@@ -7,6 +7,12 @@ const styles = {
         flex: 1,
         width: Metrics.WIDTH,
         height: Metrics.HEIGHT,
+        // backgroundColor: "#febe29"
+    },
+    backgroundImage2: {
+        flex: 1,
+        width: Metrics.WIDTH,
+        height: Metrics.HEIGHT,
         backgroundColor: "#febe29"
     },
     header: {
@@ -89,6 +95,16 @@ const styles = {
 		borderBottomWidth : 0.11,
 		borderBottomColor : '#f3f3f3'
     },
+    containMidPrincipleCode: {
+        backgroundColor: "#fff",
+        height: Metrics.HEIGHT * 0.08,
+        width: Metrics.WIDTH * 0.91,
+        justifyContent: "space-between",
+        alignItems: "center",
+		alignSelf: "center",
+		borderBottomWidth : 0.11,
+		borderBottomColor : '#f3f3f3'
+    },
     containMidLeadCode: {
         // backgroundColor: "#fff",
         height: Metrics.HEIGHT * 0.08,
@@ -116,22 +132,26 @@ const styles = {
         width: Metrics.WIDTH * 0.84,
         color: "#000",
         paddingLeft: Fonts.moderateScale(10),
-        fontFamily: Fonts.type.sfuiDisplayRegular
+        fontFamily: Fonts.type.proximaNovaReg
     },
     inputAddress: {
         height: Metrics.HEIGHT * 0.20,
         width: Metrics.WIDTH * 0.84,
-        color: "#000",
-        paddingLeft: Fonts.moderateScale(10),
-        fontFamily: Fonts.type.sfuiDisplayRegular,
-        fontSize: 18
+        // color: "#000",
+        // paddingLeft: Fonts.moderateScale(10),
+        fontFamily: Fonts.type.proximaNovaReg,
+        // fontSize: 18,
+        fontSize: 15,left: 15,
+        // paddingBottom: 3,
+        // backgroundColor: '#fff'
+        color: '#fff'
     },
     inputEmailPrinciple:{
         height: Metrics.HEIGHT * 0.08,
-        width: Metrics.WIDTH * 0.84,
+        width: Metrics.WIDTH * 0.80,
         color: "#000",
-        paddingLeft: Fonts.moderateScale(23),
-        fontFamily: Fonts.type.sfuiDisplayRegular
+        paddingLeft: Fonts.moderateScale(20),
+        fontFamily: Fonts.type.proximaNovaReg
     },
     containPassword: {
         backgroundColor: "#fff",
@@ -154,6 +174,17 @@ const styles = {
         alignSelf: "center",
         elevation: 3
     },
+    containImageTop_no: {
+        // backgroundColor: "#fff",
+        width: Metrics.WIDTH * 0.92,
+        // borderBottomLeftRadius: 15,
+        // borderBottomRightRadius: 15,
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignSelf: "center",
+        elevation: 3
+    },
+
     containImage: {
         backgroundColor: "#fff",
         width: Metrics.WIDTH * 0.92,
@@ -202,7 +233,7 @@ const styles = {
         fontSize: Fonts.moderateScale(17),
         width: Metrics.WIDTH * 0.92,
         textAlign: "center",
-        fontFamily: Fonts.type.sfuiDisplaySemibold
+        fontFamily: Fonts.type.proximaNovaReg
     },
     forgotPassword: {
         color: Colors.snow,
@@ -213,7 +244,7 @@ const styles = {
         justifyContent: "center",
         textAlign: "center",
         backgroundColor: Colors.transparent,
-        fontFamily: Fonts.type.sfuiDisplayRegular
+        fontFamily: Fonts.type.proximaNovaReg
     },
     socialSec: {
         height: Metrics.HEIGHT * 0.25,
@@ -235,7 +266,7 @@ const styles = {
         color: Colors.snow,
         paddingLeft: Fonts.moderateScale(5),
         fontSize: Fonts.moderateScale(17),
-        fontFamily: Fonts.type.sfuiDisplayRegular
+        fontFamily: Fonts.type.proximaNovaReg
     },
     eye: {
         position: "absolute",
@@ -247,7 +278,7 @@ const styles = {
         width: Metrics.WIDTH * 0.84,
         color: "#000",
         paddingLeft: Fonts.moderateScale(10),
-        fontFamily: Fonts.type.sfuiDisplayRegular,
+        fontFamily: Fonts.type.proximaNovaReg,
         alignItems: "center",
         flexDirection: "row",
         height: null,
@@ -261,6 +292,97 @@ const styles = {
         flex:1,
         width:Dimensions.get('window').width,
         backgroundColor : '#333'
-    }
+    },
+    nbInput: {
+        
+    },
+    marginround :{
+        height: 45, marginBottom: 4,marginLeft: 12, marginRight: 12, 
+        // backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderColor: "#ffffff",
+        textAlignVertical: 'bottom',
+
+    },
+    marginrounderror :{
+        height: 45, marginBottom: 4,marginLeft: 12, marginRight: 12, 
+        // backgroundColor: '#fff',
+        // borderBottomWidth: 1,
+        // borderColor: "#ffffff",
+        textAlignVertical: 'bottom',
+
+    },
+    
+    iconColor : {
+        color: Colors.white, left: 15,
+        fontSize: 20
+    },
+    positionTextInput: {
+        fontSize: 15,left: 8,
+        // paddingBottom: 3,
+        // backgroundColor: '#fff'
+        color: '#fff'
+    },
+    overviewTitles: {
+        flex: 1,
+        fontFamily: Fonts.type.proximaNovaReg,
+        left: 15,
+        color: '#ffffff'
+        
+      },
+      marginfirst :{
+        marginTop: 8
+    },
+    signInBtnSmall: {
+        backgroundColor: Colors.loginBlue,
+        // height: Metrics.HEIGHT * 0.10,
+        height: 40,
+        width: 80,
+        paddingLeft: 20,
+        paddingRight: 20,
+        // width: '100%',
+        alignSelf: "center",
+        elevation: 3,
+        // shadowColor: "#000",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5
+    },
+    signInBtnMedium: {
+        backgroundColor: Colors.goldUrban,
+        // height: Metrics.HEIGHT * 0.10,
+        height: 50,
+        width: 230,
+        paddingLeft: 20,
+        paddingRight: 20,
+        // width: '100%',
+        alignSelf: "center",
+        elevation: 3,
+        // shadowColor: "#000",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5
+    },
+    overview: {
+        flex: 1,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+      },
+      textInput_medium: {
+        // fontFamily: 'Montserrat-Regular',
+        fontFamily: Fonts.type.proximaNovaReg,
+        borderBottomWidth: 2,
+        borderColor: "#ffffff",
+        fontSize: 14,
+        width: '100%',
+        borderRadius: 5,
+        textAlignVertical: 'bottom',
+        // paddingVertical: .5,
+        // paddingHorizontal: 20,
+        color: "#666666",
+        // color: "black"
+      },
+
+   
 };
 export default styles;

@@ -89,7 +89,7 @@ class Signup extends React.Component {
     render() {
         return (
             <Container>
-                <ImageBackground style={styles.backgroundImage}>
+                <ImageBackground style={styles.backgroundImage2} source={require("../Images/background-blue.png")}>
                     <Header style={styles.header}>
                         <Left style={styles.left}>
                             <Button
@@ -119,10 +119,17 @@ class Signup extends React.Component {
                         <Right style={styles.right}></Right>
                     </Header>
                     <View style={styles.inputFieldStyles}>
-                        <Image
+                        {/* <Image
                             style={styles.images}
-                            source={require("../Images/logo.jpg")}
-                        />
+                            source={require("../Images/logo.png")}
+                        /> */}
+                        <View style={{width: 200,height: 100, marginBottom: 65}}>
+                                <Image
+                                    // style={styles.images}
+                                style={styles.styleLogo}
+                                source={require("../Images/logo.png")}
+                            />
+                        </View>
 
                         <View style={{justifyContent : 'center'}}>
                             <View style={styles.containEmail}>

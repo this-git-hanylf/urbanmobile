@@ -47,6 +47,7 @@ const colors = {
     redUrban: "#AF3034",
     bluegreyUrban: "#c0d4f0",
     greyUrban: "#999",
+    goldUrban: "#AB9E84",
 
 
     statusBarOrange: "#db5f00",

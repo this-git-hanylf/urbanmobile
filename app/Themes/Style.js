@@ -263,11 +263,11 @@ export default {
     // *** text colors *** //
     textWhite: {
         color: '#FFFFFF',
-		fontFamily: "Montserrat-Regular",
+		fontFamily: Fonts.type.proximaNovaReg,
     },
     textBlack: {
         color: '#3f3b38',
-		fontFamily: "Montserrat-Regular",
+		fontFamily: Fonts.type.proximaNovaReg,
     },
     textGreyLight: {
         color: '#999',

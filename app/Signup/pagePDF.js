@@ -65,36 +65,47 @@ class pagePDF extends Component {
             user: "",
             name: "",
             project: [],
-            selected: ""
+            selected: "",
+            file_url: '',
+            uri: '',
         }
 
-        console.log('props cf', props);
+        console.log('props pdf', props);
     }
 
-    downloadFile = () =>{
-        const item  = this.props.item
-        const android = RNFetchBlob.android
-        RNFetchBlob
-        .config({
-            fileCache : true,
-            addAndroidDownloads: {
-                path: RNFetchBlob.fs.dirs.SDCardDir +'/downloads/'+item.descs+'.pdf',
-                useDownloadManager: true,
-                notification: true,
-                overwrite: true,
-                description: 'downloading content...',
-                mime: 'application/pdf',
-                mediaScannable: true
-            }
-        })
-        .fetch('GET', item.url)
-        .then((res) => {
-            console.log('The file saved to ', res.path())
-            alert('Saved at : '+res.path())
-            // android.actionViewIntent(res.path(), 'application/pdf')
-            // android.actionViewIntent(RNFetchBlob.fs.dirs.SDCardDir +'/Download/laporan.pdf','application/pdf')
-        })
+    async componentDidMount(){
+    const data = {
+        uri : this.props.datas.file_url
+
     }
+    // const uri = this.props.item.file_url;
+    console.log('uri', data);
+}
+
+    // downloadFile = () =>{
+    //     const item  = this.props.item
+    //     const android = RNFetchBlob.android
+    //     RNFetchBlob
+    //     .config({
+    //         fileCache : true,
+    //         addAndroidDownloads: {
+    //             path: RNFetchBlob.fs.dirs.SDCardDir +'/downloads/'+item.descs+'.pdf',
+    //             useDownloadManager: true,
+    //             notification: true,
+    //             overwrite: true,
+    //             description: 'downloading content...',
+    //             mime: 'application/pdf',
+    //             mediaScannable: true
+    //         }
+    //     })
+    //     .fetch('GET', item.url)
+    //     .then((res) => {
+    //         console.log('The file saved to ', res.path())
+    //         alert('Saved at : '+res.path())
+    //         // android.actionViewIntent(res.path(), 'application/pdf')
+    //         // android.actionViewIntent(RNFetchBlob.fs.dirs.SDCardDir +'/Download/laporan.pdf','application/pdf')
+    //     })
+    // }
 
     onValueChange(value) {
         this.setState({
@@ -103,6 +114,7 @@ class pagePDF extends Component {
     }
     render() {
         const source = {uri:this.props.item.file_url,cache:true};
+        console.log('uri', this.props.item.file_url);
         return (
             <Container style={Style.bgMain}>
                 <Header style={Style.navigation}>
@@ -131,7 +143,7 @@ class pagePDF extends Component {
                             {"Terms & Conditions".toUpperCase()}
                         </Text>
                     </View>
-                    <View style={Style.actionBarRight}>
+                    {/* <View style={Style.actionBarRight}>
                         <Button
                             transparent
                             style={Style.actionBarBtn}
@@ -144,7 +156,7 @@ class pagePDF extends Component {
                                 type="MaterialCommunityIcons"
                             />
                         </Button>
-                    </View>
+                    </View> */}
                 </Header>
                 <Pdf
                     

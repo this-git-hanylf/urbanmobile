@@ -12,7 +12,8 @@ import {
     ImageBackground,
     TouchableOpacity,
     BackHandler,
-    I18nManager
+    I18nManager,
+    Dimensions
 } from "react-native";
 import {
     Container,
@@ -325,32 +326,23 @@ export default class Intro extends React.Component {
             //Real Application
             return (
                 <Container>
-                    <ImageBackground style={styles.backgroundImage}>
+                    <ImageBackground style={[styles.backgroundImage, styles.fixedBackground]} source={require("../Images/urban-home-min.jpg")}>
                         <Header style={styles.header}>
                             <Left style={styles.left}></Left>
                             <Body style={styles.body}></Body>
                             <Right style={styles.right}>
-                                <TouchableOpacity
-                                    style={styles.textRight}
-                                    onPress={() =>
-                                        this.props.navigation.navigate("Guest")
-                                    }
-                                >
-                                    <Text
-                                        style={styles.textTitle}
-                                        onPress={() => this.skipLogin()}
-                                    >
-                                        Skip Login
-                                    </Text>
-                                </TouchableOpacity>
+                               
                             </Right>
                         </Header>
                         <View style={styles.inputFieldStyles}>
-                            <Image
-                                style={styles.images}
-                                source={require("../Images/logo.jpg")}
-                            />
-
+                            <View style={{width: 200,height: 100, marginBottom: 65}}>
+                                <Image
+                                    // style={styles.images}
+                                    style={styles.styleLogo}
+                                    source={require("../Images/logo.png")}
+                                />
+                            </View>
+                            
                             <View style={styles.containEmail}>
                                 <Input
                                     ref="email"
@@ -367,11 +359,11 @@ export default class Intro extends React.Component {
                                     textAlign={
                                         I18nManager.isRTL ? "right" : "left"
                                     }
-                                    placeholder="Email"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    placeholder="Your Username"
+                                    placeholderTextColor="#7d7d7d"
                                 />
                             </View>
-                            <View style={styles.divider} />
+                            {/* <View style={styles.divider} /> */}
                             <View style={styles.containPassword}>
                                 <Input
                                     ref="password"
@@ -388,8 +380,8 @@ export default class Intro extends React.Component {
                                     textAlign={
                                         I18nManager.isRTL ? "right" : "left"
                                     }
-                                    placeholder="Password"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    placeholder="Your Password"
+                                    placeholderTextColor="#7d7d7d"
                                     secureTextEntry={!this.state.isHide}
                                     value={this.state.password}
                                 />
@@ -411,7 +403,7 @@ export default class Intro extends React.Component {
                             }
                         >
                             <Button
-                                style={styles.signInBtn}
+                                style={styles.signInBtnSmall}
                                 onPress={() => this.btnLoginClick()}
                             >
                                 {!this.state.isLoaded ? (
@@ -432,13 +424,29 @@ export default class Intro extends React.Component {
                             <GoogleLoginButton onPress={this.signInGoogle} />
                             <FBLoginButton onPress={this.signInFacebook} />
                         </View>
-                        <View style={styles.socialSec}>
-                            {/* <TouchableOpacity onPress={() => Actions.SignupAgent()}> */}
+                        <View style={styles.socialSec}>  
                             <TouchableOpacity onPress={() => Actions.chooseRegist()}>
                                 <Text style={styles.fbButtonText}>
                                     New here? Register Agent
                                 </Text>
                             </TouchableOpacity>
+                            
+                        </View>
+                        <View style={styles.skiplog}>  
+                          
+                            <TouchableOpacity
+                                    style={styles.textRight}
+                                    onPress={() =>
+                                        this.props.navigation.navigate("Guest")
+                                    }
+                                >
+                                    <Text
+                                        style={styles.fbButtonText}
+                                        onPress={() => this.skipLogin()}
+                                    >
+                                        Skip Login
+                                    </Text>
+                                </TouchableOpacity>
                         </View>
                     </ImageBackground>
                 </Container>

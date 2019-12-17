@@ -29,7 +29,8 @@ import {
     Left,
     Body,
     Title,
-    ListItem
+    ListItem,
+    Label
     // CheckBox
 } from "native-base";
 import {SearchBar} from "react-native-elements";
@@ -85,8 +86,8 @@ class SignupGuest extends React.Component {
 
             pictUrlKtp: '',
             pictUrlNPWP: '',
-            pictUrlSuratAnggota: '',
-            pictUrlBukuTabungan: '',
+            pictUrlSuratAnggota: require("../../assets/images/ktp.png"),
+            pictUrlBukuTabungan: require("../../assets/images/ktp.png"),
             pictUrl: require("../../assets/images/ktp.png"),
 
             selectedType: "",
@@ -99,14 +100,37 @@ class SignupGuest extends React.Component {
 
             // query: '',
             fullData: [],
-            principle_name:''
+            principle_name:'',
+            itemPrinciple: '',
         };
     }
 
     componentDidMount() {
+        const data = {
+            fullname : this.props.datas_dari_regist.fullname,
+            email: this.props.datas_dari_regist.email,
+            nohp: this.props.datas_dari_regist.hp,
+            principle_cd: this.props.datas_dari_regist.code,
+            principle_name: this.props.resData[0].group_name
+            // principle_cd: this.props.itemPrinciple
+        }
+        console.log('email', data.email);
+        console.log('data dari regis', data);
+        console.log('value principle', data.principle_cd);
+        console.log('principle_name', data.principle_name);
+        this.setState(data, () => {
+            // this.getDataListProspect(this.props.datas)
         this.getProject();
         // this.getProject2();
         this.getPrinciples();
+        // this.getData(this.props.meterId);XMLDocument
+            // this.getDataFollowUp(this.props.datas)
+            // this.getStatus()
+        });
+
+        this.mounted = true;
+   
+        
         isMount = true;
         // const { email } = this.state.email;
         // console.log("email",email);
@@ -117,6 +141,7 @@ class SignupGuest extends React.Component {
     };
 
 
+    
 
 
     renderRow = ({item}) => {
@@ -234,12 +259,12 @@ class SignupGuest extends React.Component {
         let filenpwp = RNFetchBlob.wrap(
             this.state.pictUrlNPWP.uri.replace("file://", "")
         );
-        let filebukutabungan = RNFetchBlob.wrap(
-            this.state.pictUrlBukuTabungan.uri.replace("file://", "")
-        );
-        let filesuratanggota = RNFetchBlob.wrap(
-            this.state.pictUrlSuratAnggota.uri.replace("file://", "")
-        );
+        // let filebukutabungan = RNFetchBlob.wrap(
+        //     this.state.pictUrlBukuTabungan.uri.replace("file://", "")
+        // );
+        // let filesuratanggota = RNFetchBlob.wrap(
+        //     this.state.pictUrlSuratAnggota.uri.replace("file://", "")
+        // );
         
 
         const {
@@ -257,7 +282,7 @@ class SignupGuest extends React.Component {
             acc_no,
 
             npwp,
-            project_no
+            project_no,
            
         } = this.state;
 
@@ -275,8 +300,8 @@ class SignupGuest extends React.Component {
             //---------foto attachment
             pictUrlKtp: filektp, //ktp
             pictUrlNPWP: filenpwp,
-            pictUrlBukuTabungan: filebukutabungan,
-            pictUrlSuratAnggota: filesuratanggota,
+            // pictUrlBukuTabungan: filebukutabungan,
+            // pictUrlSuratAnggota: filesuratanggota,
             //---------end foto attachment
 
             bankname: bank_name,
@@ -301,8 +326,8 @@ class SignupGuest extends React.Component {
         let fileNameKtp = "KTP_RegisAgent_"+nik+".png";
         console.log('filenamektp', nik);
         let fileNameNpwp = "npwp_RegisAgent_" + nik + ".png";
-        let fileNameBukuTabungan = "bukutabungan_RegisAgent_" + nik + ".png";
-        let fileNameSuratAnggota= "suratanggota_RegisAgent_" + nik + ".png";
+        // let fileNameBukuTabungan = "bukutabungan_RegisAgent_" + nik + ".png";
+        // let fileNameSuratAnggota= "suratanggota_RegisAgent_" + nik + ".png";
 
        
         
@@ -338,8 +363,8 @@ class SignupGuest extends React.Component {
                     // { name: "photo", filename: fileName, data: fileImg },
                     { name: "photoktp", filename: fileNameKtp, data: filektp },
                     { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-                    { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
-                    { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+                    // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+                    // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
                     { name: "data", data: JSON.stringify(frmData) }
                 ]
             ).then(resp => {
@@ -351,7 +376,8 @@ class SignupGuest extends React.Component {
                     // Actions.pop()
                     this.setState({ isLogin: true }, () => {
                         alert(res.Pesan);
-                        Actions.pop()
+                        // Actions.pop()
+                        Actions.Login()
                     });
                 }else {
                     this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -437,10 +463,14 @@ class SignupGuest extends React.Component {
         this.setState({ search: text });
     };
 
+    modalPrinciple(){
+        Actions.modalPrinciple();
+    }
+
     render() {
         return (
             <Container>
-                <ImageBackground style={styles.backgroundImage}>
+                <ImageBackground style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
                     <Header style={styles.header}>
                         <Left style={styles.left}>
                             <Button
@@ -451,13 +481,13 @@ class SignupGuest extends React.Component {
                                 <Icon
                                     active
                                     name="arrow-left"
-                                    style={Style.textBlack}
+                                    style={Style.textWhite}
                                     type="MaterialCommunityIcons"
                                 />
                             </Button>
                         </Left>
                         <Body style={styles.body}>
-                            <Text style={[Style.textBlack, Style.textMedium]}>
+                            <Text style={[Style.textWhite, Style.textMedium]}>
                                 {"Sign Up as Agent"}
                             </Text>
                         </Body>
@@ -472,374 +502,309 @@ class SignupGuest extends React.Component {
                             ]}
                         >
                             <View>
-                                <View style={styles.containEmail} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="email"
-                                        style={styles.inputEmail}
-                                        editable={
-                                            this.props.data ? false : true
-                                        }
-                                        keyboardType="email-address"
-                                        onChangeText={val =>
-                                            this.setState({ email: val })
-                                        }
-                                        returnKeyType="next"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Email"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.email}
-                                    />
-                                    {this.state.erroremail ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! Email Required
-                                        </Text>
-                                    ) : null}
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="fullname"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ fullname: val })
-                                        }
-                                        returnKeyType="next"
-                                        autoCapitalize="words"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Full Name"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.fullname}
-                                    />
-                                    {this.state.errorfullname ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! Full Name Required
-                                        </Text>
-                                    ) : null}
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="nik"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ nik: val })
-                                        }
-                                        keyboardType="numeric"
-                                        returnKeyType="next"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="NIK"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.nik}
-                                        maxLength={20}
-                                    />
-                                    {this.state.errornik ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! NIK Required
-                                        </Text>
-                                    ) : null}
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="npwp"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ npwp: val })
-                                        }
-                                        keyboardType="numeric"
-                                        returnKeyType="next"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="NPWP"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.npwp}
-                                    />
-                                    {this.state.errornik ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! NPWP Required
-                                        </Text>
-                                    ) : null}
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="bankname"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ bank_name: val })
-                                        }
-                                        returnKeyType="next"
-                                        autoCapitalize="words"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Bank Name"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.bank_name}
-                                    />
-                                    
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="accname"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ acc_name: val })
-                                        }
-                                        returnKeyType="next"
-                                        autoCapitalize="words"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Account Name"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.acc_name}
-                                    />
-                                    
-                                </View>
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="accno"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ acc_no: val })
-                                        }
-                                        keyboardType="numeric"
-                                        returnKeyType="next"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Account No"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.acc_no}
-                                    />
-                                    
-                                </View>
-
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Item style={styles.containMid}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                this.setModalVisible(true);
-                                            }}
-                                            style={{width: '100%'}}>
-                                                <Input
-                                                        ref="principle_cd"
-                                                        style={styles.inputEmailPrinciple}
-                                                        editable={false}
-                                                        onChangeText={val =>
-                                                            this.setState({ principle_cd: val })
-                                                        }
-                                                        // keyboardType="numeric"
-                                                        returnKeyType="next"
-                                                        autoCapitalize="none"
-                                                        autoCorrect={false}
-                                                        underlineColorAndroid="transparent"
-                                                        textAlign={
-                                                            I18nManager.isRTL ? "right" : "left"
-                                                        }
-                                                        placeholder="Principle Code"
-                                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                                        value={this.state.principle_name}
-                                                    />
-                                                {/* <TextInput  placeholder={'Lot No'} value={this.state.principle_cd} onChangeText={(val)=>{this.setState({principle_cd:val})}} editable={false}/> */}
-                                                {/* <Right style={{position:'absolute',right:10}}>
-                                                    <Icon solid name='sort-down' type="FontAwesome5" style={{fontSize: 15,top: 3,right:1, color: '#666'}} />
-                                                </Right>     */}
-                                            
-                                        </TouchableOpacity>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.email} 
+                                            onChangeText={(email) => this.setState({ email })} 
+                                            style={styles.positionTextInput}
+                                            ref="email" />
+                                            {this.state.erroremail ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
                                     </Item>
-                                    <View>
-                                        <Modal
-                                        animationType="slide"
-                                        transparent={true}
-                                        visible={this.state.modalVisible}
-                                        onRequestClose={() => this.alert('Modal has been closed.')}
-                                        >
-                                            
-                                            <View style={{
-                                                    flex: 1,
-                                                    flexDirection: 'column',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                
-                                                    // backgroundColor: Colors.twitter,
-                                                    }}>
-                                                <TouchableOpacity
-                                                    onPress={() => {
-                                                    this.setModalVisible(!this.state.modalVisible);
-                                                    }}
-                                                    style={{backgroundColor: Colors.twitter, paddingVertical: 2, paddingHorizontal: 2, borderRadius: 5}}
-                                                    >
-                                                    <Text style={{color: '#000'}}>Close</Text>
-                                                </TouchableOpacity>
-                                                
-                                                <View style={{
-                                                        width: 300,
-                                                        height: 300, 
-                                                        backgroundColor: Colors.white,
-                                                        borderRadius: 8,
-                                                        borderColor: '#555',
-                                                        borderWidth: 1,
-                                                        
-                                                        }}
-                                                        >
-                                                
-                                                {/* loadmore looping in here */}
-                                            
-                                                    <View style={{height: 300}}> 
-                                                        <SearchBar
-                                                        placeholder="Search Here..."
-                                                        onChangeText={this.updateSearch}
-                                                        // ref={search => this.state.search = search}
-                                                        value={this.state.search}
-                                                        containerStyle={{backgroundColor: Colors.white, height: 40, borderRadius: 8, borderWidth: 0, borderColor: Colors.white, borderBottomColor: Colors.white}}
-                                                        inputContainerStyle={{height: 30, borderBottomColor: Colors.white}}
-                                                        />
-                                                        <FlatList data={this.state.getPrin} 
-                                                        renderItem={this.renderRow}
-                                                        keyExtractor={(item,index)=>item.label} 
-                                                        
-                                                        />
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </Modal>
-                                    </View>
-                                   
-                                    
-                                </View>
-                              
-
-                                
-                               
-                                {/* <View style={[styles.containMid]}>
-                                    <RNPickerSelect
-                                        style={pickerSelectStyles}
-                                        items={userType}
-                                        onValueChange={val =>
-                                            this.chooseType(val)
-                                        }
-                                        placeholder={{
-                                            key: 0,
-                                            label: "Select Principle"
+                                    {this.state.erroremail ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
                                         }}
-                                        useNativeAndroidPickerStyle={false}
-                                    />
-                                    {this.state.errorselectedType ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! Select User Type Required
-                                        </Text>
-                                    ) : null} */}
-                                {/* </View> */}
+                                    >
+                                        Email Required
+                                    </Text>) : null}
+                                </View>
+                                
+                                
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Full Name</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.fullname} 
+                                            onChangeText={(fullname) => this.setState({ fullname })} 
+                                            style={styles.positionTextInput}
+                                            ref="fullname" />
+                                            {this.state.errorfullname ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errorfullname ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Full Name Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>NIK</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.nik} 
+                                            onChangeText={val =>
+                                                this.setState({ nik: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="nik" />
+                                            {this.state.errornik ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errornik ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        NIK Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>NPWP</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.npwp} 
+                                            onChangeText={val =>
+                                                this.setState({ npwp: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="npwp" />
+                                            {this.state.errornpwp ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errornpwp ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        NPWP Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.bank_name} 
+                                            onChangeText={val =>
+                                                this.setState({ bank_name: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="bank_name" />
+                                            {this.state.errorbank_name ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errorbank_name ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Bank Name Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Account Name</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.acc_name} 
+                                            onChangeText={val =>
+                                                this.setState({ acc_name: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_name" />
+                                            {this.state.erroracc_name ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroracc_name ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Account Name Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Account Number</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.acc_no} 
+                                            onChangeText={val =>
+                                                this.setState({ acc_no: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_no" />
+                                            {this.state.erroracc_no ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroracc_no? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Account Number Required
+                                    </Text>) : null}
+                                </View>
+                                {/* 
                                 <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Input
-                                        ref="nohp"
-                                        style={styles.inputEmail}
-                                        editable={true}
-                                        onChangeText={val =>
-                                            this.setState({ nohp: val })
-                                        }
-                                        keyboardType="numeric"
-                                        returnKeyType="next"
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        underlineColorAndroid="transparent"
-                                        lkk
-                                        textAlign={
-                                            I18nManager.isRTL ? "right" : "left"
-                                        }
-                                        placeholder="Handphone"
-                                        placeholderTextColor="rgba(0,0,0,0.20)"
-                                        value={this.state.nohp}
-                                    />
-                                    {this.state.errornohp ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! No Hp Required
-                                        </Text>
-                                    ) : null}
-                                </View>                               
-                                <View
-                                    style={[
-                                        styles.containMid,
-                                        { height: null, paddingBottom: 10 }
-                                    ]}
-                                >
+                                    <TouchableOpacity 
+                                    onPress={() => this.modalPrinciple()}
+                                    >
+                                        <View>
+                                            <Text>
+                                                tes
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>   */}
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Handphone</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.nohp} 
+                                            onChangeText={val =>
+                                                this.setState({ nohp: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_no" />
+                                            {this.state.errornohp ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errornohp? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Handphone Required
+                                    </Text>) : null}
+                                </View>                             
+                                <View>
                                     {this.state.dataProject.map((data, key) => {
                                         return (
                                             <View
@@ -852,6 +817,7 @@ class SignupGuest extends React.Component {
                                                         this.handleCheck(data)
                                                     }
                                                     checked={data.checked}
+                                                    // checked={true}
                                                     title={data.descs}
                                                     iconType="material"
                                                     checkedIcon="check-circle"
@@ -883,163 +849,82 @@ class SignupGuest extends React.Component {
                                         </Text>
                                     ) : null}
                                 </View>
-                                <View style={[styles.containImageTop]}>
-                                    <Text
-                                        style={[
-                                            Style.textBlack,
-                                            { paddingTop: 5 }
-                                        ]}
-                                    >
-                                        Upload Photo KTP
-                                    </Text>
-                                    <TouchableOpacity
-                                        style={{
-                                            padding: 2,
-                                            borderWidth: 1,
-                                            borderColor: "#d3d3d3",
-                                            margin: 10
-                                        }}
-                                        onPress={() => this.showAlert("pictUrlKtp")}
-                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                    >
-                                        {/* <Image
-                                            style={{ width: 200, height: 100 }}
-                                            source={this.state.pictUrlKtp}
-                                        /> */}
-                                        {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
-                                             <View >
-                                             {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                <Image
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={uri = require("../../assets/images/ktp.png")}
-                                                />
-                                            </View>
-                                            :
-                                            <Image
-                                                // resizeMode="cover"
-                                                style={{ width: 200, height: 130 }}
-                                                source={
-                                                    this.state.pictUrlKtp
-                                                }
-                                            />
-                                        }
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[styles.containImageTop]}>
-                                    <Text
-                                        style={[
-                                            Style.textBlack,
-                                            { paddingTop: 5 }
-                                        ]}
-                                    >
-                                        Upload Photo NPWP
-                                    </Text>
-                                    <TouchableOpacity
-                                        style={{
-                                            padding: 2,
-                                            borderWidth: 1,
-                                            borderColor: "#d3d3d3",
-                                            margin: 10
-                                        }}
-                                        onPress={() => this.showAlert("pictUrlNPWP")}
-                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                    >
-                                        {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
-                                            <View >
+                                <View style={{paddingTop: 25}}>
+                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo KTP</Label>
+                                    <View style={[styles.containImageTop_no]}>
+                                        <TouchableOpacity
+                                            style={{
+                                                padding: 2,
+                                                borderWidth: 1,
+                                                borderColor: "#d3d3d3",
+                                                margin: 10
+                                            }}
+                                            onPress={() => this.showAlert("pictUrlKtp")}
+                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                                        >
+                                            {/* <Image
+                                                style={{ width: 200, height: 100 }}
+                                                source={this.state.pictUrlKtp}
+                                            /> */}
+                                            {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
+                                                <View >
                                                 {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
+                                                    <Image
+                                                        style={{ width: 200, height: 130 }}
+                                                        source={uri = require("../../assets/images/ktp.png")}
+                                                    />
+                                                </View>
+                                                :
                                                 <Image
+                                                    // resizeMode="cover"
                                                     style={{ width: 200, height: 130 }}
-                                                    source={uri = require("../../assets/images/ktp.png")}
+                                                    source={
+                                                        this.state.pictUrlKtp
+                                                    }
                                                 />
-                                            </View>
-                                            :
-                                            <Image
-                                                // resizeMode="cover"
-                                                style={{ width: 200, height: 130 }}
-                                                source={
-                                                    this.state.pictUrlNPWP
-                                                }
-                                            />
-                                        }
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[styles.containImageTop]}>
-                                    <Text
-                                        style={[
-                                            Style.textBlack,
-                                            { paddingTop: 5 }
-                                        ]}
-                                    >
-                                        Upload Photo Member File
-                                    </Text>
-                                    <TouchableOpacity
-                                        style={{
-                                            padding: 2,
-                                            borderWidth: 1,
-                                            borderColor: "#d3d3d3",
-                                            margin: 10
-                                        }}
-                                        onPress={() => this.showAlert("pictUrlSuratAnggota")}
-                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                    >
-                                        {this.state.pictUrlSuratAnggota == null || this.state.pictUrlSuratAnggota == '' ?
-                                            <View >
+                                            }
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>  
+
+                                <View style={{paddingTop: 25}}>
+                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo NPWP</Label>
+                                    <View style={[styles.containImageTop_no]}>
+                                        <TouchableOpacity
+                                            style={{
+                                                padding: 2,
+                                                borderWidth: 1,
+                                                borderColor: "#d3d3d3",
+                                                margin: 10
+                                            }}
+                                            onPress={() => this.showAlert("pictUrlNPWP")}
+                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                                        >
+                                            {/* <Image
+                                                style={{ width: 200, height: 100 }}
+                                                source={this.state.pictUrlKtp}
+                                            /> */}
+                                            {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
+                                                <View >
                                                 {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
+                                                    <Image
+                                                        style={{ width: 200, height: 130 }}
+                                                        source={uri = require("../../assets/images/ktp.png")}
+                                                    />
+                                                </View>
+                                                :
                                                 <Image
+                                                    // resizeMode="cover"
                                                     style={{ width: 200, height: 130 }}
-                                                    source={uri = require("../../assets/images/ktp.png")}
+                                                    source={
+                                                        this.state.pictUrlNPWP
+                                                    }
                                                 />
-                                            </View>
-                                            :
-                                            <Image
-                                                // resizeMode="cover"
-                                                style={{ width: 200, height: 130 }}
-                                                source={
-                                                    this.state.pictUrlSuratAnggota
-                                                }
-                                            />
-                                        }
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[styles.containImage]}>
-                                    <Text
-                                        style={[
-                                            Style.textBlack,
-                                            { paddingTop: 5 }
-                                        ]}
-                                    >
-                                        Upload Photo Saving Book
-                                    </Text>
-                                    <TouchableOpacity
-                                        style={{
-                                            padding: 2,
-                                            borderWidth: 1,
-                                            borderColor: "#d3d3d3",
-                                            margin: 10
-                                        }}
-                                        onPress={() => this.showAlert("pictUrlBukuTabungan")}
-                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                    >
-                                        {this.state.pictUrlBukuTabungan == null || this.state.pictUrlBukuTabungan == '' ?
-                                            <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                <Image
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={uri = require("../../assets/images/ktp.png")}
-                                                />
-                                            </View>
-                                            :
-                                            <Image
-                                                // resizeMode="cover"
-                                                style={{ width: 200, height: 130 }}
-                                                source={
-                                                    this.state.pictUrlBukuTabungan
-                                                }
-                                            />
-                                        }
-                                    </TouchableOpacity>
-                                </View>
-                                
+                                            }
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>  
+                               
                             </View>
                         </View>
                     </ScrollView>
@@ -1048,7 +933,7 @@ class SignupGuest extends React.Component {
                         pointerEvents={this.state.isLoaded ? "auto" : "none"}
                     >
                         <Button
-                            style={styles.signInBtn}
+                            style={[styles.signInBtn,{backgroundColor: Colors.goldUrban}]}
                             onPress={() => this.submit()}
                         >
                             {!this.state.isLoaded ? (

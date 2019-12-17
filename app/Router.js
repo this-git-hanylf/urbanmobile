@@ -15,6 +15,7 @@ import SignupGuest from './Signup/SignupGuest';
 import SignupAgent from './Signup/SignupAgent';
 import chooseRegist from './Signup/chooseRegist';
 import SignupPrinciple from './Signup/SignupPrinciple';
+import modalPrinciple from './Signup/modalPrinciple';
 import pagePDF from './Signup/pagePDF';
 import Reset from './ResetPass/Reset';
 import Search from "./Find/Search";
@@ -419,6 +420,12 @@ class Routes extends Component{
                 <Scene
                   key="SignupPrinciple"
                   component={SignupPrinciple}
+                  hideNavBar={true}
+                  title=""
+                />
+                <Scene
+                  key="modalPrinciple"
+                  component={modalPrinciple}
                   hideNavBar={true}
                   title=""
                 />

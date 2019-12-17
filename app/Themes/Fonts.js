@@ -15,7 +15,7 @@ const type = {
   bold: "Avenir-Black",
   emphasis: "HelveticaNeue-Italic",
   sfuiDisplayBold: "SFUIDisplay-Bold",
-  sfuiDisplaySemibold: "SFUIDisplay-Semibold",
+  sfuiDisplaySemibold: "FontsFree-Net-proxima_nova_bold-webfont",
   sfuiDisplayRegular: "SFUIDisplay-Regular",
   sfuiDisplayLight: "SFUIDisplay-Light",
   sfuiDisplayMedium: "SFUIDisplay-Medium",
@@ -26,7 +26,18 @@ const type = {
   helveticaBold: "Helvetica-Bold",
   robotoRegular: "Roboto-Regular",
   robotoMedium: "Roboto-Medium",
-  montserratSemiBold: "Montserrat-SemiBold"
+  montserratSemiBold: "Montserrat-SemiBold",
+  proximaNovaBoldWeb:    "FontsFree-Net-proxima_nova_bold-webfont",
+  proximaNovaCondBold: "FontsFree-Net-proxima_nova_cond_bold-webfont",
+  proximaNovaReg:      "FontsFree-Net-proxima_nova_reg-webfont",
+  proximaNovaBlackIt:      "FontsFree-Net-Proxima-Nova-Black-It",
+  proximaNovaBlack:     "FontsFree-Net-Proxima-Nova-Black",
+  proximaNovaBoldIt:      "FontsFree-Net-Proxima-Nova-Bold-It",
+  proximaNovaBold:      "FontsFree-Net-Proxima-Nova-Bold",
+  proximaNovaThin:     "FontsFree-Net-Proxima-Nova-Thin",
+  proximaNovaXBoldIt:      "FontsFree-Net-Proxima-Nova-Xbold-It"
+
+
 
 };
 

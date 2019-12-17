@@ -78,8 +78,14 @@ class Reset extends React.Component {
 					</Header>
 					<View style={styles.inputFieldStyles}>
                         
-                        <Image  style={styles.images} source={ require("../Images/logo.jpg")}/>
-
+                        {/* <Image  style={styles.images} source={ require("../Images/logo.jpg")}/> */}
+                        <View style={{width: 200,height: 100, marginBottom: 65}}>
+                                <Image
+                                    // style={styles.images}
+                                    style={styles.styleLogo}
+                                    source={require("../Images/logo.png")}
+                                />
+                            </View>
 						<View style={styles.containEmail}>
                             <Input 
                                 ref='newpass' 
