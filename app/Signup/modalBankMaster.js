@@ -56,16 +56,15 @@ import RNFetchBlob from "rn-fetch-blob";
 
 
 
-class modalPrinciple extends React.Component {
+class modalBankMaster extends React.Component {
     constructor(props){
         super(props);
 
         this.state = {
-            getPrin: [],
-            principle_cd: '',
-            principle_name: '',       
-            itemPrinciple: '',
+            getbank: [],
+            itemBank: '',
             isLoaded: true,
+            
          }
     }
     componentDidMount() {
@@ -75,7 +74,7 @@ class modalPrinciple extends React.Component {
        
         this.setState(data, () => {
            
-            this.getPrinciples();
+            this.getBank();
             this.selectedItem();
             // this.getDataFollowUp(this.props.datas)
             // this.getStatus()
@@ -86,25 +85,10 @@ class modalPrinciple extends React.Component {
         // console.log("email",email);
     }
 
-    // getPrinciples = () => {
-    //     fetch(urlApi+"c_principal/zoomPrincipal/IFCAPB/", {
-    //         method: "GET"
-    //     })
-    //         .then(response => response.json())
-    //         .then(res => {
-    //             console.log("principle", res);
-    //             if (!res.Error) {
-    //                 this.setState({ getPrin: res.Data });
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // };
-    getPrinciples = () => {
+    getBank = () => {
 
         {isMount ?
-            fetch(urlApi + 'c_principal/zoomPrincipal/IFCAPB/',{
+            fetch(urlApi + 'c_bank_master/zoomBank/IFCAMOBILE/',{
                 method:'GET',
                 // body: JSON.stringify({salutation})
                 // headers : this.state.hd,
@@ -113,12 +97,12 @@ class modalPrinciple extends React.Component {
                 if(!res.Error){
                     const resData = res.Data
                    
-                    console.log('principle',res);
+                    console.log('bank name',res);
+                    
                     this.setState({isLoaded: !this.state.isLoaded},()=>{
                         // alert(res.Pesan)
-                        this.setState({getPrin:resData});
+                        this.setState({getbank:resData});
                     });
-                    
                 } else {
                     this.setState({isLoaded: !this.state.isLoaded},()=>{
                         alert(res.Pesan)
@@ -132,50 +116,23 @@ class modalPrinciple extends React.Component {
 
     }
 
-    selectedItem = (itemPrinciple)=>{
-        console.log('item select lot no',itemPrinciple);
+    selectedItem = (itemBank)=>{
+        console.log('item select bank',itemBank);
         
         
         // alert(val);
         
         
         // alert(val);
-        if(itemPrinciple){
+        if(itemBank){
             Actions.pop()
-                
                 setTimeout(() => {
-                    Actions.refresh({itemPrinciple: itemPrinciple});
+                    Actions.refresh({itemBank: itemBank});
                 }, 0);
-            // setTimeout(()=> {Actions.refresh({dataItem: itemPrinciple})}, 500); Actions.pop();
-            // this.setState({principle_cd : props.itemPrinciple},()=>{
-            //     Actions.pop({itemPrinciple : this.state.principle_cd })
-            // })
-            // Actions.pop({itemPrinciple: itemPrinciple})
-            // this.setState({principle_cd : item.value})
-            // this.setState({principle_name: item.label})
-            // this.setModalVisible(!this.state.modalVisible)
         }
         // this.setModalVisible(!this.state.modalVisible)
        
     }
-
-    // selectedItem(e) {
-    //     console.log('e',e)
-    //     // this.setState({
-    //     //   dataqr: e.data,
-    //     //   status: "Coba Lagi"
-    //     // });
-    //     // Alert.alert(
-    //     //   "QR Code",
-    //     //   "Code : " + e.data,
-    //     //   [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-    //     //   { cancelable: false }
-    //     // );
-    //     // setTimeout(()=> {Actions.refresh({meterId: e.data})}, 500); Actions.pop();
-    //   }
-
-
-    
 
     render() {
         return (
@@ -198,28 +155,41 @@ class modalPrinciple extends React.Component {
                         </Left>
                         <Body style={styles.body}>
                             <Text style={[Style.textWhite, Style.textMedium]}>
-                                {"Choose Principle"}
+                                {"Choose Bank Name"}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>
                     </Header>
 
+                    {/* <View style={{ paddingLeft: 15, paddingRight: 15, paddingBottom: 10}}>
+                        <Item searchBar rounded style={{height: 40,}}>
+                            <Icon name="ios-search" style={{color: '#fff'}}/>
+                            <Input placeholder="Search" style={{color: '#fff', fontSize: 14}}/>
+                            <Icon name="ios-card" style={{color: '#fff'}} />
+                        </Item>
+                    </View> */}
                     <Content>
+                          
+                    {this.state.getbank == 0 ? <ActivityIndicator color="#fff" /> :
                         <ScrollView>
-                        {this.state.getPrin.map((itemPrinciple,key)=>
-                            <View key={key} >
-                                <ListItem >
+                        {this.state.getbank.map((itemBank,key)=>
+                            <View key={key} style={{paddingRight: 15}}>
+                               
+                                 <ListItem >
                                     <TouchableOpacity 
-                                    onPress={() => this.selectedItem(itemPrinciple)}
+                                    onPress={() => this.selectedItem(itemBank)}
                                     // onPress={this.selectedItem.bind(this)}
                                     >
-                                        <Text style={{color: '#fff'}}>{itemPrinciple.label}</Text>
+                                        <Text style={{color: '#fff'}}>{itemBank.label}</Text>
                                     </TouchableOpacity>
                                 </ListItem>
+                                
+                               
                                 {/* <Text>{item.value}</Text> */}
                             </View>
                         )}
                         </ScrollView>
+                    }
                     </Content>
 
                 </ImageBackground>
@@ -227,7 +197,7 @@ class modalPrinciple extends React.Component {
         );
     }
 }
-export default modalPrinciple;
+export default modalBankMaster;
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {

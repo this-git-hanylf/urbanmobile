@@ -45,7 +45,7 @@ import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
 import { urlApi } from "@Config/services";
 import RNPickerSelect from "react-native-picker-select";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableHighlight } from "react-native-gesture-handler";
 import ImagePicker from "react-native-image-crop-picker";
 import RNFetchBlob from "rn-fetch-blob";
 let isMount = false;
@@ -102,6 +102,7 @@ class SignupGuest extends React.Component {
             fullData: [],
             principle_name:'',
             itemPrinciple: '',
+            principles: '',
         };
     }
 
@@ -467,6 +468,47 @@ class SignupGuest extends React.Component {
         Actions.modalPrinciple();
     }
 
+    modalBankMaster(){
+        Actions.modalBankMaster();
+    }
+
+    // componentWillReceiveProps(props){
+    //     const itemPrinciple = props.itemPrinciple;
+    //     console.log('props getback',itemPrinciple);
+    //     if(itemPrinciple){
+    //         this.setState({principles: itemPrinciple.value});
+    //         // console.log('principle_cd', principle_cd);
+
+    //         // this.CallFunction();
+    //         // console.log("TEST 111");
+    //     }
+        
+    // }
+    componentWillReceiveProps(props){
+            // props dari B
+            const itemBank = props.itemBank; // props dari B
+            console.log('props getback',itemBank);
+            if(itemBank){
+                this.setState({bank_name: itemBank.value});
+                // console.log('principle_cd', principle_cd);
+    
+                // this.CallFunction();
+                // console.log("TEST 111");
+            }
+
+            // props dari C
+            // const itemCode = props.itemCode; // props dari C
+            // console.log('props getback',itemCode);
+            // if(itemCode){
+            //     this.setState({code: itemCode.value});
+            //     // console.log('principle_cd', principle_cd);
+    
+            //     // this.CallFunction();
+            //     // console.log("TEST 111");
+            // }
+            
+        }
+
     render() {
         return (
             <Container>
@@ -646,20 +688,23 @@ class SignupGuest extends React.Component {
                                         NPWP Required
                                     </Text>) : null}
                                 </View>
-                                <View style={{paddingBottom: 20}}>
+                                
+                                <View style={{paddingBottom: 20}}  >
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
+                                    <Item floatingLabel style={styles.marginround} onPress={() => this.modalBankMaster()}>
                                         <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                         </View> */}
                                         <Input 
-                                            // placeholder='Full Name' 
+                                            // placeholder='Full Name'
+                                            // onPress={() => this.modalBankMaster()} 
                                             placeholderTextColor={'#666'} 
                                             value={this.state.bank_name} 
+                                            editable={false}
                                             onChangeText={val =>
                                                 this.setState({ bank_name: val })
                                             }
@@ -755,10 +800,10 @@ class SignupGuest extends React.Component {
                                         Account Number Required
                                     </Text>) : null}
                                 </View>
-                                {/* 
-                                <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
+                                
+                                {/* <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
                                     <TouchableOpacity 
-                                    onPress={() => this.modalPrinciple()}
+                                    onPress={() => this.modalBankMaster()}
                                     >
                                         <View>
                                             <Text>
@@ -766,6 +811,9 @@ class SignupGuest extends React.Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
+                                </View>   */}
+                                {/* <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
+                                    <Text>{this.state.principles}</Text>
                                 </View>   */}
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>

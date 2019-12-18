@@ -280,6 +280,34 @@ class SignupPrinciple extends React.Component {
         return isValid;
     };
 
+    modalBankMaster(){
+        Actions.modalBankMaster();
+    }
+    componentWillReceiveProps(props){
+        // props dari B
+        const itemBank = props.itemBank; // props dari B
+        console.log('props getback',itemBank);
+        if(itemBank){
+            this.setState({bank_name: itemBank.value});
+            // console.log('principle_cd', principle_cd);
+
+            // this.CallFunction();
+            // console.log("TEST 111");
+        }
+
+        // props dari C
+        // const itemCode = props.itemCode; // props dari C
+        // console.log('props getback',itemCode);
+        // if(itemCode){
+        //     this.setState({code: itemCode.value});
+        //     // console.log('principle_cd', principle_cd);
+
+        //     // this.CallFunction();
+        //     // console.log("TEST 111");
+        // }
+        
+    }
+
     submit = () => {
         this.setState({ isLoaded: !this.state.isLoaded });
         // const { email } = this.state.email;
@@ -398,51 +426,51 @@ class SignupPrinciple extends React.Component {
 
         // console.log('url', fileNameDomisili);
 
-        if ( isValid ) {
-            // console.log('valid domisili', valid_domisili);
-            // fileImg = RNFetchBlob.wrap(
-            //     this.state.pictUrl.uri.replace("file://", "")
-            // );
+        // if ( isValid ) {
+        //     // console.log('valid domisili', valid_domisili);
+        //     // fileImg = RNFetchBlob.wrap(
+        //     //     this.state.pictUrl.uri.replace("file://", "")
+        //     // );
 
-            RNFetchBlob.fetch(
-                "POST",
-                urlApi + "c_auth/SignUpPrinciple",
-                {
-                    "Content-Type": "multipart/form-data"
-                },
-                [
-                    // { name: "photo", filename: fileName, data: fileImg },
-                    { name: "photoktp", filename: fileNameKtp, data: filektp },
-                    { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-                    { name: "photosiup", filename: fileNameSIUP, data: filesiup },
-                    { name: "phototdp", filename: fileNameTDP, data: filetdp},
-                    // { name: "photodomisili", filename: fileNameDomisili, data: filedomisili},
-                    { name: "photoakte", filename: fileNameAktePendirian, data: fileakte},
-                    { name: "data", data: JSON.stringify(frmData) }
-                ]
-            ).then(resp => {
-                const res = JSON.parse(resp.data);
-                // let res = JSON.stringify(resp.data);
-                console.log("res", resp);
-                if(!res.Error){
-                    // Actions.pop()
-                    this.setState({ isLogin: true }, () => {
-                        alert(res.Pesan);
-                        // Actions.pop()
-                        Actions.Login()
-                    });
-                }else {
-                    this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                        alert(res.Pesan);
-                    });
-                }
-                // alert(res.Pesan); 
-            });
-            // .then((response) => response.json())
+        //     RNFetchBlob.fetch(
+        //         "POST",
+        //         urlApi + "c_auth/SignUpPrinciple",
+        //         {
+        //             "Content-Type": "multipart/form-data"
+        //         },
+        //         [
+        //             // { name: "photo", filename: fileName, data: fileImg },
+        //             { name: "photoktp", filename: fileNameKtp, data: filektp },
+        //             { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+        //             { name: "photosiup", filename: fileNameSIUP, data: filesiup },
+        //             { name: "phototdp", filename: fileNameTDP, data: filetdp},
+        //             // { name: "photodomisili", filename: fileNameDomisili, data: filedomisili},
+        //             { name: "photoakte", filename: fileNameAktePendirian, data: fileakte},
+        //             { name: "data", data: JSON.stringify(frmData) }
+        //         ]
+        //     ).then(resp => {
+        //         const res = JSON.parse(resp.data);
+        //         // let res = JSON.stringify(resp.data);
+        //         console.log("res", resp);
+        //         if(!res.Error){
+        //             // Actions.pop()
+        //             this.setState({ isLogin: true }, () => {
+        //                 alert(res.Pesan);
+        //                 // Actions.pop()
+        //                 Actions.Login()
+        //             });
+        //         }else {
+        //             this.setState({ isLoaded: !this.state.isLoaded }, () => {
+        //                 alert(res.Pesan);
+        //             });
+        //         }
+        //         // alert(res.Pesan); 
+        //     });
+        //     // .then((response) => response.json())
             
-        } else {
-            alert("Please assign your ID Picture");
-        }
+        // } else {
+        //     alert("Please assign your ID Picture");
+        // }
     };
     
     titleCheckbox() {
@@ -687,7 +715,7 @@ class SignupPrinciple extends React.Component {
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
+                                    <Item floatingLabel style={styles.marginround} onPress={() => this.modalBankMaster()}>
                                         <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
@@ -695,6 +723,7 @@ class SignupPrinciple extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            editable={false}
                                             placeholderTextColor={'#666'} 
                                             value={this.state.bank_name} 
                                             onChangeText={val =>

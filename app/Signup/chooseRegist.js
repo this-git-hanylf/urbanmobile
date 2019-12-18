@@ -132,6 +132,7 @@ class chooseRegist extends React.Component {
     };
 
     btnNext(){
+        this.setState({ isLoaded: !this.state.isLoaded });
         const data_screen = {
             fullname: this.state.fullname,
             email: this.state.email,
@@ -185,11 +186,23 @@ class chooseRegist extends React.Component {
                         // alert('tidak true'+res.Pesan)
                         if (resdatagrup == 'P' ) {
                             // this.getTower(res);
-                            Actions.SignupAgent({datas_dari_regist:data_screen, resData: resData});
+                            this.setState({ isLoaded: true }, () => {
+                                // alert(res.Pesan);
+                                Actions.SignupAgent({datas_dari_regist:data_screen, resData: resData});
+                                // Actions.pop()
+                                // Actions.Login()
+                            });
+                           
                         } else {
-                            this.setState({ isLoaded: !this.state.isLoaded });
+                            // this.setState({ isLoaded: !this.state.isLoaded });
+                            this.setState({ isLoaded: true }, () => {
+                                // alert(res.Pesan);
+                                Actions.SignupPrinciple({datas_dari_regist:data_screen, resData: resData});
+                                // Actions.pop()
+                                // Actions.Login()
+                            });
                             // Actions.ResetPass({ email: res.Data.user });
-                            Actions.SignupPrinciple({datas_dari_regist:data_screen, resData: resData});
+                            
                         }
                     } else if (res.Error){
                         console.log('res pesan');
@@ -382,29 +395,25 @@ class chooseRegist extends React.Component {
                                 Unique Code Required
                             </Text>) : null}
                         </View>
-                        <View style={{marginTop: 40}}>
-                            
+                        <View
+                         style={{marginTop: 40}}
+                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                        >
                             <Button
                                 style={styles.signInBtnMedium}
                                 onPress={() => this.btnNext()}
+                               
                             >
-                                <Text style={styles.signInBtnText}>
-                                    Next
-                                </Text>
-                                {/* {!this.state.isLoaded ? (
+                                {!this.state.isLoaded ? (
                                     <ActivityIndicator color="#fff" />
                                 ) : (
                                     <Text style={styles.signInBtnText}>
-                                        Sign In
-                                    </Text>
-                                )} */}
+                                    Next
+                                </Text>
+                                )}
                             </Button>
-
                         </View>
                         
-                        
-                    
-                   
                 </ImageBackground>
             </Container>
         );

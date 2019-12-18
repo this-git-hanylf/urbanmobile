@@ -16,6 +16,7 @@ import SignupAgent from './Signup/SignupAgent';
 import chooseRegist from './Signup/chooseRegist';
 import SignupPrinciple from './Signup/SignupPrinciple';
 import modalPrinciple from './Signup/modalPrinciple';
+import modalBankMaster from './Signup/modalBankMaster';
 import pagePDF from './Signup/pagePDF';
 import Reset from './ResetPass/Reset';
 import Search from "./Find/Search";
@@ -426,6 +427,12 @@ class Routes extends Component{
                 <Scene
                   key="modalPrinciple"
                   component={modalPrinciple}
+                  hideNavBar={true}
+                  title=""
+                />
+                <Scene
+                  key="modalBankMaster"
+                  component={modalBankMaster}
                   hideNavBar={true}
                   title=""
                 />
