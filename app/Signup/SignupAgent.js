@@ -103,6 +103,8 @@ class SignupGuest extends React.Component {
             principle_name:'',
             itemPrinciple: '',
             principles: '',
+
+
         };
     }
 
@@ -124,6 +126,7 @@ class SignupGuest extends React.Component {
         this.getProject();
         // this.getProject2();
         this.getPrinciples();
+        
         // this.getData(this.props.meterId);XMLDocument
             // this.getDataFollowUp(this.props.datas)
             // this.getStatus()
@@ -141,8 +144,6 @@ class SignupGuest extends React.Component {
         this.setState({ selectedType: val });
     };
 
-
-    
 
 
     renderRow = ({item}) => {
@@ -372,7 +373,7 @@ class SignupGuest extends React.Component {
                 const res = JSON.parse(resp.data);
                 // let res = JSON.stringify(resp.data);
                 console.log("res", resp);
-                
+                 
                 if(!res.Error){
                     // Actions.pop()
                     this.setState({ isLogin: true }, () => {
@@ -592,6 +593,7 @@ class SignupGuest extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            autoCapitalize="words"
                                             placeholderTextColor={'#666'} 
                                             value={this.state.fullname} 
                                             onChangeText={(fullname) => this.setState({ fullname })} 
@@ -690,19 +692,20 @@ class SignupGuest extends React.Component {
                                 </View>
                                 
                                 <View style={{paddingBottom: 20}}  >
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround} onPress={() => this.modalBankMaster()}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label>
+                                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Bank Name</Text>
+                                    </View>
+                                    <Item  style={styles.marginround} onPress={() => this.modalBankMaster()} >
+                                        {/* <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label> */}
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                         </View> */}
                                         <Input 
-                                            // placeholder='Full Name'
+                                            placeholder='Choose Bank'
                                             // onPress={() => this.modalBankMaster()} 
                                             placeholderTextColor={'#666'} 
+                                            
                                             value={this.state.bank_name} 
                                             editable={false}
                                             onChangeText={val =>
@@ -739,6 +742,7 @@ class SignupGuest extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            autoCapitalize="words"
                                             placeholderTextColor={'#666'} 
                                             value={this.state.acc_name} 
                                             onChangeText={val =>
@@ -975,6 +979,7 @@ class SignupGuest extends React.Component {
                                
                             </View>
                         </View>
+
                     </ScrollView>
                     <View
                         style={styles.signbtnSec}

@@ -270,6 +270,7 @@ class chooseRegist extends React.Component {
                                 </View> */}
                                 <Input 
                                     // placeholder='Full Name' 
+                                    autoCapitalize="words"
                                     placeholderTextColor={'#666'} 
                                     value={this.state.fullname} 
                                     onChangeText={(fullname) => this.setState({ fullname })} 

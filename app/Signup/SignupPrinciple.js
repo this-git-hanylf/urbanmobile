@@ -107,6 +107,12 @@ class SignupPrinciple extends React.Component {
             lead_name: '',
             title: 'I have read and accept the terms & conditions',
             files: [],
+
+
+            textInputHolder: 0,
+            captchaHolder: 0,
+            randomNumberOne: 0,  
+            capt: false
         };
         // console.log('statte', this.state.title);
     }
@@ -129,6 +135,7 @@ class SignupPrinciple extends React.Component {
         this.getLeadCd();
         // this.getProject2();
         this.getFile();
+        this.generateCaptcha();
             // this.getDataFollowUp(this.props.datas)
             // this.getStatus()
         });
@@ -426,52 +433,80 @@ class SignupPrinciple extends React.Component {
 
         // console.log('url', fileNameDomisili);
 
-        // if ( isValid ) {
-        //     // console.log('valid domisili', valid_domisili);
-        //     // fileImg = RNFetchBlob.wrap(
-        //     //     this.state.pictUrl.uri.replace("file://", "")
-        //     // );
+        if ( isValid ) {
+            // console.log('valid domisili', valid_domisili);
+            // fileImg = RNFetchBlob.wrap(
+            //     this.state.pictUrl.uri.replace("file://", "")
+            // );
 
-        //     RNFetchBlob.fetch(
-        //         "POST",
-        //         urlApi + "c_auth/SignUpPrinciple",
-        //         {
-        //             "Content-Type": "multipart/form-data"
-        //         },
-        //         [
-        //             // { name: "photo", filename: fileName, data: fileImg },
-        //             { name: "photoktp", filename: fileNameKtp, data: filektp },
-        //             { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-        //             { name: "photosiup", filename: fileNameSIUP, data: filesiup },
-        //             { name: "phototdp", filename: fileNameTDP, data: filetdp},
-        //             // { name: "photodomisili", filename: fileNameDomisili, data: filedomisili},
-        //             { name: "photoakte", filename: fileNameAktePendirian, data: fileakte},
-        //             { name: "data", data: JSON.stringify(frmData) }
-        //         ]
-        //     ).then(resp => {
-        //         const res = JSON.parse(resp.data);
-        //         // let res = JSON.stringify(resp.data);
-        //         console.log("res", resp);
-        //         if(!res.Error){
-        //             // Actions.pop()
-        //             this.setState({ isLogin: true }, () => {
-        //                 alert(res.Pesan);
-        //                 // Actions.pop()
-        //                 Actions.Login()
-        //             });
-        //         }else {
-        //             this.setState({ isLoaded: !this.state.isLoaded }, () => {
-        //                 alert(res.Pesan);
-        //             });
-        //         }
-        //         // alert(res.Pesan); 
-        //     });
-        //     // .then((response) => response.json())
+            RNFetchBlob.fetch(
+                "POST",
+                urlApi + "c_auth/SignUpPrinciple",
+                {
+                    "Content-Type": "multipart/form-data"
+                },
+                [
+                    // { name: "photo", filename: fileName, data: fileImg },
+                    { name: "photoktp", filename: fileNameKtp, data: filektp },
+                    { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+                    { name: "photosiup", filename: fileNameSIUP, data: filesiup },
+                    { name: "phototdp", filename: fileNameTDP, data: filetdp},
+                    // { name: "photodomisili", filename: fileNameDomisili, data: filedomisili},
+                    { name: "photoakte", filename: fileNameAktePendirian, data: fileakte},
+                    { name: "data", data: JSON.stringify(frmData) }
+                ]
+            ).then(resp => {
+                const res = JSON.parse(resp.data);
+                // let res = JSON.stringify(resp.data);
+                console.log("res", resp);
+                if(!res.Error){
+                    // Actions.pop()
+                    this.setState({ isLogin: true }, () => {
+                        alert(res.Pesan);
+                        // Actions.pop()
+                        Actions.Login()
+                    });
+                }else {
+                    this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                        alert(res.Pesan);
+                    });
+                }
+                // alert(res.Pesan); 
+            });
+            // .then((response) => response.json())
             
-        // } else {
-        //     alert("Please assign your ID Picture");
-        // }
+        } else {
+            alert("Please assign your ID Picture");
+        }
     };
+
+    generateCaptcha = () => { 
+        // this.setState({ isLoaded: !this.state.isLoaded });
+        // var charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+        var numberOne = Math.floor(Math.random() * 1000000) + 1; 
+        // var numberOne = Math.floor(Math.random() * charsArray.length == 6) + 6;   
+        var captchaCode = numberOne ;
+        console.log('captcha', captchaCode);
+        this.setState({ randomNumberOne: numberOne });
+        this.setState({ captchaHolder: captchaCode });
+    }
+    
+
+    validateCaptchaCode = () => {
+        // this.setState({ isLoaded: !this.state.isLoaded });
+        var temp = this.state.randomNumberOne ;
+        if (this.state.textInputHolder == temp) {
+          //Captcha match
+          this.setState({capt : this.state.textInputHolder});
+          Alert.alert("Captcha Matched");
+        }
+        else {
+          //Captcha not match
+          Alert.alert("Captcha NOT Matched");
+        }
+        // Calling captcha function, to generate captcha code
+        this.generateCaptcha();
+    }
     
     titleCheckbox() {
         return (
@@ -574,6 +609,7 @@ class SignupPrinciple extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            autoCapitalize="words"
                                             placeholderTextColor={'#666'} 
                                             value={this.state.agencyname} 
                                             onChangeText={val =>
@@ -611,6 +647,7 @@ class SignupPrinciple extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            autoCapitalize="words"
                                             placeholderTextColor={'#666'} 
                                             value={this.state.companyname} 
                                             onChangeText={val =>
@@ -712,17 +749,17 @@ class SignupPrinciple extends React.Component {
                                     </Text>) : null}
                                 </View>
                                 <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround} onPress={() => this.modalBankMaster()}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label>
+                                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Bank Name</Text>
+                                    </View>
+                                    <Item  style={styles.marginround} onPress={() => this.modalBankMaster()}>
+                                        {/* <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label> */}
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                         </View> */}
                                         <Input 
-                                            // placeholder='Full Name' 
+                                            placeholder='Choose Bank' 
                                             editable={false}
                                             placeholderTextColor={'#666'} 
                                             value={this.state.bank_name} 
@@ -760,6 +797,7 @@ class SignupPrinciple extends React.Component {
                                         </View> */}
                                         <Input 
                                             // placeholder='Full Name' 
+                                            autoCapitalize="words"
                                             placeholderTextColor={'#666'} 
                                             value={this.state.acc_name} 
                                             onChangeText={val =>
@@ -1164,20 +1202,41 @@ class SignupPrinciple extends React.Component {
                         </View>
                         
                         )}
-                        
-
-                   
-                        
-                        {/* {this.state.files.map((val,key)=> 
-                        <View key={key} >
-                            <Text onPress={()=>this.downloadFile(val)}>
-                            I have read and accept the terms & conditions
-                            </Text>
-                        </View>
-                        
-                        )} */}
                     </View>
-                    
+
+
+                    {/* <View style={styles.captchaContainerView}>
+                        <View style={ styles.captchaChildContainer}>
+                            {this.state.randomNumberOne.length == 0 ? (
+                                <ActivityIndicator color="#000" />
+                            ) : (
+                                <View style={{height: 50, width: 80, backgroundColor: Colors.twitter, justifyContent: 'center',}}>
+                                    <Text style={{fontSize: 20, textAlign: 'center'}}>{this.state.randomNumberOne}</Text>
+                                </View>
+                               
+                            )}
+                            
+                            <TouchableOpacity onPress={this.generateCaptcha} >
+                                <Icon name="ios-refresh" style={{color: "#000", width: 40, height: 35, resizeMode: "contain", margin: 20}}/>
+                           
+                            </TouchableOpacity>
+                        </View>
+
+
+                        <View  style={ styles.captchaChildContainer}>
+                            <TextInput
+                            placeholder="Enter Captcha"
+                            onChangeText={data => this.setState({ textInputHolder: data })}
+                            style={styles.textInputStyle}
+                            underlineColorAndroid='transparent'
+                            />
+                        </View>
+                    </View>
+
+                    <TouchableOpacity style={styles.button} onPress={this.validateCaptchaCode} >
+                        <Text style={styles.text}>Im not robot</Text>
+                    </TouchableOpacity> 
+                     */}
                     
                     {/* <Button onPress={this.handleBuy}  style={{alignSelf : 'center', marginTop : 20}}>
                         <Text style={{fontFamily :'Montserrat-Regular'}}>Accept</Text>
@@ -1187,9 +1246,10 @@ class SignupPrinciple extends React.Component {
                         pointerEvents={this.state.isLoaded ? "auto" : "none"}
                     >
                         <Button
-                            style={[styles.signInBtn, { backgroundColor: !this.state.checked ? "#cccccc": "#0691ce" }]}
+                            style={[styles.signInBtn, { backgroundColor: !this.state.checked? "#cccccc": "#0691ce" }]}
                             onPress={() => this.submit()}
                             disabled={!this.state.checked}
+                            // disabled={!this.state.capt}
                         >
                             {!this.state.isLoaded ? (
                                 <ActivityIndicator color="#fff" />

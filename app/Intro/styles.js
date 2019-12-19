@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     textRight: {
         justifyContent: "center",
         alignItems: "center",
-        width: 90
+        // width: "100%"
     },
     body: {
         flex: 3,
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
         paddingTop: Fonts.moderateScale(1),
         justifyContent: "flex-end",
         alignItems: "center",
+        width: "100%"
         // paddingBottom: Fonts.moderateScale(20)
     },
     fbButton: {
@@ -271,7 +272,8 @@ const styles = StyleSheet.create({
         color: Colors.white,
         paddingLeft: Fonts.moderateScale(5),
         fontSize: Fonts.moderateScale(17),
-        fontFamily: Fonts.type.sfuiDisplayMedium
+        fontFamily: Fonts.type.sfuiDisplayMedium,
+        width: "100%"
     },
     eye: {
         position: "absolute",

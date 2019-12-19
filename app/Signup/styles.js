@@ -383,6 +383,46 @@ const styles = {
         // color: "black"
       },
 
+      text: {
+        color: '#FFF',
+        fontSize: 24,
+        textAlign: 'center',
+        padding: 5,
+      },
+      captchaContainerView: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+        borderColor: '#01579b',
+        // width: '90%',
+        height: 150,
+        borderWidth: 1,
+        padding: 5,
+        backgroundColor: '#e1f5fe'
+      },
+      captchaChildContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      textInputStyle: {
+        textAlign: 'center',
+        height: 40,
+        width: '80%',
+        borderWidth: 1,
+        borderColor: '#4CAF50',
+        borderRadius: 7,
+      },
+      button: {
+        width: '80%',
+        paddingTop: 2,
+        paddingBottom: 2,
+        backgroundColor: '#ec407a',
+        borderRadius: 3,
+        marginTop: 20
+      },
    
 };
 export default styles;

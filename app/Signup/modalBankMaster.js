@@ -14,7 +14,8 @@ import {
     I18nManager,
     StyleSheet,
     Alert,
-    TextInput
+    TextInput,
+    FlatList,
     // Content
 } from "react-native";
 import {
@@ -32,7 +33,9 @@ import {
     Content,
     Label,
     Switch,
-    InputGroup
+    InputGroup,
+    
+    List
     // CheckBox
 } from "native-base";
 import { CheckBox } from "react-native-elements";
@@ -64,8 +67,11 @@ class modalBankMaster extends React.Component {
             getbank: [],
             itemBank: '',
             isLoaded: true,
+            // fullData: [],
+            arrayholder: []
             
          }
+        //  this.arrayholder = [];
     }
     componentDidMount() {
         const data = {
@@ -76,6 +82,7 @@ class modalBankMaster extends React.Component {
            
             this.getBank();
             this.selectedItem();
+            this.searchFilterFunction();
             // this.getDataFollowUp(this.props.datas)
             // this.getStatus()
         });
@@ -83,6 +90,15 @@ class modalBankMaster extends React.Component {
         isMount = true;
         // const { email } = this.state.email;
         // console.log("email",email);
+    }
+
+    searchFilterFunction = text => {
+        console.log('text',text);
+        const newData = this.state.arrayholder.filter(item => {const itemData = `${item.label.toUpperCase()}`;
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1 ;
+    });
+        this.setState({getbank: newData});
     }
 
     getBank = () => {
@@ -108,26 +124,30 @@ class modalBankMaster extends React.Component {
                         alert(res.Pesan)
                     });
                 }
+                this.setState({arrayholder: res.Data}) ;
+                // console.log('array',arrayholder);
                 // console.log('salutation',res);
             }).catch((error) => {
                 console.log(error);
             })
             :null}
 
+            
+
     }
 
-    selectedItem = (itemBank)=>{
-        console.log('item select bank',itemBank);
+    selectedItem = (item)=>{
+        console.log('item select bank',item);
         
         
         // alert(val);
         
         
         // alert(val);
-        if(itemBank){
+        if(item){
             Actions.pop()
                 setTimeout(() => {
-                    Actions.refresh({itemBank: itemBank});
+                    Actions.refresh({itemBank: item});
                 }, 0);
         }
         // this.setModalVisible(!this.state.modalVisible)
@@ -161,14 +181,62 @@ class modalBankMaster extends React.Component {
                         <Right style={styles.right}></Right>
                     </Header>
 
-                    {/* <View style={{ paddingLeft: 15, paddingRight: 15, paddingBottom: 10}}>
-                        <Item searchBar rounded style={{height: 40,}}>
+                    <View style={{ paddingLeft: 15, paddingRight: 15, paddingBottom: 10}}>
+                        <Item searchBar rounded style={{height: 40,}} >
                             <Icon name="ios-search" style={{color: '#fff'}}/>
-                            <Input placeholder="Search" style={{color: '#fff', fontSize: 14}}/>
+                            <Input placeholder="Search" style={{color: '#fff', fontSize: 14}} 
+                            // onChangeText={this.handleSearch}
+                            onChangeText={text => this.searchFilterFunction(text)}
+                            autoCorrect={false}
+                            />
                             <Icon name="ios-card" style={{color: '#fff'}} />
                         </Item>
-                    </View> */}
-                    <Content>
+                    </View>
+
+                    {/* <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+                        <FlatList          
+                            data={this.state.getbank}    
+                            keyExtractor={item => item.rowID}      
+                            renderItem={({ item }) => ( 
+                                <ListItem>
+                                    <TouchableOpacity 
+                                        >
+                                            <View onPress={() => this.selectedItem(item)}>
+                                                <Text style={{color: '#fff'}}>{item.label}</Text>
+                                            </View>
+                                           
+                                        </TouchableOpacity>
+                                    
+                                </ListItem>
+                                
+                            )}          
+                                                    
+                        />            
+                        </List> */}
+                    {this.state.getbank == 0 ? <ActivityIndicator color="#fff" style={{paddingTop: 10}}/> :
+                       <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+                        <FlatList          
+                            data={this.state.getbank}    
+                            keyExtractor={item => item.label}    
+                             
+                            renderItem={({ item }) => ( 
+                                <ListItem  >
+                                    <TouchableOpacity onPress={() => this.selectedItem(item)} style={{width: '100%'}}>
+                                            <View >
+                                                <Text style={{color: '#fff'}}>{item.label}</Text>
+                                            </View>
+                                           
+                                        </TouchableOpacity>
+                                    
+                                </ListItem>
+                                
+                            )}          
+                                                    
+                        />            
+                        </List>
+                    }
+
+                    {/* <Content>
                           
                     {this.state.getbank == 0 ? <ActivityIndicator color="#fff" /> :
                         <ScrollView>
@@ -185,12 +253,11 @@ class modalBankMaster extends React.Component {
                                 </ListItem>
                                 
                                
-                                {/* <Text>{item.value}</Text> */}
                             </View>
                         )}
                         </ScrollView>
                     }
-                    </Content>
+                    </Content> */}
 
                 </ImageBackground>
             </Container>
