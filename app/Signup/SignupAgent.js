@@ -299,7 +299,8 @@ class SignupGuest extends React.Component {
             nomor_induk: nik,
             phone_no: nohp,
             // pictUrl: pictUrl,
-            projek: selectedProject[0].project_no,
+            // projek: selectedProject[0].project_no,
+            projek: '1104',
 
             //---------foto attachment
             pictUrlKtp: filektp, //ktp

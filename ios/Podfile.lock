@@ -147,11 +147,11 @@ PODS:
     - React/RCTBlob
   - RNDeviceInfo (2.1.2):
     - React
-  - RNFirebase (5.5.5):
+  - RNFirebase (5.5.6):
     - Firebase/Core
     - React
-    - RNFirebase/Crashlytics (= 5.5.5)
-  - RNFirebase/Crashlytics (5.5.5):
+    - RNFirebase/Crashlytics (= 5.5.6)
+  - RNFirebase/Crashlytics (5.5.6):
     - Crashlytics
     - Fabric
     - Firebase/Core
@@ -190,7 +190,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Crashlytics
     - Fabric
     - FBSDKCoreKit
@@ -262,12 +262,12 @@ SPEC CHECKSUMS:
   react-native-mail: 7e37dfbe93ff0d4c7df346b738854dbed533e86f
   react-native-webview: 8b2761a9bf84bbbbe7f90f49743b9b74c7cb11e7
   RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
-  RNFirebase: b627e5991bb10bf34cea84806819f98f95f39f8b
+  RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNGoogleSignin: d030c6c6591db24c3cee649f64c7babf0a1699a0
   RNImageCropPicker: 6134b66a3d5bc13e2895a97c630a4254006902b4
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
-PODFILE CHECKSUM: 72d8afff51622f57ca917686f5e6903f6f5dc077
+PODFILE CHECKSUM: 4f235037f8e9b8b503afcdde1048a05c73e022ec
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.8.4

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -15,6 +16,7 @@
 		0390B0CFC98647E5A35D3F6A /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6659EEF034A34577A33226AA /* FontAwesome5_Brands.ttf */; };
 		03C5D4BB92CB4598839C0C7E /* Bariol_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 358933B80D2E4BC898007A6A /* Bariol_Regular.ttf */; };
 		0692C65B1E054A8DA6F57458 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF88312C0BE944818B58B93F /* libRNVectorIcons.a */; };
+		078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */; };
 		0CDE716B38694566BEDF7A99 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 859661CAF0984BFE8A682415 /* EvilIcons.ttf */; };
 		0E175BED34624083891CC69C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9C5076915174772A0278F10 /* Montserrat-Regular.ttf */; };
 		0F61E5D13AE74FB586C8687D /* HelveticaNeue-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45A418AE481C44DEA7CE1C53 /* HelveticaNeue-Bold.ttf */; };
@@ -60,6 +62,7 @@
 		462A18D7544041D59453EFB0 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E08F4A42F7E84B4DA26D25EE /* MaterialCommunityIcons.ttf */; };
 		4730F85EC4B64658B40DE953 /* libRCTPdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F209704E45C44DFC80F6B42B /* libRCTPdf.a */; };
 		4749AD866FAF42ADAA328052 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E477F690250E4B69AF4D114E /* FontAwesome5_Regular.ttf */; };
+		4919D465566E48DC820E393F /* RNModalPicker.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 122F3299F0314D248FA64A22 /* RNModalPicker.app */; };
 		4BF49E2F750B4E7B9226E707 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 503C8563EF644BD1AE87F8D2 /* libRNReanimated.a */; };
 		4C18833173054E5BB99291F1 /* SFUIDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 507CBD5DE4B04FD9A8D018EA /* SFUIDisplay-Bold.ttf */; };
 		5C5B3E65FEC74379AC1D98CB /* Myriad Pro Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0401624CF0D4126AC0D7244 /* Myriad Pro Regular.ttf */; };
@@ -96,8 +99,10 @@
 		B6589F6DF8A9454FA070689F /* PlayfairDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C492FB3BF95141E5B34584FC /* PlayfairDisplay-Bold.ttf */; };
 		B7F57B35373B4E1C819B8F71 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B112B89E0684EC3AD17965E /* Octicons.ttf */; };
 		BC794E15D06247F0AE6BD36A /* BebasNeue Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0982CD7CEB4E1EB99735B0 /* BebasNeue Bold.ttf */; };
+		BE64161FBF024E2FBBFDD26B /* RNModalPicker-tvOS.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 003311779F934EAEBB56706E /* RNModalPicker-tvOS.app */; };
 		C13A6979E9FA4E8DA03FCC9B /* BebasNeueBook.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 828019D8017F48EFB8FF76CE /* BebasNeueBook.ttf */; };
 		C27D4C4DEFCC425C9AA59442 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EF06D02EF1949FBAE952B90 /* Roboto-Medium.ttf */; };
+		C66ED0F90AC44BF7AE51D6CB /* RNModalPicker-tvOSTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */; };
 		D7D5D5F738CE430889D0B90A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1738482533384C628056E370 /* libRNGestureHandler.a */; };
 		E28507E66D07D888E5742A10 /* libPods-Urban-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A487B324E845F87D952E7442 /* libPods-Urban-tvOSTests.a */; };
 		E7794D27F55546E8AF815E0F /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE3F3BFBBAF4433C917534DC /* Montserrat-SemiBold.ttf */; };
@@ -107,10 +112,6 @@
 		EEB3B60EAEBE42D9829629B2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD3967D6117D4E6D92BD77B2 /* MaterialIcons.ttf */; };
 		EF4346683811493695B8895A /* SF-UI-Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58218041937448399BA4ABCF /* SF-UI-Display-Bold.ttf */; };
 		F5111DF649FA449F955C11FC /* libPods-UrbanTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD8280633113BC415416F41C /* libPods-UrbanTests.a */; };
-		4919D465566E48DC820E393F /* RNModalPicker.app in Resources */ = {isa = PBXBuildFile; fileRef = 122F3299F0314D248FA64A22 /* RNModalPicker.app */; };
-		078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */; };
-		BE64161FBF024E2FBBFDD26B /* RNModalPicker-tvOS.app in Resources */ = {isa = PBXBuildFile; fileRef = 003311779F934EAEBB56706E /* RNModalPicker-tvOS.app */; };
-		C66ED0F90AC44BF7AE51D6CB /* RNModalPicker-tvOSTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -516,6 +517,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		003311779F934EAEBB56706E /* RNModalPicker-tvOS.app */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "RNModalPicker-tvOS.app"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
@@ -534,6 +536,7 @@
 		0D74D80B709A454CA7A9ED0C /* SFUIDisplay-Semibold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Semibold.otf"; path = "../app/Fonts/SFUIDisplay-Semibold.otf"; sourceTree = "<group>"; };
 		0F2B8566F8EB4356A8077C83 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		1164BB80A666462A858853CD /* libRNVectorIcons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNVectorIcons-tvOS.a"; sourceTree = "<group>"; };
+		122F3299F0314D248FA64A22 /* RNModalPicker.app */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RNModalPicker.app; sourceTree = "<group>"; };
 		1353418CA6764BA3AA1AB272 /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -593,6 +596,7 @@
 		A481216ABBE38787ACE73291 /* Pods-UrbanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UrbanTests.release.xcconfig"; path = "Target Support Files/Pods-UrbanTests/Pods-UrbanTests.release.xcconfig"; sourceTree = "<group>"; };
 		A487B324E845F87D952E7442 /* libPods-Urban-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Urban-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4C25B854031483780A8BCB4 /* SF-UI-Display-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-UI-Display-Regular.ttf"; path = "../app/Fonts/SF-UI-Display-Regular.ttf"; sourceTree = "<group>"; };
+		A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "RNModalPicker-tvOSTests.xctest"; sourceTree = "<group>"; };
 		ACB4EDBEBFCF484EA7ED642E /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		AD2E0AA46DD694AF33846ED9 /* Pods-Urban-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Urban-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Urban-tvOSTests/Pods-Urban-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -600,6 +604,7 @@
 		AF88312C0BE944818B58B93F /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		AFFFABFD98534F54A997E649 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		B3BC6870EC4E40FFA77F1430 /* SFUIDisplay-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Light.ttf"; path = "../app/Fonts/SFUIDisplay-Light.ttf"; sourceTree = "<group>"; };
+		B6F6BEBE5ABE467A868CCEF5 /* RNModalPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNModalPicker.xcodeproj; path = "../node_modules/rn-modal-picker/ios/RNModalPicker.xcodeproj"; sourceTree = "<group>"; };
 		C268ABAE6F7440A182D8C180 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		C492FB3BF95141E5B34584FC /* PlayfairDisplay-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlayfairDisplay-Bold.ttf"; path = "../app/Fonts/PlayfairDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		C933FE53871A4D059F4AE689 /* RCTPdf.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTPdf.xcodeproj; path = "../node_modules/react-native-pdf/ios/RCTPdf.xcodeproj"; sourceTree = "<group>"; };
@@ -625,6 +630,7 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EEE97E70413E4CB5AA9C9FBA /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
+		F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RNModalPickerTests.xctest; sourceTree = "<group>"; };
 		F209704E45C44DFC80F6B42B /* libRCTPdf.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTPdf.a; sourceTree = "<group>"; };
 		F3326C72035D46FEB586D7F3 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		F6E80E6C7DE64FCD9882E481 /* HelveticaNeue-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HelveticaNeue-Regular.ttf"; path = "../app/Fonts/HelveticaNeue-Regular.ttf"; sourceTree = "<group>"; };
@@ -632,11 +638,6 @@
 		FB69A5F5348642449CEEC7D7 /* SFUIDisplay_thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFUIDisplay_thin.ttf; path = ../app/Fonts/SFUIDisplay_thin.ttf; sourceTree = "<group>"; };
 		FD645DF7D6284604ABD6822F /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		FDAC4B72BADD0F3E885E14DC /* Pods-Urban-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Urban-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Urban-tvOS/Pods-Urban-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		B6F6BEBE5ABE467A868CCEF5 /* RNModalPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNModalPicker.xcodeproj"; path = "../node_modules/rn-modal-picker/ios/RNModalPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		122F3299F0314D248FA64A22 /* RNModalPicker.app */ = {isa = PBXFileReference; name = "RNModalPicker.app"; path = "RNModalPicker.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
-		F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */ = {isa = PBXFileReference; name = "RNModalPickerTests.xctest"; path = "RNModalPickerTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
-		003311779F934EAEBB56706E /* RNModalPicker-tvOS.app */ = {isa = PBXFileReference; name = "RNModalPicker-tvOS.app"; path = "RNModalPicker-tvOS.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
-		A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */ = {isa = PBXFileReference; name = "RNModalPicker-tvOSTests.xctest"; path = "RNModalPicker-tvOSTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -679,8 +680,8 @@
 				96D58C3CE6FD66275C9C8FC4 /* libPods-Urban.a in Frameworks */,
 				245942BCE00C46C39A7AF20C /* libRNDocumentInteractionController.a in Frameworks */,
 				3F43C862B741447DA6C4649E /* libRNFirebase.a in Frameworks */,
-				4919D465566E48DC820E393F /* RNModalPicker.app in Resources */,
-				078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Resources */,
+				4919D465566E48DC820E393F /* RNModalPicker.app in Frameworks */,
+				078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,8 +702,8 @@
 				5D3EB8D842DF4315B7F14516 /* libRNVectorIcons-tvOS.a in Frameworks */,
 				14C34872532D4F50A011F74E /* libRNDeviceInfo-tvOS.a in Frameworks */,
 				67D2BDF8EFE71DBCEB0EFB20 /* libPods-Urban-tvOS.a in Frameworks */,
-				BE64161FBF024E2FBBFDD26B /* RNModalPicker-tvOS.app in Resources */,
-				C66ED0F90AC44BF7AE51D6CB /* RNModalPicker-tvOSTests.xctest in Resources */,
+				BE64161FBF024E2FBBFDD26B /* RNModalPicker-tvOS.app in Frameworks */,
+				C66ED0F90AC44BF7AE51D6CB /* RNModalPicker-tvOSTests.xctest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,6 +882,10 @@
 				2AD915ADE777459E85CACB17 /* libRNDeviceInfo-tvOS.a */,
 				D53C5B0FF40340948B288515 /* libRNDocumentInteractionController.a */,
 				F3326C72035D46FEB586D7F3 /* libRNFirebase.a */,
+				122F3299F0314D248FA64A22 /* RNModalPicker.app */,
+				F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */,
+				003311779F934EAEBB56706E /* RNModalPicker-tvOS.app */,
+				A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1856,15 +1861,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-UrbanTests-checkManifestLockResult.txt",
 			);
@@ -1916,15 +1917,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Urban-tvOS-checkManifestLockResult.txt",
 			);
@@ -1938,15 +1935,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Urban-checkManifestLockResult.txt",
 			);
@@ -1960,15 +1953,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Urban-tvOSTests-checkManifestLockResult.txt",
 			);
