@@ -4,9 +4,10 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    Platform
+    Platform,
+    Image
 } from "react-native";
-import { Style,Colors } from "../../Themes";
+import { Style,Colors, Fonts } from "../../Themes";
 import { Icon } from "native-base";
 const FBSDK = require("react-native-fbsdk");
 const { LoginManager, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
@@ -76,8 +77,16 @@ export default class FBLoginButton extends Component {
                 style={styles.container}
                 onPress={this.handleLogin}
             >
-                <Icon name="facebook" style={styles.icon} type="FontAwesome5" />
-                <Text style={[Style.textWhite,styles.text]}>Sign in with facebook</Text>
+                {/* <Icon name="facebook" style={styles.icon} type="FontAwesome5" /> */}
+                <View style={{left: 30}}>
+                 <Image style={{width: 40, height: 40}} source={require('@Asset/images/icon/fb.png')}></Image> 
+                 </View>
+                <View style={{left: 37}}>
+                <Text style={{fontFamily: Fonts.type.proximaNovaReg, fontWeight: "500", color: Colors.white, fontSize: 12}}>
+                    Continue with facebook
+                </Text>
+
+                </View>
             </TouchableOpacity>
         );
     }
@@ -86,22 +95,31 @@ export default class FBLoginButton extends Component {
 const styles = StyleSheet.create({
     container: {
         marginTop: 5,
-        width: 185,
-        height: 42,
+        width: 250,
+        height: 40,
         padding: 12,
         backgroundColor: Colors.facebook,
-        justifyContent: "space-between",
+        // justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        elevation: 2
+        elevation: 2,
+        borderRadius: 15
     },
+    
     text: {
         // fontFamily: "Montserrat-Regular.ttf",
         fontSize: 12,
-        color: "#fff"
+        color: Colors.white,
+        textAlign: 'left',
+        // paddingHorizontal: 10
+        
+        
     },
     icon: {
-        fontSize: 24,
-        color: "#fff"
+        // textAlign: 'center',
+        // fontSize: 24,
+        justifyContent: "flex-start",
+        // left: 0,
+        color: Colors.white
     }
 });

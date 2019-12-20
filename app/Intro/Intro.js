@@ -312,6 +312,11 @@ export default class Intro extends React.Component {
        
         );
       };
+      _activeDotStyle = () => {
+          <View>
+              <Text style={{color: 'red'}}></Text>
+          </View>
+      }
 
     render() {
         // let BG_Image = { uri : 'https://antiqueruby.aliansoftware.net/Images/signin/ic_main_bg_stwo.png'};
@@ -359,7 +364,7 @@ export default class Intro extends React.Component {
                                     textAlign={
                                         I18nManager.isRTL ? "right" : "left"
                                     }
-                                    placeholder="Your Username"
+                                    placeholder="Your username or email"
                                     placeholderTextColor="#7d7d7d"
                                 />
                             </View>
@@ -380,7 +385,7 @@ export default class Intro extends React.Component {
                                     textAlign={
                                         I18nManager.isRTL ? "right" : "left"
                                     }
-                                    placeholder="Your Password"
+                                    placeholder="Your password"
                                     placeholderTextColor="#7d7d7d"
                                     secureTextEntry={!this.state.isHide}
                                     value={this.state.password}
@@ -410,16 +415,25 @@ export default class Intro extends React.Component {
                                     <ActivityIndicator color="#fff" />
                                 ) : (
                                     <Text style={styles.signInBtnText}>
-                                        Sign In
+                                        Sign in
                                     </Text>
                                 )}
                             </Button>
+
+                            <View style={{paddingTop: 20, paddingBottom: 15}} >
+                                <TouchableOpacity onPress={()=>Actions.forgotPass()}>
+                                <Text style={styles.forgotPassword} >Forgot Password</Text>
+                                </TouchableOpacity>
+                                 
+                            </View>
+                            
                         </View>
-                        <Text
+                       
+                        {/* <Text
                             style={styles.forgotPassword}
                         >
                             OR
-                        </Text>
+                        </Text> */}
                         <View style={styles.signInGoogle}>
                             <GoogleLoginButton onPress={this.signInGoogle} />
                             <FBLoginButton onPress={this.signInFacebook} />
@@ -427,7 +441,7 @@ export default class Intro extends React.Component {
                         <View style={styles.socialSec}>  
                             <TouchableOpacity onPress={() => Actions.chooseRegist()}>
                                 <Text style={styles.fbButtonText}>
-                                    New here? Register Agent
+                                New here? Register Agent
                                 </Text>
                             </TouchableOpacity>
                             
@@ -444,7 +458,7 @@ export default class Intro extends React.Component {
                                         style={styles.fbButtonText}
                                         onPress={() => this.skipLogin()}
                                     >
-                                        Skip Login
+                                        Skip Log in
                                     </Text>
                                 </TouchableOpacity>
                         </View>
@@ -454,8 +468,10 @@ export default class Intro extends React.Component {
         } else {
             return (
                 <AppIntroSlider
+                    // dotStyle={{backgroundColor: 'red'}}
+                    activeDotStyle={{backgroundColor: Colors.navyUrban}}
                     slides={slides}
-                    
+                    // activeDotStyle={{borderColor: 'red'}}
                     onDone={this._onDone}
                     renderDoneButton={this._renderDoneButton}
                     renderNextButton={this._renderNextButton}

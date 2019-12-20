@@ -42,7 +42,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
 import AppIntroSlider from "react-native-app-intro-slider";
 import styles from "./styles";
-import { Style, Colors, Metrics } from "../Themes";
+import { Style, Colors, Metrics, Fonts } from "../Themes";
 import { Actions } from "react-native-router-flux";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
@@ -112,7 +112,8 @@ class SignupPrinciple extends React.Component {
             textInputHolder: 0,
             captchaHolder: 0,
             randomNumberOne: 0,  
-            capt: false
+            capt: false,
+            officephone: '',
         };
         // console.log('statte', this.state.title);
     }
@@ -360,6 +361,7 @@ class SignupPrinciple extends React.Component {
             contactno,
             lead_cd,
             lead_name,
+            officephone,
             // code,
             // lead_name,
             // getLeadCode,
@@ -390,7 +392,8 @@ class SignupPrinciple extends React.Component {
             pictUrlAktePendirian: fileakte,
             // lead_cd: code
             lead_cd: lead_cd,
-            lead_name: lead_name
+            lead_name: lead_name,
+            officephone: officephone
             // lead_name: lead_name[0].label
             // lead_name: getLeadCode[0].lead_name,
         };
@@ -401,7 +404,7 @@ class SignupPrinciple extends React.Component {
             agencyname: { require: true },
             companyname: { require: true },
             address: { require: true },
-            npwp: { require: true },
+            // npwp: { require: true },
             bank_name: { require: true },
             acc_name: { require: true },
             acc_no: { require: true },
@@ -498,11 +501,11 @@ class SignupPrinciple extends React.Component {
         if (this.state.textInputHolder == temp) {
           //Captcha match
           this.setState({capt : this.state.textInputHolder});
-          Alert.alert("Captcha Matched");
+        //   Alert.alert("Captcha Matched");
         }
         else {
           //Captcha not match
-          Alert.alert("Captcha NOT Matched");
+          Alert.alert("Captcha not matched");
         }
         // Calling captcha function, to generate captcha code
         this.generateCaptcha();
@@ -556,47 +559,13 @@ class SignupPrinciple extends React.Component {
                         <Right style={styles.right}></Right>
                     </Header>
                     <ScrollView contentContainerStyle={{ paddingVertical: 10 }} scrollEnabled={this.state.isLoaded ? true : false}>
-                        <View
+                        {/* <View
                             style={[
                                 styles.inputFieldStyles,
                                 { justifyContent: "flex-start" }
                             ]}
-                        >
+                        > */}
                             <View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.email} 
-                                            onChangeText={(email) => this.setState({ email })} 
-                                            style={styles.positionTextInput}
-                                            ref="fullname" />
-                                            {this.state.erroremail ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.erroremail ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Email Required
-                                    </Text>) : null}
-                                </View>
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
@@ -672,8 +641,11 @@ class SignupPrinciple extends React.Component {
                                         Company Name Required
                                     </Text>) : null}
                                 </View>
+
+                                
+                                 
                                 <View style={{paddingBottom: 20}}>
-                                <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Address</Label>
+                                <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Company Address</Label>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
@@ -687,7 +659,7 @@ class SignupPrinciple extends React.Component {
                                         onChangeText={val =>
                                             this.setState({ address: val })
                                         } 
-                                        placeholder="Address" 
+                                        placeholder="Company Address" 
                                         editable={true} 
                                         placeholderTextColor={'#666'} 
                                         autoCorrect={false}
@@ -710,7 +682,43 @@ class SignupPrinciple extends React.Component {
                                         Address Required
                                     </Text>) : null}
                                 </View>
-                                
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Office Phone</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.officephone} 
+                                            onChangeText={val =>
+                                                this.setState({ officephone: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="officephone" />
+                                            {this.state.errorofficephone ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {/* {this.state.errorofficephone ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Office Phone Required
+                                    </Text>) : null} */}
+                                </View>
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
@@ -750,7 +758,8 @@ class SignupPrinciple extends React.Component {
                                 </View>
                                 <View style={{paddingBottom: 20}}>
                                     <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Bank Name</Text>
+                                        <Text style={[styles.overviewTitles_Bank,{
+                                            color: this.state.bank_name ? '#B0C6DA' : '#fff'}]}>Bank Name</Text>
                                     </View>
                                     <Item  style={styles.marginround} onPress={() => this.modalBankMaster()}>
                                         {/* <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label> */}
@@ -766,12 +775,16 @@ class SignupPrinciple extends React.Component {
                                             onChangeText={val =>
                                                 this.setState({ bank_name: val })
                                             }
-                                            style={styles.positionTextInput}
+                                            style={[styles.positionTextInput_Bank, 
+                                                {fontFamily: this.state.bank_name ?  Fonts.type.proximaNovaReg :  Fonts.type.proximaNovaBoldWeb, 
+                                                    fontWeight: this.state.bank_name ?  '100' :  '200'}]}
                                             ref="bank_name" />
                                             {this.state.errorbank_name ? (
                                             <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
                                             ) : null}
+                                        {/* <Icon></Icon> */}
                                         {/* <Icon name='close-circle' /> */}
+                                        <Image style={{width: 25, height: 25}} source={require('@Asset/images/icon/dropdown.png')}></Image> 
                                     </Item>
                                     {this.state.errorbank_name ? (<Text
                                         style={{
@@ -785,49 +798,13 @@ class SignupPrinciple extends React.Component {
                                         Bank Name Required
                                     </Text>) : null}
                                 </View>
+                                
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
                                     <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Account Name</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            autoCapitalize="words"
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.acc_name} 
-                                            onChangeText={val =>
-                                                this.setState({ acc_name: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="acc_name" />
-                                            {this.state.erroracc_name ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.erroracc_name ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Account Name Required
-                                    </Text>) : null}
-                                </View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Account Number</Label>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Account Number</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
@@ -857,6 +834,43 @@ class SignupPrinciple extends React.Component {
                                         }}
                                     >
                                         Account Number Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Account Name</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            autoCapitalize="words"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.acc_name} 
+                                            onChangeText={val =>
+                                                this.setState({ acc_name: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_name" />
+                                            {this.state.erroracc_name ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroracc_name ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Account Name Required
                                     </Text>) : null}
                                 </View>
                                 {/* <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
@@ -987,196 +1001,189 @@ class SignupPrinciple extends React.Component {
                                         Contact Number Required
                                     </Text>) : null}
                                 </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.email} 
+                                            onChangeText={(email) => this.setState({ email })} 
+                                            style={styles.positionTextInput}
+                                            ref="fullname" />
+                                            {this.state.erroremail ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroremail ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Email Required
+                                    </Text>) : null}
+                                </View>
+                                {/* KTP  */}
                                 <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo SIUP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlSIUP")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlSIUP == null || this.state.pictUrlSIUP == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlSIUP
-                                                    }
-                                                />
-                                            }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
+                                    {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
+                                        <Item regular style={[{borderRadius: 5,width: Metrics.WIDTH * 0.92}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlKtp")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                        {/* <View style={{width: Metrics.WIDTH * 0.92,
+                                       
+                                        // borderBottomLeftRadius: 15,
+                                        // borderBottomRightRadius: 15,
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        alignSelf: "center",
+                                        elevation: 3
+                                         }}> */}
+                                        <Text style={[styles.textAttach,{width: Metrics.WIDTH * 0.92}]}>Attach KTP</Text>
+                                        <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        {/* </View> */}
+                                            
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlKtp")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlKtp
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                                {/* NPWP */}
                                 <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo TDP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlTDP")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlTDP == null || this.state.pictUrlTDP == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlTDP
-                                                    }
-                                                />
-                                            }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
+                                    {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlNPWP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach NPWP</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlNPWP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlNPWP
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                                {/* TDP */}
                                 <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo NPWP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlNPWP")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlNPWP
-                                                    }
-                                                />
-                                            }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
+                                    {this.state.pictUrlTDP == null || this.state.pictUrlTDP == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlTDP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach TDP</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlTDP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlTDP
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                                {/* SIUP */}
+                                <View style={{paddingTop: 25}}> 
+                                    {this.state.pictUrlSIUP == null || this.state.pictUrlSIUP == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} onPress={() => this.showAlert("pictUrlSIUP")} pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach SIUP</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} onPress={() => this.showAlert("pictUrlSIUP")} pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlSIUP
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                                 {/* APPP  */}
+                                <View style={{paddingTop: 25}}>
+                                    {this.state.pictUrlAktePendirian == null || this.state.pictUrlAktePendirian == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlAktePendirian")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach Deed of establish</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlAktePendirian")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlAktePendirian
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
                                 
-                                <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo APPP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlAktePendirian")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlAktePendirian == null || this.state.pictUrlAktePendirian == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlAktePendirian
-                                                    }
-                                                />
-                                            }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
-                                <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo KTP (Commissioner + Director)</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlKtp")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlKtp
-                                                    }
-                                                />
-                                            }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
-
-
                             </View>
-                        </View>
+                        {/* </View> */}
                     </ScrollView>
                     <View style={[pickerSelectStyles.checkBoxWrap, {flexDirection: 'row', backgroundColor: "#fff", height: 30, marginTop: 8, marginBottom: 8, borderRadius: 10} ]}>
                         <CheckBox 
@@ -1204,39 +1211,44 @@ class SignupPrinciple extends React.Component {
                         )}
                     </View>
 
-
-                    {/* <View style={styles.captchaContainerView}>
-                        <View style={ styles.captchaChildContainer}>
-                            {this.state.randomNumberOne.length == 0 ? (
-                                <ActivityIndicator color="#000" />
-                            ) : (
-                                <View style={{height: 50, width: 80, backgroundColor: Colors.twitter, justifyContent: 'center',}}>
-                                    <Text style={{fontSize: 20, textAlign: 'center'}}>{this.state.randomNumberOne}</Text>
-                                </View>
-                               
-                            )}
+                    {!this.state.checked ? null :
+                    <View>
+                        <View style={styles.captchaContainerView}>
+                            <View style={ styles.captchaChildContainer}>
+                                {this.state.randomNumberOne.length == 0 ? (
+                                    <ActivityIndicator color="#000" />
+                                ) : (
+                                    <View style={{height: 50, width: 80, backgroundColor: Colors.goldUrban, justifyContent: 'center',}}>
+                                        <Text style={{fontSize: 20, textAlign: 'center'}}>{this.state.randomNumberOne}</Text>
+                                    </View>
+                                )}
+                                
+                                <TouchableOpacity onPress={this.generateCaptcha} >
+                                    <Icon name="ios-refresh" style={styles.iconCaptcha}/>
                             
-                            <TouchableOpacity onPress={this.generateCaptcha} >
-                                <Icon name="ios-refresh" style={{color: "#000", width: 40, height: 35, resizeMode: "contain", margin: 20}}/>
-                           
-                            </TouchableOpacity>
-                        </View>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flexDirection: 'row', left: 25}}>
+                                <View style={ styles.captchaChildContainerInput }>
+                                    <TextInput
+                                    placeholder="Enter Captcha"
+                                    onChangeText={data => this.setState({ textInputHolder: data })}
+                                    style={styles.textInputStyle}
+                                    underlineColorAndroid='transparent'
+                                    />
+                                </View>
 
-
-                        <View  style={ styles.captchaChildContainer}>
-                            <TextInput
-                            placeholder="Enter Captcha"
-                            onChangeText={data => this.setState({ textInputHolder: data })}
-                            style={styles.textInputStyle}
-                            underlineColorAndroid='transparent'
-                            />
+                                <View style={styles.captchaChildContainerButton}>
+                                <TouchableOpacity style={{width: 100,height: 35, borderRadius: 5, backgroundColor: Colors.navyUrban, textAlign: 'center',justifyContent: 'center'}} onPress={this.validateCaptchaCode} >
+                                    <Text style={styles.text}>Im not robot</Text>
+                                </TouchableOpacity> 
+                                </View>
+                            </View>  
                         </View>
                     </View>
-
-                    <TouchableOpacity style={styles.button} onPress={this.validateCaptchaCode} >
-                        <Text style={styles.text}>Im not robot</Text>
-                    </TouchableOpacity> 
-                     */}
+                    }
+                    
+                    
                     
                     {/* <Button onPress={this.handleBuy}  style={{alignSelf : 'center', marginTop : 20}}>
                         <Text style={{fontFamily :'Montserrat-Regular'}}>Accept</Text>
@@ -1246,9 +1258,9 @@ class SignupPrinciple extends React.Component {
                         pointerEvents={this.state.isLoaded ? "auto" : "none"}
                     >
                         <Button
-                            style={[styles.signInBtn, { backgroundColor: !this.state.checked? "#cccccc": "#0691ce" }]}
+                            style={[styles.signInBtn, { backgroundColor: !this.state.capt? "#cccccc": "#0691ce" }]}
                             onPress={() => this.submit()}
-                            disabled={!this.state.checked}
+                            disabled={!this.state.capt}
                             // disabled={!this.state.capt}
                         >
                             {!this.state.isLoaded ? (

@@ -205,8 +205,11 @@ class chooseRegist extends React.Component {
                             
                         }
                     } else if (res.Error){
+                        this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                            alert(res.Pesan);
+                        });
                         console.log('res pesan');
-                        alert(res.Pesan)
+                        // alert(res.Pesan)
                         // this.setState({ isLoaded: !this.state.isLoaded }, () => {
                         //     alert(res.Pesan);
                         // });
@@ -296,6 +299,40 @@ class chooseRegist extends React.Component {
 
                         <View style={{paddingBottom: 20}}>
                             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                <Text style={styles.overviewTitles}>Handphone</Text>
+                            </View> */}
+                            <Item  floatingLabel style={styles.marginround}>
+                                <Label style={{color: "#fff", fontSize: 14}}>Mobile Phone</Label>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                </View> */}
+                                <Input 
+                                    // placeholder='Handphone' 
+                                    placeholderTextColor={'#fff'} 
+                                    value={this.state.hp} 
+                                    keyboardType="numeric"
+                                    onChangeText={(hp) => this.setState({ hp })} 
+                                    style={styles.positionTextInput} />
+                                    {this.state.errorhp ? (
+                                    <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                    ) : null}
+                            </Item>
+                            {this.state.errorhp ? (<Text
+                                style={{
+                                    position: "absolute",
+                                    bottom:10,
+                                    left: 15,
+                                    color: "red",
+                                    fontSize: 12
+                                }}
+                            >
+                                Handphone Required
+                            </Text>) : null}
+                        </View>
+
+                        <View style={{paddingBottom: 20}}>
+                            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Email</Text>
                             </View> */}
                             <Item floatingLabel style={styles.marginround}>
@@ -330,39 +367,7 @@ class chooseRegist extends React.Component {
                             </Text>) : null}
                         </View>
 
-                        <View style={{paddingBottom: 20}}>
-                            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Handphone</Text>
-                            </View> */}
-                            <Item  floatingLabel style={styles.marginround}>
-                                <Label style={{color: "#fff", fontSize: 14}}>Handphone</Label>
-                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                </View> */}
-                                <Input 
-                                    // placeholder='Handphone' 
-                                    placeholderTextColor={'#fff'} 
-                                    value={this.state.hp} 
-                                    keyboardType="numeric"
-                                    onChangeText={(hp) => this.setState({ hp })} 
-                                    style={styles.positionTextInput} />
-                                    {this.state.errorhp ? (
-                                    <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                    ) : null}
-                            </Item>
-                            {this.state.errorhp ? (<Text
-                                style={{
-                                    position: "absolute",
-                                    bottom:10,
-                                    left: 15,
-                                    color: "red",
-                                    fontSize: 12
-                                }}
-                            >
-                                Handphone Required
-                            </Text>) : null}
-                        </View>
+                        
 
                         <View style={{paddingBottom: 20}}>
                             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>

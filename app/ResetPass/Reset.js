@@ -19,7 +19,8 @@ class Reset extends React.Component {
             isLoaded : true,
 
             conpass : '',
-            newpass : ''
+            newpass : '',
+            isHide: false,
         }
     }
 
@@ -37,7 +38,7 @@ class Reset extends React.Component {
 
             console.log('form',formData);
 
-            fetch(urlApi+'c_auth/Resetpass/',{
+            fetch(urlApi+'c_auth/resetpass_newlogin/',{
                 method : "POST",
                 body :JSON.stringify(formData),
                 headers :{
@@ -61,7 +62,7 @@ class Reset extends React.Component {
     render() {
         return (
             <Container>
-                <ImageBackground style={styles.backgroundImage}>
+                <ImageBackground style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
                     <Header style={styles.header}>
 						<Left style={styles.left}>
                             <Button transparent style={Style.actionBarBtn} onPress={Actions.pop} >
@@ -79,13 +80,14 @@ class Reset extends React.Component {
 					<View style={styles.inputFieldStyles}>
                         
                         {/* <Image  style={styles.images} source={ require("../Images/logo.jpg")}/> */}
-                        <View style={{width: 200,height: 100, marginBottom: 65}}>
+                        {/* <View style={{width: 200,height: 100, marginBottom: 65}}>
                                 <Image
                                     // style={styles.images}
                                     style={styles.styleLogo}
                                     source={require("../Images/logo.png")}
                                 />
-                            </View>
+                            </View> */}
+                        
 						<View style={styles.containEmail}>
                             <Input 
                                 ref='newpass' 
@@ -102,9 +104,19 @@ class Reset extends React.Component {
                                 placeholderTextColor="rgba(0,0,0,0.20)" 
                                 secureTextEntry={true} 
                                 onChangeText={(val)=>this.setState({newpass:val})}
-                                value={this.state.newpass} />
+                                value={this.state.newpass} 
+                                secureTextEntry={!this.state.isHide}/>
+                                <Icon
+                                    name={this.state.isHide ? "eye-off" : "eye"}
+                                    style={styles.eye}
+                                    onPress={() =>
+                                        this.setState({
+                                            isHide: !this.state.isHide
+                                        })
+                                    }
+                                />
 						</View>
-						<View style={styles.divider}/>
+						{/* <View style={styles.divider}/> */}
 						<View style={styles.containPassword}>
 							<Input
 								ref='conpass'
@@ -121,7 +133,17 @@ class Reset extends React.Component {
 								placeholderTextColor="rgba(0,0,0,0.20)"
 								secureTextEntry={true} 
                                 onChangeText={(val)=>this.setState({conpass:val})} 
-                                value={this.state.conpass} />
+                                value={this.state.conpass} 
+                                secureTextEntry={!this.state.isHide}/>
+                                <Icon
+                                    name={this.state.isHide ? "eye-off" : "eye"}
+                                    style={styles.eye}
+                                    onPress={() =>
+                                        this.setState({
+                                            isHide: !this.state.isHide
+                                        })
+                                    }
+                                />
 						</View>
 					</View>
 					<View style={styles.signbtnSec} pointerEvents={this.state.isLoaded ? 'auto' : 'none'}>

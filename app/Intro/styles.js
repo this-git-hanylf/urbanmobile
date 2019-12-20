@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
     },
     signbtnSec: {
         marginTop: Fonts.moderateScale(15),
-		height: Metrics.HEIGHT * 0.10
+        height: Metrics.HEIGHT * 0.10,
+        marginBottom: 65
 		// flex :1
     },
     signInGoogle: {
@@ -228,20 +229,20 @@ const styles = StyleSheet.create({
         fontSize: Fonts.moderateScale(17),
         width: Metrics.WIDTH * 0.92,
         textAlign: "center",
-        fontFamily: Fonts.type.sfuiDisplaySemibold
+        fontFamily: Fonts.type.proximaNovaBold
         // fontFamily: Fonts.type.proximaNovaXBoldIt
 
     },
     forgotPassword: {
-        color: Colors.white,
-        fontSize: Fonts.moderateScale(15),
+        color: Colors.blueUrban,
+        fontSize: Fonts.moderateScale(16),
         height: Metrics.HEIGHT * 0.05,
         width: Metrics.WIDTH,
         alignSelf: "center",
         justifyContent: "center",
         textAlign: "center",
         backgroundColor: Colors.transparent,
-        fontFamily: Fonts.type.sfuiDisplayMedium
+        fontFamily: Fonts.type.proximaNovaBoldWeb
     },
     socialSec: {
         // height: Metrics.HEIGHT * 0.07,
@@ -270,10 +271,16 @@ const styles = StyleSheet.create({
     },
     fbButtonText: {
         color: Colors.white,
-        paddingLeft: Fonts.moderateScale(5),
-        fontSize: Fonts.moderateScale(17),
-        fontFamily: Fonts.type.sfuiDisplayMedium,
-        width: "100%"
+        // paddingLeft: Fonts.moderateScale(5),
+        fontSize: Fonts.moderateScale(15),
+        fontFamily: Fonts.type.proximaNovaBold,
+        // fontWeight: '500',
+        // textDecorationLine: 'underline',
+        borderBottomColor: Colors.white,
+        borderBottomWidth: 1,
+
+        width: "100%",
+
     },
     eye: {
         position: "absolute",
@@ -287,12 +294,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       fixedBackground: {
-        width: Dimensions.get("window").width, //for full screen
-        height: Dimensions.get("window").height, position: "absolute",
+        // width: Dimensions.get("window").width, //for full screen
+        height: Dimensions.get("window").height, 
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
-        bottom: 0, zIndex: -1
+        bottom: 0, 
+        zIndex: -1
       }
 });
 export default styles;

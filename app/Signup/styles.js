@@ -67,7 +67,7 @@ const styles = {
     },
 
     inputFieldStyles: {
-		// height: Metrics.HEIGHT * 0.45,
+		height: Metrics.HEIGHT * 0.45,
 		flex : 1,
         // justifyContent: "space-start",
         alignItems: "center"
@@ -136,7 +136,7 @@ const styles = {
     },
     inputAddress: {
         height: Metrics.HEIGHT * 0.20,
-        width: Metrics.WIDTH * 0.84,
+        width: Metrics.WIDTH * 0.90,
         // color: "#000",
         // paddingLeft: Fonts.moderateScale(10),
         fontFamily: Fonts.type.proximaNovaReg,
@@ -304,6 +304,29 @@ const styles = {
         textAlignVertical: 'bottom',
 
     },
+    inputAttach :{
+        height: 40, 
+        // marginBottom: 4,
+        paddingBottom: 15,
+        marginLeft: 12, marginRight: 12, 
+        // backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderColor: "#ffffff",
+        // textAlignVertical: 'bottom',
+
+    },
+    inputAttachLarge :{
+        height: 'auto', marginBottom: 4,marginLeft: 12, marginRight: 12, 
+        paddingBottom: 10, paddingTop: 10,
+        // backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderColor: "#ffffff",
+        textAlignVertical: 'bottom',
+
+    },
+    textAttach: {
+        color: '#777', fontFamily: Fonts.type.proximaNovaBoldWeb, position: 'absolute', left: 10, fontSize: 13
+    },
     marginrounderror :{
         height: 45, marginBottom: 4,marginLeft: 12, marginRight: 12, 
         // backgroundColor: '#fff',
@@ -321,15 +344,32 @@ const styles = {
         fontSize: 15,left: 8,
         // paddingBottom: 3,
         // backgroundColor: '#fff'
-        color: '#fff'
+        color: '#fff',
+        fontFamily: Fonts.type.proximaNovaReg
     },
-    overviewTitles: {
+    positionTextInput_Bank: {
+        fontSize: 15,left: 8,
+        // paddingBottom: 3,
+        // backgroundColor: '#fff'
+        color: '#fff',
+        // fontFamily: Fonts.type.proximaNovaReg
+    },
+    overviewTitles_Bank: {
         flex: 1,
-        fontFamily: Fonts.type.proximaNovaReg,
+        // fontFamily: Fonts.type.proximaNovaReg,
         left: 15,
-        color: '#ffffff'
+        // color: '#fff'
+        color: '#B0C6DA'
+
         
       },
+    overviewTitles: {
+    flex: 1,
+    fontFamily: Fonts.type.proximaNovaReg,
+    left: 15,
+    color: '#ffffff'
+    
+    },
       marginfirst :{
         marginTop: 8
     },
@@ -385,8 +425,11 @@ const styles = {
 
       text: {
         color: '#FFF',
-        fontSize: 24,
+        fontSize: 14,
         textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 5,
       },
       captchaContainerView: {
@@ -396,7 +439,7 @@ const styles = {
         margin: 5,
         borderColor: '#01579b',
         // width: '90%',
-        height: 150,
+        height: 130,
         borderWidth: 1,
         padding: 5,
         backgroundColor: '#e1f5fe'
@@ -406,14 +449,35 @@ const styles = {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
+        
+      },
+      captchaChildContainerInput: {
+        flex: 1,
+        // flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+        
+      },
+      iconCaptcha:{
+       width: 40, height: 35, 
+    //    resizeMode: 'contain', 
+       margin: 20
+      },
+      captchaChildContainerButton: {
+        flex: 1,
+        // flexDirection: 'row',
+        justifyContent: 'center',
+        // alignItems: 'center'
+        
       },
       textInputStyle: {
         textAlign: 'center',
         height: 40,
         width: '80%',
         borderWidth: 1,
-        borderColor: '#4CAF50',
+        borderColor: Colors.goldUrban,
         borderRadius: 7,
+        justifyContent: 'center',
       },
       button: {
         width: '80%',

@@ -4,9 +4,10 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    Platform
+    Platform,
+    Image
 } from "react-native";
-import { Style, Colors } from "../../Themes";
+import { Style, Colors, Metrics, Fonts } from "../../Themes";
 import { Icon } from "native-base";
 import {
     GoogleSignin,
@@ -70,10 +71,18 @@ export default class GoogleLoginButton extends Component {
                 style={styles.container}
                 onPress={this.handleLogin}
             >
-                <Icon name="google" style={styles.icon} type="FontAwesome5" />
-                <Text style={[Style.textBlack, styles.text]}>
-                    Sign in with Google
+                {/* <Icon name="google" style={styles.icon} type="FontAwesome5" />
+                 */}
+                 <View style={{left: 33}}>
+                 <Image style={{width: 33, height: 33}} source={require('@Asset/images/icon/google.png')}></Image> 
+                 </View>
+                <View style={{left: 43}}>
+                <Text style={{fontFamily: Fonts.type.proximaNovaReg, fontWeight: "500", color: Colors.facebook, fontSize: 12}}>
+                    Continue with email
                 </Text>
+
+                </View>
+                
             </TouchableOpacity>
         );
     }
@@ -82,22 +91,30 @@ export default class GoogleLoginButton extends Component {
 const styles = StyleSheet.create({
     container: {
         marginTop: 5,
-        width: 185,
-        height: 42,
+        width: 250,
+        height: 40,
         padding: 12,
         backgroundColor: Colors.white,
-        justifyContent: "space-between",
+        // justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        elevation: 2
+        elevation: 2,
+        borderRadius: 15
     },
+    
     text: {
         // fontFamily: "Montserrat-Regular.ttf",
         fontSize: 12,
-        color: "#333"
+        color: "#333",
+        textAlign: 'left',
+        // paddingHorizontal: 10
+        
+        
     },
     icon: {
-        fontSize: 24,
+        // textAlign: 'center',
+        // fontSize: 24,
+        justifyContent: "flex-start",
         color: Colors.fire
     }
 });

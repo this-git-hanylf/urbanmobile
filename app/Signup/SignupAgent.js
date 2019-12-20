@@ -16,7 +16,8 @@ import {
     Alert,
     FlatList,
     TextInput,
-    Modal
+    Modal,
+    
 } from "react-native";
 import {
     Container,
@@ -30,7 +31,8 @@ import {
     Body,
     Title,
     ListItem,
-    Label
+    Label,
+    Content
     // CheckBox
 } from "native-base";
 import {SearchBar} from "react-native-elements";
@@ -39,7 +41,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
 import AppIntroSlider from "react-native-app-intro-slider";
 import styles from "./styles";
-import { Style, Colors, Metrics } from "../Themes";
+import { Style, Colors, Metrics, Fonts } from "../Themes";
 import { Actions } from "react-native-router-flux";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
@@ -319,7 +321,7 @@ class SignupGuest extends React.Component {
         const isValid = this.validating({
             email: { require: true },
             fullname: { require: true },
-            nik: { require: true },
+            // nik: { require: true },
             nohp: { require: true },
             // selectedType: { require: true },
             // selectedProject: { require: true }
@@ -537,49 +539,8 @@ class SignupGuest extends React.Component {
                         <Right style={styles.right}></Right>
                     </Header>
                     
+                    {/* <Content style={{paddingVertical: 10}}> */}
                     <ScrollView contentContainerStyle={{ paddingVertical: 10 }} scrollEnabled={this.state.isLoaded ? true : false}>
-                        <View pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                            style={[
-                                styles.inputFieldStyles,
-                                { justifyContent: "flex-start" }
-                            ]}
-                        >
-                            <View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.email} 
-                                            onChangeText={(email) => this.setState({ email })} 
-                                            style={styles.positionTextInput}
-                                            ref="email" />
-                                            {this.state.erroremail ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.erroremail ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Email Required
-                                    </Text>) : null}
-                                </View>
-                                
                                 
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
@@ -616,215 +577,13 @@ class SignupGuest extends React.Component {
                                         Full Name Required
                                     </Text>) : null}
                                 </View>
+
                                 <View style={{paddingBottom: 20}}>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
                                     <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>NIK</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            keyboardType="numeric"
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.nik} 
-                                            onChangeText={val =>
-                                                this.setState({ nik: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="nik" />
-                                            {this.state.errornik ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.errornik ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        NIK Required
-                                    </Text>) : null}
-                                </View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>NPWP</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            keyboardType="numeric"
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.npwp} 
-                                            onChangeText={val =>
-                                                this.setState({ npwp: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="npwp" />
-                                            {this.state.errornpwp ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.errornpwp ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        NPWP Required
-                                    </Text>) : null}
-                                </View>
-                                
-                                <View style={{paddingBottom: 20}}  >
-                                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Bank Name</Text>
-                                    </View>
-                                    <Item  style={styles.marginround} onPress={() => this.modalBankMaster()} >
-                                        {/* <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label> */}
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            placeholder='Choose Bank'
-                                            // onPress={() => this.modalBankMaster()} 
-                                            placeholderTextColor={'#666'} 
-                                            
-                                            value={this.state.bank_name} 
-                                            editable={false}
-                                            onChangeText={val =>
-                                                this.setState({ bank_name: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="bank_name" />
-                                            {this.state.errorbank_name ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.errorbank_name ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Bank Name Required
-                                    </Text>) : null}
-                                </View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Account Name</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            autoCapitalize="words"
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.acc_name} 
-                                            onChangeText={val =>
-                                                this.setState({ acc_name: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="acc_name" />
-                                            {this.state.erroracc_name ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.erroracc_name ? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Account Name Required
-                                    </Text>) : null}
-                                </View>
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Account Number</Label>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                        </View> */}
-                                        <Input 
-                                            // placeholder='Full Name' 
-                                            keyboardType="numeric"
-                                            placeholderTextColor={'#666'} 
-                                            value={this.state.acc_no} 
-                                            onChangeText={val =>
-                                                this.setState({ acc_no: val })
-                                            }
-                                            style={styles.positionTextInput}
-                                            ref="acc_no" />
-                                            {this.state.erroracc_no ? (
-                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                            ) : null}
-                                        {/* <Icon name='close-circle' /> */}
-                                    </Item>
-                                    {this.state.erroracc_no? (<Text
-                                        style={{
-                                            position: "absolute",
-                                            bottom:10,
-                                            left: 15,
-                                            color: "red",
-                                            fontSize: 12
-                                        }}
-                                    >
-                                        Account Number Required
-                                    </Text>) : null}
-                                </View>
-                                
-                                {/* <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <TouchableOpacity 
-                                    onPress={() => this.modalBankMaster()}
-                                    >
-                                        <View>
-                                            <Text>
-                                                tes
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>   */}
-                                {/* <View style={styles.containMid} pointerEvents={this.state.isLoaded ? "auto" : "none"}>
-                                    <Text>{this.state.principles}</Text>
-                                </View>   */}
-                                <View style={{paddingBottom: 20}}>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Text style={styles.overviewTitles}>Full Name</Text>
-                                    </View> */}
-                                    <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Handphone</Label>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Mobile Phone</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
@@ -856,130 +615,272 @@ class SignupGuest extends React.Component {
                                         Handphone Required
                                     </Text>) : null}
                                 </View>                             
-                                <View>
-                                    {this.state.dataProject.map((data, key) => {
-                                        return (
-                                            <View
-                                                style={styles.checkboxWrap}
-                                                key={key}
-                                                pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                            >
-                                                <CheckBox
-                                                    onPress={() =>
-                                                        this.handleCheck(data)
-                                                    }
-                                                    checked={data.checked}
-                                                    // checked={true}
-                                                    title={data.descs}
-                                                    iconType="material"
-                                                    checkedIcon="check-circle"
-                                                    uncheckedIcon="check-circle"
-                                                    checkedColor="green"
-                                                    
-                                                />
-                                                {/* <Text
-                                                    style={{
-                                                        fontSize: 16
-                                                    }}
-                                                >
-                                                    {data.descs}
-                                                </Text> */}
-                                            </View>
-                                        );
-                                    })}
-                                    {this.state.errorselectedProject ? (
-                                        <Text
-                                            style={{
-                                                position: "absolute",
-                                                bottom: 0,
-                                                left: 25,
-                                                color: "red",
-                                                fontSize: 12
-                                            }}
-                                        >
-                                            ! Select Project Required
-                                        </Text>
-                                    ) : null}
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.email} 
+                                            onChangeText={(email) => this.setState({ email })} 
+                                            style={styles.positionTextInput}
+                                            ref="email" />
+                                            {this.state.erroremail ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroremail ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Email Required
+                                    </Text>) : null}
                                 </View>
-                                <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo KTP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlKtp")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlKtp
-                                                    }
-                                                />
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>NIK</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.nik} 
+                                            onChangeText={val =>
+                                                this.setState({ nik: val })
                                             }
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>  
-
-                                <View style={{paddingTop: 25}}>
-                                    <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Upload Photo NPWP</Label>
-                                    <View style={[styles.containImageTop_no]}>
-                                        <TouchableOpacity
-                                            style={{
-                                                padding: 2,
-                                                borderWidth: 1,
-                                                borderColor: "#d3d3d3",
-                                                margin: 10
-                                            }}
-                                            onPress={() => this.showAlert("pictUrlNPWP")}
-                                            pointerEvents={this.state.isLoaded ? "auto" : "none"}
-                                        >
-                                            {/* <Image
-                                                style={{ width: 200, height: 100 }}
-                                                source={this.state.pictUrlKtp}
-                                            /> */}
-                                            {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
-                                                <View >
-                                                {/* <Icon name='image' type="FontAwesome5" style={{ color: Colors.navyUrban,fontSize: 50, top: Metrics.WIDTH * 0.05,justifyContent: 'space-between', textAlign: 'center', alignSelf: 'center', alignItems: 'center'}} /> */}
-                                                    <Image
-                                                        style={{ width: 200, height: 130 }}
-                                                        source={uri = require("../../assets/images/ktp.png")}
-                                                    />
-                                                </View>
-                                                :
-                                                <Image
-                                                    // resizeMode="cover"
-                                                    style={{ width: 200, height: 130 }}
-                                                    source={
-                                                        this.state.pictUrlNPWP
-                                                    }
-                                                />
+                                            style={styles.positionTextInput}
+                                            ref="nik" />
+                                            {this.state.errornik ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>NPWP</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.npwp} 
+                                            onChangeText={val =>
+                                                this.setState({ npwp: val })
                                             }
-                                        </TouchableOpacity>
+                                            style={styles.positionTextInput}
+                                            ref="npwp" />
+                                            {this.state.errornpwp ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                </View>
+                                
+                                <View style={{paddingBottom: 20}}  >
+                                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={[styles.overviewTitles_Bank,{
+                                            color: this.state.bank_name ? '#B0C6DA' : '#fff'}]}>Bank Name</Text>
                                     </View>
-                                </View>  
-                               
-                            </View>
-                        </View>
+                                    <Item  style={styles.marginround} onPress={() => this.modalBankMaster()} >
+                                        {/* <Label style={{color: "#fff", fontSize: 14}}>Bank Name</Label> */}
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            placeholder='Choose Bank'
+                                            // onPress={() => this.modalBankMaster()} 
+                                            // placeholderTextColor={'#666'} 
+                                            // placeholderStyle={styles.textAttach}
+                                            
+                                            value={this.state.bank_name} 
+                                            editable={false}
+                                            onChangeText={val =>
+                                                this.setState({ bank_name: val })
+                                            }
+                                            style={[styles.positionTextInput_Bank, 
+                                                {fontFamily: this.state.bank_name ?  Fonts.type.proximaNovaReg :  Fonts.type.proximaNovaBoldWeb, 
+                                                    fontWeight: this.state.bank_name ?  '100' :  '200'}]}
+                                            ref="bank_name" />
+                                            {this.state.errorbank_name ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                            <Image style={{width: 25, height: 25}} source={require('@Asset/images/icon/dropdown.png')}></Image> 
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.errorbank_name ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Bank Name Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Account Number</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            keyboardType="numeric"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.acc_no} 
+                                            onChangeText={val =>
+                                                this.setState({ acc_no: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_no" />
+                                            {this.state.erroracc_no ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroracc_no? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Account Number Required
+                                    </Text>) : null}
+                                </View>
+                                <View style={{paddingBottom: 20}}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Text style={styles.overviewTitles}>Full Name</Text>
+                                    </View> */}
+                                    <Item floatingLabel style={styles.marginround}>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Bank Account Name</Label>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                            <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                            <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                        </View> */}
+                                        <Input 
+                                            // placeholder='Full Name' 
+                                            autoCapitalize="words"
+                                            placeholderTextColor={'#666'} 
+                                            value={this.state.acc_name} 
+                                            onChangeText={val =>
+                                                this.setState({ acc_name: val })
+                                            }
+                                            style={styles.positionTextInput}
+                                            ref="acc_name" />
+                                            {this.state.erroracc_name ? (
+                                            <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                            ) : null}
+                                        {/* <Icon name='close-circle' /> */}
+                                    </Item>
+                                    {this.state.erroracc_name ? (<Text
+                                        style={{
+                                            position: "absolute",
+                                            bottom:10,
+                                            left: 15,
+                                            color: "red",
+                                            fontSize: 12
+                                        }}
+                                    >
+                                        Account Name Required
+                                    </Text>) : null}
+                                </View>
+                                
 
+                                {/* KTP */}
+                                <View style={{paddingTop: 10}}>
+                                    {this.state.pictUrlKtp == null || this.state.pictUrlKtp == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlKtp")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach KTP</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlKtp")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlKtp
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                                
+                                {/* NPWP */}
+                                <View style={{paddingTop: 25,paddingBottom: 10}}>
+                                    {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == '' ?
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttach]} 
+                                        onPress={() => this.showAlert("pictUrlNPWP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <Text style={styles.textAttach}>Attach NPWP</Text>
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} 
+                                            source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                        :
+                                        <Item regular style={[{borderRadius: 5}, styles.inputAttachLarge]} 
+                                        onPress={() => this.showAlert("pictUrlNPWP")} 
+                                        pointerEvents={this.state.isLoaded ? "auto" : "none"}> 
+                                            <View style={[styles.containImageTop_no]}>
+                                            <Image
+                                                // resizeMode="cover"
+                                                style={{ width: 200, height: 130, alignContent:'center' }}
+                                                source={
+                                                    this.state.pictUrlNPWP
+                                                }
+                                            />
+                                            </View>
+                                            
+                                            <Image style={{width: 25, height: 25, position:'absolute', right: 10}} source={require('@Asset/images/icon/image.png')}></Image>
+                                        </Item>
+                                    }
+                                </View>
+                    {/* </Content> */}
                     </ScrollView>
                     <View
                         style={styles.signbtnSec}
