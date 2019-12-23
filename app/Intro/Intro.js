@@ -284,9 +284,9 @@ export default class Intro extends React.Component {
     };
     _renderNextButton = () => {
         return (
-            <View>
+            <View style={styles.bottom_next}>
                 <Text style={styles.title_next}>
-                    Next
+                    SKIP
                 </Text>
             </View>
        
@@ -304,9 +304,9 @@ export default class Intro extends React.Component {
       };
       _renderDoneButton = () => {
         return (
-            <View>
-                <Text style={styles.title_done}>
-                    Done
+            <View style={styles.bottom_next}>
+                <Text style={styles.title_next}>
+                    MULAI
                 </Text>
             </View>
        
@@ -317,6 +317,18 @@ export default class Intro extends React.Component {
               <Text style={{color: 'red'}}></Text>
           </View>
       }
+     
+
+    //   _renderDefaultButton = () => {
+    //     return (
+    //         <View style={{backgroundColor: '#000'}}>
+    //             <Text style={styles.title_done}>
+    //                 Skip
+    //             </Text>
+    //         </View>
+       
+    //     );
+    //   };
 
     render() {
         // let BG_Image = { uri : 'https://antiqueruby.aliansoftware.net/Images/signin/ic_main_bg_stwo.png'};
@@ -471,13 +483,21 @@ export default class Intro extends React.Component {
                     // dotStyle={{backgroundColor: 'red'}}
                     activeDotStyle={{backgroundColor: Colors.navyUrban}}
                     slides={slides}
+                    bottomButton
+                    // buttonStyle={styles.bottom_Button} 
+                    // buttonTextStyle={styles.bottom_text_Button}
+                    // renderDefaultButton={this._renderDefaultButton}
+                    
+                    // renderItem={this._renderItem}
                     // activeDotStyle={{borderColor: 'red'}}
                     onDone={this._onDone}
                     renderDoneButton={this._renderDoneButton}
                     renderNextButton={this._renderNextButton}
-                    renderSkipButton={this._renderSkipButton}
-                    showSkipButton={true}
-                    onSkip={this._onSkip}
+                    // renderSkipButton={this._renderSkipButton}
+                    // showSkipButton={true}
+                    // showNextButton={false}
+                    // showNextButton={false}
+                    // onSkip={this._onSkip}
                 />
             );
         }
@@ -487,95 +507,54 @@ export default class Intro extends React.Component {
 const slides = [
     {
         key: "s1",
-        text: "Find information and update project from \n PT Urban Jakarta Propertindo",
-        title: "Get Info Project",
+        text: "Agent sales dapat melakukan penjualan Priority Pass secara online untuk customer yang ingin menggunakan pembayaran secara online.",
+        title: "PENJUALAN PRIORITY PASS",
         titleStyle: styles.title_urban,
         textStyle: styles.text_urban,
         image: require('@Asset/images/walktrough/urban_sky.png'),
         // image:  require('@Asset/icon/save_file.png'),
         // imageStyle: styles.image,
         imageStyle: styles.images_urban,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        width: 200,
+        height: 200,
+        // bottomSpacer: 
+        // 
+        bottomSpacer: styles.bottom_Spacer,
+        // topSpacer: styles.top_Spacer
+        // buttonStyle: styles.bottom_Button,
+        // buttonTextStyle: styles.text_urban
         // backgroundColor: Colors.grey
     },
     {
         key: "s2",
-        title: "See unit type",
+        title: "PRODUK",
         titleStyle: styles.title_urban,
         textStyle: styles.text_urban,
-        text: "Get detailed info about units currently being marketed",
+        text: "Aplikasi ini dilengkapi dengan fitur untuk melihat denah lokasi, unit, diagramatic, dan sebagainya untuk menjamin unit yang paling cocok sebagai pilihan customer.",
         image: require('@Asset/images/walktrough/unit_plan.png'),
         // image: {
         //     uri:
         //         "http://aboutreact.com/wp-content/uploads/2018/08/flight_ticket_booking.png"
         // },
-        imageStyle: styles.image,
+        imageStyle: styles.images_urban,
         // backgroundColor: "#febe29"
         backgroundColor: Colors.white
     },
     {
         key: "s3",
-        title: "Easy Registration NUP",
+        title: "NEWS",
         titleStyle: styles.title_urban,
         textStyle: styles.text_urban,
         text:
-            "Nup purchases and payments are more practical via online",
+            "Aplikasi Urban Jakarta juga digunakan untuk membagi informasi mengenai produk dan berbagai promosi menarik lainnya.",
             image: require('@Asset/images/walktrough/nup_regis.png'),
         // image: {
         //     uri:
         //         "http://aboutreact.com/wp-content/uploads/2018/08/discount1.png"
         // },
-        imageStyle: styles.image,
+        imageStyle: styles.images_urban,
         // backgroundColor: "#22bcb5"
         backgroundColor: Colors.white
-    },
-    {
-        key: "s4",
-        title: "Installment illustration",
-        titleStyle: styles.title_urban,
-        textStyle: styles.text_urban,
-        text: 
-        "Choose the type of payment unit with updated interest rates",
-        // image: {
-        //     uri:
-        //         "http://aboutreact.com/wp-content/uploads/2018/08/best_deals1.png"
-        // },
-        image: require('@Asset/images/walktrough/instalment.png'),
-        imageStyle: styles.image,
-        backgroundColor: Colors.white
-        // backgroundColor: "#3395ff"
-    },
-    {
-        key: "s5",
-        title: "Real time unit check",
-       
-        titleStyle: styles.title_urban,
-        textStyle: styles.text_urban,
-        text:
-            "Check the available status directly from your mobile and the specifications of unit type, view and others",
-        // image: {
-        //     uri:
-        //         "http://aboutreact.com/wp-content/uploads/2018/08/bus_ticket_booking.png"
-        // },
-        image: require('@Asset/images/walktrough/realtime_unit.png'),
-        imageStyle: styles.image,
-        backgroundColor: Colors.white
-    },
-    {
-        key: "s6",
-        title: "About PT Urban Jakarta Propertindo",
-        titleStyle: styles.title_urban,
-        textStyle: styles.text_urban,
-       
-        text:
-            "PT Urban Jakarta Propertindo brings a new concept of residence, as is the paradigm that occurs in all major cities in the world",
-        // image: {
-        //     uri:
-        //         "http://aboutreact.com/wp-content/uploads/2018/08/train_ticket_booking.png"
-        // },
-        image: require('@Asset/images/walktrough/about.png'),
-        imageStyle: styles.image,
-        backgroundColor: Colors.white
-        // backgroundColor: "#febe29"
     }
 ];

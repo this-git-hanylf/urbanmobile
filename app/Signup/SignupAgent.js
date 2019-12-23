@@ -287,6 +287,8 @@ class SignupGuest extends React.Component {
 
             npwp,
             project_no,
+            pictUrlKtp,
+            pictUrlNPWP,
            
         } = this.state;
 
@@ -350,10 +352,23 @@ class SignupGuest extends React.Component {
 
         // let fileName = "KTP_RegisAgent.png";
         // let fileImg = "";
+        // console.log('pic ktp', pictUrlKtp);
+        // if ( pictUrlKtp || pictUrlNPWP ) {
+        //     // console.log('pic ktp', pictUrlKtp)
+        //         this.setState({ errors: false })
+        //         alert('gak error');
+        //         console.log('gak error');
+               
+        //     } else {
+        //         this.setState({ errors: true })
+        //         alert("Please upload attachments")
+        //         console.log('error')
+        //     }
 
         
 // 
         if ( isValid ) {
+            
             // fileImg = RNFetchBlob.wrap(
             //     this.state.pictUrl.uri.replace("file://", "")
             // );

@@ -205,7 +205,7 @@ class chooseRegist extends React.Component {
                             
                         }
                     } else if (res.Error){
-                        this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                        this.setState({ isLoaded: true }, () => {
                             alert(res.Pesan);
                         });
                         console.log('res pesan');
@@ -223,7 +223,10 @@ class chooseRegist extends React.Component {
                     // });
                 });
         } else {
-            alert("Please fill the blank");
+            this.setState({ isLoaded: true }, () => {
+                alert("Please fill the blank");
+            })
+            
         }
         
         

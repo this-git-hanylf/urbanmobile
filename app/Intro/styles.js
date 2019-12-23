@@ -50,8 +50,11 @@ const styles = StyleSheet.create({
         // shadowOpacity: 0.1
         // width: '100%',
         // height: '100%',
-        width: 300,
-        height: 300
+        marginTop: 100,
+        marginBottom: -100,
+        width: 450,
+        height: 450,
+        // paddingBottom: -10,
         // borderRadius: 50,
         // overflow: 'hidden'
         // borderBottomLeftRadius: 200,
@@ -59,6 +62,15 @@ const styles = StyleSheet.create({
         // borderTopRightRadius: 200,
         // borderTopLeftRadius: 200,
         // overflow: 'hidden',
+        // paddingTop: 10,
+        // marginTop: 10
+        // alignItems: 'center',
+        // alignSelf: 'center',
+        // justifyContent: 'center'
+        // justifyContent: 'space-around',
+        // alignItems: 'center',
+        // paddingTop: 10
+        
 
 
 
@@ -101,21 +113,46 @@ const styles = StyleSheet.create({
         // fontFamily: Fonts.type.robotoRegular,
     },
     text_urban: {
-        fontFamily: Fonts.type.sfuiDisplayMedium,
-        color: Colors.navyUrban
+        fontFamily: Fonts.type.proximaNovaReg,
+        color: Colors.navyUrban,
+        // marginHorizontal: 8
+        // fontSize: 14
     },
     title_urban: {
-        fontFamily: Fonts.type.sfuiDisplayMedium,
-        color: Colors.navyUrban,
-        textAlign: 'center'
+        fontFamily: Fonts.type.proximaNovaBold,
+        color: Colors.goldUrban,
+        textAlign: 'center',
+        justifyContent: 'flex-end',
+        fontSize: 23
     },
     title_next: {
-        fontFamily: Fonts.type.sfuiDisplayMedium,
+        fontFamily: Fonts.type.proximaNovaReg,
         color: Colors.navyUrban,
-        fontSize: 16,
-        fontWeight: 'bold',
-        right: 10
+        fontSize: 18,
+        // justifyContent: 'space-between',
+        // fontWeight: 'bold',
+        letterSpacing: 1,
+        // right: 10,
+        // alignItems: 'center',
+        textAlign: 'center',
+        // justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.navyUrban,
+        color: Colors.navyUrban,   
     },
+    bottom_next:{
+        // flex: 1,
+        // backgroundColor: 'rgba(0, 0, 0, .3)',
+        // backgroundColor: 'red',
+        // width:'20%',
+        // marginHorizontal: 140,
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+        
+      
+    },
+   
     title_skip: {
         fontFamily: Fonts.type.sfuiDisplayMedium,
         color: Colors.navyUrban,
@@ -287,12 +324,22 @@ const styles = StyleSheet.create({
         right: 10,
         top: 7
     },
-    bottomButton: {
-        flex: 1,
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+    // bottom_Button: {
+    //     flex: 1,
+    //     // backgroundColor: 'red',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     width:'100%'
+    //     // color: '#000',
+        
+    //   },
+    //   bottom_text_Button:{
+    //     paddingBottom: 0,
+    //     width: 'auto',
+    //     borderBottomWidth: 1,
+    //     borderBottomColor: Colors.navyUrban,
+    //     color: Colors.navyUrban
+    //   },
       fixedBackground: {
         // width: Dimensions.get("window").width, //for full screen
         height: Dimensions.get("window").height, 
@@ -302,6 +349,17 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0, 
         zIndex: -1
+      },
+
+      bottom_Spacer: {
+          paddingBottom: 10
+      },
+      top_Spacer:{
+          marginTop: 10
       }
+
+
+
+     
 });
 export default styles;
