@@ -429,5 +429,9 @@ export default {
         borderBottomColor: '#FFF',
     },
 
+    fontProxima: {
+        fontFamily: Fonts.type.proximaNovaBold
+    }
+
 
 }

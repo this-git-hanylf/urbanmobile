@@ -571,7 +571,7 @@ class SignupPrinciple extends React.Component {
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
                                     <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Agency Name</Label>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Principle Name</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
@@ -609,7 +609,7 @@ class SignupPrinciple extends React.Component {
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
                                     <Item floatingLabel style={styles.marginround}>
-                                        <Label style={{color: "#fff", fontSize: 14}}>Company Name</Label>
+                                        <Label style={{color: "#fff", fontSize: 14}}>Principle Company Name</Label>
                                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
@@ -645,7 +645,7 @@ class SignupPrinciple extends React.Component {
                                 
                                  
                                 <View style={{paddingBottom: 20}}>
-                                <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Company Address</Label>
+                                <Label style={{color: "#fff", fontSize: 14, paddingLeft: 15}}>Principle Company Address</Label>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}

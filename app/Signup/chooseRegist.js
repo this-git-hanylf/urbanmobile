@@ -237,6 +237,10 @@ class chooseRegist extends React.Component {
         // alert('next');
     }
 
+    Capitalize(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
     render() {
         return (
             <Container>
@@ -257,8 +261,9 @@ class chooseRegist extends React.Component {
                             </Button>
                         </Left>
                         <Body style={styles.body}>
-                            <Text style={[Style.textWhite, Style.textMedium]}>
-                                {"Registration"}
+                            <Text style={[Style.textWhite, Style.textMedium, Style.fontProxima]}>
+                                {/* {"Registration"} */}
+                                {this.Capitalize("Registration")}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>

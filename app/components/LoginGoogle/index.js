@@ -73,15 +73,25 @@ export default class GoogleLoginButton extends Component {
             >
                 {/* <Icon name="google" style={styles.icon} type="FontAwesome5" />
                  */}
-                 <View style={{left: 33}}>
-                 <Image style={{width: 33, height: 33}} source={require('@Asset/images/icon/google.png')}></Image> 
-                 </View>
-                <View style={{left: 43}}>
-                <Text style={{fontFamily: Fonts.type.proximaNovaReg, fontWeight: "500", color: Colors.facebook, fontSize: 12}}>
-                    Continue with email
-                </Text>
 
-                </View>
+                 <View style={{flex: 1, flexDirection: 'row', alignItems: "center",justifyContent: "center",}}>
+                    <View style={{marginRight: 10}}>
+                        <Image style={styles.icon} source={require('@Asset/images/icon/google.png')}></Image> 
+                    </View>
+                    {/* <View style={{left: 43}}> */}
+                    <Text style={styles.text}>
+                        Continue with email
+                    </Text>
+
+                 </View>
+                 
+
+
+               
+                    {/* <Text style={{ backgroundColor:'lightblue', alignSelf: "center" }}>Vindhyachal</Text> */}
+                {/* </View> */}
+
+                {/* </View> */}
                 
             </TouchableOpacity>
         );
@@ -90,31 +100,35 @@ export default class GoogleLoginButton extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 5,
-        width: 250,
-        height: 40,
-        padding: 12,
         backgroundColor: Colors.white,
-        // justifyContent: "center",
+        height: Metrics.HEIGHT * 0.06,
+        width: Metrics.WIDTH * 0.75,
+        borderRadius: 15,
+        alignSelf: "center",
+        elevation: 3,
+        shadowColor: "#000",
         alignItems: "center",
-        flexDirection: "row",
-        elevation: 2,
-        borderRadius: 15
+        justifyContent: "center",
+        // flexDirection: 'row'
     },
-    
     text: {
-        // fontFamily: "Montserrat-Regular.ttf",
+        // color: "#fff",
+        fontSize: Fonts.moderateScale(17),
+        // width: Metrics.WIDTH * 0.92,
+        textAlign: "center",
+        fontWeight: "500", 
+        color: Colors.facebook, 
         fontSize: 12,
-        color: "#333",
-        textAlign: 'left',
-        // paddingHorizontal: 10
-        
-        
+        fontFamily: Fonts.type.proximaNovaReg
+
+        // fontFamily: Fonts.type.proximaNovaReg, fontWeight: "500", color: Colors.facebook, fontSize: 12
     },
     icon: {
-        // textAlign: 'center',
-        // fontSize: 24,
-        justifyContent: "flex-start",
-        color: Colors.fire
+        // justifyContent: "flex-end",
+        // flexDirection: 'row',
+        // fontSize: Fonts.moderateScale(17),
+        // width: Metrics.WIDTH * 0.92,
+        width: 33, height: 33,
+        // textAlign: "center",
     }
 });

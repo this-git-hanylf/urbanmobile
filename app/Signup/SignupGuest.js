@@ -23,7 +23,8 @@ import {
     Header,
     Left,
     Body,
-    Title
+    Title,
+    Label
 } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
@@ -86,6 +87,10 @@ class Signup extends React.Component {
             });
     }
 
+    Capitalize(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
     render() {
         return (
             <Container>
@@ -113,7 +118,8 @@ class Signup extends React.Component {
                                     color: "#fff"
                                 }}
                             >
-                                {"Sign Up as Guest"}
+                                {/* {"Sign Up as Guest"} */}
+                                {this.Capitalize("Registration")}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>
@@ -132,7 +138,48 @@ class Signup extends React.Component {
                         </View>
 
                         <View style={{justifyContent : 'center'}}>
-                            <View style={styles.containEmail}>
+                        <View style={{paddingBottom: 20}}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+                                <Item floatingLabel style={styles.marginround}>
+                                    <Label style={{color: "#fff", fontSize: 14}}>Email</Label>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                                    <Input 
+                                        // placeholder='Full Name' 
+                                        keyboardType="email-address"
+                                        autoCapitalize="words"
+                                        returnKeyType="next"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor={'#666'} 
+                                        value={this.state.email}
+                                        onChangeText={val =>
+                                            this.setState({ email: val })
+                                        }
+                                        style={styles.positionTextInput}
+                                        ref="email"/>
+                                        {this.state.erroremail ? (
+                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                        ) : null}
+                                    {/* <Icon name='close-circle' /> */}
+                                </Item>
+                                {this.state.erroremail ? (<Text
+                                    style={{
+                                        position: "absolute",
+                                        bottom:10,
+                                        left: 15,
+                                        color: "red",
+                                        fontSize: 12
+                                    }}
+                                >
+                                    Email Required
+                                </Text>) : null}
+                            </View>
+                            {/* <View style={styles.containEmail}>
                                 <Input
                                     ref="email"
                                     style={styles.inputEmail}
@@ -152,8 +199,50 @@ class Signup extends React.Component {
                                     placeholderTextColor="rgba(0,0,0,0.20)"
                                     value={this.state.email}
                                 />
+                            </View> */}
+
+                        <View style={{paddingBottom: 20}}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+                                <Item floatingLabel style={styles.marginround}>
+                                    <Label style={{color: "#fff", fontSize: 14}}>Full Name</Label>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                                    <Input 
+                                        // placeholder='Full Name' 
+                                        // keyboardType="email-address"
+                                        autoCapitalize="words"
+                                        returnKeyType="next"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor={'#666'} 
+                                        value={this.state.fullname}
+                                        onChangeText={val =>
+                                            this.setState({ fullname: val })
+                                        }
+                                        style={styles.positionTextInput}
+                                        ref="email"/>
+                                        {this.state.errorfullname ? (
+                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                        ) : null}
+                                    {/* <Icon name='close-circle' /> */}
+                                </Item>
+                                {this.state.errorfullname ? (<Text
+                                    style={{
+                                        position: "absolute",
+                                        bottom:10,
+                                        left: 15,
+                                        color: "red",
+                                        fontSize: 12
+                                    }}
+                                >
+                                    Full Name Required
+                                </Text>) : null}
                             </View>
-                            <View style={styles.containMid}>
+                            {/* <View style={styles.containMid}>
                                 <Input
                                     ref="fullname"
                                     style={styles.inputEmail}
@@ -172,8 +261,50 @@ class Signup extends React.Component {
                                     placeholderTextColor="rgba(0,0,0,0.20)"
                                     value={this.state.fullname}
                                 />
+                            </View> */}
+                            <View style={{paddingBottom: 20}}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+                                <Item floatingLabel style={styles.marginround}>
+                                    <Label style={{color: "#fff", fontSize: 14}}>Handphone</Label>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                                    <Input 
+                                        // placeholder='Full Name' 
+                                        // keyboardType="email-address"
+                                        keyboardType="numeric"
+                                        autoCapitalize="words"
+                                        returnKeyType="next"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor={'#666'} 
+                                        value={this.state.nohp}
+                                        onChangeText={val =>
+                                            this.setState({ nohp: val })
+                                        }
+                                        style={styles.positionTextInput}
+                                        ref="email"/>
+                                        {this.state.errornohp ? (
+                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                        ) : null}
+                                    {/* <Icon name='close-circle' /> */}
+                                </Item>
+                                {this.state.errornohp ? (<Text
+                                    style={{
+                                        position: "absolute",
+                                        bottom:10,
+                                        left: 15,
+                                        color: "red",
+                                        fontSize: 12
+                                    }}
+                                >
+                                    Handphone Required
+                                </Text>) : null}
                             </View>
-                            <View style={styles.containMid}>
+                            {/* <View style={styles.containMid}>
                                 <Input
                                     ref="nohp"
                                     style={styles.inputEmail}
@@ -194,8 +325,60 @@ class Signup extends React.Component {
                                     placeholderTextColor="rgba(0,0,0,0.20)"
                                     value={this.state.nohp}
                                 />
+                            </View> */}
+                            <View style={{paddingBottom: 20}}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+                                <Item floatingLabel style={styles.marginround}>
+                                    <Label style={{color: "#fff", fontSize: 14}}>Password</Label>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                                    <Input 
+                                        // placeholder='Full Name' 
+                                        // keyboardType="email-address"
+                                        // keyboardType="numeric"
+                                        // autoCapitalize="words"
+                                        returnKeyType="next"
+                                        autoCapitalize="none"
+                                        autoCorrect={false}
+                                        placeholderTextColor={'#666'} 
+                                        value={this.state.password}
+                                        onChangeText={val =>
+                                            this.setState({ password: val })
+                                        }
+                                        secureTextEntry={!this.state.isHide}
+                                        style={styles.positionTextInput}
+                                        ref="password"/>
+                                        <Icon
+                                            name={this.state.isHide ? "eye-off" : "eye"}
+                                            style={styles.eye}
+                                            onPress={() =>
+                                                this.setState({
+                                                    isHide: !this.state.isHide
+                                                })
+                                            }
+                                        />
+                                        {this.state.errorpassword ? (
+                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                        ) : null}
+                                    {/* <Icon name='close-circle' /> */}
+                                </Item>
+                                {this.state.errorpassword ? (<Text
+                                    style={{
+                                        position: "absolute",
+                                        bottom:10,
+                                        left: 15,
+                                        color: "red",
+                                        fontSize: 12
+                                    }}
+                                >
+                                    Password Required
+                                </Text>) : null}
                             </View>
-                            <View style={styles.containPassword}>
+                            {/* <View style={styles.containPassword}>
                                 <Input
                                     ref="password"
                                     style={styles.inputEmail}
@@ -225,7 +408,7 @@ class Signup extends React.Component {
                                         })
                                     }
                                 />
-                            </View>
+                            </View> */}
                         </View>
                     </View>
                     <View

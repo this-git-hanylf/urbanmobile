@@ -65,7 +65,7 @@ const userType = [
     }
 ];
 
-class SignupPrinciple extends React.Component {
+class SignupPrincipless extends React.Component {
     constructor(props) {
         super(props);
         this.handleCheck = this.handleCheck.bind(this);
@@ -1147,7 +1147,7 @@ class SignupPrinciple extends React.Component {
         );
     }
 }
-export default SignupPrinciple;
+export default SignupPrincipless;
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
