@@ -369,6 +369,103 @@ class Signup extends React.Component {
                                 </Text>) : null}
                             </View>
                             
+                            {/* <View style={styles.containEmail}>
+                                <Input
+                                    ref="email"
+                                    style={styles.inputEmail}
+                                    editable={this.props.data ? false : true}
+                                    keyboardType="email-address"
+                                    onChangeText={val =>
+                                        this.setState({ email: val })
+                                    }
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    underlineColorAndroid="transparent"
+                                    textAlign={
+                                        I18nManager.isRTL ? "right" : "left"
+                                    }
+                                    placeholder="Email"
+                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    value={this.state.email}
+                                />
+                            </View> */}
+
+{/* <View style={styles.containMid}>
+                                <Input
+                                    ref="fullname"
+                                    style={styles.inputEmail}
+                                    editable={true}
+                                    onChangeText={val =>
+                                        this.setState({ fullname: val })
+                                    }
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    underlineColorAndroid="transparent"
+                                    textAlign={
+                                        I18nManager.isRTL ? "right" : "left"
+                                    }
+                                    placeholder="Full Name"
+                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    value={this.state.fullname}
+                                />
+                            </View> */}
+
+{/* <View style={styles.containMid}>
+                                <Input
+                                    ref="nohp"
+                                    style={styles.inputEmail}
+                                    editable={true}
+                                    onChangeText={val =>
+                                        this.setState({ nohp: val })
+                                    }
+                                    keyboardType="numeric"
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    underlineColorAndroid="transparent"
+                                    lkk
+                                    textAlign={
+                                        I18nManager.isRTL ? "right" : "left"
+                                    }
+                                    placeholder="Handphone"
+                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    value={this.state.nohp}
+                                />
+                            </View> */}
+
+             {/* <View style={styles.containPassword}>
+                                <Input
+                                    ref="password"
+                                    style={styles.inputEmail}
+                                    editable={true}
+                                    onChangeText={val =>
+                                        this.setState({ password: val })
+                                    }
+                                    keyboardType="default"
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    underlineColorAndroid="transparent"
+                                    textAlign={
+                                        I18nManager.isRTL ? "right" : "left"
+                                    }
+                                    placeholder="Password"
+                                    placeholderTextColor="rgba(0,0,0,0.20)"
+                                    secureTextEntry={!this.state.isHide}
+                                    value={this.state.password}
+                                />
+                                <Icon
+                                    name={this.state.isHide ? "eye-off" : "eye"}
+                                    style={styles.eye}
+                                    onPress={() =>
+                                        this.setState({
+                                            isHide: !this.state.isHide
+                                        })
+                                    }
+                                />
+                            </View> */}
                         </View>
 
                         <View
