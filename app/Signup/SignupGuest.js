@@ -30,7 +30,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
 import AppIntroSlider from "react-native-app-intro-slider";
 import styles from "./styles";
-import { Style, Colors } from "../Themes";
+import { Style, Colors, Metrics, Fonts } from "../Themes";
 import { Actions } from "react-native-router-flux";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
@@ -62,6 +62,7 @@ class Signup extends React.Component {
             Id: this.props.data.LoginId,
             password: this.state.password
         };
+        console.log('data kirim', data);
 
         fetch(urlApi + "c_auth/SignUpGuest", {
             method: "POST",
@@ -91,6 +92,34 @@ class Signup extends React.Component {
         return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
+    validating = validationData => {
+        const keys = Object.keys(validationData);
+        const errorKey = [];
+        let isValid = false;
+
+        keys.map((data, key) => {
+            if (validationData[data].require) {
+                let isError =
+                    !this.state[data] || this.state[data].length == 0
+                        ? true
+                        : false;
+                let error = "error" + data;
+                errorKey.push(isError);
+                this.setState({ [error]: isError });
+            }
+        });
+
+        for (var i = 0; i < errorKey.length; i++) {
+            if (errorKey[i]) {
+                isValid = false;
+                break;
+            }
+            isValid = true;
+        }
+
+        return isValid;
+    };
+
     render() {
         return (
             <Container>
@@ -113,13 +142,14 @@ class Signup extends React.Component {
                         <Body style={styles.body}>
                             <Text
                                 style={{
-                                    fontSize: 18,
-                                    fontWeight: "bold",
-                                    color: "#fff"
+                                    fontSize: 16,
+                                    // fontWeight: "bold",
+                                    color: Colors.goldUrban,
+                                    fontFamily: Fonts.type.proximaNovaBold
                                 }}
                             >
-                                {/* {"Sign Up as Guest"} */}
-                                {this.Capitalize("Registration")}
+                                {"REGISTRATION"}
+                                {/* {this.Capitalize("Registration")} */}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>
@@ -129,16 +159,17 @@ class Signup extends React.Component {
                             style={styles.images}
                             source={require("../Images/logo.png")}
                         /> */}
-                        <View style={{width: 200,height: 100, marginBottom: 65}}>
+                        {/* <View style={{width: 200,height: 100, marginBottom: 65}}>
                                 <Image
                                     // style={styles.images}
                                 style={styles.styleLogo}
                                 source={require("../Images/logo.png")}
                             />
-                        </View>
+                        </View> */}
 
-                        <View style={{justifyContent : 'center'}}>
-                        <View style={{paddingBottom: 20}}>
+                        <View style={{justifyContent : 'center',width: Metrics.WIDTH * 0.92,}}> 
+
+                            <View style={{paddingBottom: 20}}>
                                 {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
                                 </View> */}
@@ -151,17 +182,27 @@ class Signup extends React.Component {
                                     <Input 
                                         // placeholder='Full Name' 
                                         keyboardType="email-address"
-                                        autoCapitalize="words"
-                                        returnKeyType="next"
                                         autoCapitalize="none"
+                                        returnKeyType="next"
                                         autoCorrect={false}
                                         placeholderTextColor={'#666'} 
                                         value={this.state.email}
                                         onChangeText={val =>
                                             this.setState({ email: val })
                                         }
+                                        
+                                        ref="email"
                                         style={styles.positionTextInput}
-                                        ref="email"/>
+
+                                        // editable={this.props.data ? false : true}
+                                        // underlineColorAndroid="transparent"
+                                        // textAlign={
+                                        //     I18nManager.isRTL ? "right" : "left"
+                                        // }
+                                        // placeholder="Email"
+                                        // placeholderTextColor="rgba(0,0,0,0.20)"
+                                        
+                                        />
                                         {this.state.erroremail ? (
                                         <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
                                         ) : null}
@@ -179,29 +220,8 @@ class Signup extends React.Component {
                                     Email Required
                                 </Text>) : null}
                             </View>
-                            {/* <View style={styles.containEmail}>
-                                <Input
-                                    ref="email"
-                                    style={styles.inputEmail}
-                                    editable={this.props.data ? false : true}
-                                    keyboardType="email-address"
-                                    onChangeText={val =>
-                                        this.setState({ email: val })
-                                    }
-                                    returnKeyType="next"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    underlineColorAndroid="transparent"
-                                    textAlign={
-                                        I18nManager.isRTL ? "right" : "left"
-                                    }
-                                    placeholder="Email"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
-                                    value={this.state.email}
-                                />
-                            </View> */}
-
-                        <View style={{paddingBottom: 20}}>
+                            
+                            <View style={{paddingBottom: 20}}>
                                 {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
                                 </View> */}
@@ -216,15 +236,25 @@ class Signup extends React.Component {
                                         // keyboardType="email-address"
                                         autoCapitalize="words"
                                         returnKeyType="next"
-                                        autoCapitalize="none"
                                         autoCorrect={false}
                                         placeholderTextColor={'#666'} 
+                                        ref="fullname"
+                                        style={styles.positionTextInput}
                                         value={this.state.fullname}
                                         onChangeText={val =>
                                             this.setState({ fullname: val })
                                         }
-                                        style={styles.positionTextInput}
-                                        ref="email"/>
+
+                                        // editable={true}
+                                        // underlineColorAndroid="transparent"
+                                        // textAlign={
+                                        //     I18nManager.isRTL ? "right" : "left"
+                                        // }
+                                        // placeholder="Full Name"
+                                        // placeholderTextColor="rgba(0,0,0,0.20)"
+                                        
+                                        
+                                        />
                                         {this.state.errorfullname ? (
                                         <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
                                         ) : null}
@@ -242,26 +272,7 @@ class Signup extends React.Component {
                                     Full Name Required
                                 </Text>) : null}
                             </View>
-                            {/* <View style={styles.containMid}>
-                                <Input
-                                    ref="fullname"
-                                    style={styles.inputEmail}
-                                    editable={true}
-                                    onChangeText={val =>
-                                        this.setState({ fullname: val })
-                                    }
-                                    returnKeyType="next"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    underlineColorAndroid="transparent"
-                                    textAlign={
-                                        I18nManager.isRTL ? "right" : "left"
-                                    }
-                                    placeholder="Full Name"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
-                                    value={this.state.fullname}
-                                />
-                            </View> */}
+                    
                             <View style={{paddingBottom: 20}}>
                                 {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
@@ -286,7 +297,7 @@ class Signup extends React.Component {
                                             this.setState({ nohp: val })
                                         }
                                         style={styles.positionTextInput}
-                                        ref="email"/>
+                                        ref="nohp"/>
                                         {this.state.errornohp ? (
                                         <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
                                         ) : null}
@@ -304,66 +315,45 @@ class Signup extends React.Component {
                                     Handphone Required
                                 </Text>) : null}
                             </View>
-                            {/* <View style={styles.containMid}>
-                                <Input
-                                    ref="nohp"
-                                    style={styles.inputEmail}
-                                    editable={true}
-                                    onChangeText={val =>
-                                        this.setState({ nohp: val })
-                                    }
-                                    keyboardType="numeric"
-                                    returnKeyType="next"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    underlineColorAndroid="transparent"
-                                    lkk
-                                    textAlign={
-                                        I18nManager.isRTL ? "right" : "left"
-                                    }
-                                    placeholder="Handphone"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
-                                    value={this.state.nohp}
-                                />
-                            </View> */}
+
                             <View style={{paddingBottom: 20}}>
-                                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Text style={styles.overviewTitles}>Full Name</Text>
-                                </View> */}
+                               
                                 <Item floatingLabel style={styles.marginround}>
                                     <Label style={{color: "#fff", fontSize: 14}}>Password</Label>
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                    </View> */}
+                                   
                                     <Input 
-                                        // placeholder='Full Name' 
-                                        // keyboardType="email-address"
-                                        // keyboardType="numeric"
-                                        // autoCapitalize="words"
+                                        ref="password"
+                                        style={styles.positionTextInput}
+                                        editable={true}
+                                        onChangeText={val =>
+                                            this.setState({ password: val })
+                                        }
+                                        keyboardType="default"
                                         returnKeyType="next"
                                         autoCapitalize="none"
                                         autoCorrect={false}
                                         placeholderTextColor={'#666'} 
-                                        value={this.state.password}
-                                        onChangeText={val =>
-                                            this.setState({ password: val })
-                                        }
+                                        // underlineColorAndroid="transparent"
+                                        // textAlign={
+                                        //     I18nManager.isRTL ? "right" : "left"
+                                        // }
+                                        // placeholder="Password"
+                                        // placeholderTextColor="rgba(0,0,0,0.20)"
                                         secureTextEntry={!this.state.isHide}
-                                        style={styles.positionTextInput}
-                                        ref="password"/>
+                                        value={this.state.password}
+                                        />
+                                        {/* {this.state.errorpassword ? (
+                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
+                                        ) : null} */}
                                         <Icon
                                             name={this.state.isHide ? "eye-off" : "eye"}
-                                            style={styles.eye}
+                                            style={[styles.eye,{color: Colors.white}]}
                                             onPress={() =>
                                                 this.setState({
                                                     isHide: !this.state.isHide
                                                 })
                                             }
                                         />
-                                        {this.state.errorpassword ? (
-                                        <Icon style={{color: "red", bottom: 3, position: "absolute", right: 0}} name='close-circle' />
-                                        ) : null}
                                     {/* <Icon name='close-circle' /> */}
                                 </Item>
                                 {this.state.errorpassword ? (<Text
@@ -378,45 +368,37 @@ class Signup extends React.Component {
                                     Password Required
                                 </Text>) : null}
                             </View>
-                            {/* <View style={styles.containPassword}>
-                                <Input
-                                    ref="password"
-                                    style={styles.inputEmail}
-                                    editable={true}
-                                    onChangeText={val =>
-                                        this.setState({ password: val })
-                                    }
-                                    keyboardType="default"
-                                    returnKeyType="next"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                    underlineColorAndroid="transparent"
-                                    textAlign={
-                                        I18nManager.isRTL ? "right" : "left"
-                                    }
-                                    placeholder="Password"
-                                    placeholderTextColor="rgba(0,0,0,0.20)"
-                                    secureTextEntry={!this.state.isHide}
-                                    value={this.state.password}
-                                />
-                                <Icon
-                                    name={this.state.isHide ? "eye-off" : "eye"}
-                                    style={styles.eye}
-                                    onPress={() =>
-                                        this.setState({
-                                            isHide: !this.state.isHide
-                                        })
-                                    }
-                                />
-                            </View> */}
+                            
                         </View>
-                    </View>
-                    <View
-                        style={styles.signbtnSec}
+
+                        <View
+                        // style={styles.signbtnSec}
+                        style={{marginTop: 40}}
                         pointerEvents={this.state.isLoaded ? "auto" : "none"}
                     >
                         <Button
-                            style={styles.signInBtn}
+                            style={styles.signInBtnMedium}
+                            onPress={() => this.SignupSosmed()}
+                        >
+                            {!this.state.isLoaded ? (
+                                <ActivityIndicator color="#fff" />
+                            ) : (
+                                <Text style={[styles.signInBtnText,{fontSize: 15}]}>
+                                    Register Now
+                                </Text>
+                            )}
+                        </Button>
+                    </View>
+
+
+                    </View>
+                    {/* <View
+                        // style={styles.signbtnSec}
+                        style={{marginTop: 40}}
+                        pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                    >
+                        <Button
+                            style={styles.signInBtnMedium}
                             onPress={() => this.SignupSosmed()}
                         >
                             {!this.state.isLoaded ? (
@@ -427,7 +409,7 @@ class Signup extends React.Component {
                                 </Text>
                             )}
                         </Button>
-                    </View>
+                    </View> */}
                 </ImageBackground>
             </Container>
         );

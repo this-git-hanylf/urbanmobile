@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
         // flexDirection: 'row',
         // fontSize: Fonts.moderateScale(17),
         // width: Metrics.WIDTH * 0.92,
+        right: 10,
         width: 33, height: 33,
         // textAlign: "center",
     }

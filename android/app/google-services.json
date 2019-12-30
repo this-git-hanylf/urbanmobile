@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "945884059945-ol9atovt5o3euigeeshbat2i38el7v05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ifcasoftware.urban",
+            "certificate_hash": "f281910ec8e4ce31f49eefc70d5534db3de7d934"
+          }
+        },
+        {
           "client_id": "945884059945-0ga4c6kcjiauacrdmv0li899fu4g2n4t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
