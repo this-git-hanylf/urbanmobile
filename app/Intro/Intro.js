@@ -352,7 +352,7 @@ export default class Intro extends React.Component {
                             </Right>
                         </Header>
                         <View style={styles.inputFieldStyles}>
-                            <View style={{width: 200,height: 100, marginBottom: 65}}>
+                            <View style={{width: 300,height: 120, marginBottom: 65}}>
                                 <Image
                                     // style={styles.images}
                                     style={styles.styleLogo}
