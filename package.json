@@ -1,6 +1,6 @@
 {
   "name": "Urban",
-  "version": "1.0.4",
+  "version": "1.0.10",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -18,7 +18,8 @@
     "add-remote" : "git remote add origin",
     "push-master": "git push -u origin master",
     "push-origin": "git push -u origin",
-    "push-from-branch": "git push -u origin (branch):master" 
+    "push-from-branch": "git push -u origin (branch):master",
+    "start-reset": "react-native start -- --reset-cache" 
 
   },
   "dependencies": {

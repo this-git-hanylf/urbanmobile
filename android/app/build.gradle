@@ -117,6 +117,11 @@ def verCode = getVerCode()
 def verName = getVerName()
 
 android {
+    lintOptions { 
+
+        checkReleaseBuilds false
+
+    }
     packagingOptions {
         pickFirst '**/libc++_shared.so'
     }
