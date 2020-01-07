@@ -31,6 +31,8 @@ target 'Urban' do
   pod 'react-native-mail', :path => '../node_modules/react-native-mail'
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'UrbanTests' do
     inherit! :search_paths
     # Pods for testing

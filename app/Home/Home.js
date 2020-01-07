@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
+  ImageBackground,
   Image,
   ActivityIndicator,
   FlatList
@@ -301,128 +302,133 @@ export default class Home extends Component {
     // const example8 = this.customExample(8, 'Custom animation 4', 4, this._renderLightItem);
 
     return (
+      <ImageBackground  style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
       <View style={styles.container}>
         <StatusBar
           translucent={true}
           backgroundColor={"rgba(0, 0, 0, 0.3)"}
           barStyle={"light-content"}
         />
-        {this.gradient}
-        <ScrollView
-          style={styles.scrollview}
-          scrollEventThrottle={200}
-          directionalLockEnabled={true}>
-          {example1}
-          <ScrollView scrollEventThrottle={16} >
-            <View style={{ flex: 1 }}>
+        {/* {this.gradient} */}
+        
+          <ScrollView
+            style={styles.scrollview}
+            scrollEventThrottle={200}
+            directionalLockEnabled={true}>
+            {example1}
+            <ScrollView scrollEventThrottle={16} source={require("../Images/background-blue.png")}>
+              <View style={{ flex: 1 }}>
 
-              {/* <View style={{ height: 130, marginTop: 20 }}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                  {this.state.dataPromo.length != 0 ?
-                    this.state.dataPromo.map((item,key)=>
-                      <CardSlide key={key} imageUri={{url:item.picture}} name={item.subject} />
-                    )
-                  :<ActivityIndicator/>}
-                </ScrollView>
-              </View> */}
-              <View style={Styles.sectionTransparent}>
-                <View style={Styles.headerBg}>
-                  <Text style={Styles.sTitleWhite}>
-                    {"Promo".toUpperCase()}
-                  </Text>
-                  <Right>
-                    <Button
-                      small
-                      rounded
-                      style={Styles.sBtn}
-                      onPress={()=>Actions.Feed()}
-                      >
-                      <Text style={Styles.sLink}>See All</Text>
-                    </Button>
-                  </Right>
+                {/* <View style={{ height: 130, marginTop: 20 }}>
+                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {this.state.dataPromo.length != 0 ?
+                      this.state.dataPromo.map((item,key)=>
+                        <CardSlide key={key} imageUri={{url:item.picture}} name={item.subject} />
+                      )
+                    :<ActivityIndicator/>}
+                  </ScrollView>
+                </View> */}
+                <View style={Styles.sectionTransparent}>
+                  <View style={Styles.headerBg}>
+                    <Text style={Styles.sTitleWhite}>
+                      {"Promo".toUpperCase()}
+                    </Text>
+                    <Right>
+                      <Button
+                        small
+                        rounded
+                        style={Styles.sBtn}
+                        onPress={()=>Actions.Feed()}
+                        >
+                        <Text style={Styles.sLink}>See All</Text>
+                      </Button>
+                    </Right>
+                  </View>
+                  <Carousel
+                    autoplay={true}
+                    autoplayDelay={1000}
+                    autoplayInterval={3000}
+                    sliderWidth={width}
+                    sliderHeight={width}
+                    itemWidth={width - 60}
+                    data={this.state.dataPromo}
+                    renderItem={this._renderItemPromo}
+                    hasParallaxImages={true}
+                    // resizeMode={ImageResizeMode.contain}
+                  />
+                  {/* <FlatList
+                    data={this.state.dataPromo}
+                    horizontal
+                    alwaysBounceHorizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    style={Styles.flatList}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => this.renderItemPromo(item)}
+                  /> */}
                 </View>
-                <Carousel
-                  autoplay={true}
-                  autoplayDelay={1000}
-                  autoplayInterval={3000}
-                  sliderWidth={width}
-                  sliderHeight={width}
-                  itemWidth={width - 60}
-                  data={this.state.dataPromo}
-                  renderItem={this._renderItemPromo}
-                  hasParallaxImages={true}
-                  // resizeMode={ImageResizeMode.contain}
-                />
-                {/* <FlatList
-                  data={this.state.dataPromo}
-                  horizontal
-                  alwaysBounceHorizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  style={Styles.flatList}
-                  keyExtractor={item => item.id.toString()}
-                  renderItem={({ item }) => this.renderItemPromo(item)}
-                /> */}
-              </View>
 
-              <View style={Styles.sectionTransparent}>
-                <View style={Styles.headerBg}>
-                  <Text style={Styles.sTitleWhite}>
-                    {"News".toUpperCase()}
-                  </Text>
-                  <Right>
-                    <Button
-                      small
-                      rounded
-                      style={Styles.sBtn}
-                      onPress={()=>Actions.Feed()}>
-                      <Text style={Styles.sLink}>See All</Text>
-                    </Button>
-                  </Right>
+                <View style={Styles.sectionTransparent}>
+                  <View style={Styles.headerBg}>
+                    <Text style={Styles.sTitleWhite}>
+                      {"News".toUpperCase()}
+                    </Text>
+                    <Right>
+                      <Button
+                        small
+                        rounded
+                        style={Styles.sBtn}
+                        onPress={()=>Actions.Feed()}>
+                        <Text style={Styles.sLink}>See All</Text>
+                      </Button>
+                    </Right>
+                  </View>
+                  <FlatList
+                    data={this.state.dataNews}
+                    contentContainerStyle={Styles.flatList}
+                    keyExtractor={item => item.id.toString()}
+                    numColumns={2}
+                    renderItem={({ item }) => this.renderItemNews(item)}
+                  />
                 </View>
-                <FlatList
-                  data={this.state.dataNews}
-                  contentContainerStyle={Styles.flatList}
-                  keyExtractor={item => item.id.toString()}
-                  numColumns={2}
-                  renderItem={({ item }) => this.renderItemNews(item)}
-                />
-              </View>
-              {/* <View style={Styles.sectionTransparent}>
-                <TouchableOpacity
-                    style={Styles.item}
-                    underlayColor="transparent"
-                    onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
-                    <View>
+                {/* <View style={Styles.sectionTransparent}>
+                  <TouchableOpacity
+                      style={Styles.item}
+                      underlayColor="transparent"
+                      onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
                       <View>
-                        <Image
-                          source={{ uri: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg' }}
-                          style={Styles.itemImg}
-                        />
+                        <View>
+                          <Image
+                            source={{ uri: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg' }}
+                            style={Styles.itemImg}
+                          />
+                        </View>
+                        <Text style={Styles.itemPrice}>rts</Text>
+                        <Text style={Styles.itemLocation}>ess</Text>
+                        
                       </View>
-                      <Text style={Styles.itemPrice}>rts</Text>
-                      <Text style={Styles.itemLocation}>ess</Text>
-                      
-                    </View>
-                  </TouchableOpacity>
-              </View> */}
+                    </TouchableOpacity>
+                </View> */}
 
-              {/* <View style={{ marginTop: 40, paddingHorizontal: 20, paddingBottom: 16 }}>
-                <Text style={{ fontSize: 18, fontWeight: '500' }}>
-                    Introducing Ifca SPlus
-                </Text>
-                <Text style={{ fontWeight: '100', marginTop: 10 }}>
-                    A new selection of homes verified for quality & comfort
-                </Text>
-                <View style={{ width: width - 40, height: 200, marginTop: 20 }}>
-                  <Image
-                    style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
-                    source={require('../Images/home.jpg')} />
-                </View>
-              </View> */}
-            </View>
-          </ScrollView>          
-        </ScrollView>
+                {/* <View style={{ marginTop: 40, paddingHorizontal: 20, paddingBottom: 16 }}>
+                  <Text style={{ fontSize: 18, fontWeight: '500' }}>
+                      Introducing Ifca SPlus
+                  </Text>
+                  <Text style={{ fontWeight: '100', marginTop: 10 }}>
+                      A new selection of homes verified for quality & comfort
+                  </Text>
+                  <View style={{ width: width - 40, height: 200, marginTop: 20 }}>
+                    <Image
+                      style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
+                      source={require('../Images/home.jpg')} />
+                  </View>
+                </View> */}
+              </View>
+            </ScrollView>          
+          </ScrollView>
+       
+        
       </View>
+      </ImageBackground>
     );
   }
 }

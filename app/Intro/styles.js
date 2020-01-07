@@ -123,7 +123,8 @@ const styles = StyleSheet.create({
         color: Colors.goldUrban,
         textAlign: 'center',
         justifyContent: 'flex-end',
-        fontSize: 23
+        fontSize: 23,
+        paddingBottom: 15
     },
     title_next: {
         fontFamily: Fonts.type.proximaNovaReg,

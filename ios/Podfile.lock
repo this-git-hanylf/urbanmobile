@@ -112,6 +112,8 @@ PODS:
     - React
   - react-native-mail (4.0.0):
     - React
+  - react-native-maps (0.25.0):
+    - React
   - react-native-webview (5.12.0):
     - React
   - React/Core (0.59.0):
@@ -170,6 +172,7 @@ DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-mail (from `../node_modules/react-native-mail`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React/Core (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -190,7 +193,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Crashlytics
     - Fabric
     - FBSDKCoreKit
@@ -222,6 +225,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fbsdk"
   react-native-mail:
     :path: "../node_modules/react-native-mail"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   RNDeviceInfo:
@@ -260,6 +265,7 @@ SPEC CHECKSUMS:
   React: 0d6c719d9549bea0bd5676f8170b0e5c56e2c3c7
   react-native-fbsdk: 45e28bbab3e905cbc635c0bdd3444b372e933ae9
   react-native-mail: 7e37dfbe93ff0d4c7df346b738854dbed533e86f
+  react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-webview: 8b2761a9bf84bbbbe7f90f49743b9b74c7cb11e7
   RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
@@ -268,6 +274,6 @@ SPEC CHECKSUMS:
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
-PODFILE CHECKSUM: 4f235037f8e9b8b503afcdde1048a05c73e022ec
+PODFILE CHECKSUM: f45a8576223141e1a12b14f079ea793667d8003e
 
 COCOAPODS: 1.8.4

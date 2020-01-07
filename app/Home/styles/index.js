@@ -18,9 +18,15 @@ export default StyleSheet.create({
         backgroundColor: 'transparent',
 
     },
+    backgroundImage: {
+        flex: 1,
+        width: Metrics.WIDTH,
+        height: Metrics.HEIGHT,
+        // backgroundColor: "#febe29"
+    },
     container: {
         flex: 1,
-        backgroundColor: colors.background1
+        // backgroundColor: colors.background1
     },
     gradient: {
         ...StyleSheet.absoluteFillObject
