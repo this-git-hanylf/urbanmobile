@@ -41,6 +41,7 @@ import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel"
 import { sliderWidth, itemWidth } from "./styles/SliderEntry";
 import SliderEntry from "../components/SlideEntry";
 import styles, { colors } from "./styles/index";
+import { Fonts } from '../Themes/';
 import { ENTRIES1, ENTRIES2 } from "./static/entries";
 import { scrollInterpolators, animatedStyles } from "./utils/animations";
 import CardSlide from "../components/CardSlide";
@@ -64,6 +65,7 @@ export default class Home extends Component {
       dataTower : [],
       dataPromo : [],
       dataNews : [],
+      tes: '',
 
       isCorLoaded : false,
     };
@@ -178,6 +180,17 @@ export default class Home extends Component {
     return <SliderEntry data={item} even={true} />;
   }
 
+  handleNavigation = () => {
+    alert('Coming soon');
+    // this.setState({ isDisabled: true }, () => {
+    //     if (this.state.appType == "") {
+    //         this.goToScreen("screen.CategoryHelp");
+    //     } else {
+    //         this.goToScreen("screen.SubmitHelpDesk");
+    //     }
+    // });
+};
+
   mainExample(number, title) {
     const { slider1ActiveSlide } = this.state;
 
@@ -185,10 +198,34 @@ export default class Home extends Component {
       <View style={styles.exampleContainer}>
         {/* //??? Di Matiin Belum nemu Solusi Biar ke refresh */}
         {/* <Text style={styles.title}>Hey {this.state.name}</Text> */}
-        <Text style={styles.title}>Urban Jakarta Propertindo</Text>
-        <Text style={styles.subtitle}>{`This is what you need!`}</Text>
+        {/* <Text style={styles.title}>Urban Jakarta Propertindo</Text>
+        <Text style={styles.subtitle}>{`This is what you need!`}</Text> */}
+
+        <View style={{flexDirection:'column'}}>
+          <ImageBackground  style={styles.backgroundImage2} source={require("../Images/bg-gedung.png")}></ImageBackground>
+          <View style={{marginLeft: 20, marginRight: 20}}>
+            <Item style={styles.marginround}  >
+            {/* <Item style={styles.marginround} onPress={() => this.handleNavigation()} > */}
+              <Input 
+                editable={false}
+                placeholder='Find a residance'
+                value={this.state.tes} 
+                style={
+                  {fontFamily: this.state.tes ?  Fonts.type.proximaNovaThin :  Fonts.type.proximaNovaThin, fontWeight: this.state.tes ?  '100' :  '400',
+                  marginLeft: 20, fontSize: 16}}
+                >
+              </Input>
+              <Icon style={{color: colors.greyUrban, bottom: 4, position: "absolute", right: 10, fontSize: 26}} name='search' />
+            </Item>
+          </View>
+        </View>
+
+        <View style={{paddingVertical: 30}}>
+          <Text style={{color: colors.gold, fontFamily: Fonts.type.proximaNovaBoldWeb,letterSpacing: 1.5, alignItems: 'center', textAlign: 'center', paddingTop: 10, fontSize: 15}}>DISCOVER</Text>
+        </View>
+       
         
-        <View
+        {/* <View
           style={{
             justifyContent: "flex-end",
             flexDirection: "row",
@@ -204,7 +241,7 @@ export default class Home extends Component {
             onPress={()=>Actions.ListingProjectPage()}>
             <Text style={Styles.sLinkHead}>ALL PROJECT</Text>
           </Button>
-        </View>
+        </View> */}
         
         <View style={styles.corContainerStyle}>
           {this.state.dataTower.length == 0 ? <ActivityIndicator size="large" /> :
@@ -315,20 +352,11 @@ export default class Home extends Component {
             style={styles.scrollview}
             scrollEventThrottle={200}
             directionalLockEnabled={true}>
+          
             {example1}
             <ScrollView scrollEventThrottle={16} source={require("../Images/background-blue.png")}>
               <View style={{ flex: 1 }}>
-
-                {/* <View style={{ height: 130, marginTop: 20 }}>
-                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    {this.state.dataPromo.length != 0 ?
-                      this.state.dataPromo.map((item,key)=>
-                        <CardSlide key={key} imageUri={{url:item.picture}} name={item.subject} />
-                      )
-                    :<ActivityIndicator/>}
-                  </ScrollView>
-                </View> */}
-                <View style={Styles.sectionTransparent}>
+                {/* <View style={Styles.sectionTransparent}>
                   <View style={Styles.headerBg}>
                     <Text style={Styles.sTitleWhite}>
                       {"Promo".toUpperCase()}
@@ -356,18 +384,10 @@ export default class Home extends Component {
                     hasParallaxImages={true}
                     // resizeMode={ImageResizeMode.contain}
                   />
-                  {/* <FlatList
-                    data={this.state.dataPromo}
-                    horizontal
-                    alwaysBounceHorizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    style={Styles.flatList}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => this.renderItemPromo(item)}
-                  /> */}
-                </View>
+                
+                </View> */}
 
-                <View style={Styles.sectionTransparent}>
+                {/* <View style={Styles.sectionTransparent}>
                   <View style={Styles.headerBg}>
                     <Text style={Styles.sTitleWhite}>
                       {"News".toUpperCase()}
@@ -389,39 +409,8 @@ export default class Home extends Component {
                     numColumns={2}
                     renderItem={({ item }) => this.renderItemNews(item)}
                   />
-                </View>
-                {/* <View style={Styles.sectionTransparent}>
-                  <TouchableOpacity
-                      style={Styles.item}
-                      underlayColor="transparent"
-                      onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
-                      <View>
-                        <View>
-                          <Image
-                            source={{ uri: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg' }}
-                            style={Styles.itemImg}
-                          />
-                        </View>
-                        <Text style={Styles.itemPrice}>rts</Text>
-                        <Text style={Styles.itemLocation}>ess</Text>
-                        
-                      </View>
-                    </TouchableOpacity>
                 </View> */}
-
-                {/* <View style={{ marginTop: 40, paddingHorizontal: 20, paddingBottom: 16 }}>
-                  <Text style={{ fontSize: 18, fontWeight: '500' }}>
-                      Introducing Ifca SPlus
-                  </Text>
-                  <Text style={{ fontWeight: '100', marginTop: 10 }}>
-                      A new selection of homes verified for quality & comfort
-                  </Text>
-                  <View style={{ width: width - 40, height: 200, marginTop: 20 }}>
-                    <Image
-                      style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5, borderWidth: 1, borderColor: '#dddddd' }}
-                      source={require('../Images/home.jpg')} />
-                  </View>
-                </View> */}
+              
               </View>
             </ScrollView>          
           </ScrollView>

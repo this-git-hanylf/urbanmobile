@@ -9,6 +9,8 @@ export const colors = {
     // background1: '#12173F',
     background1: Colors.navyUrban,
     background2: Colors.blueUrban,
+    gold: Colors.goldUrban,
+    greyUrban: Colors.greyUrban
     // background2: '#1E3A60'
 };
 
@@ -19,6 +21,12 @@ export default StyleSheet.create({
 
     },
     backgroundImage: {
+        flex: 1,
+        width: Metrics.WIDTH,
+        height: Metrics.HEIGHT,
+        // backgroundColor: "#febe29"
+    },
+    backgroundImage2: {
         flex: 1,
         width: Metrics.WIDTH,
         height: Metrics.HEIGHT,
@@ -76,7 +84,8 @@ export default StyleSheet.create({
 
     },
     slider: {
-        marginTop: 8,
+        // marginTop: 8,
+        marginTop: 10, //marginn top paralax
         overflow: 'visible' // for custom animations
     },
     sliderContentContainer: {
@@ -164,5 +173,18 @@ export default StyleSheet.create({
         backgroundColor : 'rgba(0,0,0,0.5)',
         justifyContent :'center',
         alignItems:'center'
-    }
+    },
+
+    marginround :{
+        height: 35, 
+        marginBottom: 4,
+        marginLeft: 12, 
+        marginRight: 12, 
+        backgroundColor: '#fff',
+        // borderBottomWidth: 1,
+        // borderColor: "#ffffff",
+        textAlignVertical: 'bottom',
+        borderRadius: 13
+
+    },
 });

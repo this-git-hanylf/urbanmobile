@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { colors } from './index';
+// import { Fonts, Metrics, Colors } from '../../Themes/';
+// import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -9,9 +11,9 @@ function wp (percentage) {
     return Math.round(value);
 }
 
-const slideHeight = viewportHeight * 0.50;
-const slideWidth = wp(90); 
-const itemHorizontalMargin = wp(2);
+const slideHeight = viewportHeight * 0.45;
+const slideWidth = wp(80); 
+const itemHorizontalMargin = wp(4);
                  
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
@@ -20,6 +22,7 @@ const entryBorderRadius = 8;
 
 export default StyleSheet.create({
     slideInnerContainer: {
+      
         width: itemWidth,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
@@ -40,12 +43,13 @@ export default StyleSheet.create({
     imageContainer: {
         flex: 1,
         marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-        backgroundColor: 'white',
+        backgroundColor: colors.gold,
+        // backgroundColor: colors.gold,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius
     },
     imageContainerEven: {
-        backgroundColor: colors.black
+        backgroundColor: colors.gold
     },
     image: {
         ...StyleSheet.absoluteFillObject,
@@ -61,37 +65,43 @@ export default StyleSheet.create({
         left: 0,
         right: 0,
         height: entryBorderRadius,
-        backgroundColor: 'white'
+        backgroundColor: colors.gold
     },
     radiusMaskEven: {
-        backgroundColor: colors.black
+        backgroundColor: colors.gold
     },
     textContainer: {
         justifyContent: 'center',
-        paddingTop: 20 - entryBorderRadius,
-        paddingBottom: 20,
+        
+        paddingTop: 10 - entryBorderRadius,
+        paddingBottom: 10,
         paddingHorizontal: 16,
-        backgroundColor: 'white',
+        backgroundColor: colors.gold,
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius
     },
     textContainerEven: {
-        backgroundColor: colors.black
+        backgroundColor: colors.gold
     },
     title: {
-        color: colors.black,
+        color: 'white',
         fontSize: 13,
         fontWeight: 'bold',
-        letterSpacing: 0.5
+        letterSpacing: 0.5,
+        alignItems: 'center',
+        textAlign: 'center',
+    
     },
     titleEven: {
         color: 'white'
     },
     subtitle: {
         marginTop: 6,
-        color: colors.gray,
+        color: 'white',
         fontSize: 12,
-        fontStyle: 'italic'
+        // fontStyle: 'italic',
+        alignItems: 'center',
+        textAlign: 'center',
     },
     subtitleEven: {
         color: 'rgba(255, 255, 255, 0.7)'
