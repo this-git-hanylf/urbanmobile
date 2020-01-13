@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import Home from "./Home/Home";
 import Login from "./Intro/Intro";
+import SkipLoginBlank from "./Intro/SkipLoginBlank";
 import SignupGuest from './Signup/SignupGuest';
 import SignupAgent from './Signup/SignupAgent';
 import chooseRegist from './Signup/chooseRegist';
@@ -234,6 +235,14 @@ class Routes extends Component{
                   title=""
         
                 />
+                <Scene
+                  key="SkipLoginBlank"
+                  component={SkipLoginBlank}
+                  hideNavBar={true}
+                  title=""
+        
+                />
+                
                   <Scene
                   key="unitgoris"
                   component={Unitgoris}

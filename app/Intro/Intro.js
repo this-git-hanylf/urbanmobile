@@ -275,6 +275,10 @@ export default class Intro extends React.Component {
         });
     };
 
+    skipLoginBlank = () => {
+        Actions.SkipLoginBlank()
+    }
+
     signInGoogle = (data) => {
         this.doLoginSosMed(data);
     };
@@ -468,7 +472,7 @@ export default class Intro extends React.Component {
                                 >
                                     <Text
                                         style={styles.fbButtonText}
-                                        onPress={() => this.skipLogin()}
+                                        onPress={() => this.skipLoginBlank()}
                                     >
                                         Skip Log in
                                     </Text>
