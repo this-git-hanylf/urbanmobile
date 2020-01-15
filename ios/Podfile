@@ -6,7 +6,7 @@ target 'Urban' do
   # use_frameworks!
 
   # Pods for Urban
-  platform :ios, '9.0'
+  platform :ios, '10.0'
   pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'Core',
@@ -32,6 +32,23 @@ target 'Urban' do
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
+  # Add the Firebase pod for Google Analytics
+pod 'Firebase/Analytics'
+
+# Add the pods for any other Firebase products you want to use in your app
+# For example, to use Firebase Authentication and Cloud Firestore
+pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
+# Required by RNFirebase
+pod 'Firebase/Core', '~> 4.13.0'
+
+pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+pod 'FBSDKCoreKit', '~> 5.13'
+pod 'FBSDKLoginKit', '~> 5.13'
+pod 'FBSDKShareKit', '~> 5.13'
 
   target 'UrbanTests' do
     inherit! :search_paths
@@ -39,7 +56,6 @@ target 'Urban' do
   end
 
   post_install do |installer|
-    fix_fb
     installer.pods_project.targets.each do |target|
       if target.name == "React"
         target.remove_from_project

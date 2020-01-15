@@ -24,7 +24,7 @@
   "dependencies": {
     "@mindinventory/react-native-tab-bar-interaction": "github:mindinventory/react-native-tab-bar-interaction",
     "@monterosa/react-native-parallax-scroll": "^1.8.0",
-    "@react-native-community/async-storage": "^1.2.4",
+    "@react-native-community/async-storage": "^1.7.1",
     "add": "^2.0.6",
     "moment": "^2.24.0",
     "native-base": "^2.12.1",
