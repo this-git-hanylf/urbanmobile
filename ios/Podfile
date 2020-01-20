@@ -29,7 +29,6 @@ target 'Urban' do
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
   pod 'react-native-mail', :path => '../node_modules/react-native-mail'
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
   pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
@@ -41,12 +40,12 @@ pod 'Firebase/Analytics'
 # Add the pods for any other Firebase products you want to use in your app
 # For example, to use Firebase Authentication and Cloud Firestore
 pod 'Firebase/Auth'
-pod 'Firebase/Firestore'
+# pod 'FirebaseUI/Auth'
+# pod 'Firebase/Firestore'
 # Required by RNFirebase
-pod 'Firebase/Core', '~> 4.13.0'
+pod 'Firebase/Core', '~> 6.3.0'
 
-pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
-pod 'FBSDKCoreKit', '~> 5.13'
+pod 'FBSDKCoreKit', '~> 5.8', :modular_headers => true
 pod 'FBSDKLoginKit', '~> 5.13'
 pod 'FBSDKShareKit', '~> 5.13'
 
@@ -73,14 +72,14 @@ pod 'FBSDKShareKit', '~> 5.13'
 
 end
 
-target 'Urban-tvOS' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
+# target 'Urban-tvOS' do
+#   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+#   # use_frameworks!
 
-  # Pods for Urban-tvOS
+#   # Pods for Urban-tvOS
 
-  target 'Urban-tvOSTests' do
-    inherit! :search_paths
-  end
+#   target 'Urban-tvOSTests' do
+#     inherit! :search_paths
+#   end
 
-end
+# end

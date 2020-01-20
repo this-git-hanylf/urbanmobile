@@ -185,7 +185,6 @@ android {
 
 dependencies {
     implementation 'com.facebook.android:facebook-login:[5,6)'
-    implementation project(':react-native-fbsdk')
     implementation project(':react-native-maps')
     implementation project(':react-native-mail')
     implementation project(':react-native-firebase')
