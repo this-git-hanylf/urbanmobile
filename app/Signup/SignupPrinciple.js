@@ -317,27 +317,94 @@ class SignupPrinciple extends React.Component {
     }
 
     submit = () => {
+
+       
         this.setState({ isLoaded: !this.state.isLoaded });
         // const { email } = this.state.email;
         // console.log("email",email);
-        let filektp = RNFetchBlob.wrap(
-            this.state.pictUrlKtp.uri.replace("file://", "")
-        );
-        let filenpwp = RNFetchBlob.wrap(
-            this.state.pictUrlNPWP.uri.replace("file://", "")
-        );
-        let filesiup = RNFetchBlob.wrap(
-            this.state.pictUrlSIUP.uri.replace("file://", "")
-        );
-        let filetdp = RNFetchBlob.wrap(
-            this.state.pictUrlTDP.uri.replace("file://", "")
-        );
+
+         //-----KETIKA PAKE REQUIRED ------//
+        // let filektp = RNFetchBlob.wrap(
+        //     this.state.pictUrlKtp.uri.replace("file://", "")
+        // );
+        // let filenpwp = RNFetchBlob.wrap(
+        //     this.state.pictUrlNPWP.uri.replace("file://", "")
+        // );
+        // let filesiup = RNFetchBlob.wrap(
+        //     this.state.pictUrlSIUP.uri.replace("file://", "")
+        // );
+        // let filetdp = RNFetchBlob.wrap(
+        //     this.state.pictUrlTDP.uri.replace("file://", "")
+        // );
         // let filedomisili = RNFetchBlob.wrap(
         //     this.state.pictUrlDomisili.uri.replace("file://", "")
         // );
-        let fileakte = RNFetchBlob.wrap(
-            this.state.pictUrlAktePendirian.uri.replace("file://", "")
-        );
+        // let fileakte = RNFetchBlob.wrap(
+        //     this.state.pictUrlAktePendirian.uri.replace("file://", "")
+        // );
+        //----- TUTUP KETIKA PAKE REQUIRED ------// 
+        
+        //-----KETIKA GAK PAKE REQUIRED ------//
+            let filektp = "";
+            if(this.state.pictUrlKtp.length == 0 ){
+                // console.log('replace',this.state.replaceFoto)
+                filektp = "./img/noimage.png";
+                console.log('pic nul',this.state.pictUrlKtp)
+            }else{
+                filektp = RNFetchBlob.wrap(
+                    this.state.pictUrlKtp.uri.replace("file://", "")
+                );
+                console.log('pic not nul',this.state.pictUrlKtp)
+            }
+
+            let filenpwp = "";
+            if(this.state.pictUrlNPWP.length == 0){
+                // console.log('replace',this.state.replaceFoto)
+                filenpwp = "./img/noimage.png";
+                console.log('pic nul',this.state.pictUrlNPWP)
+            }else{
+                filenpwp = RNFetchBlob.wrap(
+                    this.state.pictUrlNPWP.uri.replace("file://", "")
+                );
+                console.log('pic not nul',this.state.pictUrlNPWP)
+            }
+
+            let filesiup = "";
+            if(this.state.pictUrlSIUP.length == 0){
+                filesiup = "./img/noimage.png";
+                console.log('pic nul',this.state.pictUrlSIUP)
+            }else{
+                filesiup = RNFetchBlob.wrap(
+                    this.state.pictUrlSIUP.uri.replace("file://", "")
+                );
+                console.log('pic nul',this.state.pictUrlSIUP)
+            }
+
+            let filetdp = "";
+            if(this.state.pictUrlTDP.length == 0){
+                filetdp = "./img/noimage.png";
+                console.log('pic nul',this.state.pictUrlTDP)
+            }else{
+                filetdp = RNFetchBlob.wrap(
+                    this.state.pictUrlTDP.uri.replace("file://", "")
+                );
+                console.log('pic nul',this.state.pictUrlTDP)
+            }
+
+            let fileakte = "";
+            if(this.state.pictUrlAktePendirian.length == 0){
+                fileakte = "./img/noimage.png";
+                console.log('pic nul',this.state.pictUrlAktePendirian) 
+            }else{
+                fileakte = RNFetchBlob.wrap(
+                    this.state.pictUrlAktePendirian.uri.replace("file://", "")
+                );
+                console.log('pic nul',this.state.pictUrlAktePendirian)
+            }
+
+
+        //----- TUTUP KETIKA GAK PAKE REQUIRED ------// 
+
         // const valid_domisili = this.state.pictUrlDomisili.uri;
         // console.log('url domisili',this.state.pictUrlDomisili);
         
@@ -346,8 +413,6 @@ class SignupPrinciple extends React.Component {
         // }
         
         
-        
-
         const {
             email,
             agencyname,
@@ -418,13 +483,56 @@ class SignupPrinciple extends React.Component {
         });
         const _agencyname = agencyname.replace(/\s+/g, '_');
 
-        let fileNameKtp = "KTP_RegisPrincipal_"+_agencyname+".png";
-        let fileNameNpwp = "NWPW_RegisPrincipal_"+_agencyname+".png";
-        let fileNameSIUP = "SIUP_RegisPrincipal_"+_agencyname+".png";
-        let fileNameTDP = "TDP_RegisPrincipal_"+_agencyname+".png";
-        // let fileNameDomisili = "Domisili_RegisPrincipal_"+_agencyname+".png";
-        let fileNameAktePendirian = "APPP_RegisPrincipal_"+_agencyname+".png";
+
+        // KALO REQUIRED FOTO
+        // let fileNameKtp = "KTP_RegisPrincipal_"+_agencyname+".png";
+        // let fileNameNpwp = "NWPW_RegisPrincipal_"+_agencyname+".png";
+        // let fileNameSIUP = "SIUP_RegisPrincipal_"+_agencyname+".png";
+        // let fileNameTDP = "TDP_RegisPrincipal_"+_agencyname+".png";
+        // // let fileNameDomisili = "Domisili_RegisPrincipal_"+_agencyname+".png";
+        // let fileNameAktePendirian = "APPP_RegisPrincipal_"+_agencyname+".png";
        
+
+        // KALO GAK REQUIRED FOTO 
+        let fileNameKtp = "";
+        if(this.state.pictUrlKtp.length == 0){
+            console.log(this.state.pictUrlKtp.length);
+             fileNameKtp = "./img/noimage.png";
+        }else{
+             fileNameKtp = "KTP_RegisPrincipal_"+_agencyname+".png";
+        }
+
+        let fileNameNpwp = "";
+        if(this.state.pictUrlNPWP.length == 0){
+            console.log(this.state.pictUrlNPWP.length);
+            fileNameNpwp = "./img/noimage.png";
+        }else{
+            fileNameNpwp = "NWPW_RegisPrincipal_"+_agencyname+".png";
+        }
+
+        let fileNameSIUP = "";
+        if(this.state.pictUrlSIUP.length == 0){
+            console.log(this.state.pictUrlSIUP.length);
+            fileNameSIUP = "./img/noimage.png";
+        }else{
+            fileNameSIUP = "SIUP_RegisPrincipal_"+_agencyname+".png";
+        }
+
+        let fileNameTDP = "";
+        if(this.state.pictUrlTDP.length == 0){
+            console.log(this.state.pictUrlTDP.length);
+            fileNameTDP = "./img/noimage.png";
+        }else{
+            fileNameTDP = "TDP_RegisPrincipal_"+_agencyname+".png";
+        }
+
+        let fileNameAktePendirian = "";
+        if(this.state.pictUrlAktePendirian.length == 0){
+            console.log(this.state.pictUrlAktePendirian.length);
+            fileNameAktePendirian = "./img/noimage.png";
+        }else{
+            fileNameAktePendirian = "APPP_RegisPrincipal_"+_agencyname+".png";
+        }
 
        
         

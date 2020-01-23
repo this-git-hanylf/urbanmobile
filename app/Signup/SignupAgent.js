@@ -105,6 +105,13 @@ class SignupGuest extends React.Component {
             principle_name:'',
             itemPrinciple: '',
             principles: '',
+            filektp: '',
+            // replaceFoto: require("/assets/images/download.png"),
+            // replaceFoto: "assets/images/download.png",
+            // replaceFoto: "",
+            // /Users/hany/Documents/Project React/urbanmobile/assets/images/download.png
+            replaceFoto: "file:///urbanAPI/images/noimage-min.png"
+            
 
 
         };
@@ -257,12 +264,55 @@ class SignupGuest extends React.Component {
         this.setState({ isLoaded: !this.state.isLoaded });
         // const { email } = this.state.email;
         // console.log("email",email);
-        let filektp = RNFetchBlob.wrap(
-            this.state.pictUrlKtp.uri.replace("file://", "")
-        );
-        let filenpwp = RNFetchBlob.wrap(
-            this.state.pictUrlNPWP.uri.replace("file://", "")
-        );
+       
+// const tes ='';
+
+        let filektp = "";
+        let filenpwp ="";
+        // RNFetchBlob.wrap(
+        //     this.state.pictUrlKtp.uri.replace("file://", "")
+        // );
+       
+        if(this.state.pictUrlKtp.length == 0 ){
+            // alert('nnul')
+            console.log('replace',this.state.replaceFoto)
+            // filektp = "@Asset/images/icon/dropdown.png";
+            filektp = "./img/noimage.png";
+            // "file:///data/user/0/com.ifcasoftware.urban/cache/react-native-image-crop-picker/image-7db81647-c261-4066-8e0e-46a4417e15e24941063510417621352.jpg"
+            // "RNFetchBlob-file:///data/user/0/com.ifcasoftware.urban/cache/react-native-image-crop-picker/image-7db81647-c261-4066-8e0e-46a4417e15e24941063510417621352.jpg"
+            // filektp = this.state.replaceFoto;
+            // filektp = RNFetchBlob.wrap(
+            //     this.state.replaceFoto
+            // );
+            console.log('pic nul',this.state.pictUrlKtp)
+            // this.state.replaceFoto.uri.replace("file://", "")
+        }else{
+            // alert('not null')
+            filektp = RNFetchBlob.wrap(
+                this.state.pictUrlKtp.uri.replace("file://", "")
+            );
+            console.log('pic not nul',this.state.pictUrlKtp)
+            // this.state.pictUrlKtp.uri.replace("file://", "")
+        }
+
+        if(this.state.pictUrlNPWP.length == 0 ){
+            console.log('replace',this.state.replaceFoto)
+            filenpwp = "./img/noimage.png";
+            console.log('pic nul',this.state.pictUrlKtp)
+        }else{
+            filenpwp = RNFetchBlob.wrap(
+                this.state.pictUrlNPWP.uri.replace("file://", "")
+            );
+            console.log('pic not nul',this.state.pictUrlNPWP)
+        }
+            
+            // Do something
+
+        // let filenpwp = RNFetchBlob.wrap(
+        //     this.state.pictUrlNPWP.uri.replace("file://", "")
+        // );
+
+        
         // let filebukutabungan = RNFetchBlob.wrap(
         //     this.state.pictUrlBukuTabungan.uri.replace("file://", "")
         // );
@@ -330,9 +380,26 @@ class SignupGuest extends React.Component {
             // selectedProject: { require: true }
         });
 
-        let fileNameKtp = "KTP_RegisAgent_"+nik+".png";
-        console.log('filenamektp', nik);
-        let fileNameNpwp = "npwp_RegisAgent_" + nik + ".png";
+        let fileNameKtp = "";
+        if(this.state.pictUrlKtp.length == 0){
+            console.log(this.state.pictUrlKtp.length);
+             fileNameKtp = "./img/noimage.png";
+        }else{
+             fileNameKtp = "KTP_RegisAgent_"+nik+".png";
+        }
+
+        let fileNameNpwp = "";
+        if(this.state.pictUrlNPWP.length == 0){
+            console.log(this.state.pictUrlNPWP.length);
+            fileNameNpwp = "./img/noimage.png";
+        }else{
+            fileNameNpwp = "npwp_RegisAgent_" + nik + ".png";
+        }
+        
+
+        
+        // console.log('filenamektp', nik);
+        
         // let fileNameBukuTabungan = "bukutabungan_RegisAgent_" + nik + ".png";
         // let fileNameSuratAnggota= "suratanggota_RegisAgent_" + nik + ".png";
 
@@ -340,7 +407,7 @@ class SignupGuest extends React.Component {
         
 
         console.log('saveFormNUP', frmData);
-        console.log('leng nik',this.state.nik.length);
+        // console.log('leng nik',this.state.nik.length);
         console.log('leng foto ktp',this.state.pictUrlKtp.length);
         // if(this.state.pictUrlKtp.length == 7 || filektp.length == 7){
         //     console.log(this.state.pictUrlKtp.length)
@@ -349,6 +416,8 @@ class SignupGuest extends React.Component {
         //     console.log(this.state.pictUrlKtp.length)
         //     alert('lebih dari 7')
         // }
+
+        
 
         // let fileName = "KTP_RegisAgent.png";
         // let fileImg = "";
@@ -364,15 +433,12 @@ class SignupGuest extends React.Component {
         //         alert("Please upload attachments")
         //         console.log('error')
         //     }
-
-        
+       
+        // if(filektp != "" || filektp != null){
+        //     console.log('filektp', filektp)
+        // }
 // 
         if ( isValid ) {
-            
-            // fileImg = RNFetchBlob.wrap(
-            //     this.state.pictUrl.uri.replace("file://", "")
-            // );
-
             RNFetchBlob.fetch(
                 "POST",
                 urlApi + "c_auth/SignUpAgent",
@@ -381,16 +447,18 @@ class SignupGuest extends React.Component {
                 },
                 [
                     // { name: "photo", filename: fileName, data: fileImg },
-                    { name: "photoktp", filename: fileNameKtp, data: filektp },
+                    { name: "photoktp", filename: fileNameKtp, data: filektp},
                     { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
                     // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
                     // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
                     { name: "data", data: JSON.stringify(frmData) }
                 ]
             ).then(resp => {
+                console.log("res_if", resp);
                 const res = JSON.parse(resp.data);
-                // let res = JSON.stringify(resp.data);
-                console.log("res", resp);
+                console.log('res',res);
+                // const res = JSON.stringify(resp.data);
+                
                  
                 if(!res.Error){
                     // Actions.pop()
@@ -402,13 +470,21 @@ class SignupGuest extends React.Component {
                 }else {
                     this.setState({ isLoaded: !this.state.isLoaded }, () => {
                         alert(res.Pesan);
+                        // console.log('url',this.state.pickUrlKtp.uri)
                     });
                 }
-                // alert(res.Pesan); 
+                alert(res.Pesan); 
             });
             
         } else {
-            alert("Please assign your ID Picture");
+            this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert("Please assign your ID Picture");
+                // alert(res.Pesan);
+                // console.log('url',this.state.pickUrlKtp.uri)
+            });
+            // alert("Please assign your ID Picture");
+            // console.log('url else',this.state.pickUrlKtp.uri)
+           
         }
     };
 
