@@ -7,7 +7,7 @@ class CustomLinearGradient extends Component {
     render() {
         const { locationStart, colorShimmer, widthShimmer } = this.props;
         return (
-            <LinearGradient
+            <View
                 colors={colorShimmer}
                 style={{ flex: 1 }}
                 start={{ x: -1, y: 0.5 }}

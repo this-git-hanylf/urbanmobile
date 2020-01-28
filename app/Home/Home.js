@@ -222,6 +222,7 @@ export default class Home extends Component {
 
         <View style={{paddingVertical: 30}}>
           <Text style={{color: colors.gold, fontFamily: Fonts.type.proximaNovaBoldWeb,letterSpacing: 1.5, alignItems: 'center', textAlign: 'center', paddingTop: 10, fontSize: 15}}>DISCOVER</Text>
+          
         </View>
        
         
@@ -244,7 +245,7 @@ export default class Home extends Component {
         </View> */}
         
         <View style={styles.corContainerStyle}>
-          {this.state.dataTower.length == 0 ? <ActivityIndicator size="large" /> :
+          {this.state.dataTower.length == 0 ? <ActivityIndicator size="large" color="#fff" /> :
             <Carousel
             ref={c => (this._slider1Ref = c)}
             data={this.state.dataTower}

@@ -119,7 +119,7 @@ import AddAttachment from './Prospect/AddAttachment';
 
 
 const TabIcon = ({ focused, iconName }) => {
-  var color = focused ? "#ad1819" : "#7f8c8d";
+  var color = focused ? "#AB9E84" : "#b7b7b7";
   return (
     <Icon name={iconName} color={color} size={24} style={{ marginTop: 8 }} textStyle={color} />
 
@@ -170,6 +170,8 @@ class Routes extends Component{
                 hideNavBar={true}
                 title=""
                 tabBarLabel="Home"
+                color='#000000'
+                // tabBarStyle={{color: "#000000"}}
                 // titleStyle=""
                 // labelStyle={{color: "#ad1819"}}
                 // activeTintColor="#ad1819"
