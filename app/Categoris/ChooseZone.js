@@ -121,7 +121,12 @@ class Categoris extends React.Component {
     goTo(item) {
         const data = this.props.items;
         data['zoneCd'] = item.zone_cd;
-        _navigate("categoris", { items: data });
+        if(item.zone_cd == 'NA'){
+            alert('Not available unit');
+        }else{
+            _navigate("categoris", { items: data });
+        }
+        
     }
 
     render() {
@@ -150,7 +155,7 @@ class Categoris extends React.Component {
                     </View>
                     <View style={Style.actionBarMiddle}>
                         <Text style={Style.actionBarText}>
-                            {"Choose Zone".toUpperCase()}
+                            {"Unit Group".toUpperCase()}
                         </Text>
                     </View>
                     <View style={Style.actionBarRight} />

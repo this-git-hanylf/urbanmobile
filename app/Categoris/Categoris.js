@@ -85,7 +85,7 @@ class Categoris extends React.Component {
                         </Button>
                     </View>
                     <View style={Style.actionBarMiddle}>
-                        <Text style={Style.actionBarText}>{'Categoris'.toUpperCase()}</Text>
+                        <Text style={Style.actionBarText}>{'Unit Type'.toUpperCase()}</Text>
                     </View>
                     <View style={Style.actionBarRight}>
                     </View>

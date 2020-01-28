@@ -4,6 +4,58 @@ const dh = Dimensions.get("window").height;
 const dw = Dimensions.get("window").width;
 
 export default {
+  sectionTransparent: {
+    flex: 1,
+    paddingVertical: 30,
+    backgroundColor: 'transparent',
+  },
+  titleGold:{
+    // color: colors.gold, 
+    color: Colors.goldUrban,
+    fontFamily: Fonts.type.proximaNovaBoldWeb,
+    letterSpacing: 1.5, 
+    alignItems: 'center', 
+    textAlign: 'center', 
+    paddingTop: 10, 
+    fontSize: 15
+},
+titleWhiteSmall:{
+  // color: colors.gold, 
+  color: Colors.white,
+  fontFamily: Fonts.type.proximaNovaReg,
+  letterSpacing: 1.5, 
+  alignItems: 'center', 
+  textAlign: 'center', 
+  paddingTop: 15, 
+  fontSize: 14,
+  // textDecorationLine: 'underline',
+  borderBottomWidth: 1,
+  borderBottomColor: Colors.white,
+  marginHorizontal: 140
+  // width: 'auto'
+
+},
+  signInBtnMedium: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 40,
+    width: 300,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5
+},
+  backgroundImage: {
+    flex: 1,
+    width: Metrics.WIDTH,
+    height: Metrics.HEIGHT,
+    // backgroundColor: "#febe29"
+},
   layoutContent: {
     flex: 1,
     alignItems: 'center',
@@ -26,7 +78,7 @@ export default {
   },
   coverImg: {
     flex: 1,
-    height: 360,
+    height: 730,
   },
 
   section: {
@@ -397,8 +449,8 @@ export default {
     backgroundColor: '#f0f0f0',
   },
   flatList: {
-    // paddingLeft: 15,
-    // paddingRight : 15
+    paddingLeft: 15,
+    paddingRight : 15
   },
   headerBg: {
     flexDirection: 'row',
@@ -442,10 +494,60 @@ export default {
     shadowOpacity: 0.1,
     shadowRadius: 0,
   },
+  itemBoxAmen: {
+    resizeMode: 'cover',
+    width: 165,
+    height: 145,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: Colors.goldUrban,
+    borderRadius: 5,
+    elevation: 10,
+    shadowOffset: {
+      width: 10,
+      height: 10
+    },
+    shadowColor: "grey",
+    shadowOpacity: 0.1,
+    shadowRadius: 0,
+  },
+  itemBoxAmen_not_gold: {
+    // resizeMode: 'cover',
+    width: 165,
+    height: 145,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    // backgroundColor: Colors.goldUrban,
+    borderRadius: 5,
+    // elevation: 10,
+    shadowOffset: {
+      width: 10,
+      height: 10
+    },
+    // shadowColor: "grey",
+    // shadowOpacity: 0.1,
+    // shadowRadius: 0,
+  },
   itemImg: {
     marginBottom: 10,
     width: 200,
     height: 100,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+  itemAmen: {
+    marginBottom: 10,
+    width: '100%',
+    height: 100,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+  itemAmen_not_gold: {
+    marginBottom: 10,
+    width: '100%',
+    height: 150,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -461,6 +563,13 @@ export default {
     fontSize: 16,
 		fontFamily: Fonts.type.sfuiDisplaySemibold,
     paddingHorizontal: 20,
+  },
+  itemTextAmenities: {
+    color: Colors.white,
+    fontSize: 16,
+		fontFamily: Fonts.type.proximaNovaReg,
+    paddingHorizontal: 20,
+    textAlign: 'center'
   },
   itemLocation: {
     color: '#999',

@@ -44,31 +44,55 @@ import {
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
+import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel";
 import {urlApi} from '@Config/services';
 import GALLERY from "./Gallery";
 import AMENITIES from "./Amenities";
 import SIMILAR from "./Similar";
 import {_storeData,_getData,_navigate} from '@Component/StoreAsync';
 
-import { Style, Colors } from "../Themes/index";
+import { Style, Colors, Fonts } from "../Themes/index";
 import Styles from "./Style";
 
 import ImageViewer from 'react-native-image-zoom-viewer';
 import HTML from 'react-native-render-html';
 import Mailer from "react-native-mail";
 import { WebView } from 'react-native-webview';
+import styles, { colors } from "./componen/index";
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import NavigationService from "@Service/Navigation";
+// import { sliderWidth, itemWidth } from "./componen/SliderEntry";
+// import SliderEntry from "../components/SlideEntry";
+// const { height, width } = Dimensions.get('window')
 
 
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
+const { height, width } = Dimensions.get('window')
 
 let isMount = false
 
 
 const API_KEY = "AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8";
 // const API_KEY = "AIzaSyBFhdZb-_5FCA5IhbLhB9-KimWC_QlOKLs";
+
+const IS_IOS = Platform.OS === 'ios';
+// const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp (percentage) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
+}
+
+const slideHeight = viewportHeight * 0.45;
+const slideWidth = wp(57); 
+const itemHorizontalMargin = wp(4);
+                 
+export const sliderWidth = viewportWidth;
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+
 
 
 export default class extends React.Component {
@@ -102,14 +126,21 @@ export default class extends React.Component {
         dataPromo:[],
         index : 0,
         wa_no: '',
-        email_add: ''
+        email_add: '',
+        tower: [],
+        amen: [],
+        unit:[],
+        tes:'',
+        stylehtml: "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25"
       };
 
       console.log('props',props);
+      this._renderItemTower = this._renderItemTower.bind(this); //add this line
 
     }
       
 async componentDidMount() {
+  
     Actions.refresh({ backTitle: () => this.props.title });
 
     const data = {
@@ -135,6 +166,11 @@ async componentDidMount() {
       this.getDataGallery(this.props.items)
       this.getPromo()
       this.getDataUnitPlan(this.props.items)
+      this.getTower()
+      this.getDataAminities(this.props.items)
+      this.getUnit()
+      // this.goTo()
+      
     })
 
 }
@@ -145,8 +181,7 @@ componentWillUnmount(){
 }
 
 getPromo = () => {
-  const {entity_cd,project_no} = this.props.items
-  fetch(urlApi+'c_newsandpromo/getDatapromo2/IFCAMOBILE/'+entity_cd+'/'+project_no ,{
+  fetch(urlApi+'c_newsandpromo/getDatapromo2/IFCAMOBILE' ,{
       method : "GET",
   })
   .then((response) => response.json())
@@ -313,9 +348,260 @@ showAlert = () => {
       ],
       {cancelable: false},
   );
+};
+
+// goTo(item){
+//   alert('t')
+// };
+goTo(item) {
+  // console.log('tes')
+  // alert('t')
+  // const itemyangdibawa = item;
+  // console.log('itemyangdibawa', itemyangdibawa)
+  // const datapentingtower = this.props.items;
+  // console.log('datapentingtower', datapentingtower);
+  const data = this.props.items;
+  data["tower"] = item.property_cd;
+  data["towerDescs"] = item.descs;
+  console.log('data',data);
+  if(this.props.dyn){
+    _navigate("UnitEnquiryProjectPage", { prevItems: data }); 
+  } else {
+    _navigate("chooseZone", { items: this.props.items });
+  }
+}
+// tes(){
+//   alert('s')
+// }
+
+_renderItemTower ({item, index}, parallaxProps) {
+  console.log('item towersss', item)
+  return (
+      <TouchableOpacity style={styles.item} 
+      // onPress={() => this.goTo()}
+      // onPress={()=>this.goTo()}
+      onPress={() => this.goTo(item)}
+      // onPress={this.goTo()}
+      // onPress={() => this.goTo()}
+      // onPress={()=>Actions.ProductProjectPage({items : item})}
+
+     
+      >
+          <ParallaxImage
+          // onPress={()=>this.goTo(item)}
+              source={{ uri: item.picture_url }}
+              containerStyle={styles.imageContainer}
+              style={styles.image}
+              parallaxFactor={0.1}
+              {...parallaxProps}
+          />
+          <View style={styles.newsTitle} onPress={()=>this.goTo()}>
+            <Text style={styles.newsTitleText_small}>
+                { item.descs }
+            </Text>
+          </View>
+      </TouchableOpacity>
+  );
+}
+
+_renderItemUnit ({item, index}, parallaxProps) {
+  return (
+      <TouchableOpacity style={styles.item}>
+          <ParallaxImage
+              source={{ uri: item.picture_url }}
+              containerStyle={styles.imageContainer}
+              style={styles.image}
+              parallaxFactor={0.1}
+              {...parallaxProps}
+          />
+          <View style={styles.newsTitle}>
+            <Text style={styles.newsTitleText_small}>
+                { item.descs }
+            </Text>
+          </View>
+      </TouchableOpacity>
+  );
+}
+
+getTower = () => {
+  const item = this.props.items;
+  console.log('item tower', item);
+  {
+    isMount
+      ? fetch(
+          urlApi +
+            "c_product_info/getTower/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd
+          }
+        )
+          .then(response => response.json())
+          .then(res => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ tower: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("getTower", res);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      : null;
+  }
+};
+
+getDataAminities = () => {
+  const item = this.props.items;
+  console.log('item tower', item);
+  {
+    isMount
+      ? fetch(
+          urlApi +
+            "c_reservation/getDataDetailsAmenities/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd
+          }
+        )
+          .then(response => response.json())
+          .then(res => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ amen: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("amenitis", res);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      : null;
+  }
+};
+
+getUnit = () => {
+  const item = this.props.items;
+  console.log('item tower', item);
+  {
+    isMount
+      ? fetch(
+          urlApi +
+            "c_product_info/getUnitProp/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd
+          }
+        )
+          .then(response => response.json())
+          .then(res => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ unit: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("unit", res);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      : null;
+  }
+};
+
+sendEmail(){
+  // alert('email');
+  const email_add = this.state.project[0].email_add
+  // const descs_ = this.state.descs_wa
+  // noHp = '';
+  // const email_add = this.state.projects[0].email_add
+  // const descs = this.props.items.project_descs
+  
+  // alert(email_add);
+
+  console.log('email send add', email_add)
+  Mailer.mail(
+    {
+      // subject: "Saya tertarik reservasi " + descs_,
+      subject: "",
+      recipients: [`${email_add}`],
+      ccRecipients: [""],
+      bccRecipients: [""],
+      body: "",
+      isHTML: true
+    },
+    (error, event) => {
+      Alert.alert(
+        error,
+        event,
+        [
+          {
+            text: "Ok",
+            onPress: () => console.log("OK: Email Error Response")
+          },
+          {
+            text: "Cancel",
+            onPress: () => console.log("CANCEL: Email Error Response")
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+  );
+};
+
+
+renderItemNews(item){
+  return (
+    <TouchableOpacity
+      style={Styles.itemBoxAmen_not_gold}
+      underlayColor="transparent"
+      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+      >
+      <View>
+        <View>
+          <Image
+            source={{ uri: item.amenities_url }}
+            style={Styles.itemAmen_not_gold}
+          />
+        </View>
+        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+        
+      </View>
+    </TouchableOpacity>
+    
+    
+  )
 }
  
   render() {
+    
     // let feature = ''
     // if(this.state.feature){
     //   feature = this.state.feature[0].feature_info.replace(/<div class="col-md-6">|<\/div>|<\/b>|<b>|<ul class="list-unstyled">|<\/ul>/gi, '')
@@ -326,9 +612,17 @@ showAlert = () => {
 
     return (
       <Container style={Style.bgMain}>
+         <ImageBackground style={Styles.backgroundImage} source={require("../Images/background-blue.png")}>
+        
+           
         <Header style={Style.navigation}>
+          
           <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" />          
-
+          {/* <StatusBar
+          translucent={true}
+          backgroundColor={"rgba(0, 0, 0, 0.3)"}
+          barStyle={"light-content"}
+        /> */}
           <View style={Style.actionBarLeft}>
             <Button
               transparent
@@ -343,7 +637,7 @@ showAlert = () => {
               />
             </Button>
           </View>
-          <View style={Style.actionBarMiddle}>
+          <View style={[Style.actionBarMiddle,{backgroundColor: 'transparent'}]}>
             <Text style={Style.actionBarText}>
               {this.state.title.toUpperCase()}
             </Text>
@@ -361,652 +655,467 @@ showAlert = () => {
               />
             </Button> */}
           </View>
+            
         </Header>
+       
+        <ScrollView>
+            <View style={{flexDirection: 'column'}}>
+            <View>
+                {this.state.picture_url !='' ?
+                  <ImageBackground
+                  source={{
+                    uri: this.state.picture_url
+                  }}
+                  imageStyle={"cover"}
+                  style={Styles.coverImg}
+                  >
+                </ImageBackground>
+                :<ActivityIndicator/>}
+            </View>
+            <View>
+              <Button style={Styles.signInBtnMedium}>
+                <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
+                  Booking Priority Pass
+                </Text>
+              </Button>
+            </View>
+            </View>
+            
 
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
-          {this.state.picture_url !='' ?
-            <ImageBackground
-            source={{
-              uri: this.state.picture_url
-            }}
-            imageStyle={"cover"}
-            style={Styles.coverImg}
-            >
-          {/* <Fab
-            active={this.state.active}
-            direction="down"
-            containerStyle={{ marginLeft:8}}
-            style={{ backgroundColor: '#DAD299', width:32, height: 32 }}
-            position="topRight"
-            onPress={() => this.setState({ active: !this.state.active })}>
-            <Icon name="share" />
-            <Button style={{ backgroundColor: '#DAD299',  width:32, height: 32,  marginLeft:4  }}>
-              <Icon name="logo-whatsapp" />
-            </Button>
-            <Button style={{ backgroundColor: '#DAD299',  width:32, height: 32,  marginLeft:4  }}>
-              <Icon name="logo-facebook" />
-            </Button>
-            <Button style={{ backgroundColor: '#DAD299' ,  width:32, height: 32,  marginLeft:4 }}>
-              <Icon name="mail" />
-            </Button>
-          </Fab> */}
-          </ImageBackground>
-          :<ActivityIndicator/>}
+            <View style={{paddingTop: 50}}>
+            {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
+                {/* <Text style={{color: Colors.white}}>Overview</Text> */}
+                {/* <Text style={[Styles.titleGold,{fontSize: 18}]}>Overview</Text> */}
+                <Text style={{color: Colors.white, 
+                  textAlign:'center', 
+                  fontSize: 18, 
+                  paddingVertical: 10, 
+                  paddingHorizontal: 30, 
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 2,
+                  lineHeight: 25}}>
+                Dikembangkan dengan konsep
+                TOD diatas lahan sekitar
+                15.475m2, dengan 4 menara yang
+                terdiri dari 14.600m2 area
+                komersial.</Text>
+                <Text style={{color: Colors.white, 
+                  textAlign:'center', 
+                  fontSize: 18, 
+                  paddingVertical: 10, 
+                  paddingHorizontal: 30, 
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 2,
+                  lineHeight: 25}}>
+                Merupakan kawasan terbaik
+                karena lokasinya yang sangat
+                strategis, bukan hanya karena
+                terintegerasi langsung dengan
+                stasiun LRT Ciknir 1, namun
+                berada di persimpangan Caman
+                sehingga akan menjadi hub serta
+                meeting point bagi penduduk di
+                sekitarnya.
+                </Text>
 
+                {this.state.overview ? 
+                
+                // tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }
+                // <Text style={{color: Colors.white}}>
+                  // <HTML html={'' this.state.overview[0].overview_info} imagesMaxWidth={Dimensions.get('window').width}  />
+                  <HTML html={`<span style="textAlign: 'center', fontStyle: 'italic', color: 'white' ">` + this.state.overview[0].overview_info + `</span>`} imagesMaxWidth={Dimensions.get('window').width}  />
+              // <WebView
+              //   scalesPageToFit={false}
+              //   bounces={false}
+              //   javaScriptEnabled
+              //   style={{ height: 240, width: null, marginHorizontal: 20}}
+              //   source={{
+              //     html: `
+              //           <!DOCTYPE html>
+              //           <html>
+              //             <head></head>
+              //             <body>
+              //               <div style="color: 'red'; ">'${this.state.overview[0].overview_info}'</div>
+              //               <div>tes</div>
+              //             </body>
+              //           </html>
+              //     `,
+              //   }}
+              //   automaticallyAdjustContentInsets={false}
+              
+              // />
+                // </Text>
+                 :<ActivityIndicator /> }
+                
+            </View>
 
-          {/* <View style={Styles.section}>
-                    <Text style={Styles.price}>$2,850,000</Text>
-                    <View style={Styles.locationTop}>
-                        <Icon active name='map-marker-radius' style={Styles.locationTopIcon} type="MaterialCommunityIcons" />
-                        <Text style={Styles.locationTopInfo}>Bristol, England</Text>
-                    </View>
-                </View> */}
+            <View style={{paddingBottom: 20}} >
+                  <View style={{paddingVertical: 10}} >
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>TOWERS</Text>
+                  </View>
+                  {/* <View style={styles.corContainerStyle}> */}
+                  <Carousel
+                    autoplay={false}
+                    autoplayDelay={1000}
+                    autoplayInterval={3000}
+                    // sliderWidth={width}
+                    // sliderHeight={width}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    // itemWidth={width - 60}
+                    data={this.state.tower}
+                    renderItem={this._renderItemTower}
+                    hasParallaxImages={true}
+                    containerCustomStyle={styles.slider}
+                    
+                    // contentContainerCustomStyle={styles.sliderContentContainer}
+                    // resizeMode={ImageResizeMode.contain}
+                  />
 
-          <View style={Styles.count}>
-           <ScrollView horizontal={true}>
-            <View style={[Styles.countItem, Styles.countFirst]}>
-              <TouchableOpacity onPress={() => {
+                  {/* </View> */}
+                  
+
+                  <View style={{paddingVertical: 10}}>
+                    <TouchableOpacity onPress={() => {
                 _navigate('ProductProjectPage',{items:this.props.items})
               }}>
-                <View style={Styles.countCol}>
-                  <Image
-                    source={require("@Asset/images/icon/findunit.png")}
-                    style={{ width: 34, height: 34 }}
-                    resizeMode='stretch'
-                  />
-                  <View style={Styles.textMenu}>
-                    <Text style={Styles.countText}>Find Unit & Price</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style={[Styles.countItem, Styles.countFirst]}>
-              {/* <TouchableOpacity
-              onPress={()=>{
-                this.state.isLogin ? Actions.BookingPage({items : this.props.items}) 
-                : this.showAlert()
-              }}>
-                <View style={Styles.countCol}>
-                  <Image
-                    source={require("@Asset/images/icon/booking.png")}
-                    style={{ width: 34, height: 42 }}
-                    resizeMode='stretch'
-                  />
-                  <View style={Styles.textMenu}>
-                    <Text style={Styles.countText}>Booking Now</Text>
-                  </View>
-                </View>
-              </TouchableOpacity> */}
-            </View>
-            <View style={[Styles.countItem, Styles.countFirst]}>
-              <TouchableOpacity
-              onPress={()=>Actions.ProjectDownloadPage({items:this.props.items})}>
-                <View style={Styles.countCol}>
-                  <Image
-                    source={require("@Asset/images/icon/brocure.png")}
-                    style={{ width: 40, height: 32 }}
-                    resizeMode='stretch'
-                  />
-                  <View style={Styles.textMenu}>
-                    <Text style={Styles.countText}>Brosur</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-            </ScrollView>
-          </View>
+                <Text style={Styles.titleWhiteSmall}>See all tower</Text>
 
-          <ImageBackground
-            source={require("@Asset/images/shadow.png")}
-            imageStyle={"cover"}
-            style={Styles.shadow}
-          />
-
-          <View style={Styles.overview}>
-            <Text style={Styles.overviewTitle}>Overview</Text>
-    
-              {this.state.overview ? 
-               <HTML html={this.state.overview[0].overview_info} imagesMaxWidth={Dimensions.get('window').width} />
-              :<ActivityIndicator /> }
-
-          </View>
-          
-          
-          <Tabs locked={Platform.OS == 'android' ? true : false} tabBarUnderlineStyle={Styles.tabBorder}>
-            <Tab
-              tabStyle={Styles.tabGrey}
-              textStyle={Styles.tabText}
-              activeTabStyle={Styles.tabFeature}
-              activeTextStyle={Styles.tabTextActive}
-              heading="Features"
-            >
-              <List style={Styles.infoTab}>
-                <View style={Styles.overview}>
-                  <Text style={Styles.overviewTitle}>Feature</Text>
-                    {this.state.feature ? 
-                    // <Text style={Styles.overviewDesc}> 
-                    //   {feature}
-                    // </Text>
-                    <HTML html={this.state.feature[0].feature_info} imagesMaxWidth={Dimensions.get('window').width} />
-                    :<ActivityIndicator /> }
-                </View>
-              </List>
-
-              
-
-            </Tab>
-            <Tab
-              tabStyle={Styles.tabGrey}
-              textStyle={Styles.tabText}
-              activeTabStyle={Styles.tabGallery}
-              activeTextStyle={Styles.tabTextActive}
-              heading="Gallery"
-            >
-              <List style={Styles.infoTab}>
-                <View style={Styles.overview}>
-                  <Text style={Styles.overviewTitle}>Photo Gallery</Text>
-                  {this.state.gallery ?
-                  <FlatList
-                  data={this.state.gallery}
-                  horizontal
-                  style={Styles.slider}
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={item =>item.line_no}
-                  renderItem={({ item,index }) => (
-                    <TouchableOpacity
-                      underlayColor="transparent"
-                      onPress={() => {
-                        this.setState({isView:true,index:index})
-                      }}
-                    >
-                      <View>
-                        <Image
-                          source={{ uri: item.gallery_url }}
-                          style={Styles.sliderImg}
-                        />
-                      </View>
                     </TouchableOpacity>
-                  )}
-                />  
-                 :<ActivityIndicator/>}
-                </View>
-
-                
-
-                {/* <View style={Styles.amenities}>
-                  <Text style={Styles.amenityTitle}>Facilities</Text>
-                  <View>
-                    <FlatList
-                      data={AMENITIES}
-                      horizontal
-                      keyExtractor={item => item.amenity}
-                      renderItem={({ item }) => (
-                        <View style={Styles.amenity}>
-                          <Image
-                            source={item.icon}
-                            style={Styles.amenityIcon}
-                          />
-                          <Text style={Styles.amenityItem}>{item.amenity}</Text>
-                        </View>
-                      )}
-                    />
-                  </View>
-                </View> */}
-              </List>
-            </Tab>
-            <Tab
-              tabStyle={Styles.tabGrey}
-              textStyle={Styles.tabText}
-              activeTabStyle={Styles.tabSimulasi}
-              activeTextStyle={Styles.tabTextActive}
-              heading="Unit Plan"
-            >
-              <List style={Styles.infoTab}>
-              <View style={Styles.overview}>
-                  <Text style={Styles.overviewTitle}>Unit Plan</Text>
-                  {this.state.plans ?
-                  <FlatList
-                  data={this.state.plans}
-                  horizontal
-                  style={Styles.slider}
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={item =>item.line_no}
-                  renderItem={({ item,index }) => (
-                    <TouchableOpacity
-                      underlayColor="transparent"
-                      onPress={() => {
-                        this.setState({isUnitView:true,index:index})
-                      }} 
-                    >
-                      <View>
-                        <Image
-                          source={{ uri: item.plan_url }}
-                          style={Styles.sliderImg}
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                />  
-                 :<ActivityIndicator/>}
-                </View>
-
-                
-
-                  </List>
-            </Tab>
-          </Tabs>
-
-
-          {/* for HR line */}
-          {/* <View
-            style={{
-              borderTopColor: '#b5b5b5',
-              borderTopWidth: 1,
-              marginVertical: 10,
-              marginHorizontal: 10,
-            }}
-          /> */}
-
-          <View style={Styles.overview}>
-                  <Text style={Styles.overviewTitle_surround}>Simulasi Perhitungan KPA/R</Text>
-               
-                  <TextInput
-                    style={Styles.textInput}
-                    placeholder={"Total Credit ( IDR )"}
-                    keyboardType="numeric"
-                  />
-                  <View style={Styles.col}>
-                    <TextInput
-                      style={Styles.textInputHalf}
-                      placeholder={"Bunga (%)"}
-                      keyboardType="numeric"
-
-
-                    />
-                    <TextInput
-                      style={Styles.textInputHalf}
-                      placeholder={"Time (years)"}
-                      keyboardType="numeric"
-
-                    />
-                  </View>
-                  <Button
-                    style={Styles.btn}
-                  >
-                    <Text style={Styles.formBtnText}>
-                      {"Hitung".toUpperCase()}
-                    </Text>
-                    <Icon
-                      active
-                      name="calculator"
-                      type="FontAwesome"
-                      style={Styles.formBtnIcon}
-                    />
-                  </Button>
-                  </View>
-                  <View style={Styles.overview}>
-
-                  <Text style={Styles.countText}>
-                  * Angka di atas merupakan angka estimasi, untuk lebih akuratnya mohon hubungi bank terkait.
-                  </Text>
-                  </View>
-
-          <Text style={Styles.overviewTitle_surround}>Surrounding Area</Text>
-          <Tabs locked={Platform.OS == 'android' ? true : false} tabBarUnderlineStyle={Styles.tabBorder}>
-              <Tab
-                tabStyle={Styles.tabGrey}
-                textStyle={Styles.tabText}
-                activeTabStyle={Styles.tabGrey}
-                activeTextStyle={Styles.tabTextActive}
-                heading="Infrastructure"
-                >
-                  <List style={Styles.infoTab}>
-                    <View style={Styles.overview}>
-                      {/* <Text style={Styles.overviewTitle}>Infrastructure</Text> */}
-                        {this.state.amenities ? 
-
-                        // <Text style={Styles.overviewDesc}> 
-                        //   {feature}
-                        // </Text>
-                        <HTML html={this.state.amenities[0].amenities_info} imagesMaxWidth={Dimensions.get('window').width} />
-                        :<ActivityIndicator /> }
-                    </View>
-                  </List>
-              </Tab>
-              <Tab
-                tabStyle={Styles.tabGrey}
-                textStyle={Styles.tabText}
-                activeTabStyle={Styles.tabGrey}
-                activeTextStyle={Styles.tabTextActive}
-                heading="School"
-              >
-                <List style={Styles.infoTab}>
-                  <View style={Styles.overview}>
-                    {/* <Text style={Styles.overviewTitle}>School</Text> */}
-                      {this.state.amenities ? 
-
-                      // <Text style={Styles.overviewDesc}> 
-                      //   {feature}
-                      // </Text>
-                      <HTML html={this.state.amenities[1].amenities_info} imagesMaxWidth={Dimensions.get('window').width} />
-                      :<ActivityIndicator /> }
-                  </View>
-                </List>
-              </Tab>
-              <Tab
-                tabStyle={Styles.tabGrey}
-                textStyle={Styles.tabText}
-                activeTabStyle={Styles.tabGrey}
-                activeTextStyle={Styles.tabTextActive}
-                heading="Hospital"
-              >
-                <List style={Styles.infoTab}>
-                  <View style={Styles.overview}>
-                    {/* <Text style={Styles.overviewTitle}>Infrastructure</Text> */}
-                      {this.state.amenities ? 
-
-                      // <Text style={Styles.overviewDesc}> 
-                      //   {feature}
-                      // </Text>
-                      <HTML html={this.state.amenities[2].amenities_info} imagesMaxWidth={Dimensions.get('window').width} />
-                      :<ActivityIndicator /> }
-                  </View>
-                </List>
-              </Tab>
-              <Tab
-                tabStyle={Styles.tabGrey}
-                textStyle={Styles.tabText}
-                activeTabStyle={Styles.tabGrey}
-                activeTextStyle={Styles.tabTextActive}
-                heading="Other"
-              >
-                <List style={Styles.infoTab}>
-                  <View style={Styles.overview}>
-                    {/* <Text style={Styles.overviewTitle}>Infrastructure</Text> */}
-                      {this.state.amenities ? 
-
-                      // <Text style={Styles.overviewDesc}> 
-                      //   {feature}
-                      // </Text>
-                      <HTML html={this.state.amenities[3].amenities_info} imagesMaxWidth={Dimensions.get('window').width} />
-                      :<ActivityIndicator /> }
-                  </View>
-                </List>
-              </Tab>
-
-          </Tabs>
-          
-               
-          {/* <View>
-            <Text style={Styles.overviewTitle_youtube}>Video</Text>
-              
-              {this.state.overview ? 
-  
-               <HTML html={`<iframe src='${this.state.overview[0].youtube_link}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-              :<ActivityIndicator /> }
-
-              
-             
-          </View> */}
-          <View style={{flex: 1, paddingHorizontal: 10}} >
-          <Text style={Styles.overviewTitle_youtube}>Video</Text>
-            {/* <Text>{this.state.overview[0].youtube_link}</Text> */}
-            {this.state.overview ? 
-              // <Text>{this.state.overview[0].youtube_link}</Text>
-              <WebView
-                style={{height: 300}}
-                source={{ uri: this.state.overview[0].youtube_link }}
-                // allowsFullscreenVideo={true}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}   
-              />
-              :<ActivityIndicator /> }
-          </View>
-                 
-          <View style={Styles.overview_location}>
-            <Text style={Styles.overviewTitle_youtube}>Location</Text>
-          </View>
-            {/* <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML> */}
-                {this.state.project ? 
-  
-                //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-               
-                 //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-                //  <HTML html={this.state.project[0].coordinat_project} />
-                // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
-                // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
-                // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
-                // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>  
-
-                <WebView
-                  scalesPageToFit={false}
-                  bounces={false}
-                  javaScriptEnabled
-                  style={{ height: 300, width: null, marginHorizontal: 10, right: 4 }}
-                  source={{
-                    html: `
-                          <!DOCTYPE html>
-                          <html>
-                            <head></head>
-                            <body>
-                              <div id="baseDiv"><iframe width="450" height="450" frameborder="0" style="border:0" src='${this.state.project[0].coordinat_project}'></iframe></div>
-                            </body>
-                          </html>
-                    `,
-                  }}
-                  automaticallyAdjustContentInsets={false}
-                 
-                />
-
-                
-
-                :<ActivityIndicator />  }
-
-                {this.state.project ? 
-                <View style={Styles.overview}>
-                <Text style={Styles.overviewTitle}>{this.state.project[0].project_descs}</Text>
-                <Text style={Styles.overviewTitle}>{this.state.project[0].coordinat_name}</Text>
-                <Text style={Styles.overviewTitle}>{this.state.project[0].coordinat_address}</Text>
-                </View>
-
-                :<ActivityIndicator /> }
-          {/* </View> */}
-          
-          
-
-          
-
-          <View style={Styles.sectionGrey}>
-            <View style={Styles.headerBg}>
-              <Text style={Styles.sHeader}>
-                {"Promo".toUpperCase()}
-              </Text>
-              <Right>
-                <Button
-                  small
-                  rounded
-                  style={Styles.sBtn}
-                  onPress={() => {
-                    Actions.Feed()
-                  }}
-                >
-                  <Text style={Styles.sLink}>See All</Text>
-                </Button>
-              </Right>
-            </View>
-            {this.state.dataPromo.length > 0 ?
-              <FlatList
-                data={this.state.dataPromo}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={Styles.flatList}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={Styles.item}
-                    underlayColor="transparent"
                     
-                  >
-                    <View>
-                      <View>
-                        <Image
-                          source={{ uri: item.picture }}
-                          style={Styles.itemImg}
-                        />
-                      </View>
-                      <Text style={Styles.itemPrice}>{item.descs}</Text>
-                      <Text style={Styles.itemLocation}>{item.subject}</Text>
-                      
-                    </View>
-                  </TouchableOpacity>
-                )}
-              />  
-            :<Text style={[Styles.itemPrice,{alignSelf:'center'}]}>No Promo</Text>}
-          </View>
+                  </View>
+            </View>
+            
+            <View style={styles.sectionTransparent}>
+                  <View style={{paddingVertical: 10}}>
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
+                  </View> 
 
-          
-          <Modal visible={this.state.isView} transparent={true}
-          onRequestClose={() => {
-            this.setState({ isView: !this.state.isView })
-          }}>
-            <Header style={Style.navigationModal}>
-              <StatusBar
-                backgroundColor={Colors.statusBarNavy}
-                animated
-                barStyle="light-content"
-              />
-              <View style={Style.actionBarRight}>
-                <Button
-                  transparent
-                  style={Style.actionBtnRight}
+                  <FlatList
+                    data={this.state.amen}
+                    contentContainerStyle={Styles.flatList}
+                    keyExtractor={item => item.rowID}
+                    numColumns={2}
+                    renderItem={({ item }) => this.renderItemNews(item)}
+                  />
+            </View>
+
+            {/* <View style={styles.sectionTransparent}>
+                  <View style={{paddingVertical: 10}}>
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
+                  </View> 
+
+                  <FlatList
+                    data={this.state.amen}
+                    contentContainerStyle={Styles.flatList}
+                    keyExtractor={item => item.rowID}
+                    numColumns={2}
+                    renderItem={({ item }) => this.renderItemNews(item)}
+                  />
+            </View> */}
+
+            <View style={{paddingBottom: 20}}>
+                  <View style={{paddingVertical: 10}}>
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>UNIT</Text>
+                  </View>
+                  {/* <View style={styles.corContainerStyle}> */}
+                  <Carousel
+                    autoplay={false}
+                    autoplayDelay={1000}
+                    autoplayInterval={3000}
+                    // sliderWidth={width}
+                    // sliderHeight={width}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    // itemWidth={width - 60}
+                    data={this.state.unit}
+                    renderItem={this._renderItemUnit}
+                    hasParallaxImages={true}
+                    containerCustomStyle={styles.slider}
+                    // contentContainerCustomStyle={styles.sliderContentContainer}
+                    // resizeMode={ImageResizeMode.contain}
+                  />
+
+                  {/* </View> */}
+                  
+
+                  {/* <View style={{paddingVertical: 10}}>
+                    <Text style={Styles.titleWhiteSmall}>See all unit</Text>
+                  </View> */}
+            </View>
+            
+            <View style={Styles.overview}>
+              <View style={{paddingVertical: 10}}>
+                <Text style={[Styles.titleGold,{fontSize: 18}]}>GALLERY</Text>
+              </View>
+              {this.state.gallery ?
+              <FlatList
+              data={this.state.gallery}
+              horizontal
+              style={[Styles.slider,{paddingTop: 10}]}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item =>item.line_no}
+              renderItem={({ item,index }) => (
+                <TouchableOpacity
+                  underlayColor="transparent"
                   onPress={() => {
+                    this.setState({isView:true,index:index})
+                  }}
+                >
+                  <View>
+                    <Image
+                      source={{ uri: item.gallery_url }}
+                      style={Styles.sliderImg}
+                    />
+                  </View>
+                </TouchableOpacity>
+              )}
+            />  
+              :<ActivityIndicator/>}
+            </View>
+            <Modal visible={this.state.isView} transparent={true}
+                  onRequestClose={() => {
                     this.setState({ isView: !this.state.isView })
-                  }}            
-                  >
-                  <Icon
-                    active
-                    name="close"
-                    style={Style.actionIcon}
-                    type="FontAwesome"
-                  />
-                </Button>
-              </View>
-            </Header>
-            {this.state.imagesPreview ? <ImageViewer enableImageZoom={true} enableSwipeDown={true} onSwipeDown={()=>this.setState({ isView: !this.state.isView })} index={this.state.index} imageUrls={this.state.imagesPreview}/> : null}
-          </Modal>
+                  }}>
+                  <Header style={Style.navigationModal}>
+                    <StatusBar
+                      backgroundColor={Colors.statusBarNavy}
+                      animated
+                      barStyle="light-content"
+                    />
+                    <View style={Style.actionBarRight}>
+                      <Button
+                        transparent
+                        style={Style.actionBtnRight}
+                        onPress={() => {
+                          this.setState({ isView: !this.state.isView })
+                        }}            
+                        >
+                        <Icon
+                          active
+                          name="close"
+                          style={Style.actionIcon}
+                          type="FontAwesome"
+                        />
+                      </Button>
+                    </View>
+                  </Header>
+                  {this.state.imagesPreview ? <ImageViewer enableImageZoom={true} enableSwipeDown={true} onSwipeDown={()=>this.setState({ isView: !this.state.isView })} index={this.state.index} imageUrls={this.state.imagesPreview}/> : null}
+                </Modal>
 
-          <Modal visible={this.state.isUnitView} transparent={true}
-          onRequestClose={() => {
-            this.setState({ isUnitView: !this.state.isUnitView })
-          }}>
-            <Header style={Style.navigationModal}>
-              <StatusBar
-                backgroundColor={Colors.statusBarNavy}
-                animated
-                barStyle="light-content"
+          <View>
+            <View style={{paddingVertical: 10}}>
+              <Text style={[Styles.titleGold,{fontSize: 18,paddingBottom: 10}]}>LOCATION</Text>
+            </View>
+              {this.state.project ? 
+              //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+            
+              //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+              //  <HTML html={this.state.project[0].coordinat_project} />
+              // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
+              // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
+              // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
+              // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>  
+
+              <WebView
+                scalesPageToFit={false}
+                bounces={false}
+                javaScriptEnabled
+                style={{ height: 240, width: null, marginHorizontal: 20}}
+                source={{
+                  html: `
+                        <!DOCTYPE html>
+                        <html>
+                          <head></head>
+                          <body>
+                            <div id="baseDiv"><iframe width="350" height="300" frameborder="0" style="border:0, margin: 0"  src='${this.state.project[0].coordinat_project}'></iframe></div>
+                          </body>
+                        </html>
+                  `,
+                }}
+                automaticallyAdjustContentInsets={false}
+              
               />
-              <View style={Style.actionBarRight}>
-                <Button
-                  transparent
-                  style={Style.actionBtnRight}
-                  onPress={() => {
-                    this.setState({ isUnitView: !this.state.isUnitView })
-                  }}            >
-                  <Icon
-                    active
-                    name="close"
-                    style={Style.actionIcon}
-                    type="FontAwesome"
-                  />
-                </Button>
-              </View>
-            </Header>
-            {this.state.unitPlanPreview ? <ImageViewer enableImageZoom={true} enableSwipeDown={true} onSwipeDown={()=>this.setState({ isUnitView: !this.state.isUnitView })} index={this.state.index} imageUrls={this.state.unitPlanPreview}/> : null}
-          </Modal>
-
-          <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={this.state.isVisible}
-          onRequestClose={() => {
-            this.setState({ isVisible: !this.state.isVisible })
-          }}>
-          <Header style={Style.navigationModal}>
-          <StatusBar
-            backgroundColor={Colors.statusBarNavy}
-            animated
-            barStyle="light-content"
-          />
-           <View style={Style.actionBarLeft}>
-               </View>
-          <View style={Style.actionBarMiddle}>
-            <Text style={Style.actionBarText}>
-              {"I'm Interested".toUpperCase()}
-            </Text>
+              :<ActivityIndicator />  }
           </View>
-          <View style={Style.actionBarRight}>
-            <Button
-              transparent
-              style={Style.actionBtnRight}
-              onPress={() => {
-                this.setState({ isVisible: !this.state.isVisible })
-              }}            >
+          <View>
+            {this.state.project ? 
+            <View style={Styles.overview}>
+            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].project_descs}</Text>
+            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].coordinat_name}</Text>
+            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].coordinat_address}</Text>
+            </View>
+
+            :<ActivityIndicator /> }
+          </View>
+
+          <View>
+              <View style={{paddingVertical: 10}}>
+                <Text style={[Styles.titleGold,{fontSize: 18}]}>CONTACT</Text>
+              </View>
+              {this.state.project ? 
+            <Grid>
+              <Row>
+                <Col style={{height: 90,textAlign: 'center', alignItems:'center' }} onPress={() =>  Linking.openURL('tel:'+this.state.project[0].office_no)}>
+                <Icon
+                  raised
+                  name='phone'
+                  type='FontAwesome'
+                  style={{color: '#fff'}}
+                  />
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Call</Text>
+                </Col>
+
+                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() =>  Linking.openURL(this.state.project[0].web_url)}>
+              
+                <Icon
+                    reverse
+                    name='ios-globe'
+                    type='Ionicons'
+                    style={{color: '#fff'}}
+                  />
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Website</Text>
+                </Col>
+                
+                <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }} onPress={() => this.sendEmail()}>
+                
+                <Icon
+                  raised
+                  name='envelope'
+                  type='FontAwesome'
+                  style={{color: '#fff'}}
+                  />
+                    <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Email</Text>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].facebook_url)}>
+                
+                <Icon
+                  raised
+                  name='facebook-square'
+                  type='FontAwesome'
+                  style={{color: '#fff'}}
+                  />
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Facebook</Text>
+                </Col>
+                
+                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].instagram_url)}>
+              
+                <Icon
+                  raised
+                  name='instagram'
+                  type='FontAwesome'
+                  style={{color: '#fff'}}
+                  />
+                  {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Instagram</Text>
+                </Col>
+      
+                <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].youtube_url)}>
+                
+                  <Icon
+                  raised
+                  name='youtube'
+                  type='FontAwesome'
+                  style={{color: '#fff'}}
+                  />
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Youtube</Text>
+                </Col>
+              </Row>
+              
+            </Grid>
+
+              : 
+            <Grid>
+              <Row>
+              <Col style={{height: 90,textAlign: 'center', alignItems:'center' }}>
               <Icon
-                active
-                name="close"
-                style={Style.actionIcon}
-                type="FontAwesome"
-              />
-            </Button>
+                raised
+                name='phone'
+                type='FontAwesome'
+                style={{color: '#fff'}}
+                 />
+                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Call</Text>
+              </Col>
+
+              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }}>
+             
+               <Icon
+                  reverse
+                  name='ios-globe'
+                  type='Ionicons'
+                  style={{color: '#fff'}}
+                />
+                <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Website</Text>
+              </Col>
+              
+              <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }}>
+              
+              <Icon
+                raised
+                name='envelope'
+                type='FontAwesome'
+                style={{color: '#fff'}}
+                 />
+                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Email</Text>
+              </Col>
+              </Row>
+
+              <Row>
+              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }}>
+              
+              <Icon
+                raised
+                name='facebook-square'
+                type='FontAwesome'
+                style={{color: '#fff'}}
+                 />
+                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Facebook</Text>
+              </Col>
+              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL('http://google.com')}>
+            
+              <Icon
+                raised
+                name='instagram'
+                type='FontAwesome'
+                style={{color: '#fff'}}
+                 />
+                 {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Instagram</Text>
+              </Col>
+              
+              <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }}>
+              
+                <Icon
+                raised
+                name='youtube'
+                type='FontAwesome'
+                style={{color: '#fff'}}
+                 />
+                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Youtube</Text>
+              </Col>
+              
+              
+              </Row>
+              
+            </Grid> }
+              
           </View>
-        </Header>
-        <ScrollView>
-        <Form style={{marginTop:10}}>
-            <Item>
-              <Text>{this.state.title}</Text>
-            </Item>
-            <Item floatingLabel>
-              <Label>Nama Anda</Label>
-              <Input value={this.state.name} onChangeText={(val)=>this.setState({name : val})} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Handphone</Label>
-              <Input value={this.state.handphone} onChangeText={(val)=>this.setState({handphone : val})} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Deskripsi</Label>
-              <Input multiline value={this.state.descs} onChangeText={(val)=>this.setState({descs : val})} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Reference Email</Label>
-              <Input value={this.state.refEmail} onChangeText={(val)=>this.setState({refEmail : val})} />
-            </Item>
-            <Body style={{ paddingVertical:32 }} o>
-            <Button rounded sucscess full
-            style={{ marginTop:16, backgroundColor: Colors.blueUrban }} onPress={()=>this.sendEmail()} >
-            <Text>Send Email</Text>
-          </Button>
-            <Button rounded warning iconRight full
-            style={{ marginTop:16, backgroundColor: Colors.loginGreen }} onPress={()=>this.sendWa()}>
-            <Text>Send via WhatsApp</Text>
-            <Icon name='whatsapp' 
-            type="FontAwesome5"/>
-          </Button>
-          </Body>
-          </Form>
-          </ScrollView>
-        </Modal>
-        </Content>
-        <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{
+
+        </ScrollView>
+        
+       
+      
+        {/* <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{
           this.state.isLogin ? this.showModal()
           : this.showAlert()
           
         }}>
           <Text>I'm Interested</Text>
-        </Button>
+        </Button> */}
+        </ImageBackground>
       </Container>
     );
   }
