@@ -579,7 +579,7 @@ showAlert = () => {
                       underlayColor="transparent"
                       onPress={() => {
                         this.setState({isUnitView:true,index:index})
-                      }}
+                      }} 
                     >
                       <View>
                         <Image
