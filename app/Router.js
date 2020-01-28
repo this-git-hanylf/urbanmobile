@@ -119,6 +119,7 @@ import AddAttachment from './Prospect/AddAttachment';
 
 
 const TabIcon = ({ focused, iconName }) => {
+  
   var color = focused ? "#AB9E84" : "#b7b7b7";
   return (
     <Icon name={iconName} color={color} size={24} style={{ marginTop: 8 }} textStyle={color} />
