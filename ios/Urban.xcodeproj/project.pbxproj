@@ -7,42 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
-		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
-		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
-		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* UrbanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* UrbanTests.m */; };
 		0390B0CFC98647E5A35D3F6A /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6659EEF034A34577A33226AA /* FontAwesome5_Brands.ttf */; };
 		03C5D4BB92CB4598839C0C7E /* Bariol_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 358933B80D2E4BC898007A6A /* Bariol_Regular.ttf */; };
-		0692C65B1E054A8DA6F57458 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF88312C0BE944818B58B93F /* libRNVectorIcons.a */; };
-		078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F0119CD10D4F4184848DC9 /* RNModalPickerTests.xctest */; };
 		0CDE716B38694566BEDF7A99 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 859661CAF0984BFE8A682415 /* EvilIcons.ttf */; };
 		0E175BED34624083891CC69C /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9C5076915174772A0278F10 /* Montserrat-Regular.ttf */; };
 		0F61E5D13AE74FB586C8687D /* HelveticaNeue-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45A418AE481C44DEA7CE1C53 /* HelveticaNeue-Bold.ttf */; };
 		0FC7AE0EB80045999CBBDB4A /* SF-UI-Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7236F6E52D224A53AC121ECB /* SF-UI-Display-Medium.ttf */; };
 		11CC1B0BE48E48F4AA260DBF /* SFUIDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 671CA40206944578A0B12A90 /* SFUIDisplay-Regular.ttf */; };
 		11CFE80A678E4EE1B8B297A6 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACB4EDBEBFCF484EA7ED642E /* AntDesign.ttf */; };
-		11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		127D2FFE560A48E1A57CD3F9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30864EAEEB844587895BF1E6 /* Ionicons.ttf */; };
-		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
-		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
-		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		14C34872532D4F50A011F74E /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AD915ADE777459E85CACB17 /* libRNDeviceInfo-tvOS.a */; };
 		15482650BD4C4503AB482D9B /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E01A2D80D89544B2AC7EF574 /* Roboto_medium.ttf */; };
 		1762873A029B4FF4B9379551 /* SF-UI-Display-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D373884121A4C8A974738A8 /* SF-UI-Display-Semibold.ttf */; };
-		1936308B1F5E4249B884C2D9 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31070ED302AD4FC2B170303C /* libRNFetchBlob.a */; };
 		1B8B8BDC308748FF9944A591 /* Steelworks_Vintage_Demo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAE2467ADDE04073AC7C08BA /* Steelworks_Vintage_Demo.ttf */; };
-		21D13D066F294354B8D3B27B /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7ABB7DC2894246A6BCD5C8 /* libBVLinearGradient.a */; };
-		245942BCE00C46C39A7AF20C /* libRNDocumentInteractionController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D53C5B0FF40340948B288515 /* libRNDocumentInteractionController.a */; };
 		24C2412955EE47399CEA13D2 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFFFABFD98534F54A997E649 /* Roboto.ttf */; };
-		26C505FE779D4004A31390F5 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41E4A8D2B0A4870A6703941 /* libRNSVG.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -57,21 +41,19 @@
 		2DCD954D1E0B4F2C00145EB5 /* UrbanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* UrbanTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		3CF2519FF8A74CBB900019FF /* BariolRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09216B61ADCF4C67874944D6 /* BariolRegular.ttf */; };
-		3F1E198223C4634E0050AE74 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E364F0FB22646EB700BB5058 /* libRNReanimated.a */; };
-		3F96D81923D1628600F8B415 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F96D81823D1628600F8B415 /* libRNFirebase.a */; };
-		3F96D84423D167D600F8B415 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */; };
+		3F49C45B23E2D1080055C68A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		3F49C45C23E2D11D0055C68A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		3F49C4AF23E2D6360055C68A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		3F49C4B123E2DCE40055C68A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F49C4B023E2DCE40055C68A /* GoogleService-Info.plist */; };
+		3F49C4B223E2DCE40055C68A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F49C4B023E2DCE40055C68A /* GoogleService-Info.plist */; };
 		4172BDB094BB4AA2BFFF0D68 /* PlayfairDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1F35725484754D22B7CDB53D /* PlayfairDisplay-Bold.otf */; };
 		462A18D7544041D59453EFB0 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E08F4A42F7E84B4DA26D25EE /* MaterialCommunityIcons.ttf */; };
-		4730F85EC4B64658B40DE953 /* libRCTPdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F209704E45C44DFC80F6B42B /* libRCTPdf.a */; };
 		4749AD866FAF42ADAA328052 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E477F690250E4B69AF4D114E /* FontAwesome5_Regular.ttf */; };
-		4919D465566E48DC820E393F /* RNModalPicker.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 122F3299F0314D248FA64A22 /* RNModalPicker.app */; };
-		4BF49E2F750B4E7B9226E707 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 503C8563EF644BD1AE87F8D2 /* libRNReanimated.a */; };
 		4C18833173054E5BB99291F1 /* SFUIDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 507CBD5DE4B04FD9A8D018EA /* SFUIDisplay-Bold.ttf */; };
 		58F8B3A20E809A19AF5139C6 /* libPods-Urban.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBEAABB06E5C02EF6319DA1 /* libPods-Urban.a */; };
 		5C5B3E65FEC74379AC1D98CB /* Myriad Pro Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0401624CF0D4126AC0D7244 /* Myriad Pro Regular.ttf */; };
 		5D3EB8D842DF4315B7F14516 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1164BB80A666462A858853CD /* libRNVectorIcons-tvOS.a */; };
 		5E835FE941534D85A92333E4 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C1A19D2424C4FA4869E218A /* Foundation.ttf */; };
-		5FA03635FFF14C1588FD4C16 /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0834F278D88B46EA8FE87B95 /* libRNCAsyncStorage.a */; };
 		64A28F4FA45748BDA6E6DD82 /* SFUIDisplay-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3BC6870EC4E40FFA77F1430 /* SFUIDisplay-Light.ttf */; };
 		657F0C948B054B67A7DBAF55 /* Bariol.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADCCACDA66B34058B45D0A13 /* Bariol.ttf */; };
 		6EAD2BCA52B34552A764AF5D /* SF-UI-Display-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4C25B854031483780A8BCB4 /* SF-UI-Display-Regular.ttf */; };
@@ -82,9 +64,7 @@
 		7BB6FBF3187B47D99D6B39C1 /* SFUIDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92297240BA9D4AB6BA666548 /* SFUIDisplay-Medium.ttf */; };
 		7C771C15669B453AB00041D9 /* SF-UI-Text-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37C328C3B6964AD894DD53DC /* SF-UI-Text-Regular.ttf */; };
 		8134B78DDAAE4F16A180CCED /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C3E7BAEC39E44CD88C46D7E /* FontAwesome5_Solid.ttf */; };
-		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		88B6B5A4EFA74D5DBC070904 /* SFUIDisplay-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 858EE88BD1BE4FCA954F32FE /* SFUIDisplay-Thin.ttf */; };
-		91A3F3F062F442FF9C357DFC /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 148A73D2F47F4C52A90C4913 /* libRNDeviceInfo.a */; };
 		9395BABC829245B8964191F4 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CB8DC62D4E448BF8EE27CD9 /* Entypo.ttf */; };
 		95A8443C0C324B93AF5E8CAE /* HelveticaNeue-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6E80E6C7DE64FCD9882E481 /* HelveticaNeue-Regular.ttf */; };
 		95B815E58DF24766A95789EB /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7272455A5F34251841B3545 /* libRNSVG-tvOS.a */; };
@@ -96,8 +76,6 @@
 		A145A77F36D94F52AD55EA6A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D80978C0171249FA9F7ADFC2 /* Feather.ttf */; };
 		A7BC8870CD184F4C9B31E2B7 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03E1F913F5CE481EA70EA832 /* icomoon.ttf */; };
 		A8FD210DAC124FE383A7656B /* HelveticaNeue-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C1AEF107A9F49B9B171C03A /* HelveticaNeue-Light.ttf */; };
-		AB3DC5765A6F402798EE25E2 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D837845409924483AEB653F1 /* libRCTOrientation.a */; };
-		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B6589F6DF8A9454FA070689F /* PlayfairDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C492FB3BF95141E5B34584FC /* PlayfairDisplay-Bold.ttf */; };
 		B7F57B35373B4E1C819B8F71 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B112B89E0684EC3AD17965E /* Octicons.ttf */; };
 		BC794E15D06247F0AE6BD36A /* BebasNeue Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0982CD7CEB4E1EB99735B0 /* BebasNeue Bold.ttf */; };
@@ -105,9 +83,7 @@
 		C13A6979E9FA4E8DA03FCC9B /* BebasNeueBook.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 828019D8017F48EFB8FF76CE /* BebasNeueBook.ttf */; };
 		C27D4C4DEFCC425C9AA59442 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EF06D02EF1949FBAE952B90 /* Roboto-Medium.ttf */; };
 		C66ED0F90AC44BF7AE51D6CB /* RNModalPicker-tvOSTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = A7544B184CEB4A239A3D343A /* RNModalPicker-tvOSTests.xctest */; };
-		D7D5D5F738CE430889D0B90A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1738482533384C628056E370 /* libRNGestureHandler.a */; };
 		E7794D27F55546E8AF815E0F /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE3F3BFBBAF4433C917534DC /* Montserrat-SemiBold.ttf */; };
-		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		ED6BEEA993BE484382E0C050 /* Helvetica.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 34A70DA771B34C9B97BAE0AB /* Helvetica.ttf */; };
 		EEB3B60EAEBE42D9829629B2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD3967D6117D4E6D92BD77B2 /* MaterialIcons.ttf */; };
@@ -571,8 +547,8 @@
 		37C328C3B6964AD894DD53DC /* SF-UI-Text-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SF-UI-Text-Regular.ttf"; path = "../app/Fonts/SF-UI-Text-Regular.ttf"; sourceTree = "<group>"; };
 		3A0982CD7CEB4E1EB99735B0 /* BebasNeue Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BebasNeue Bold.ttf"; path = "../app/Fonts/BebasNeue Bold.ttf"; sourceTree = "<group>"; };
 		3EF06D02EF1949FBAE952B90 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../app/Fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		3F49C4B023E2DCE40055C68A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3F96D81823D1628600F8B415 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNFirebase.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F9D0A2223CD785600D38329 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		45A418AE481C44DEA7CE1C53 /* HelveticaNeue-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HelveticaNeue-Bold.ttf"; path = "../app/Fonts/HelveticaNeue-Bold.ttf"; sourceTree = "<group>"; };
 		47B5F719800A44C6A8695711 /* RNDocumentInteractionController.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDocumentInteractionController.xcodeproj; path = "../node_modules/react-native-open-file/ios/RNDocumentInteractionController/RNDocumentInteractionController.xcodeproj"; sourceTree = "<group>"; };
 		503C8563EF644BD1AE87F8D2 /* libRNReanimated.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReanimated.a; sourceTree = "<group>"; };
@@ -648,6 +624,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F49C4AF23E2D6360055C68A /* JavaScriptCore.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 				98121C5FC302243C8F750481 /* libPods-UrbanTests.a in Frameworks */,
 			);
@@ -657,35 +634,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F96D84423D167D600F8B415 /* libcxxreact.a in Frameworks */,
-				3F96D81923D1628600F8B415 /* libRNFirebase.a in Frameworks */,
-				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
-				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
-				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
-				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
-				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
-				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
-				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
-				3F1E198223C4634E0050AE74 /* libRNReanimated.a in Frameworks */,
-				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
-				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				26C505FE779D4004A31390F5 /* libRNSVG.a in Frameworks */,
-				21D13D066F294354B8D3B27B /* libBVLinearGradient.a in Frameworks */,
-				0692C65B1E054A8DA6F57458 /* libRNVectorIcons.a in Frameworks */,
-				D7D5D5F738CE430889D0B90A /* libRNGestureHandler.a in Frameworks */,
-				4730F85EC4B64658B40DE953 /* libRCTPdf.a in Frameworks */,
-				1936308B1F5E4249B884C2D9 /* libRNFetchBlob.a in Frameworks */,
-				AB3DC5765A6F402798EE25E2 /* libRCTOrientation.a in Frameworks */,
-				4BF49E2F750B4E7B9226E707 /* libRNReanimated.a in Frameworks */,
-				5FA03635FFF14C1588FD4C16 /* libRNCAsyncStorage.a in Frameworks */,
-				91A3F3F062F442FF9C357DFC /* libRNDeviceInfo.a in Frameworks */,
-				245942BCE00C46C39A7AF20C /* libRNDocumentInteractionController.a in Frameworks */,
-				4919D465566E48DC820E393F /* RNModalPicker.app in Frameworks */,
-				078814467D3F449B88A9160C /* RNModalPickerTests.xctest in Frameworks */,
+				3F49C45C23E2D11D0055C68A /* libReact.a in Frameworks */,
+				3F49C45B23E2D1080055C68A /* JavaScriptCore.framework in Frameworks */,
 				58F8B3A20E809A19AF5139C6 /* libPods-Urban.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -804,7 +754,7 @@
 		13B07FAE1A68108700A75B9A /* Urban */ = {
 			isa = PBXGroup;
 			children = (
-				3F9D0A2223CD785600D38329 /* GoogleService-Info.plist */,
+				3F49C4B023E2DCE40055C68A /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1765,6 +1715,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F49C4B223E2DCE40055C68A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1785,6 +1736,7 @@
 				5E835FE941534D85A92333E4 /* Foundation.ttf in Resources */,
 				127D2FFE560A48E1A57CD3F9 /* Ionicons.ttf in Resources */,
 				462A18D7544041D59453EFB0 /* MaterialCommunityIcons.ttf in Resources */,
+				3F49C4B123E2DCE40055C68A /* GoogleService-Info.plist in Resources */,
 				EEB3B60EAEBE42D9829629B2 /* MaterialIcons.ttf in Resources */,
 				B7F57B35373B4E1C819B8F71 /* Octicons.ttf in Resources */,
 				15482650BD4C4503AB482D9B /* Roboto_medium.ttf in Resources */,
@@ -2025,7 +1977,7 @@
 					"$(SRCROOT)/../node_modules/rn-modal-picker/ios/RNModalPicker",
 				);
 				INFOPLIST_FILE = UrbanTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2073,7 +2025,7 @@
 					"$(SRCROOT)/../node_modules/rn-modal-picker/ios/RNModalPicker",
 				);
 				INFOPLIST_FILE = UrbanTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2102,12 +2054,18 @@
 			baseConfigurationReference = 54651A12264DA7B188C3AAB9 /* Pods-Urban.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = YES;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C99L922ZVC;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -2126,7 +2084,8 @@
 					"$(SRCROOT)/../node_modules/react",
 				);
 				INFOPLIST_FILE = Urban/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2139,7 +2098,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Urban;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2149,11 +2110,18 @@
 			baseConfigurationReference = E3403D63A7DDC524E2C626B6 /* Pods-Urban.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = YES;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C99L922ZVC;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -2172,11 +2140,13 @@
 					"$(SRCROOT)/../node_modules/react",
 				);
 				INFOPLIST_FILE = Urban/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-lc++",
@@ -2184,7 +2154,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Urban;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

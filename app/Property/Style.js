@@ -31,7 +31,7 @@ titleWhiteSmall:{
   // textDecorationLine: 'underline',
   borderBottomWidth: 1,
   borderBottomColor: Colors.white,
-  marginHorizontal: 140
+  marginHorizontal: 130
   // width: 'auto'
 
 },
@@ -514,7 +514,7 @@ titleWhiteSmall:{
   },
   itemBoxAmen_not_gold: {
     // resizeMode: 'cover',
-    width: 165,
+    width: 145,
     height: 145,
     marginBottom: 20,
     marginLeft: 10,
@@ -523,8 +523,8 @@ titleWhiteSmall:{
     borderRadius: 5,
     // elevation: 10,
     shadowOffset: {
-      width: 10,
-      height: 10
+      width: 15,
+      height: 15
     },
     // shadowColor: "grey",
     // shadowOpacity: 0.1,

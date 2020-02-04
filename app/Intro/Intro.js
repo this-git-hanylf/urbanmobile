@@ -146,7 +146,10 @@ export default class Intro extends React.Component {
             .then(res => {
                 if (!res.Error) {
                     if (res.Data.isResetPass != 1) {
-                        this.getTower(res);
+                        // this.getTower(res);
+                        this.setState({ isLoaded: !this.state.isLoaded });
+                        this.skipLoginBlank();
+
                     } else {
                         this.setState({ isLoaded: !this.state.isLoaded });
                         Actions.ResetPass({ email: res.Data.user });
@@ -163,6 +166,10 @@ export default class Intro extends React.Component {
                     alert(error);
                 });
             });
+    }
+
+    skipLoginBlank = () => {
+        Actions.SkipLoginBlank();
     }
 
     doLoginSosMed = async data => {
@@ -185,9 +192,11 @@ export default class Intro extends React.Component {
                     if (res.Error) {
                         Actions.SignupGuest({ sosmed: true, data });
                     } else {
-                        this.setState({ isLogin: true }, () => {
-                            this.getTower(res);
-                        });
+                        this.setState({ isLoaded: !this.state.isLoaded });
+                        this.skipLoginBlank();
+                        // this.setState({ isLogin: true }, () => {
+                        //     this.getTower(res);
+                        // });
                     }
                 } catch (error) {
                     console.log('error',error);

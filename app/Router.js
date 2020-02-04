@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Home from "./Home/Home";
 import Login from "./Intro/Intro";
 import SkipLoginBlank from "./Intro/SkipLoginBlank";
+import SkipLoginBlank2 from "./Intro/SkipLoginBlank2";
 import SignupGuest from './Signup/SignupGuest';
 import SignupAgent from './Signup/SignupAgent';
 import chooseRegist from './Signup/chooseRegist';
@@ -40,6 +41,7 @@ import ChouseFloor from "./Categoris/ChouseFloor";
 import ChooseTower from "./Categoris/ChooseTower";
 import ChouseUnit from "./Categoris/ChouseUnit";
 import ChooseZone from "./Categoris/ChooseZone";
+import ChooseZoneModif from "./Categoris/ChooseZoneModif";
 import UnitInfo from "./Categoris/UnitInfo";
 import UnitEnquiry from "./Categoris/UnitEnquiry";
 
@@ -243,6 +245,16 @@ class Routes extends Component{
                   component={SkipLoginBlank}
                   hideNavBar={true}
                   title=""
+                  translucent={true}
+                  // initial={this.state.hasLogin}
+                  // hideNavBar={true}
+        
+                />
+                <Scene
+                  key="SkipLoginBlank2"
+                  component={SkipLoginBlank2}
+                  hideNavBar={true}
+                  title=""
         
                 />
                 
@@ -289,6 +301,12 @@ class Routes extends Component{
                 <Scene
                   key="chooseZone"
                   component={ChooseZone}
+                  hideNavBar={true}
+                  title=""
+                />
+                <Scene
+                  key="ChooseZoneModif"
+                  component={ChooseZoneModif}
                   hideNavBar={true}
                   title=""
                 />

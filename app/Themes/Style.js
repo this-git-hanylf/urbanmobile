@@ -1,7 +1,10 @@
 const React = require("react-native");
+// import { Platform, StyleSheet, Dimensions } from 'react-native';
 const { Platform } = React;
 import { Fonts, Metrics, Colors } from '../Themes/';
-import {StatusBar} from 'react-native';
+import {StatusBar,Dimensions} from 'react-native';
+// const dh = Dimensions.get("window").height;
+// const dw = Dimensions.get("window").width;
 
 export default {
 
@@ -55,6 +58,66 @@ export default {
         backgroundColor: Colors.statusBarNavy,
         // backgroundColor: 'transparent',
         marginTop: StatusBar.currentHeight,
+    },
+    backgroundImage_bg: {
+        flex: 1,
+        width: Metrics.WIDTH,
+        height: Metrics.HEIGHT,
+        // backgroundColor: "#febe29"
+    },
+    coverImg: {
+        flex: 1,
+        height: 730,
+      },
+    itemBoxAmen_not_gold: {
+        // resizeMode: 'cover',
+        width: 145,
+        height: 145,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        // backgroundColor: Colors.goldUrban,
+        borderRadius: 5,
+        // elevation: 10,
+        shadowOffset: {
+          width: 15,
+          height: 15
+        },
+        // shadowColor: "grey",
+        // shadowOpacity: 0.1,
+        // shadowRadius: 0,
+      },
+      itemAmen_not_gold: {
+        marginBottom: 10,
+        width: '100%',
+        height: 150,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+      },
+    sectionTransparent: {
+        flex: 1,
+        paddingVertical: 30,
+        backgroundColor: 'transparent',
+      },
+      flatList: {
+        paddingLeft: 15,
+        paddingRight : 15
+      },
+     
+    signInBtnMedium: {
+        backgroundColor: Colors.goldUrban,
+        // height: Metrics.HEIGHT * 0.10,
+        height: 40,
+        width: 300,
+        paddingLeft: 20,
+        paddingRight: 20,
+        // width: '100%',
+        alignSelf: "center",
+        elevation: 3,
+        // shadowColor: "#000",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5
     },
     navigationModal: {
         shadowOpacity: 0,
@@ -260,6 +323,7 @@ export default {
         height: null,
         resizeMode: 'cover'
     },
+   
 
     // *** text colors *** //
     textWhite: {

@@ -614,9 +614,10 @@ class SignupPrinciple extends React.Component {
         else {
           //Captcha not match
           Alert.alert("Captcha not matched");
+          this.generateCaptcha();
         }
         // Calling captcha function, to generate captcha code
-        this.generateCaptcha();
+        // this.generateCaptcha();
     }
     
     titleCheckbox() {

@@ -87,7 +87,7 @@ function wp (percentage) {
 }
 
 const slideHeight = viewportHeight * 0.45;
-const slideWidth = wp(57); 
+const slideWidth = wp(62); 
 const itemHorizontalMargin = wp(4);
                  
 export const sliderWidth = viewportWidth;
@@ -131,11 +131,13 @@ export default class extends React.Component {
         amen: [],
         unit:[],
         tes:'',
-        stylehtml: "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25"
+        stylehtml: "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
+        pict_hardcode: require('@Asset/images/project_suite_urban.png'),
       };
 
       console.log('props',props);
       this._renderItemTower = this._renderItemTower.bind(this); //add this line
+      // this.renderItemNews = this.renderItemNews.bind(this);
 
     }
       
@@ -367,7 +369,8 @@ goTo(item) {
   if(this.props.dyn){
     _navigate("UnitEnquiryProjectPage", { prevItems: data }); 
   } else {
-    _navigate("chooseZone", { items: this.props.items });
+    // _navigate("chooseZone", { items: this.props.items });
+    _navigate("ChooseZoneModif", { items: this.props.items});
   }
 }
 // tes(){
@@ -578,7 +581,7 @@ sendEmail(){
 
 renderItemNews(item){
   return (
-    <TouchableOpacity
+    <View
       style={Styles.itemBoxAmen_not_gold}
       underlayColor="transparent"
       // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
@@ -594,7 +597,7 @@ renderItemNews(item){
         {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
         
       </View>
-    </TouchableOpacity>
+    </View>
     
     
   )
@@ -661,7 +664,16 @@ renderItemNews(item){
         <ScrollView>
             <View style={{flexDirection: 'column'}}>
             <View>
-                {this.state.picture_url !='' ?
+            {/* <Image
+                  source={require("@Asset/icon/settings.png")}
+                  style={{ width: 25, height: 25 }}
+                /> */}
+              <ImageBackground source={this.state.pict_hardcode}
+              imageStyle={"cover"}
+              style={Styles.coverImg}>
+
+              </ImageBackground>
+                {/* {this.state.picture_url !='' ?
                   <ImageBackground
                   source={{
                     uri: this.state.picture_url
@@ -670,7 +682,7 @@ renderItemNews(item){
                   style={Styles.coverImg}
                   >
                 </ImageBackground>
-                :<ActivityIndicator/>}
+                :<ActivityIndicator/>} */}
             </View>
             <View>
               <Button style={Styles.signInBtnMedium}>
@@ -711,14 +723,14 @@ renderItemNews(item){
                 karena lokasinya yang sangat
                 strategis, bukan hanya karena
                 terintegerasi langsung dengan
-                stasiun LRT Ciknir 1, namun
+                stasiun LRT Cikunir 1, namun
                 berada di persimpangan Caman
                 sehingga akan menjadi hub serta
                 meeting point bagi penduduk di
                 sekitarnya.
                 </Text>
 
-                {this.state.overview ? 
+                {/* {this.state.overview ? 
                 
                 // tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }
                 // <Text style={{color: Colors.white}}>
@@ -745,7 +757,7 @@ renderItemNews(item){
               
               // />
                 // </Text>
-                 :<ActivityIndicator /> }
+                 :<ActivityIndicator /> } */}
                 
             </View>
 
@@ -867,6 +879,7 @@ renderItemNews(item){
                       source={{ uri: item.gallery_url }}
                       style={Styles.sliderImg}
                     />
+                    {/* <Text>{item.gallery_title}</Text> */}
                   </View>
                 </TouchableOpacity>
               )}

@@ -83,6 +83,30 @@ export default {
     flexGrow: 1,
     flexDirection: "row"
   },
+  overview: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  titleGold:{
+    // color: colors.gold, 
+    color: Colors.goldUrban,
+    fontFamily: Fonts.type.proximaNovaBoldWeb,
+    letterSpacing: 1.5, 
+    alignItems: 'center', 
+    textAlign: 'center', 
+    paddingTop: 10, 
+    fontSize: 15
+},
+slider: {
+  width: '100%',
+},
+sliderImg: {
+  width: 200,
+  height: 150,
+  marginRight: 10,
+  borderRadius: 5,
+},
   itemIcon: {
     color: "#999",
     marginRight: 5,

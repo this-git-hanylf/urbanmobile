@@ -48,8 +48,10 @@ class Reset extends React.Component {
             })
             .then((response) => response.json())
             .then((res)=>{
-                alert(res.Pesan)
+                console.log('res',res.Data);
+                
                 if(!res.Error){
+                    alert(res.Pesan)
                     Actions.pop()
                 }
                 

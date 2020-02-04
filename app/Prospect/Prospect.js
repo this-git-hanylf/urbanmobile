@@ -25,7 +25,7 @@ import TabBar from '@Component/TabBar';
 import Styles from "./Style";
 import {_storeData,_getData} from '@Component/StoreAsync';
 import { urlApi } from "@Config/services";
-import Shimmer from '@Component/Shimmer';
+// import { Shimmer }from '@Component/Shimmer';
 // import styles, { colors } from "./styles/index";
 
 // const navState = {
@@ -228,7 +228,7 @@ class ProspectPage extends Component {
                         <View style={Styles.overview}>
                         {this.state.status.length == 0 ? 
                                 <View style={Styles.city}>
-                                   <Shimmer autoRun={true} style={Styles.btnCity} />
+                                   {/* <Shimmer autoRun={true} style={Styles.btnCity} /> */}
                                     
                                 </View>
                             :

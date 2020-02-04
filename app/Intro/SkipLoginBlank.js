@@ -62,6 +62,7 @@ class SkipLoginBlank extends React.Component {
         return (
             <Container>
                 <ImageBackground style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
+                    <StatusBar translucent={true}></StatusBar>
                     <Header style={styles.header}>
                         <Left style={styles.left}>
                             <Button

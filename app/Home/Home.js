@@ -205,7 +205,7 @@ export default class Home extends Component {
           <ImageBackground  style={styles.backgroundImage2} source={require("../Images/bg-gedung.png")}></ImageBackground>
           <View style={{marginLeft: 20, marginRight: 20}}>
             <Item style={styles.marginround}  >
-            {/* <Item style={styles.marginround} onPress={() => this.handleNavigation()} > */}
+            {/* <Item style={styles.marginround} onPress={() => this.handleNavigation()} > hide */}
               <Input 
                 editable={false}
                 placeholder='Find a residance'

@@ -53,7 +53,7 @@ export default StyleSheet.create({
     },
     image: {
         ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
+        resizeMode: 'contain',
         borderRadius: IS_IOS ? entryBorderRadius : 0,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius
@@ -98,7 +98,7 @@ export default StyleSheet.create({
     subtitle: {
         marginTop: 6,
         color: 'white',
-        fontSize: 12,
+        fontSize: 14,
         // fontStyle: 'italic',
         alignItems: 'center',
         textAlign: 'center',
