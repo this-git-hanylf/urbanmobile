@@ -198,7 +198,7 @@ class modalPrinciple extends React.Component {
                         </Left>
                         <Body style={styles.body}>
                             <Text style={[Style.textWhite, Style.textMedium]}>
-                                {"Choose Principle"}
+                                {"Choose Principal"}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>

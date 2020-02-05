@@ -481,7 +481,7 @@ class SignupPrincipless extends React.Component {
                         </Left>
                         <Body style={styles.body}>
                             <Text style={[Style.textWhite, Style.textMedium]}>
-                                {"Sign Up as Principle"}
+                                {"Sign Up as Principal"}
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>

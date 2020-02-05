@@ -359,8 +359,17 @@ class ChooseZoneModif extends React.Component {
                 </Text>
               </Button>
             </View>
-                <View>
-                    <Text>
+                <View style={{paddingTop: 20}}>
+                    <Text style={{color: Colors.white, 
+                  textAlign:'center',
+                  // alignContent:'center', 
+                  fontSize: 18, 
+                  paddingVertical: 10,
+               
+                  paddingHorizontal: 25, 
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 2,
+                  lineHeight: 25}}>
                     Tower 1 terdiri 18 lantai dengan luas bangunan sekitar 11.253m2. Tower ini memliki beberapa fasilitas menarik yang bisa anda nikmati.
                     </Text>
 
@@ -368,7 +377,7 @@ class ChooseZoneModif extends React.Component {
 
                 <View style={Style.sectionTransparent}>
                   <View style={{paddingVertical: 10}}>
-                    <Text>AMENITIES</Text>
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
                   </View> 
 
                   <FlatList

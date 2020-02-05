@@ -689,21 +689,22 @@ renderItemNews(item){
               </ImageBackground>
           </View>
 
-          <View style={{paddingTop: 50}} >
-            <Button style={Style.signInBtnMedium}>
-              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
-                Booking Priority Pass
-              </Text>
-            </Button>
-          </View>
-            
-            
 
-            <View style={{paddingTop: 50}}>
+  <View style={{paddingTop: 50}} >
+    <Button style={Style.signInBtnMedium}>
+      <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
+        Booking Priority Pass
+      </Text>
+    </Button>
+  </View>
+
+ 
+
+            <View style={{paddingTop: 30}}>
             {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
                 {/* <Text style={{color: Colors.white}}>Overview</Text> */}
                 {/* <Text style={[Styles.titleGold,{fontSize: 18}]}>Overview</Text> */}
-                <Text style={{color: Colors.white, 
+                {/* <Text style={{color: Colors.white, 
                   textAlign:'center', 
                   fontSize: 18, 
                   paddingVertical: 10, 
@@ -733,7 +734,19 @@ renderItemNews(item){
                 sehingga akan menjadi hub serta
                 meeting point bagi penduduk di
                 sekitarnya.
-                </Text>
+                </Text> */}
+                {this.state.overview ? 
+                <Text style={{color: Colors.white, 
+                  textAlign:'center',
+                  // alignContent:'center', 
+                  fontSize: 18, 
+                  paddingVertical: 10,
+               
+                  paddingHorizontal: 25, 
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 2,
+                  lineHeight: 25}}>{this.state.overview[0].overview_info.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+                  :<ActivityIndicator /> }
 
                 {/* {this.state.overview ? 
                 
