@@ -117,6 +117,10 @@ import DetailInterest from './Interest/DetailInterest';
 //attachment
 import AddAttachment from './Prospect/AddAttachment';
 
+//ChooseLocation
+import ChooseLocation from './Locations/ChooseLocation';
+import ProjectLocation from './Locations/ProjectLocation';
+
 
 
 
@@ -600,6 +604,18 @@ class Routes extends Component{
                 <Scene
                   key="AddAttachment"
                   component={AddAttachment}
+                  hideNavBar={true}
+                  title=""
+                />
+                 <Scene
+                  key="ChooseLocation"
+                  component={ChooseLocation}
+                  hideNavBar={true}
+                  title=""
+                />
+                 <Scene
+                  key="ProjectLocation"
+                  component={ProjectLocation}
                   hideNavBar={true}
                   title=""
                 />

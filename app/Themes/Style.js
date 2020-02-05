@@ -67,7 +67,7 @@ export default {
     },
     coverImg: {
         flex: 1,
-        height: 730,
+        height: 600,
       },
     itemBoxAmen_not_gold: {
         // resizeMode: 'cover',
@@ -416,7 +416,7 @@ export default {
     },
     actionBarText: {
         color: '#FFFFFF',
-		fontFamily: "Montserrat-Regular",
+		// fontFamily: "Montserrat-Regular",
         fontSize: 14,
         textAlign: 'center',
     },

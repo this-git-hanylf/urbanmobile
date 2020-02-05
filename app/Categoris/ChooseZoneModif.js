@@ -70,9 +70,11 @@ class ChooseZoneModif extends React.Component {
             isView : false,
             gallery:'',
             imagesPreview :[],
+            picture_url: ''
         };
         isMount=true
         console.log("props", this.props);
+
     }
 
     async componentDidMount() {
@@ -82,6 +84,7 @@ class ChooseZoneModif extends React.Component {
         const data = {
           towerDescs : this.props.items.towerDescs,
           title : this.props.items.title,
+          picture_url: this.props.prevItems.picture_url,
           // towerDescs : item.towerDescs,
           // console.log('twr descs', towerDescs);
             hd: new Headers({
@@ -89,6 +92,7 @@ class ChooseZoneModif extends React.Component {
             })
         };
         console.log('data',data);
+
         this.setState(data, () => {
             // this.getTower();
             this.getDataAminities(this.props.items)
@@ -257,9 +261,14 @@ class ChooseZoneModif extends React.Component {
         return (
             <Container style={Style.bgMain}>
                 <ImageBackground style={Style.backgroundImage_bg} source={require("../Images/background-blue.png")}>
-                <Header style={Style.navigation}>
+                <StatusBar
+                        backgroundColor={Colors.statusBarNavy}
+                        animated
+                        barStyle="light-content"
+                    />
+                {/* <Header style={[Style.navigation,{backgroundColor: 'transparent'}]}>
                     <StatusBar
-                        backgroundColor={Colors.statusBarOrange}
+                        backgroundColor={Colors.statusBarNavy}
                         animated
                         barStyle="light-content"
                     />
@@ -280,32 +289,70 @@ class ChooseZoneModif extends React.Component {
                     </View>
                     <View style={Style.actionBarMiddle}>
                         <Text style={Style.actionBarText}>
-                            {/* {"Unit Group".toUpperCase()} */}
-                            {/* {towerDescs} */}
+                         
                             {this.state.title}
                             
                         </Text>
                         <Text style={Style.actionBarText}>
-                            {/* {"Unit Group".toUpperCase()} */}
-                            {/* {towerDescs} */}
+                        
                             {this.state.towerDescs}
                             
                         </Text>
                         
                     </View>
                     <View style={Style.actionBarRight} />
-                </Header>
+                </Header> */}
 
+              
                 
-            <ScrollView>
-           <View>
-              <ImageBackground source={require("@Asset/images/project_suite_urban.png")} 
-              style={Style.coverImg}
+                
+                
+            <ScrollView >
+              
+            <View style={{top:25}}>
+              
+              <ImageBackground 
+              // source={this.state.picture_url}
+              source={{
+                uri: this.state.picture_url
+              }}
+              // source={require("@Asset/images/project_suite_urban.png")} 
+              style={[Style.coverImg,{flex:1}]}
               >
+                <View style={{paddingLeft: 15,paddingTop: 15}}>
+                <Button
+                    transparent
+                    style={Style.actionBarBtn}
+                    onPress={Actions.pop}
+                >
+                    <Icon
+                        active
+                        name="arrow-left"
+                        style={[Style.textWhite,{fontSize: 28}]}
+                        type="MaterialCommunityIcons"
+                    />
+                </Button>
+                </View>
+                
+                <View>
+                  <Text 
+                  style={{fontWeight:'900', color: '#FFFFFF',fontSize: 14,textAlign: 'center',}}
+                  // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                  >
+                      
+                      {this.state.title}
+                      
+                  </Text>
+                  <Text style={Style.actionBarText}>
+                  
+                      {this.state.towerDescs}
+                      
+                  </Text>
 
+                </View>
               </ImageBackground>
            </View>
-            <View>
+            <View style={{paddingTop: 50}} >
               <Button style={Style.signInBtnMedium}>
                 <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
                   Booking Priority Pass

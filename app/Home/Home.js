@@ -181,7 +181,10 @@ export default class Home extends Component {
   }
 
   handleNavigation = () => {
-    alert('Coming soon');
+    // alert('Coming soon');
+    // console.log('itrem',item);
+    Actions.ChooseLocation()
+    // this.goToScreen("screen.CategoryHelp");
     // this.setState({ isDisabled: true }, () => {
     //     if (this.state.appType == "") {
     //         this.goToScreen("screen.CategoryHelp");
@@ -204,8 +207,8 @@ export default class Home extends Component {
         <View style={{flexDirection:'column'}}>
           <ImageBackground  style={styles.backgroundImage2} source={require("../Images/bg-gedung.png")}></ImageBackground>
           <View style={{marginLeft: 20, marginRight: 20}}>
-            <Item style={styles.marginround}  >
-            {/* <Item style={styles.marginround} onPress={() => this.handleNavigation()} > hide */}
+            {/* <Item style={styles.marginround}  > */}
+            <Item style={styles.marginround} onPress={()=>this.handleNavigation()} >
               <Input 
                 editable={false}
                 placeholder='Find a residance'

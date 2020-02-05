@@ -356,7 +356,7 @@ showAlert = () => {
 //   alert('t')
 // };
 goTo(item) {
-  // console.log('tes')
+  console.log('item',item);
   // alert('t')
   // const itemyangdibawa = item;
   // console.log('itemyangdibawa', itemyangdibawa)
@@ -365,12 +365,13 @@ goTo(item) {
   const data = this.props.items;
   data["tower"] = item.property_cd;
   data["towerDescs"] = item.descs;
+  data["picture_url"] = item.picture_url;
   console.log('data',data);
   if(this.props.dyn){
     _navigate("UnitEnquiryProjectPage", { prevItems: data }); 
   } else {
     // _navigate("chooseZone", { items: this.props.items });
-    _navigate("ChooseZoneModif", { items: this.props.items});
+    _navigate("ChooseZoneModif", { items: this.props.items, prevItems: data});
   }
 }
 // tes(){
@@ -616,16 +617,12 @@ renderItemNews(item){
     return (
       <Container style={Style.bgMain}>
          <ImageBackground style={Styles.backgroundImage} source={require("../Images/background-blue.png")}>
-        
+         <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" /> 
            
-        <Header style={Style.navigation}>
+        {/* <Header style={Style.navigation}>
           
           <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" />          
-          {/* <StatusBar
-          translucent={true}
-          backgroundColor={"rgba(0, 0, 0, 0.3)"}
-          barStyle={"light-content"}
-        /> */}
+         
           <View style={Style.actionBarLeft}>
             <Button
               transparent
@@ -645,53 +642,61 @@ renderItemNews(item){
               {this.state.title.toUpperCase()}
             </Text>
           </View>
-          <View style={Style.actionBarRight}>
-            {/* <Button
-              transparent
-              style={Style.actionBtnRight}
-            >
-              <Icon
-                active
-                name="search"
-                style={Style.actionIcon}
-                type="FontAwesome"
-              />
-            </Button> */}
-          </View>
             
-        </Header>
+        </Header> */}
        
         <ScrollView>
-            <View style={{flexDirection: 'column'}}>
-            <View>
-            {/* <Image
-                  source={require("@Asset/icon/settings.png")}
-                  style={{ width: 25, height: 25 }}
-                /> */}
-              <ImageBackground source={this.state.pict_hardcode}
+          <View style={{top:25}}>
+            <ImageBackground 
+                // source={this.state.picture_url}
+              source={this.state.pict_hardcode}
               imageStyle={"cover"}
-              style={Styles.coverImg}>
-
-              </ImageBackground>
-                {/* {this.state.picture_url !='' ?
-                  <ImageBackground
-                  source={{
-                    uri: this.state.picture_url
-                  }}
-                  imageStyle={"cover"}
-                  style={Styles.coverImg}
+              // source={require("@Asset/images/project_suite_urban.png")} 
+              // style={[Style.coverImg,{flex:1}]}
+              style={Styles.coverImg}
+              >
+                <View style={{paddingLeft: 15,paddingTop: 15}}>
+                <Button
+                    transparent
+                    style={Style.actionBarBtn}
+                    onPress={Actions.pop}
+                >
+                    <Icon
+                        active
+                        name="arrow-left"
+                        style={[Style.textWhite,{fontSize: 28}]}
+                        type="MaterialCommunityIcons"
+                    />
+                </Button>
+                </View>
+                
+                <View>
+                  <Text 
+                  style={{fontWeight:'900', color: '#FFFFFF',fontSize: 14,textAlign: 'center',}}
+                  // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                   >
-                </ImageBackground>
-                :<ActivityIndicator/>} */}
-            </View>
-            <View>
-              <Button style={Styles.signInBtnMedium}>
-                <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
-                  Booking Priority Pass
-                </Text>
-              </Button>
-            </View>
-            </View>
+                      
+                      {this.state.title.toUpperCase()}
+                      
+                  </Text>
+                  {/* <Text style={Style.actionBarText}>
+                  
+                      {this.state.towerDescs}
+                      
+                  </Text> */}
+
+                </View>
+              </ImageBackground>
+          </View>
+
+          <View style={{paddingTop: 50}} >
+            <Button style={Style.signInBtnMedium}>
+              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
+                Booking Priority Pass
+              </Text>
+            </Button>
+          </View>
+            
             
 
             <View style={{paddingTop: 50}}>
