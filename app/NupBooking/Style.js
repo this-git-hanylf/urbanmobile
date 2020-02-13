@@ -141,7 +141,7 @@ export default {
     },
     containImageTop_no: {
         // backgroundColor: "#fff",
-        width: Metrics.WIDTH * 0.69,
+        width: Metrics.WIDTH * 0.73,
         // width: Metrics.WIDTH,
         // borderBottomLeftRadius: 15,
         // borderBottomRightRadius: 15,

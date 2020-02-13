@@ -438,7 +438,7 @@ class FormBooking extends React.Component {
                 </Header> */}
 
 
-                    <View style={{top:25, paddingBottom: 60}}>
+                    <View style={{top:25, paddingBottom: 45}}>
                         <View style={{paddingLeft: 15,paddingTop: 15}}>
                             <Button
                             transparent
@@ -476,7 +476,7 @@ class FormBooking extends React.Component {
                             
                
                     </View>
-                    <ScrollView contentContainerStyle={{ paddingHorizontal: 50 }}>
+                    <ScrollView contentContainerStyle={{ paddingHorizontal: 40 }}>
                         <View style={{paddingBottom: 15,marginTop:8}}>
                                 {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
