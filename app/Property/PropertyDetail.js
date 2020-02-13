@@ -136,7 +136,8 @@ export default class extends React.Component {
       };
 
       console.log('props',props);
-      this._renderItemTower = this._renderItemTower.bind(this); //add this line
+      this._renderItemTower = this._renderItemTower.bind(this);
+      this.nupBooking = this.nupBooking.bind(this); //add this line
       // this.renderItemNews = this.renderItemNews.bind(this);
 
     }
@@ -603,6 +604,22 @@ renderItemNews(item){
     
   )
 }
+
+nupBooking = () =>{
+  // alert('tes')
+  const data = this.props.items;
+  console.log('lempar data',data);
+
+  if(data){
+
+    Actions.NupBooking({items: data})
+    // alert('ada data');
+    // console.log('da')
+  }
+  // else{
+  //   alert('gada');
+  // }
+}
  
   render() {
     
@@ -691,7 +708,8 @@ renderItemNews(item){
 
 
   <View style={{paddingTop: 50}} >
-    <Button style={Style.signInBtnMedium}>
+    <Button style={Style.signInBtnMedium}
+    onPress={()=>this.nupBooking()}>
       <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
         Booking Priority Pass
       </Text>

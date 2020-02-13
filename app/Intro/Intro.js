@@ -146,9 +146,9 @@ export default class Intro extends React.Component {
             .then(res => {
                 if (!res.Error) {
                     if (res.Data.isResetPass != 1) {
-                        // this.getTower(res);
+                        this.getTower(res);
                         this.setState({ isLoaded: !this.state.isLoaded });
-                        this.skipLoginBlank();
+                        // this.skipLoginBlank();
 
                     } else {
                         this.setState({ isLoaded: !this.state.isLoaded });
@@ -192,11 +192,13 @@ export default class Intro extends React.Component {
                     if (res.Error) {
                         Actions.SignupGuest({ sosmed: true, data });
                     } else {
-                        this.setState({ isLoaded: !this.state.isLoaded });
-                        this.skipLoginBlank();
-                        // this.setState({ isLogin: true }, () => {
-                        //     this.getTower(res);
-                        // });
+                        
+                        // this.setState({ isLoaded: !this.state.isLoaded });
+                        // this.skipLoginBlank();
+                        this.setState({ isLogin: true }, () => {
+                            // this.getTower(res);
+                            this.skipLoginBlank();
+                        });
                     }
                 } catch (error) {
                     console.log('error',error);

@@ -121,6 +121,11 @@ import AddAttachment from './Prospect/AddAttachment';
 import ChooseLocation from './Locations/ChooseLocation';
 import ProjectLocation from './Locations/ProjectLocation';
 
+//NupBooking
+import NupBooking from './NupBooking/NupBooking';
+import FormBooking from './NupBooking/FormBooking';
+
+
 
 
 
@@ -619,6 +624,23 @@ class Routes extends Component{
                   hideNavBar={true}
                   title=""
                 />
+
+                <Scene
+                  key="NupBooking"
+                  component={NupBooking}
+                 
+                  title=""
+                  hideNavBar translucent={true} tabs={true}
+                />
+                 <Scene
+                  key="FormBooking"
+                  component={FormBooking}
+                 
+                  title=""
+                  hideNavBar translucent={true} tabs={true}
+                />
+                
+                
                 
 
           </Scene>
