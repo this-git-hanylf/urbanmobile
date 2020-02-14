@@ -124,6 +124,7 @@ import ProjectLocation from './Locations/ProjectLocation';
 //NupBooking
 import NupBooking from './NupBooking/NupBooking';
 import FormBooking from './NupBooking/FormBooking';
+import FormPayment from './NupBooking/FormPayment';
 
 
 
@@ -635,6 +636,13 @@ class Routes extends Component{
                  <Scene
                   key="FormBooking"
                   component={FormBooking}
+                 
+                  title=""
+                  hideNavBar translucent={true} tabs={true}
+                />
+                 <Scene
+                  key="FormPayment"
+                  component={FormPayment}
                  
                   title=""
                   hideNavBar translucent={true} tabs={true}

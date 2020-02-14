@@ -276,7 +276,7 @@ class FormBooking extends React.Component {
 
         const isValid = this.validating({
             // email: { require: true },
-            // fullname: { require: true },
+            fullname: { require: true },
             // // nik: { require: true },
             // nohp: { require: true },
             // selectedType: { require: true },
@@ -340,6 +340,11 @@ class FormBooking extends React.Component {
         // if(filektp != "" || filektp != null){
         //     console.log('filektp', filektp)
         // }
+
+        if(isValid){
+            _navigate("FormPayment", { prevItems: frmData }); 
+
+        }
 // 
         // if ( isValid ) {
         //     RNFetchBlob.fetch(

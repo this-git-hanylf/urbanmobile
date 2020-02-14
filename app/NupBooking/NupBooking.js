@@ -330,7 +330,6 @@ class NupBooking extends React.Component {
                
                 this.getTowerDescs(prop_cd);
                 this.getUnit(prop_cd);
-                this.handleChange(prop_cd);
                
                
             })
@@ -338,15 +337,7 @@ class NupBooking extends React.Component {
        
     }
 
-    handleChange(prop_cd, index){
-        console.log('choose to di handle', prop_cd)
 
-        console.log('index',this.state.arrayTower[index]) 
-        // this.state.arrayTower[index] = prop_cd.target.value
-        // this.setState({arrayTower: this.state.arrayTower})
-        
-
-    }
 
     chooseUnit = (chooseUn)=>{
         console.log('unit change',chooseUn);
@@ -481,9 +472,7 @@ class NupBooking extends React.Component {
 
     }
 
-    addItem(){
-        this.setState({arrayTower: [...this.state.arrayTower, ""]})
-    }
+
 
 
 
@@ -710,113 +699,13 @@ class NupBooking extends React.Component {
                                 )  
                             }
 
-                            {this.state.arrayTower.map((item,index)=>
-                            <View key={index} value={item}>
-                                <View style={Styles.viewRow}>
-                                    {/* <Input value={item}></Input> */}
-                                    <Text style={[Styles.textLeft,{paddingTop:10}]}>TOWER</Text>
-                                        <Item style={{height: 35,width: 180, marginBottom: 10,borderBottomColor:'#fff'}}>
-                                        <Picker 
-                                        placeholder="-"
-                                        selectedValue={this.state.property_cd}
-                                        style={{width: '100%'}} 
-                                        textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'#666',textAlign:"right"}}
-                                        key={index}
-                                        
-                                            // onValueChange={(val)=>this.chooseTower({descs_project:val})}
-                                            // onValueChange={(chooseTo)=>this.chooseTower(chooseTo)}
-                                            onValueChange={(chooseTo)=> {
-                                                const namaTower = this.state.tower.filter(item=>item.value==chooseTo)
-                                                // const tes = namaTower.descs;
-                                                // console.log('ngambil nama',tes);
-                                                // const arTow = this.state.arrayTower[index]
-                                                // console.log('artow',arTow);
-                                                console.log(this.state.tower.filter(item=>item.value==chooseTo))
-                                                this.chooseTower({property_cd:chooseTo,descNamaTower:namaTower})
-                                            }}
-                                        // onValueChange={(val)=>alert(val)}
-                                    
-                                        >
-                                            <Picker.Item label="" value="" style={{textAlign:"right"}}/>
-                                                {this.state.tower.map((data, key) =>
-                                                <Picker.Item key={key} label={data.label} value={data.value} />
-                                                // <Picker.Item key={key} label={data.label} value={data.value} onChange={(e)=>this.handleChange(e, key)} />
-                                            )}
-                                        </Picker>
-                                    </Item>
-                                </View>
-                                <View style={Styles.viewRow} >
-                                    <Text style={[Styles.textLeft,{paddingTop:10}]}>UNIT TYPE</Text>
-                                    {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
-                                    */}
-                                    <Item style={{height: 35,width: 170, marginBottom: 10,borderBottomColor:'#fff'}}>
-                                            <Picker 
-                                            placeholder="-"
-                                            selectedValue={this.state.lot_type}
-                                            style={{width: '100%',textAlign: 'right'}} 
-                                            textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'#666',textAlign: 'right'}}
-                                            
-                                                // onValueChange={(chooseUn)=>this.setState({lot_type:chooseUn})}
-                                                // onValueChange={(chooseUn)=>this.chooseUnit(chooseUn)}
-                                                onValueChange={(chooseUn)=> {
-                                                    const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
-                                                    this.chooseUnit({lot_type:chooseUn,descNama:namaUnit})
-                                                }}
-                                                // onValueChange={(chooseUn)=> {
-                                                //     const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
-                                                //     this.chooseUnit({lot_type:chooseUn,tes:namaUnit})}}
-                                                
-                                            // onValueChange={(val)=>alert(val)}
-                                        
-                                            >
-                                                <Picker.Item label="" value="" />
-                                                    {this.state.unit.map((data, key) =>
-                                                    <Picker.Item key={key} label={data.label} value={data.value} style={{textAlign: 'right'}}/>
-                                                )}
-                                            </Picker>
-                                        </Item>
-                                    
-                                </View>
-                                {this.state.harga.length == null ?
-
-                                    null
-                                    :
-                                    // <Text>{this.state.harga.nup_amount}</Text>
-                                    this.state.harga.map((item,key)=>
-                                    <View style={Styles.viewRowHarga} key={key}>
-                                        <Text style={Styles.textLeftAmt}>{"  "+numFormat(item.nup_amount)}</Text>
-                                        <View style={{width: 100, borderRadius: 5, marginBottom: 5, top:-5}}>
-                                            <View style={{justifyContent:'space-between',flexDirection:'row', borderWidth:1,borderColor:Colors.greyUrban,borderRadius:5}}>
-                                                <TouchableOpacity onPress={()=>this.handleQty("minus")}>
-                                                    <View >
-                                                        <Text style={{marginLeft:10,color:Colors.greyUrban}}>-</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                                
-                                                <Text style={{fontFamily: Fonts.type.proximaNovaBold,alignItems:'center',alignSelf:'center'}}>{this.state.qty.toString()}</Text>
-                                                <TouchableOpacity onPress={()=>this.handleQty("plus")}>
-                                                    <View >
-                                                        <Text style={{marginRight:10,color:Colors.greyUrban}}>+</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-
-                                            </View>
-                                        </View>
-                                    
-                                    </View>
-                                    )  
-                                    }
-
-                            </View>
-                               
-                            )}
-
                             <View style={Styles.viewAddmore}>
                                 <TouchableOpacity onPress={(prop_cd)=>this.addItem(prop_cd)}>
                                     <Text style={{textAlign:'center',width:75,alignItems:'center',fontSize:14,fontFamily:Fonts.type.proximaNovaBold, 
                                 color:Colors.loginBlue,borderBottomWidth:1,borderColor:Colors.loginBlue}}>add more +</Text></TouchableOpacity>
                                 {/* <Text style={{color: Colors.twitter}} onnP>add more +</Text> */}
                             </View>
+
 
                             {/* space buat harga */}
 
