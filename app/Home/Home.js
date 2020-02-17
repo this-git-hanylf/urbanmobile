@@ -246,6 +246,14 @@ export default class Home extends Component {
             <Text style={Styles.sLinkHead}>ALL PROJECT</Text>
           </Button>
         </View> */}
+
+          {/* <Button
+            small
+            rounded
+            style={Styles.sBtnHead}
+            onPress={()=>Actions.ListingProjectPage()}>
+            <Text style={Styles.sLinkHead}>ALL PROJECT</Text>
+          </Button> */}
         
         <View style={styles.corContainerStyle}>
           {this.state.dataTower.length == 0 ? <ActivityIndicator size="large" color="#fff" /> :

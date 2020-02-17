@@ -133,9 +133,10 @@ import FormPayment from './NupBooking/FormPayment';
 const TabIcon = ({ focused, iconName }) => {
   
   var color = focused ? "#AB9E84" : "#b7b7b7";
+  var tintColor = focused ? "#AB9E84" : "#b7b7b7";
   return (
-    <Icon name={iconName} color={color} size={24} style={{ marginTop: 8 }} textStyle={color} />
-
+    <Icon name={iconName} color={color} size={24} style={{ marginTop: 8, color: tintColor }} textStyle={color} />
+    
   );
 };
 
@@ -184,8 +185,8 @@ class Routes extends Component{
                 title=""
                 tabBarLabel="Home"
                 color='#000000'
-                // tabBarStyle={{color: "#000000"}}
-                // titleStyle=""
+                tabBarStyle={{color:"#000000"}}
+                titleStyle={{color:"#000"}}
                 // labelStyle={{color: "#ad1819"}}
                 // activeTintColor="#ad1819"
                 // inactiveTintColor="#fff" 
@@ -201,7 +202,7 @@ class Routes extends Component{
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
-                tabBarLabel="Project"
+                tabBarLabel="Progress"
                 iconName="building-o"
                 icon={TabIcon}
               />
@@ -231,7 +232,7 @@ class Routes extends Component{
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
-                tabBarLabel="Akun"
+                tabBarLabel="Account"
                 iconName="user"
                 icon={TabIcon}
               />

@@ -94,7 +94,16 @@ class NupBooking extends React.Component {
 
             inputValue: '',
 
-            arrayTower:[],
+            arrayTower:[
+                {
+                    property_cd:'',
+                    lot_type:'',
+                    harga : [],
+                    qty:0,
+                    towerDes:'',
+                    unitDes:''
+                }
+            ],
     //   dataSource: ds.cloneWithRows([]),
 
         };
@@ -105,7 +114,7 @@ class NupBooking extends React.Component {
         // this.onAdd = this.onAdd.bind(this);
         this.checkout = this.checkout.bind(this);
 
-        // this.handleChange = this.handleChange.bind(this);
+        // this.addItem = this.addItem.bind(this);
     // this._handleDeleteButtonPress = this._handleDeleteButtonPress.bind(this);
 
     }
@@ -135,8 +144,8 @@ class NupBooking extends React.Component {
 
         this.setState(data, () => {
             this.getTower();
-            this.getUnit();
-            this.getHarga();
+            // this.getUnit();
+            // this.getHarga();
             this.getTowerDescs();
             this.getUnitDescs();
             // this.getDataAminities(this.props.items)
@@ -230,8 +239,11 @@ class NupBooking extends React.Component {
     }
     };
 
-    getTowerDescs = (prop_cd) => {
+    getTowerDescs = (index) => {
         const item = this.props.items;
+        const datas = this.state.arrayTower;
+        const prop = datas[0].property_cd;
+        console.log('propert',prop);
         // console.log('item tower', item);
         {
             isMount
@@ -244,7 +256,8 @@ class NupBooking extends React.Component {
                     "/" +
                     item.project_no +
                     "/" +
-                    prop_cd,
+                    prop,
+                    // prop,
                 {
                     method: "GET",
                     headers: this.state.hd,
@@ -255,7 +268,12 @@ class NupBooking extends React.Component {
                 .then(res => {
                     if (!res.Error) {
                     const resData = res.Data;
-                    this.setState({ towerDes: resData });
+                    // this.setState({ towerDes: resData });
+                    const arrayTower = this.state.arrayTower;
+                    arrayTower[index].towerDes = resData;
+
+                    this.setState({arrayTower});
+
                     console.log("towerDes", resData);
                     } else {
                     this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -275,7 +293,12 @@ class NupBooking extends React.Component {
     getUnitDescs = (choose_UN) => {
         const item = this.props.items;
         const prop_cd = this.state.property_cd;
-        console.log('pr',prop_cd);
+
+        const datas = this.state.arrayTower;
+        const prop = datas[0].property_cd;
+        const lot = datas[0].lot_type;
+        console.log('propert',prop);
+        console.log('pr',lot);
         // console.log('item tower', item);
         {
             isMount
@@ -288,9 +311,12 @@ class NupBooking extends React.Component {
                     "/" +
                     item.project_no +
                     "/" +
-                    prop_cd +
+                    prop + 
                     "/" +
-                    choose_UN,
+                    lot,
+                    // prop_cd +
+                    // "/" +
+                    // choose_UN,
                 {
                     method: "GET",
                     headers: this.state.hd,
@@ -320,24 +346,49 @@ class NupBooking extends React.Component {
 
     chooseTower = (chooseTo)=>{
         console.log('tower change',chooseTo);
-        // console.log('indexx',index);
+        console.log("TEST111");
 
+        
+        
         const prop_cd = chooseTo.property_cd;
         console.log('propto',prop_cd);
 
         if(chooseTo){
-            this.setState({property_cd : prop_cd},()=>{
+            // this.setState({property_cd : prop_cd},()=>{
                
-                this.getTowerDescs(prop_cd);
-                this.getUnit(prop_cd);
+            //     this.getTowerDescs(prop_cd);
+            //     this.getUnit(prop_cd);
                
                
-            })
+            // })
+
+            if(chooseTo.descNamaTower[0]){
+                const data = {
+                    property_cd : prop_cd,
+                    towerDes:chooseTo.descNamaTower[0].descs,
+                    lot_type : "",
+                    harga : [],
+                    qty: 0,
+                    unitDes:""
+                };
+    
+                const arrayTower = this.state.arrayTower;
+    
+                arrayTower[chooseTo.index] = data;
+    
+                this.setState({arrayTower},()=>{
+                   
+                    // this.getTowerDescs(chooseTo.index,prop_cd);
+                    this.getUnit(prop_cd);
+                    
+                    console.log("Tower sadasda",this.state.arrayTower);
+                })
+            }
+            
+              
         }
        
     }
-
-
 
     chooseUnit = (chooseUn)=>{
         console.log('unit change',chooseUn);
@@ -346,16 +397,54 @@ class NupBooking extends React.Component {
         const choose_UN = chooseUn.lot_type;
         console.log('cho',choose_UN)
 
+        // const property_cd = this.state.prop_cd;
+        // console.log('propsty',property_cd);
+
         // const nama = chooseUn.descNama.label;
         // console.log('nama',nama);
 
         // alert(val);
+        // if(chooseUn.descNama[0]){
+        //     const data = {
+        //         property_cd : prop_cd,
+        //         towerDes:chooseTo.descNamaTower[0].descs,
+        //         lot_type : "",
+        //         harga : [],
+        //         qty: 0,
+        //         unitDes:""
+        //     };
+
+        //     const arrayTower = this.state.arrayTower;
+
+        //     arrayTower[chooseTo.index] = data;
+
+        //     this.setState({arrayTower},()=>{
+               
+        //         // this.getTowerDescs(chooseTo.index,prop_cd);
+        //         this.getUnit(prop_cd);
+                
+        //         console.log("Tower sadasda",this.state.arrayTower);
+        //     })
+        // }
+
         if(choose_UN){
-            this.setState({lot_type : choose_UN},()=>{
+
+            const arrayTower = this.state.arrayTower;
+
+            arrayTower[chooseUn.index].lot_type = choose_UN;
+            arrayTower[chooseUn.index].harga = [];
+            arrayTower[chooseUn.index].qty=0;
+            if(chooseUn.descNama[0]){
+                arrayTower[chooseUn.index].unitDes=chooseUn.descNama[0].label;
+            };
+            
+
+            this.setState({arrayTower},()=>{
                 // alert(selProv);
-                this.getUnitDescs(choose_UN);
-                this.getHarga(choose_UN);
+                // this.getUnitDescs(choose_UN);
+                this.getHarga(chooseUn.index,choose_UN);
                 console.log('parmunnit',choose_UN);
+                console.log("unit sadasda",this.state.arrayTower);
                 // console.log('con');
                 // this.setState({UnitName: nama})
                 
@@ -365,7 +454,7 @@ class NupBooking extends React.Component {
        
     }
     
-    getHarga = (choose_UN) => {
+    getHarga = (index,choose_UN) => {
         console.log("choose",choose_UN);
        
         // console.log("chooseUnits",chooseUnits);
@@ -398,7 +487,10 @@ class NupBooking extends React.Component {
                 .then(res => {
                     if (!res.Error) {
                     const resData = res.Data;
-                    this.setState({ harga: resData });
+                    const arrayTower = this.state.arrayTower;
+                    arrayTower[index].harga = resData;
+
+                    this.setState({arrayTower});
                     } else {
                     this.setState({ isLoaded: !this.state.isLoaded }, () => {
                         // alert(res.Pesan);
@@ -415,16 +507,42 @@ class NupBooking extends React.Component {
         }
     };
 
-    handleQty(type){
-        let {qty} = this.state;
+    handleQty(index,type){
+        // console.log(type);
+        // let {qty} = this.state;
+        // console.log('qtyyy',qty);
+
+        const arrayTower = this.state.arrayTower;
+        const qty = arrayTower[index].qty;
+        console.log('qtyyy',qty);
+
+        if(type=="minus"){
+            console.log('minus')
+                if(qty > 0 ){
+                    console.log('>1');
+                    arrayTower[index].qty = qty-1;
+                    this.setState({arrayTower})
+                    console.log('qty minus',arrayTower);
+                }else{
+                    null
+                }
+            
+        }else{
+            console.log('plus')
+            arrayTower[index].qty = qty+1;
+            this.setState({arrayTower});
+            console.log('qty plus',arrayTower);
+        }
         
-            type == "minus" ? 
-                qty > 1 ? 
-                    this.setState({qty : qty - 1}) 
-                : null
-            : 
-            this.setState({qty : qty + 1});
-            console.log('qty',qty);
+            // type == "minus" ? 
+            //     qty > 1 ? 
+            //             arrayTower[index].qty = qty--;
+            //             this.setState({qty : qty - 1}) 
+            //         : null
+            //     : 
+            // arrayTower[index].qty = qty++;
+            // this.setState({arrayTower});
+            // console.log('qty',qty);
     };
 
     handleBuyNow(){
@@ -472,8 +590,16 @@ class NupBooking extends React.Component {
 
     }
 
+    addItem = () =>{
 
-
+        const data = {
+            property_cd : "",
+            lot_type  :"",
+            harga : [],
+            qty: 0
+        }
+        this.setState({arrayTower: [...this.state.arrayTower, data ]})
+    }
 
 
     // _handleTextChange = (value) => {
@@ -505,6 +631,20 @@ class NupBooking extends React.Component {
 
    
     render() {
+
+        let subTotal = 0;
+
+        this.state.arrayTower.map((data)=>{
+            if(data.harga.length != 0){
+                let price = parseFloat(data.harga[0].nup_amount) ;
+                let qty_tot= data.qty ;
+                console.log(qty_tot);
+
+                if(qty_tot != 0){
+                    subTotal = subTotal + (price * qty_tot);
+                }
+            }
+        })
       
         return (
            <Container style={Style  .bgMain}>
@@ -595,109 +735,109 @@ class NupBooking extends React.Component {
                                 <Text style={Styles.textLeft}>PROJECT</Text>
                                 <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
                             </View>
-                            <View style={Styles.viewRow}>
-                                <Text style={[Styles.textLeft,{paddingTop:10}]}>TOWER</Text>
-                                {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text> */}
-                                <Item style={{height: 35,width: 180, marginBottom: 10,borderBottomColor:'#fff'}}>
-                                    <Picker 
-                                    placeholder="-"
-                                    selectedValue={this.state.property_cd}
-                                    style={{width: '100%'}} 
-                                    textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'#666',textAlign:"right"}}
-                                    
-                                        // onValueChange={(val)=>this.chooseTower({descs_project:val})}
-                                        // onValueChange={(chooseTo)=>this.chooseTower(chooseTo)}
-                                        onValueChange={(chooseTo)=> {
-                                            const namaTower = this.state.tower.filter(item=>item.value==chooseTo)
-                                            // const tes = namaTower.descs;
-                                            // console.log('ngambil nama',tes);
-                                            console.log(this.state.tower.filter(item=>item.value==chooseTo))
-                                            this.chooseTower({property_cd:chooseTo,descNamaTower:namaTower})
-                                        }}
-                                    // onValueChange={(val)=>alert(val)}
-                                
-                                    >
-                                        <Picker.Item label="" value="" style={{textAlign:"right"}}/>
-                                            {this.state.tower.map((data, key) =>
-                                            <Picker.Item key={key} label={data.label} value={data.value} />
-                                            // <Picker.Item key={key} label={data.label} value={data.value} onChange={(e)=>this.handleChange(e, key)} />
-                                        )}
-                                    </Picker>
-                                </Item>
-                            </View>
-
-                            <View style={Styles.viewRowUnit}>
-                                <Text style={[Styles.textLeft,{paddingTop:10}]}>UNIT TYPE</Text>
-                                {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
-                                 */}
-                                 
-                          
-
-                                 
-                                <Item style={{height: 35,marginBottom: 10,borderBottomColor:'#fff',alignItems: 'center'}}>
-                                        
-                                        <Picker 
-                                        placeholder="-"
-                                        selectedValue={this.state.lot_type}
-                                        style={{textAlign: 'right',width: 170,right:0}} 
-                                        textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'red',textAlign: 'right'}}
-                                        // itemStyle={{color:"blue",position:'absolute',right:0}}
-                                        // itemTextStyle={{color:"blue",position:'absolute',right:0}}
-                                            // onValueChange={(chooseUn)=>this.setState({lot_type:chooseUn})}
-                                            // onValueChange={(chooseUn)=>this.chooseUnit(chooseUn)}
-                                            onValueChange={(chooseUn)=> {
-                                                
-                                                const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
-                                                this.chooseUnit({lot_type:chooseUn,descNama:namaUnit})
-                                            }}
-                                            // onValueChange={(chooseUn)=> {
-                                            //     const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
-                                            //     this.chooseUnit({lot_type:chooseUn,tes:namaUnit})}}
-                                            
-                                        // onValueChange={(val)=>alert(val)}
-                                    
-                                        >
-                                            <Picker.Item label="" value="" />
-                                                {this.state.unit.map((data, key) =>
-                                                <Picker.Item key={key} label={data.label} value={data.value} right="10"/>
-                                            )}
-                                        </Picker>
-                                    </Item>
-                                    
-                                    
-                            </View>
-
                            
-
-                            {this.state.harga.length == null ?
-
-                                null
-                                :
-                            // <Text>{this.state.harga.nup_amount}</Text>
-                                this.state.harga.map((item,key)=>
-                                <View style={Styles.viewRowHarga} key={key}>
-                                    <Text style={Styles.textLeftAmt}>{"  "+numFormat(item.nup_amount)}</Text>
-                                    <View style={{width: 100, borderRadius: 5, marginBottom: 5, top:-5}}>
-                                        <View style={{justifyContent:'space-between',flexDirection:'row', borderWidth:1,borderColor:Colors.greyUrban,borderRadius:5}}>
-                                            <TouchableOpacity onPress={()=>this.handleQty("minus")}>
-                                                <View >
-                                                    <Text style={{marginLeft:10,color:Colors.greyUrban}}>-</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                            
-                                            <Text style={{fontFamily: Fonts.type.proximaNovaBold,alignItems:'center',alignSelf:'center'}}>{this.state.qty.toString()}</Text>
-                                            <TouchableOpacity onPress={()=>this.handleQty("plus")}>
-                                                <View >
-                                                    <Text style={{marginRight:10,color:Colors.greyUrban}}>+</Text>
-                                                </View>
-                                            </TouchableOpacity>
-
+                            {this.state.arrayTower.map((item,index)=>
+                                    <View key={index} >
+                                        <View style={Styles.viewRow}>
+                                            <Text style={[Styles.textLeft,{paddingTop:10}]}>TOWER</Text>
+                                                {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text> */}
+                                                <Item style={{height: 35,width: 180, marginBottom: 10,borderBottomColor:'#fff'}}>
+                                                    <Picker 
+                                                    placeholder="-"
+                                                    selectedValue={item.property_cd}
+                                                    style={{width: '100%'}} 
+                                                    textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'#666',textAlign:"right"}}
+                                                    onValueChange={(chooseTo)=> {
+                                                            const namaTower = this.state.tower.filter(item=>item.value==chooseTo)
+                                                            // const tes = namaTower.descs;
+                                                            // console.log('ngambil nama',tes);
+                                                            console.log(this.state.tower.filter(item=>item.value==chooseTo))
+                                                            this.chooseTower({index,property_cd:chooseTo,descNamaTower:namaTower})
+                                                        }}
+                                                    // onValueChange={(val)=>alert(val)}
+                                                
+                                                    >
+                                                        <Picker.Item label="" value="" style={{textAlign:"right"}}/>
+                                                            {this.state.tower.map((data, key) =>
+                                                            <Picker.Item key={key} label={data.label} value={data.value} />
+                                                            // <Picker.Item key={key} label={data.label} value={data.value} onChange={(e)=>this.handleChange(e, key)} />
+                                                        )}
+                                                    </Picker>
+                                                </Item>
                                         </View>
+
+                                        <View style={Styles.viewRowUnit}>
+                                            <Text style={[Styles.textLeft,{paddingTop:10}]}>UNIT TYPE</Text>
+                                            {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
+                                            */}
+                                            <Item style={{height: 35,marginBottom: 10,borderBottomColor:'#fff',alignItems: 'center'}}>
+                                                    
+                                                    <Picker 
+                                                    placeholder="-"
+                                                    selectedValue={item.lot_type}
+                                                    style={{textAlign: 'right',width: 170,right:0}} 
+                                                    textStyle={{fontFamily:'Montserrat-Regular',fontSize:12,color:'red',textAlign: 'right'}}
+                                                    // itemStyle={{color:"blue",position:'absolute',right:0}}
+                                                    // itemTextStyle={{color:"blue",position:'absolute',right:0}}
+                                                        // onValueChange={(chooseUn)=>this.setState({lot_type:chooseUn})}
+                                                        // onValueChange={(chooseUn)=>this.chooseUnit(chooseUn)}
+                                                        onValueChange={(chooseUn)=> {
+                                                            
+                                                            const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
+                                                            this.chooseUnit({index,lot_type:chooseUn,descNama:namaUnit})
+                                                        }}
+                                                        // onValueChange={(chooseUn)=> {
+                                                        //     const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
+                                                        //     this.chooseUnit({lot_type:chooseUn,tes:namaUnit})}}
+                                                        
+                                                    // onValueChange={(val)=>alert(val)}
+                                                
+                                                    >
+                                                        <Picker.Item label="" value="" />
+                                                            {this.state.unit.map((data, key) =>
+                                                            <Picker.Item key={key} label={data.label} value={data.value} right="10"/>
+                                                        )}
+                                                    </Picker>
+                                                </Item>
+                                                
+                                                
+                                        </View>
+
+                                        
+                                        {item.harga.length == 0 ?
+
+                                            null
+                                            :
+                                            item.harga.map((itemnup,key)=>
+                                            <View style={Styles.viewRowHarga} key={key}>
+                                                <Text style={Styles.textLeftAmt}>{"  "+numFormat(itemnup.nup_amount)}</Text>
+                                                <View style={{width: 100, borderRadius: 5, marginBottom: 5, top:-5}}>
+                                                    <View style={{justifyContent:'space-between',flexDirection:'row', borderWidth:1,borderColor:Colors.greyUrban,borderRadius:5}}>
+                                                        <TouchableOpacity onPress={()=>this.handleQty(index,"minus")}>
+                                                            <View >
+                                                                <Text style={{marginLeft:10,color:Colors.greyUrban}}>-</Text>
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                        
+                                                        <Text style={{fontFamily: Fonts.type.proximaNovaBold,alignItems:'center',alignSelf:'center'}}>{item.qty}</Text>
+                                                        
+                                                        <TouchableOpacity onPress={(type)=>this.handleQty(index,"plus")}>
+                                                            <View >
+                                                                <Text style={{marginRight:10,color:Colors.greyUrban}}>+</Text>
+                                                            </View>
+                                                        </TouchableOpacity>
+
+                                                    </View>
+                                                </View>
+                                            
+                                            </View>
+                                            )  
+                                            }
                                     </View>
-                                   
-                                </View>
-                                )  
-                            }
+                                    
+
+
+                            )}
 
                             <View style={Styles.viewAddmore}>
                                 <TouchableOpacity onPress={(prop_cd)=>this.addItem(prop_cd)}>
@@ -713,13 +853,24 @@ class NupBooking extends React.Component {
                                 <Text style={Styles.textLeftQty}>QUANTITY</Text>
                                 {/* {this.state.} */}
                                 <View style={{flexDirection:'column',marginBottom:10}}>
-                                    {this.state.towerDes.length == 0 ?
+                                    {this.state.arrayTower.length == 0 ?
+                                        <Text> - </Text>
+                                    :
+                                        this.state.arrayTower.map((item,key)=>
+                                            <View key={key} >
+                                                 <Text style={{color:'#000',textAlign:'right',fontFamily:Fonts.type.proximaNovaBold}}>{item.towerDes}</Text>
+                                                 <Text style={{color:'#000',textAlign:'right',fontFamily:Fonts.type.proximaNovaReg,}}>- {item.unitDes} ({item.qty.toString()} ITEM)</Text>
+                                            </View>
+                                        )
+                                        
+                                    }
+                                    {/* {this.state.towerDes.length == 0 ?
                                         null :
                                     <Text style={{color:'#000',textAlign:'right',fontFamily:Fonts.type.proximaNovaBold}}>{this.state.towerDes[0].descs}</Text>}
                                     {this.state.unitDes.length == 0 ?
                                         null :
                                     <Text style={{color:'#000',textAlign:'right',fontFamily:Fonts.type.proximaNovaReg,}}>- {this.state.unitDes[0].descs} ({this.state.qty.toString()} ITEM)</Text>}
-                                    
+                                     */}
                                 </View>
                                 
 
@@ -727,18 +878,24 @@ class NupBooking extends React.Component {
 
                             <View style={Styles.viewRow}>
                                 <Text style={Styles.textLeft}>TOTAL</Text>
+                                <Text style={Styles.textRight}>{numFormat(subTotal)}</Text>
+
+                                {/* {this.state.arrayTower.length!==0 ?
+                                <Text>{this.state.arrayTower[0].qty}</Text>
+                                    // <Text style={Styles.textRight}>{numFormat(this.state.harga[0].nup_amount * item.qty)}</Text>
+                                :
+                                    null
+                                }
                                
                                 {this.state.harga.length !==0 ? 
-                                <Text style={Styles.textRight}>{numFormat(this.state.harga[0].nup_amount * this.state.qty)}</Text>
+                                <Text style={Styles.textRight}>{numFormat(subTotal)}</Text>
                                 :
                                 null
-                                }
+                                } */}
                                 
                                 {/* <Text>res{this.state.harga[0].nup_amount}</Text> */}
                             </View>
 
-                           
-                        
                             <View style={{paddingTop: 50}} >
                                 <Button style={Styles.btnMedium}
                                 onPress={()=>this.checkout()}>

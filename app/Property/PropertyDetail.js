@@ -61,6 +61,7 @@ import { WebView } from 'react-native-webview';
 import styles, { colors } from "./componen/index";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import NavigationService from "@Service/Navigation";
+import FooterTabsIconText from '@Component/BottomBar';
 // import { sliderWidth, itemWidth } from "./componen/SliderEntry";
 // import SliderEntry from "../components/SlideEntry";
 // const { height, width } = Dimensions.get('window')
@@ -156,6 +157,7 @@ async componentDidMount() {
       handphone : await _getData('@Handphone'),
       isLogin : await _getData('@isLogin'),
       title : this.props.items.project_descs,
+      group: await _getData('@Group'),
       // descs : this.props.items.project_descs,
       descs : 'Saya tertarik reservasi ' + this.props.items.project_descs + '\n\nHubungi saya untuk info detail.',
       picture_url : this.props.items.picture_url
@@ -380,7 +382,7 @@ goTo(item) {
 // }
 
 _renderItemTower ({item, index}, parallaxProps) {
-  console.log('item towersss', item)
+  // console.log('item towersss', item)
   return (
       <TouchableOpacity style={styles.item} 
       // onPress={() => this.goTo()}
@@ -620,6 +622,23 @@ nupBooking = () =>{
   //   alert('gada');
   // }
 }
+
+alertNUP = () => {
+  Alert.alert(
+    "Attention",
+    "Please contact your agent for booking",
+    [
+        { text: "Close", onPress: () => console.log("Close"), style: "default"},
+        // { text: "Camera", onPress: () => this.fromCamera() },
+        // {
+        //     text: "Cancel",
+        //     onPress: () => console.log("User Cancel"),
+        //     style: {backgroundColor: "#000"}
+        // }
+    ],
+    { cancelable: false }
+);
+}
  
   render() {
     
@@ -706,15 +725,28 @@ nupBooking = () =>{
               </ImageBackground>
           </View>
 
-
-  <View style={{paddingTop: 50}} >
-    <Button style={Style.signInBtnMedium}
-    onPress={()=>this.nupBooking()}>
-      <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
-        Booking Priority Pass
-      </Text>
-    </Button>
-  </View>
+          {this.state.group !== "AGENT" ?
+          <View style={{paddingTop: 50}} >
+            <Button style={Style.signInBtnMedium}
+            onPress={()=>this.alertNUP()}
+            >
+              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
+                Booking Priority Pass
+              </Text>
+            </Button>
+          </View> 
+          : 
+          <View style={{paddingTop: 50}} >
+            <Button style={Style.signInBtnMedium}
+            onPress={()=>this.nupBooking()}
+            >
+              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
+                Booking Priority Pass
+              </Text>
+            </Button>
+          </View> 
+          }
+          
 
  
 
@@ -1165,6 +1197,7 @@ nupBooking = () =>{
           <Text>I'm Interested</Text>
         </Button> */}
         </ImageBackground>
+        {/* <FooterTabsIconText /> */}
       </Container>
     );
   }

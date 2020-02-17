@@ -7,7 +7,7 @@ import { Style } from '../Themes/'
 import Styles from './Style'
 import {_storeData,_getData} from '@Component/StoreAsync';
 // import Shimmer from 'react-native-shimmer';
-import Shimmer from '@Component/Shimmer';
+// import Shimmer from '@Component/Shimmer';
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -61,12 +61,13 @@ export default class Search extends React.Component {
                     </View>
                     
                     {this.state.dataTower.length == 0 ? 
-                        <View style={Styles.city}>
-                            <Shimmer autoRun={true} style={Styles.btnCity} />
-                            <Shimmer autoRun={true} style={Styles.btnCity} />
-                            <Shimmer autoRun={true} style={Styles.btnCity} />
-                            <Shimmer autoRun={true} style={Styles.btnCity} />
-                        </View>
+                        <ActivityIndicator></ActivityIndicator>
+                        // <View style={Styles.city}>
+                        //     <Shimmer autoRun={true} style={Styles.btnCity} />
+                        //     <Shimmer autoRun={true} style={Styles.btnCity} />
+                        //     <Shimmer autoRun={true} style={Styles.btnCity} />
+                        //     <Shimmer autoRun={true} style={Styles.btnCity} />
+                        // </View>
                     :
                         <View style={Styles.city}>
 
