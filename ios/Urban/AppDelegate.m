@@ -11,7 +11,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #if RCT_DEV
 #import <React/RCTDevLoadingView.h>
 #endif
@@ -20,7 +20,7 @@
   //Log App Activations FB
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-  [FBSDKAppEvents activateApp];
+//  [FBSDKAppEvents activateApp];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -43,8 +43,8 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 //  FB SDK
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                           didFinishLaunchingWithOptions:launchOptions];
+//  [[FBSDKApplicationDelegate sharedInstance] application:application
+//                           didFinishLaunchingWithOptions:launchOptions];
   
   return YES;
 }

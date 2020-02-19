@@ -90,18 +90,25 @@ class FormBooking extends React.Component {
 
     async componentDidMount() {
         isMount = true;
-        // const dataPrev = this.props.prevItems;
-        // console.log('dataprev',dataPrev);
-       
+        const dataPrev = this.props.prevItems;
+        const subtot = this.props.subtot;
+        console.log('subtot',subtot);
+        console.log('dataprev',dataPrev);
+        // const items = this.props.items;
 
         const data = {
-            lot_type: this.props.prevItems.lot_type,
-            nama_tower: this.props.prevItems.nama_tower,
-            nama_unit: this.props.prevItems.nama_unit,
-            project_descs: this.props.prevItems.project_descs,
-            property_cd: this.props.prevItems.property_cd,
-            qty: this.props.prevItems.qty,
-            total: this.props.prevItems.total
+            project_no : this.props.items.project_no,
+            entity: this.props.items.entity_cd,
+            audit_user : await _getData('@UserId'),
+            projectdesc: this.props.items.project_descs,
+            subtot: this.props.subtot
+            // lot_type: this.props.prevItems.lot_type,
+            // nama_tower: this.props.prevItems.nama_tower,
+            // nama_unit: this.props.prevItems.nama_unit,
+            // project_descs: this.props.prevItems.project_descs,
+            // property_cd: this.props.prevItems.property_cd,
+            // qty: this.props.prevItems.qty,
+            // total: this.props.prevItems.total
         };
         console.log('data',data);
 
@@ -192,6 +199,7 @@ class FormBooking extends React.Component {
     }
 
     submit = () => {
+        
         this.setState({ isLoaded: !this.state.isLoaded });
      
         let filektp = "";
@@ -238,21 +246,33 @@ class FormBooking extends React.Component {
         //     this.state.pictUrlNPWP.uri.replace("file://", "")
         // );
 
+        const dataPrev = this.props.prevItems;
+        // const projectDescs = dataPrev.project_descs;
+        // console.log('projectDescs',projectDescs);
+        console.log('dataprev',dataPrev);
+
         const {
             fullname,
             mobilephone,
             email,
             nik,
             npwp,
-            lot_type,
-            nama_tower,
-            nama_unit,
-            project_descs,
-            property_cd,
-            qty,
-            total
+            projectdesc,
+            project_no,
+            entity,
+            audit_user,
+            subtot,
+            // arrayData
+            // lot_type,
+            // nama_tower,
+            // nama_unit,
+            // project_descs,
+            // property_cd,
+            // qty,
+            // total
            
         } = this.state;
+        
 
         const frmData = {
             fullname: fullname,
@@ -264,13 +284,18 @@ class FormBooking extends React.Component {
             pictUrlKtp: filektp, //ktp
             pictUrlNPWP: filenpwp,
             //---------end foto attachment
-            lot_type: lot_type,
-            nama_tower:nama_tower,
-            nama_unit: nama_unit,
-            project_descs: project_descs,
-            property_cd: property_cd,
-            qty: qty,
-            total: total
+            // lot_type: lot_type,
+            // nama_tower:nama_tower,
+            // nama_unit: nama_unit,
+            project_descs: projectdesc,
+            arrayData: dataPrev,
+            // property_cd: property_cd,
+            // qty: qty,
+            // total: dataPrev.total,
+            total: subtot,
+            project_no: project_no,
+            entity: entity,
+            audit_user:audit_user,
         };
         
 

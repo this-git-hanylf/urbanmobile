@@ -104,6 +104,7 @@ class NupBooking extends React.Component {
                     unitDes:''
                 }
             ],
+            // subTotal:0
     //   dataSource: ds.cloneWithRows([]),
 
         };
@@ -121,6 +122,9 @@ class NupBooking extends React.Component {
 
     async componentDidMount() {
         isMount = true;
+
+        const items = this.props.items;
+        console.log('items',items);
        
 
         const data = {
@@ -130,6 +134,8 @@ class NupBooking extends React.Component {
           project_no : this.props.items.project_no,
           entity: this.props.items.entity_cd,
           db_profile: this.props.items.db_profile,
+          audit_user : await _getData('@UserId'),
+
         //   namtow : this.state.descNamaTower,
         //   harga_qty: this.state.harga[0].nup_amount
    
@@ -144,8 +150,8 @@ class NupBooking extends React.Component {
 
         this.setState(data, () => {
             this.getTower();
-            // this.getUnit();
-            // this.getHarga();
+            this.getUnit();
+            this.getHarga();
             this.getTowerDescs();
             this.getUnitDescs();
             // this.getDataAminities(this.props.items)
@@ -555,31 +561,69 @@ class NupBooking extends React.Component {
     }
     
     checkout = () =>{
-        const total = this.state.harga[0].nup_amount * this.state.qty;
-        console.log('tot',total);
+
+        let subTotal = 0;
+
+        this.state.arrayTower.map((data)=>{
+            if(data.harga.length != 0){
+                let price = parseFloat(data.harga[0].nup_amount) ;
+                console.log('price',price);
+                let qty_tot= data.qty ;
+                console.log(qty_tot);
+
+                if(qty_tot != 0){
+                    subTotal = subTotal + (price * qty_tot);
+                    // this.setState({subTotal: subTotal});
+                    // price = price;
+                    console.log('subtit',subTotal);
+                }
+            }
+        })
+        
+        // const total = this.state.harga[0].nup_amount * this.state.qty;
+        // console.log('tot',total);
+        // const price = 
+        const arr = this.state.arrayTower;
+        const harga = this.state.arrayTower.harga;
+        console.log('arr',harga);
+        console.log('arr',arr);
+        const items = this.props.items;
+        const subtot = this.state.subTotal;
+        console.log('subtot',subtot);
         const {
-            projectdesc,
-            property_cd,
-            towerDes,
-            lot_type,
-            unitDes,
-            qty,
+            // arr,
+            // subTotal,
+            // price,
+            // projectdesc,
+            // project_no,
+            // entity,
+            // audit_user,
+            // property_cd,
+            // towerDes,
+            // lot_type,
+            // unitDes,
+            // qty,
+            // subTotal,
            
            
         } = this.state;
 
         const frmData = {
-            project_descs: projectdesc,
-            property_cd: property_cd,
-            nama_tower: towerDes[0].descs,
-            lot_type: lot_type,
-            nama_unit: unitDes[0].descs,
-            qty:qty,
-            total: total,
+            // project_descs: projectdesc,
+            array_tower: arr,
+            // harga: arr.harga,
+            // nama_tower: arrayTower[index].towerDes,
+            // lot_type: arrayTower[index].lot_type,
+            // nama_unit: arrayTower[index].unitDes,
+            // qty:arrayTower[index].qty,
+            // harga: arrayTower[index].harga,
+            // total: subTotal,
+           
+
 
         };
         if(frmData){
-            _navigate("FormBooking", { prevItems: frmData }); 
+            _navigate("FormBooking", { prevItems: frmData, items:items, subtot:subTotal }); 
         } 
         //   else {
         //     // _navigate("chooseZone", { items: this.props.items });
@@ -637,17 +681,20 @@ class NupBooking extends React.Component {
         this.state.arrayTower.map((data)=>{
             if(data.harga.length != 0){
                 let price = parseFloat(data.harga[0].nup_amount) ;
+                console.log('price',price);
                 let qty_tot= data.qty ;
                 console.log(qty_tot);
 
                 if(qty_tot != 0){
                     subTotal = subTotal + (price * qty_tot);
+                    console.log('subtit',subTotal);
                 }
             }
         })
+        // this.setState({subTotal:subTotal});
       
         return (
-           <Container style={Style  .bgMain}>
+           <Container style={Style.bgMain}>
                 <StatusBar
                         backgroundColor={Colors.statusBarNavy}
                         animated
@@ -896,7 +943,7 @@ class NupBooking extends React.Component {
                                 {/* <Text>res{this.state.harga[0].nup_amount}</Text> */}
                             </View>
 
-                            <View style={{paddingTop: 50}} >
+                            <View style={{paddingTop: 50,paddingBottom:50}} >
                                 <Button style={Styles.btnMedium}
                                 onPress={()=>this.checkout()}>
                                 <Text style={{width: '100%', fontSize: 14, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>

@@ -30,6 +30,7 @@ import AkunHome from "./Akun/AkunHome";
 import PDFViewer from "./components/PDFViewer/index";
 
 import PropertyDetail from "./Property/PropertyDetail";
+import DetailAmenities from "./Property/DetailAmenities";
 
 import Categoris from "./Categoris/Categoris";
 import Unitgoris from "./Categoris/Unitgoris";
@@ -125,6 +126,7 @@ import ProjectLocation from './Locations/ProjectLocation';
 import NupBooking from './NupBooking/NupBooking';
 import FormBooking from './NupBooking/FormBooking';
 import FormPayment from './NupBooking/FormPayment';
+import UploadBukti from './NupBooking/UploadBukti';
 
 
 
@@ -175,7 +177,8 @@ class Routes extends Component{
         <Router>
           <Scene key="root" headerLayoutPreset="center">
             <Scene key="Login" initial={!this.state.hasLogin} component={Login} hideNavBar={true} title="" />
-            <Scene key="tabbar" initial={this.state.hasLogin} hideNavBar translucent={true} tabs={true}>
+            <Scene key="tabbar" initial={this.state.hasLogin} hideNavBar translucent={true} tabs={true}
+            activeTintColor="#AB9E84">
               
               <Scene
                 key="home"
@@ -232,7 +235,7 @@ class Routes extends Component{
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
-                tabBarLabel="Account"
+                tabBarLabel="Profile"
                 iconName="user"
                 icon={TabIcon}
               />
@@ -242,7 +245,8 @@ class Routes extends Component{
                   component={PropertyDetail}
                   hideNavBar={true}
                   title=""
-        
+                  translucent={true} 
+                  tabs={true}
                 />
                 <Scene
                   key="categoris"
@@ -644,6 +648,21 @@ class Routes extends Component{
                  <Scene
                   key="FormPayment"
                   component={FormPayment}
+                 
+                  title=""
+                  hideNavBar translucent={true} tabs={true}
+                />
+                <Scene
+                  key="UploadBukti"
+                  component={UploadBukti}
+                 
+                  title=""
+                  hideNavBar translucent={true} tabs={true}
+                />
+
+                <Scene
+                  key="DetailAmenities"
+                  component={DetailAmenities}
                  
                   title=""
                   hideNavBar translucent={true} tabs={true}

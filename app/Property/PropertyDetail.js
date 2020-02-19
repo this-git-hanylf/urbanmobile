@@ -15,6 +15,7 @@ import {
   ActivityIndicator,
   Linking,
   Alert,
+  YellowBox
 // WebView
 } from "react-native";
 import {
@@ -62,9 +63,12 @@ import styles, { colors } from "./componen/index";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import NavigationService from "@Service/Navigation";
 import FooterTabsIconText from '@Component/BottomBar';
+// import Routes from './../Router';
+// import BottomBarDua from '@Component/BottomBarDua';
 // import { sliderWidth, itemWidth } from "./componen/SliderEntry";
 // import SliderEntry from "../components/SlideEntry";
 // const { height, width } = Dimensions.get('window')
+
 
 
 //const {width, height} = Dimensions.get('window')
@@ -80,6 +84,7 @@ const API_KEY = "AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8";
 // const API_KEY = "AIzaSyBFhdZb-_5FCA5IhbLhB9-KimWC_QlOKLs";
 
 const IS_IOS = Platform.OS === 'ios';
+
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 function wp (percentage) {
@@ -132,6 +137,7 @@ export default class extends React.Component {
         amen: [],
         unit:[],
         tes:'',
+        stat:'',
         stylehtml: "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
         pict_hardcode: require('@Asset/images/project_suite_urban.png'),
       };
@@ -139,12 +145,13 @@ export default class extends React.Component {
       console.log('props',props);
       this._renderItemTower = this._renderItemTower.bind(this);
       this.nupBooking = this.nupBooking.bind(this); //add this line
+      // this.selectAmen = this.selectAmen.bind(this); //add this line
       // this.renderItemNews = this.renderItemNews.bind(this);
 
     }
       
 async componentDidMount() {
-  
+  console.disableYellowBox = true;
     Actions.refresh({ backTitle: () => this.props.title });
 
     const data = {
@@ -583,29 +590,30 @@ sendEmail(){
 };
 
 
-renderItemNews(item){
-  return (
-    <View
-      style={Styles.itemBoxAmen_not_gold}
-      underlayColor="transparent"
-      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-      >
-      <View>
-        <View>
-          <Image
-            source={{ uri: item.amenities_url }}
-            style={Styles.itemAmen_not_gold}
-          />
-        </View>
-        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+// renderItemNews(item){
+//   return (
+//     <View
+//       style={Styles.itemBoxAmen_not_gold}
+//       underlayColor="transparent"
+//       // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+//       >
+//       <View>
+//         <View>
+//           <Image
+//             source={{ uri: item.amenities_url }}
+//             style={Styles.itemAmen_not_gold}
+//           />
+//         </View>
+//         {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+//         {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
         
-      </View>
-    </View>
+//       </View>
+//     </View>
     
     
-  )
-}
+//   )
+// }
+
 
 nupBooking = () =>{
   // alert('tes')
@@ -639,6 +647,89 @@ alertNUP = () => {
     { cancelable: false }
 );
 }
+
+selectAmenDining(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  // const stat = '';
+  if (status == 'D'){
+    this.setState({stat: 'D'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+
+selectAmenMall(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  const stat = '';
+  if (status == 'M'){
+    this.setState({stat: 'M'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+
+selectAmenGym(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  const stat = '';
+  if (status == 'G'){
+    this.setState({stat: 'G'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+
+selectAmenLrt(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  const stat = '';
+  if (status == 'L'){
+    this.setState({stat: 'L'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+
+selectAmenPool(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  const stat = '';
+  if (status == 'P'){
+    this.setState({stat: 'P'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+
+selectAmenPlay(status){
+  // console.log('status',status)
+  const items=this.props.items;
+  console.log('items',items);
+  const stat = '';
+  if (status == 'Y'){
+    this.setState({stat: 'Y'});
+
+    Actions.DetailAmenities({stat: this.state.stat,items:items});
+    console.log('stat',);
+  }
+}
+  
+  
+
+
+
  
   render() {
     
@@ -653,7 +744,7 @@ alertNUP = () => {
     return (
       <Container style={Style.bgMain}>
          <ImageBackground style={Styles.backgroundImage} source={require("../Images/background-blue.png")}>
-         <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" /> 
+         <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" translucent={true}/> 
            
         {/* <Header style={Style.navigation}>
           
@@ -728,7 +819,8 @@ alertNUP = () => {
           {this.state.group !== "AGENT" ?
           <View style={{paddingTop: 50}} >
             <Button style={Style.signInBtnMedium}
-            onPress={()=>this.alertNUP()}
+            // onPress={()=>this.alertNUP()}
+            onPress={()=>this.nupBooking()}
             >
               <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
                 Booking Priority Pass
@@ -866,7 +958,7 @@ alertNUP = () => {
                   </View>
             </View>
             
-            <View style={styles.sectionTransparent}>
+            {/* <View style={styles.sectionTransparent}>
                   <View style={{paddingVertical: 10}}>
                     <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
                   </View> 
@@ -878,6 +970,143 @@ alertNUP = () => {
                     numColumns={2}
                     renderItem={({ item }) => this.renderItemNews(item)}
                   />
+            </View> */}
+
+            <View style={styles.sectionTransparent}>
+                  <View style={{paddingVertical: 10}}>
+                    <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
+                  </View>
+                    
+                <Grid>
+                  <Row>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenDining('D')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/dining.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenGym('G')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/gym.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenLrt('L')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/LRT.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenMall('M')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/mall.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenPool('P')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/pool.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenPlay('Y')}>
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                          >
+                          <View>
+                            <View>
+                              <Image
+                                source={require('@Asset/images/amenitis/playground.png')}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                            
+                          </View>
+                        </View>
+                    </Col>
+                  </Row>
+
+                  
+
+
+                  
+                </Grid>
+               
             </View>
 
             {/* <View style={styles.sectionTransparent}>
@@ -1188,7 +1417,7 @@ alertNUP = () => {
         </ScrollView>
         
        
-      
+        {/* <BottomBarDua /> */}
         {/* <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{
           this.state.isLogin ? this.showModal()
           : this.showAlert()
@@ -1198,6 +1427,7 @@ alertNUP = () => {
         </Button> */}
         </ImageBackground>
         {/* <FooterTabsIconText /> */}
+        
       </Container>
     );
   }

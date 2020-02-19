@@ -35,7 +35,7 @@ import { Actions } from "react-native-router-flux";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
 import { urlApi } from "@Config/services";
-import FBLoginButton from "../components/LoginFB";
+// import FBLoginButton from "../components/LoginFB";
 import GoogleLoginButton from "../components/LoginGoogle";
 import { Colors } from "../Themes";
 
@@ -146,9 +146,9 @@ export default class Intro extends React.Component {
             .then(res => {
                 if (!res.Error) {
                     if (res.Data.isResetPass != 1) {
-                        // this.getTower(res);
+                        this.getTower(res);
                         this.setState({ isLoaded: !this.state.isLoaded });
-                        this.skipLoginBlank();
+                        // this.skipLoginBlank();
 
                     } else {
                         this.setState({ isLoaded: !this.state.isLoaded });
@@ -463,7 +463,7 @@ export default class Intro extends React.Component {
                         </Text> */}
                         <View style={styles.signInGoogle}>
                             <GoogleLoginButton onPress={this.signInGoogle} />
-                            <FBLoginButton onPress={this.signInFacebook} />
+                            {/* <FBLoginButton onPress={this.signInFacebook} /> */}
                         </View>
                         <View style={styles.socialSec}>  
                             <TouchableOpacity onPress={() => Actions.chooseRegist()}>
@@ -483,7 +483,7 @@ export default class Intro extends React.Component {
                                 >
                                     <Text
                                         style={styles.fbButtonText}
-                                        onPress={() => this.skipLoginBlank()}
+                                        onPress={() => this.skipLogin()}
                                     >
                                         Skip Log in
                                     </Text>

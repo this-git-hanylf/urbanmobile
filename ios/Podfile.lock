@@ -4,20 +4,6 @@ PODS:
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
-  - FBSDKCoreKit (5.14.0):
-    - FBSDKCoreKit/Basics (= 5.14.0)
-    - FBSDKCoreKit/Core (= 5.14.0)
-  - FBSDKCoreKit/Basics (5.14.0)
-  - FBSDKCoreKit/Core (5.14.0):
-    - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (5.14.0):
-    - FBSDKLoginKit/Login (= 5.14.0)
-  - FBSDKLoginKit/Login (5.14.0):
-    - FBSDKCoreKit (~> 5.0)
-  - FBSDKShareKit (5.14.0):
-    - FBSDKShareKit/Share (= 5.14.0)
-  - FBSDKShareKit/Share (5.14.0):
-    - FBSDKCoreKit (~> 5.0)
   - Firebase/Analytics (6.3.0):
     - Firebase/Core
   - Firebase/Auth (6.3.0):
@@ -160,9 +146,6 @@ PODS:
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
-  - FBSDKCoreKit (~> 5.8)
-  - FBSDKLoginKit (~> 5.13)
-  - FBSDKShareKit (~> 5.13)
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core (~> 6.3.0)
@@ -193,9 +176,6 @@ SPEC REPOS:
   trunk:
     - Crashlytics
     - Fabric
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FBSDKShareKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -241,9 +221,6 @@ SPEC CHECKSUMS:
   BVLinearGradient: 8cbc5155c978f2e43098818c91d206d07aae6d30
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  FBSDKCoreKit: a72c8d2c42aa4c4d5eaa5f160be9580750f70d2e
-  FBSDKLoginKit: 89f3c2f8be892ec8a5359619a8ff657578d47604
-  FBSDKShareKit: 872cc45ab8709881ffd406ae32cc39a1085edec1
   Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
   FirebaseAnalytics: 470ddab7253b21ad5a40bebd4a9903d7ae19386a
   FirebaseAuth: 7fa2cc010b93770831a4e7a60651b52c3b8d111a
@@ -270,6 +247,6 @@ SPEC CHECKSUMS:
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
-PODFILE CHECKSUM: 74d2f20c500b21196b00a3c37541aeefc7a4088a
+PODFILE CHECKSUM: 41d13f13ff35381ae57501e1c90658356892c9df
 
 COCOAPODS: 1.8.4

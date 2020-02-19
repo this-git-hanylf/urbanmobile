@@ -73,6 +73,10 @@ class FormPayment extends React.Component {
             seconds: 86400,
             currentDate: new Date(),
             markedDate: moment(new Date()).format("YYYY-MM-DD"),
+            // markedTanggal : moment(new Date().format("H:m:s")),
+            jam: new Date().getHours(), //Current Hours
+            menit: new Date().getMinutes(), //Current Minutes
+            detik: new Date().getSeconds(),
             // rekening: 'tes'
             // day:'',
             // date:''
@@ -80,6 +84,7 @@ class FormPayment extends React.Component {
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
+        this.confirm = this.confirm.bind(this);
         // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         // this.state = {
 
@@ -95,13 +100,16 @@ class FormPayment extends React.Component {
 
     async componentDidMount() {
         isMount = true;
-        // const dataPrev = this.props.prevItems;
-        // console.log('dataprev',dataPrev);
+        const dataPrev = this.props.prevItems;
+        console.log('dataprev',dataPrev);
+        // const arrayData = dataPrev.arrayData;
+        // console.log('arrayData',arrayData);
+
        
       
         const data = {
            fullname: this.props.prevItems.fullname,
-           total: this.props.prevItems.total,
+           total: this.props.prevItems.arrayData.total,
            rekening: '1239202'
         };
         console.log('data',data);
@@ -169,17 +177,26 @@ class FormPayment extends React.Component {
       }
     
 
- set_Text_Into_Clipboard = async () => {
+        set_Text_Into_Clipboard = async () => {
 
-    await Clipboard.setString(this.state.rekening);
+            await Clipboard.setString(this.state.rekening);
 
-  }
+        }
+    
+        confirm = () =>{
+            alert('next')
+            // _navigate("UploadBukti", { prevItems: frmData }); 
+        }
 
 
     render() {
         const today=this.state.currentDate;
         const day = moment(today).format("dddd");
         const date= moment(today).format("D MMMM YYYY");
+        // const tanggal = moment(today).format("H:m:s");
+        const jam = this.state.jam;
+        const menit= this.state.menit;
+        const detik= this.state.detik;
       
         return (
            <Container style={Style.bgMain}>
@@ -265,6 +282,7 @@ class FormPayment extends React.Component {
                                 {/* SUNDAY, 13 JANUARY 2020 */}
                                 {day}, {date}
                             </Text>
+                            {/* <Text>{jam}:{menit}</Text> */}
                         </View>
                     </View>
                    
@@ -402,7 +420,7 @@ class FormPayment extends React.Component {
                         <View >
                             <View style={{paddingTop: 50}} >
                                 <Button style={Styles.btnMedium}
-                                onPress={()=>this.submit()}>
+                                onPress={()=>this.confirm()}>
                                 <Text style={{width: '100%', fontSize: 14, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
                                     Confirm
                                 </Text>

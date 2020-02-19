@@ -45,9 +45,9 @@ pod 'Firebase/Auth'
 # Required by RNFirebase
 pod 'Firebase/Core', '~> 6.3.0'
 
-pod 'FBSDKCoreKit', '~> 5.8', :modular_headers => true
-pod 'FBSDKLoginKit', '~> 5.13'
-pod 'FBSDKShareKit', '~> 5.13'
+# pod 'FBSDKCoreKit', '~> 5.8', :modular_headers => true
+# pod 'FBSDKLoginKit', '~> 5.13'
+# pod 'FBSDKShareKit', '~> 5.13'
 
   target 'UrbanTests' do
     inherit! :search_paths
@@ -62,12 +62,12 @@ pod 'FBSDKShareKit', '~> 5.13'
     end
   end
 
-  def fix_fb
-    node_modules_path = '../node_modules'
-    patched_text = File.read("./RCTFBSDKLoginButtonManager.m.patch")
+  # def fix_fb
+  #   node_modules_path = '../node_modules'
+  #   patched_text = File.read("./RCTFBSDKLoginButtonManager.m.patch")
 
-    File.open("#{node_modules_path}/react-native-fbsdk/ios/RCTFBSDK/login/RCTFBSDKLoginButtonManager.m", "w") {|file| file.puts patched_text}
-  end
+  #   File.open("#{node_modules_path}/react-native-fbsdk/ios/RCTFBSDK/login/RCTFBSDKLoginButtonManager.m", "w") {|file| file.puts patched_text}
+  # end
 
 
 end
