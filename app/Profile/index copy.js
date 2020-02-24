@@ -52,7 +52,7 @@ import {
   _getAllData,
   _removeData
 } from "@Component/StoreAsync";
-import { Style, Colors, Fonts } from "../Themes/";
+import { Style, Colors } from "../Themes/";
 import ImagePicker from "react-native-image-crop-picker";
 import RNFetchBlob from "rn-fetch-blob";
 import DeviceInfo from "react-native-device-info";
@@ -60,7 +60,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
 
-export default class Profile extends React.Component {
+export default class Profile_Backup extends React.Component {
   constructor(props) {
     super(props);
 
@@ -500,56 +500,39 @@ export default class Profile extends React.Component {
 
     return (
       <Container style={Style.bgMain}>
-        <ImageBackground
-          style={Styles.backgroundImage}
-          source={require("../Images/background-blue.png")}
+        <StatusBar
+          backgroundColor={Colors.statusBarOrange}
+          animated
+          barStyle="light-content"
+        />
+
+        <Content
+          style={Style.layoutInner}
+          contentContainerStyle={Style.layoutContent}
         >
-          <StatusBar
-            backgroundColor={Colors.statusBarNavy}
-            animated
-            barStyle="light-content"
-          />
+          <View style={Styles.profile}>
+            <ImageBackground
+              source={fotoHeader}
+              imageStyle={"cover"}
+              style={Styles.coverImg}
+            ></ImageBackground>
 
-          <View style={{ top: 25, paddingBottom: 60 }}>
-            <View style={{ paddingLeft: 15, paddingTop: 15 }}>
-              <Button
-                transparent
-                style={Style.actionBarBtn}
-                onPress={Actions.pop}
-              >
-                <Icon
-                  active
-                  name="arrow-left"
-                  // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#000" }}
-                  type="MaterialCommunityIcons"
+            <View style={Styles.bgBlue}></View>
+            <View style={[Styles.owner, Style.actionBarIn]}>
+              <View style={Styles.ownerBg}>
+                <Image source={fotoProfil} style={Styles.ownerAvatarImg} />
+                <Icons
+                  name="camera"
+                  onPress={() => this.showAlert()}
+                  style={Styles.iconEdit}
                 />
-              </Button>
+              </View>
+              <View style={Styles.ownerInfo}>
+                <Text style={Styles.ownerName}>{this.state.name}</Text>
+                <Text style={Styles.ownerLocation}>{this.state.group}</Text>
+              </View>
             </View>
-
-            <View>
-              <Text
-                style={{
-                  fontWeight: "900",
-                  color: Colors.goldUrban,
-                  fontSize: 16,
-                  textAlign: "center",
-                  fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
-                }}
-                // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
-              >
-                PRIORITY PASS
-                {/* {this.state.projectdesc} */}
-              </Text>
-            </View>
-          </View>
-
-          <Content
-            style={Style.layoutInner}
-            contentContainerStyle={Style.layoutContent}
-          >
-            {/* <View style={[Styles.back, Style.actionBarIn]}>
+            <View style={[Styles.back, Style.actionBarIn]}>
               <Button
                 transparent
                 style={Style.actionBarBtn}
@@ -564,27 +547,42 @@ export default class Profile extends React.Component {
                   type="MaterialCommunityIcons"
                 />
               </Button>
-            </View> */}
-
-            <View style={Styles.profile}>
-              <View style={Styles.bgBlue}></View>
-              <View style={[Styles.owner, Style.actionBarIn]}>
-                <View style={Styles.ownerBg}>
-                  <Image source={fotoProfil} style={Styles.ownerAvatarImg} />
-                  <Icons
-                    name="camera"
-                    onPress={() => this.showAlert()}
-                    style={Styles.iconEdit}
-                  />
-                </View>
-                <View style={Styles.ownerInfo}>
-                  <Text style={Styles.ownerName}>{this.state.name}</Text>
-                  <Text style={Styles.ownerLocation}>{this.state.group}</Text>
-                </View>
-              </View>
             </View>
-          </Content>
-        </ImageBackground>
+          </View>
+
+          <View style={Styles.formBg}>
+            <Accordion
+              style={Styles.accordion}
+              dataArray={[
+                {
+                  type: "basic",
+                  title: "Personal Information"
+                },
+
+                {
+                  type: "social",
+                  title: "Change Password"
+                }
+              ]}
+              expanded={-1}
+              renderHeader={this.renderAccordionHeader}
+              renderContent={this.renderAccordionContent}
+            />
+          </View>
+
+          <View
+            style={{
+              marginHorizontal: 15,
+              marginVertical: 5,
+              alignItems: "center"
+            }}
+          >
+            <TouchableOpacity style={Styles.sBtn} onPress={() => this.logout()}>
+              <Text style={Styles.sLink}> Logout</Text>
+              <Icon name="log-out" style={{ color: "#fff", fontSize: 18 }} />
+            </TouchableOpacity>
+          </View>
+        </Content>
       </Container>
     );
   }

@@ -563,19 +563,21 @@ class NupBooking extends React.Component {
     checkout = () =>{
 
         let subTotal = 0;
+        let total_qty = 0;
 
         this.state.arrayTower.map((data)=>{
             if(data.harga.length != 0){
                 let price = parseFloat(data.harga[0].nup_amount) ;
                 console.log('price',price);
                 let qty_tot= data.qty ;
-                console.log(qty_tot);
 
                 if(qty_tot != 0){
                     subTotal = subTotal + (price * qty_tot);
+                    total_qty = total_qty + (qty_tot) ;
                     // this.setState({subTotal: subTotal});
                     // price = price;
                     console.log('subtit',subTotal);
+                    console.log('total_qty',total_qty);
                 }
             }
         })
@@ -589,6 +591,7 @@ class NupBooking extends React.Component {
         console.log('arr',arr);
         const items = this.props.items;
         const subtot = this.state.subTotal;
+        // const total_qty = this.state.total_qty;
         console.log('subtot',subtot);
         const {
             // arr,
@@ -623,7 +626,7 @@ class NupBooking extends React.Component {
 
         };
         if(frmData){
-            _navigate("FormBooking", { prevItems: frmData, items:items, subtot:subTotal }); 
+            _navigate("FormBooking", { prevItems: frmData, items:items, subtot:subTotal, totalqty: total_qty }); 
         } 
         //   else {
         //     // _navigate("chooseZone", { items: this.props.items });

@@ -12,7 +12,8 @@ import {
   ScrollView,
   Platform,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Alert
 } from "react-native";
 import {
   Container,
@@ -39,11 +40,16 @@ import {
 
 import { Fonts, Metrics, Colors, Style } from "../Themes/";
 import Styles from "./Style2";
-import { _storeData, _getData } from "@Component/StoreAsync";
+import {
+  _storeData,
+  _getData,
+  _getAllData,
+  _removeData
+} from "@Component/StoreAsync";
 import { Actions } from "react-native-router-flux";
 import { urlApi } from "@Config/services";
 import Mailer from "react-native-mail";
-
+import DeviceInfo from "react-native-device-info";
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
@@ -65,10 +71,9 @@ export default class extends React.Component {
       emailacc: "",
       email_add: "",
       descs: "",
-      datasysspec: "",
-
-
+      datasysspec: ""
     };
+    // this.logout = this.logout.bind(this);
   }
 
   async componentDidMount() {
@@ -95,13 +100,8 @@ export default class extends React.Component {
     setTimeout(() => {
       this.setState({ isLoaded: true });
     }, 2000);
-
-    
   }
 
- 
-
-  
   receiveProps = async () => {
     const data = {
       name: await _getData("@Name")
@@ -147,33 +147,34 @@ export default class extends React.Component {
 
   getDatasysspec = () => {
     // alert('syspec');
-    
-    fetch(urlApi+'c_profil/getDatasysspec/IFCAMOBILE/' ,{
-        method : "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Token: this.state.token
-        }
+
+    fetch(urlApi + "c_profil/getDatasysspec/IFCAMOBILE/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Token: this.state.token
+      }
     })
-    .then((response) => response.json())
-    .then((res)=>{
-        if(!res.Error){
-          const resData = res.Data
-  
-          this.setState({datasysspec:resData})
-          console.log('datasysspec',resData);
+      .then(response => response.json())
+      .then(res => {
+        if (!res.Error) {
+          const resData = res.Data;
+
+          this.setState({ datasysspec: resData });
+          console.log("datasysspec", resData);
         }
-    }).catch((error) => {
+      })
+      .catch(error => {
         console.log(error);
-    });
+      });
   };
 
   handleEmail = () => {
-    const email_add = this.state.datasysspec[0].email_splus
+    const email_add = this.state.datasysspec[0].email_splus;
     // const descs = this.state.descs
-  
-  console.log('email send', email_add)
+
+    console.log("email send", email_add);
 
     Mailer.mail(
       {
@@ -215,171 +216,223 @@ export default class extends React.Component {
     );
   };
 
+  logout = () => {
+    Alert.alert(
+      "",
+      "Are you want to Sign Out",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.signOut() }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  signOut = async () => {
+    const formData = {
+      email: this.state.email,
+      ipAddress: await DeviceInfo.getIPAddress().then(mac => mac),
+      device: Platform.OS
+    };
+
+    fetch(urlApi + "c_auth/Logout/" + this.state.email, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Token: this.state.token
+      }
+    })
+      .then(response => response.json())
+      .then(res => {
+        alert(res.Pesan);
+        console.log("save profile", res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    const data = await _getAllData();
+    data.map(val => {
+      if (val != "@isIntro") {
+        _removeData(val);
+      }
+    });
+    Actions.reset("Login");
+  };
+
+  skipLoginBlank() {
+    Actions.SkipLoginBlank();
+  }
+
+  term() {
+    Actions.PageTerm();
+  }
+  signin() {
+    Actions.Login();
+  }
+
+  mybooking() {
+    // Actions.MyBooking();
+    Actions.project({ goTo: "MyBooking" });
+
+    // if (val.isProject == 1) {
+    //   Actions.project({ goTo: val.URL_angular });
+    // } else {
+    //   Actions[val.URL_angular]();
+    // }
+    // console.log("menu", val);
+  }
+  // goToFeed = (val) =>{
+  //       if(val.isProject == 1){
+  //           Actions.project({goTo : val.URL_angular})
+  //       } else {
+  //           Actions[val.URL_angular]()
+  //       }
+  //       console.log('menu',val);
+  //   }
+
   render() {
     return (
       <Container style={Style.bgMain}>
-        <StatusBar
-          backgroundColor="rgba(0,0,0,0)"
-          animated
-          barStyle="dark-content"
-        />
+        {this.state.isLogin ? (
+          <ImageBackground
+            style={Styles.backgroundImage}
+            source={require("../Images/background-blue.png")}
+          >
+            <StatusBar
+              backgroundColor="rgba(0,0,0,0)"
+              animated
+              barStyle="dark-content"
+            />
 
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
-          {this.state.isLogin ? (
-            <View style={Styles.owner}>
-              <TouchableOpacity
-                style={Styles.btnSetting}
-                onPress={() =>
-                  Actions.profile({ onBack: () => this.receiveProps() })
-                }
-              >
-                <Image
-                  source={require("@Asset/icon/settings.png")}
-                  style={{ width: 25, height: 25 }}
-                />
-                <Text>{"  SETTINGS"}</Text>
-              </TouchableOpacity>
+            <Content
+              style={Style.layoutInner}
+              contentContainerStyle={Style.layoutContent}
+            >
+              <View style={Styles.owner}>
+                <View style={Styles.ownerAvatar}>
+                  <Image
+                    source={{ uri: this.state.fotoProfil }}
+                    style={Styles.ownerAvatarImg}
+                  />
+                </View>
 
-              <View style={Styles.ownerAvatar}>
-                <Image
-                  source={{ uri: this.state.fotoProfil }}
-                  style={Styles.ownerAvatarImg}
-                />
-              </View>
-
-              <View style={Styles.ownerInfo}>
                 <View>
                   <Text style={Styles.ownerName}>{this.state.name}</Text>
-                  <Text style={Styles.ownerLocation}>{this.state.group}</Text>
                 </View>
-              </View>
-            </View>
-          ) : (
-            <View style={Styles.owner}>
-              <View style={Styles.ownerInfo}>
+
                 <View>
-                  <Text style={Styles.ownerName}>Welcome Guest</Text>
-                  <Text
-                    onPress={() => Actions.Login()}
-                    style={Styles.ownerLocation}
+                  <Text style={Styles.ownerGrup}>{this.state.group}</Text>
+                </View>
+
+                <View style={{ paddingVertical: 25 }}>
+                  <Button
+                    style={Styles.btnSmall}
+                    onPress={() => this.skipLoginBlank()}
+                    // onPress={() =>
+                    //   Actions.profile({ onBack: () => this.receiveProps() })
+                    // }
                   >
-                    Sign In or Register
-                  </Text>
+                    <Text style={Styles.textBtnSmall}>Profile Setting</Text>
+                  </Button>
+                </View>
+
+                <View>
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => this.skipLoginBlank()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>My Customer</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => this.mybooking()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>My Booking</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => this.skipLoginBlank()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>My QR Code</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem style={Styles.infoItem} onPress={() => this.term()}>
+                    <View>
+                      <Text style={Styles.textMenu}>Terms & Condition</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => Actions.ContactUs()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>Contact Us</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => Actions.AboutUs()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>About Us</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => this.logout()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>Sign Out</Text>
+                    </View>
+                  </ListItem>
                 </View>
               </View>
+            </Content>
+          </ImageBackground>
+        ) : (
+          <ImageBackground
+            style={Styles.backgroundImage}
+            source={require("../Images/Alert01-min.png")}
+          >
+            <View
+              style={{ position: "absolute", bottom: 140, alignSelf: "center" }}
+            >
+              <Button style={Styles.btnLarge} onPress={() => this.signin()}>
+                <Text
+                  style={{
+                    width: "100%",
+                    fontSize: 18,
+                    alignItems: "center",
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    letterSpacing: 1,
+                    textTransform: "capitalize"
+                  }}
+                >
+                  Sign In
+                </Text>
+              </Button>
             </View>
-          )}
-
-          <List style={Styles.infoTab}>
-            {/* <ListItem style={Styles.infoItem} onPress={()=>Actions.profile({onBack:()=>this.receiveProps()}) }>
-                            <Image source={require('@Asset/icon/settings.png')} style={Styles.infoIcon} />
-                            <View style={{alignSelf:'center'}} style={{alignSelf:'center'}}>
-                                <Text style={Styles.infoHeader}>{'Settings'.toUpperCase()}</Text>
-                                <Text style={Styles.infoDesc}>{'Account Setting & Change Password'}</Text>
-                            </View>
-
-                            <Right style={{position:'absolute',right:10}}>
-                                <Icon name="ios-arrow-dropright" style={{fontSize: 30,}} />
-                            </Right>
-                        </ListItem> */}
-            {/* <ListItem style={Styles.infoItem} onPress={()=>Actions.menu() }>
-                            <Image source={require('@Asset/icon/menu.png')} style={Styles.infoIcon} />
-                            <View style={{alignSelf:'center'}}>
-                                <Text style={Styles.infoHeader}>{'Menu'.toUpperCase()}</Text>
-                                <Text style={Styles.infoDesc}>{'Shortcut Menu'}</Text>
-                            </View>
-
-                            <Right style={{position:'absolute',right:10}}>
-                                <Icon name="ios-arrow-dropright" style={{fontSize: 30,}} />
-                            </Right>
-                        </ListItem> */}
-            <ListItem
-              style={Styles.infoItem}
-              onPress={() => Actions.SimulasiPage()}
-            >
-              <Image
-                source={require("@Asset/icon/calculator.png")}
-                style={Styles.infoIcon}
-              />
-              <View style={{ alignSelf: "center" }}>
-                <Text style={Styles.infoHeader}>
-                  {"Calculator".toUpperCase()}
-                </Text>
-                <Text style={Styles.infoDesc}>
-                  {"Calculator KPA/R Simulation"}
-                </Text>
-              </View>
-
-              <Right style={{ position: "absolute", right: 10 }}>
-                <Icon name="ios-arrow-dropright" style={{ fontSize: 30 }} />
-              </Right>
-            </ListItem>
-            <ListItem
-              style={Styles.infoItem}
-              onPress={val => this.handleEmail()}
-            >
-              <Image
-                source={require("@Asset/icon/helpcenter.png")}
-                style={Styles.infoIcon}
-              />
-              <View style={{ alignSelf: "center" }}>
-                <Text style={Styles.infoHeader}>
-                  {"Help Center".toUpperCase()}
-                </Text>
-                <Text style={Styles.infoDesc}>
-                  {"Report problems or send feedback"}
-                </Text>
-              </View>
-
-              <Right style={{ position: "absolute", right: 10 }}>
-                <Icon name="ios-arrow-dropright" style={{ fontSize: 30 }} />
-              </Right>
-            </ListItem>
-            <ListItem
-              style={[Styles.infoItem, Styles.infoItemLast]}
-              onPress={() => this.handleRateUs()}
-            >
-              <Image
-                source={require("@Asset/icon/rate_us.png")}
-                style={Styles.infoIcon}
-              />
-              <View style={{ alignSelf: "center" }}>
-                <Text style={Styles.infoHeader}>
-                  {"Rate Us!".toUpperCase()}
-                </Text>
-                <Text style={Styles.infoDesc}>
-                  {"Rate and review application on App Store"}
-                </Text>
-              </View>
-
-              <Right style={{ position: "absolute", right: 10 }}>
-                <Icon name="ios-arrow-dropright" style={{ fontSize: 30 }} />
-              </Right>
-            </ListItem>
-            <ListItem
-              style={[Styles.infoItem, Styles.infoItemLast]}
-              onPress={() => this.handleRateUs()}
-            >
-              <Image
-                source={require("@Asset/icon/aboutus.png")}
-                style={Styles.infoIcon}
-              />
-              <View style={{ alignSelf: "center" }}>
-                <Text style={Styles.infoHeader}>
-                  {"About Us".toUpperCase()}
-                </Text>
-                <Text style={Styles.infoDesc}>{"About Us"}</Text>
-              </View>
-
-              <Right style={{ position: "absolute", right: 10 }}>
-                <Icon name="ios-arrow-dropright" style={{ fontSize: 30 }} />
-              </Right>
-            </ListItem>
-          </List>
-        </Content>
+          </ImageBackground>
+        )}
       </Container>
     );
   }

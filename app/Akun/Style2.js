@@ -1,5 +1,6 @@
 const React = require("react-native");
 const { Platform, StatusBar } = React;
+import { Fonts, Metrics, Colors } from "../Themes/";
 import { Dimensions } from "react-native";
 const dh = Dimensions.get("window").height;
 const dw = Dimensions.get("window").width;
@@ -178,8 +179,8 @@ export default {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    borderBottomColor: "#999",
-    borderBottomWidth: 0.5
+    borderBottomColor: "#999"
+    // borderBottomWidth: 0.5
   },
   ownerTitle: {
     flex: 1,
@@ -190,7 +191,7 @@ export default {
   ownerAvatar: {
     marginTop: 32,
     borderRadius: 80,
-    borderWidth: 5,
+    borderWidth: 2,
     borderColor: "#DDD",
     padding: 5,
     alignItems: "center"
@@ -207,8 +208,8 @@ export default {
   },
   ownerName: {
     fontFamily: "Montserrat-Regular",
-    fontSize: 16,
-    color: "#333",
+    fontSize: 18,
+    color: Colors.white,
     marginTop: 20,
     marginBottom: 5,
     alignSelf: "center"
@@ -218,6 +219,13 @@ export default {
     fontSize: 12,
     color: "#0099E4",
     alignSelf: "center"
+  },
+  ownerGrup: {
+    fontFamily: Fonts.type.proximaNovaReg,
+    fontSize: 10,
+    color: Colors.white,
+    alignSelf: "center",
+    letterSpacing: 1
   },
 
   ownerBlue: {
@@ -248,8 +256,12 @@ export default {
     paddingVertical: 8
   },
   infoItem: {
-    alignItems: "flex-start",
-    paddingVertical: 30
+    // alignItems: "flex-start",
+    // paddingVertical: 10,
+    height: 5,
+    borderBottomColor: "transparent",
+    width: 200
+    // backgroundColor: '#999'
   },
   infoItemLast: {
     borderBottomWidth: 0
@@ -463,9 +475,62 @@ export default {
     flexDirection: "row",
     elevation: 10,
     padding: 7,
-    shadowColor: 'rgba(0,0,0,0.5)',
+    shadowColor: "rgba(0,0,0,0.5)",
     shadowOffset: { width: 1, height: 1 },
     backgroundColor: "#fff",
     borderRadius: 25
+  },
+  backgroundImage: {
+    flex: 1,
+    width: Metrics.WIDTH,
+    height: Metrics.HEIGHT
+    // backgroundColor: "#febe29"
+  },
+  btnSmall: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 30,
+    // width: 100,
+    paddingLeft: 10,
+    paddingRight: 10,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5
+  },
+  textBtnSmall: {
+    textTransform: "capitalize",
+    fontFamily: Fonts.type.proximaNovaReg,
+    fontWeight: "400"
+  },
+  textMenu: {
+    color: Colors.white,
+    fontFamily: Fonts.type.proximaNovaReg,
+    letterSpacing: 1,
+    fontSize: 16,
+    textAlign: "center"
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get("window").width,
+    backgroundColor: "#333"
+  },
+  btnLarge: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 60,
+    width: 300,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10
   }
 };

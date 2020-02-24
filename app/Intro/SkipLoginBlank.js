@@ -1,39 +1,39 @@
 //import react in project
 import React from "react";
 import {
-    PermissionsAndroid,
-    Text,
-    View,
-    Image,
-    StatusBar,
-    Platform,
-    ActivityIndicator,
-    ImageBackground,
-    TouchableOpacity,
-    BackHandler,
-    I18nManager,
-    StyleSheet,
-    Alert,
-    TextInput
-    // Content
+  PermissionsAndroid,
+  Text,
+  View,
+  Image,
+  StatusBar,
+  Platform,
+  ActivityIndicator,
+  ImageBackground,
+  TouchableOpacity,
+  BackHandler,
+  I18nManager,
+  StyleSheet,
+  Alert,
+  TextInput
+  // Content
 } from "react-native";
 import {
-    Container,
-    Button,
-    Icon,
-    Right,
-    Item,
-    Input,
-    Header,
-    Left,
-    Body,
-    Title,
-    ListItem,
-    Content,
-    Label,
-    Switch,
-    InputGroup
-    // CheckBox
+  Container,
+  Button,
+  Icon,
+  Right,
+  Item,
+  Input,
+  Header,
+  Left,
+  Body,
+  Title,
+  ListItem,
+  Content,
+  Label,
+  Switch,
+  InputGroup
+  // CheckBox
 } from "native-base";
 import { CheckBox } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -53,15 +53,43 @@ import RNFetchBlob from "rn-fetch-blob";
 // import { Sae } from 'react-native-textinput-effects';
 // import FloatingLabelInput from "@Component/FloatingLabelInput";
 
-
-
-
 class SkipLoginBlank extends React.Component {
-
-    render() {
-        return (
-            <Container>
-                <ImageBackground style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
+  signin() {
+    Actions.Login();
+  }
+  render() {
+    return (
+      <Container>
+        <ImageBackground
+          style={styles.backgroundImage}
+          source={require("../Images/Alert02-min.png")}
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: 140,
+              alignSelf: "center"
+            }}
+          >
+            <Button style={styles.btnLarge} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 18,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize",
+                  color: Colors.white
+                }}
+              >
+                Sign In
+              </Text>
+            </Button>
+          </View>
+        </ImageBackground>
+        {/* <ImageBackground style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
                     <StatusBar translucent={true}></StatusBar>
                     <Header style={styles.header}>
                         <Left style={styles.left}>
@@ -80,39 +108,37 @@ class SkipLoginBlank extends React.Component {
                         </Left>
                         <Body style={styles.body}>
                             <Text style={[Style.textWhite, Style.textMedium, Style.fontProxima]}>
-                                {/* {"Registration"} */}
-                                {/* {this.Capitalize("Registration")} */}
+                               
                             </Text>
                         </Body>
                         <Right style={styles.right}></Right>
                     </Header>
-                    {/* <ScrollView> */}
+                  
                         <View style={{flex: 1,justifyContent:'center',alignItems: 'center',alignContent:'center'}}>
                             <Text style={{color: Colors.white, fontFamily: Fonts.type.proximaNovaBoldWeb, fontSize: 20}}>Coming Soon</Text>
                         </View>
-                    {/* </ScrollView> */}
+                  
                     
-                </ImageBackground>
-            </Container>
-        );
-    }
+                </ImageBackground> */}
+      </Container>
+    );
+  }
 }
 export default SkipLoginBlank;
 
 const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        fontSize: 16,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: "gray",
-        borderRadius: 4,
-        color: "black",
-        paddingRight: 30 // to ensure the text is never behind the icon
-    },
-    inputAndroid: {
-        ...styles.inputEmail,
-        fontSize: 17
-    }
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30 // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    ...styles.inputEmail,
+    fontSize: 17
+  }
 });
-
