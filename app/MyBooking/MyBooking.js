@@ -49,7 +49,7 @@ import Styles from "./Style";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import { urlApi } from "@Config/services";
 import moment from "moment";
-import TabBar from "@Component/TabBar";
+import TabBar from "@Component/TabBar2";
 import ApproveBooking from "./ApproveBooking";
 import PendingBooking from "./PendingBooking";
 import RejectBooking from "./RejectBooking";
@@ -72,9 +72,9 @@ class MyBooking extends Component {
       navState: {
         index: 0,
         routes: [
-          { key: "approve", title: "Approve" },
-          { key: "pending", title: "Pending" },
-          { key: "reject", title: "Reject" }
+          { key: "approve", title: "APPROVED" },
+          { key: "pending", title: "PENDING" },
+          { key: "reject", title: "REJECT" }
         ]
       },
 
@@ -90,6 +90,9 @@ class MyBooking extends Component {
 
   async componentDidMount() {
     isMount = true;
+    const items = this.props.items;
+    _storeData("@dataItems", items);
+    console.log("itemsnih", items);
     const data = {
       hd: new Headers({
         Token: await _getData("@Token")
@@ -98,9 +101,11 @@ class MyBooking extends Component {
       name: await _getData("@UserId"),
       project: await _getData("@UserProject"),
       debtor: await _getData("@Debtor"),
-      group: await _getData("@Group")
+      group: await _getData("@Group"),
+      entity_cd: items.entity_cd,
+      project_no: items.project_no
     };
-
+    console.log("data", data);
     this.setState(data, () => {
       //   this.getBilling("", "", data.debtor, "");
     });
@@ -188,17 +193,17 @@ class MyBooking extends Component {
               {/* {this.state.projectdesc} */}
             </Text>
           </View>
-        </View>
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
           <TabBar
             navState={this.state.navState}
             navScene={this.state.navScene}
             style={{ paddingTop: 10 }}
           />
-        </Content>
+        </View>
+        <TabBar
+          navState={this.state.navState}
+          navScene={this.state.navScene}
+          style={{ paddingTop: 10 }}
+        />
       </Container>
     );
   }

@@ -137,6 +137,9 @@ import AboutUs from "./AboutUs/AboutUs";
 
 //mybooking
 import MyBooking from "./MyBooking/MyBooking";
+import DetailBooking from "./MyBooking/DetailBooking";
+import DetailRejectBooking from "./MyBooking/DetailRejectBooking";
+import DetailApproveBooking from "./MyBooking/DetailApproveBooking";
 
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
@@ -700,6 +703,31 @@ class Routes extends Component {
             <Scene
               key="MyBooking"
               component={MyBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
+            <Scene
+              key="DetailBooking"
+              component={DetailBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="DetailRejectBooking"
+              component={DetailRejectBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="DetailApproveBooking"
+              component={DetailApproveBooking}
               title=""
               hideNavBar
               translucent={true}

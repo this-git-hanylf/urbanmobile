@@ -78,7 +78,10 @@ class FormBooking extends React.Component {
       isLoaded: true,
       bank_name: "",
       account_no: "",
-      account_name: ""
+      account_name: "",
+      dataFromNik: []
+      //data data dari nik
+      //   full_name: ""
     };
     // console.log()
     isMount = true;
@@ -95,6 +98,8 @@ class FormBooking extends React.Component {
     console.log("totalqty", totalqty);
     console.log("dataprev", dataPrev);
     // const items = this.props.items;
+    // const dataFromNik = this.state.dataFromNik;
+    // console.log("dataFromNikddd", dataFromNik);
 
     const data = {
       project_no: this.props.items.project_no,
@@ -103,6 +108,8 @@ class FormBooking extends React.Component {
       projectdesc: this.props.items.project_descs,
       subtot: this.props.subtot,
       totalqty: this.props.totalqty
+      //   fullname: this.state.dataFromNik.dataFormNik[0].full_name
+      //   full_name: this.state.dataFromNik[0].full_name
       // lot_type: this.props.prevItems.lot_type,
       // nama_tower: this.props.prevItems.nama_tower,
       // nama_unit: this.props.prevItems.nama_unit,
@@ -113,7 +120,9 @@ class FormBooking extends React.Component {
     };
     console.log("data", data);
 
-    this.setState(data, () => {});
+    this.setState(data, () => {
+      this.getDataFromNik();
+    });
   }
 
   componentWillUnmount() {
@@ -303,6 +312,7 @@ class FormBooking extends React.Component {
 
     const isValid = this.validating({
       // email: { require: true },
+      nik: { require: true },
       fullname: { require: true }
       // // nik: { require: true },
       // nohp: { require: true },
@@ -366,54 +376,134 @@ class FormBooking extends React.Component {
 
     // }
     //
-    if (isValid) {
-      RNFetchBlob.fetch(
-        "POST",
-        // urlApi + "c_auth/SignUpAgent",
-        urlApi + "c_nup/saveNup/IFCAPB/",
-        {
-          "Content-Type": "multipart/form-data"
-        },
-        [
-          // { name: "photo", filename: fileName, data: fileImg },
-          { name: "photoktp", filename: fileNameKtp, data: filektp },
-          { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-          // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
-          // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) }
-        ]
-      ).then(resp => {
-        console.log("res_if", resp);
-        const res = JSON.parse(resp.data);
-        console.log("res", res);
-        // const res = JSON.stringify(resp.data);
+    // if (isValid) {
+    //   RNFetchBlob.fetch(
+    //     "POST",
+    //     // urlApi + "c_auth/SignUpAgent",
+    //     urlApi + "c_nup/saveNup/IFCAPB/",
+    //     {
+    //       "Content-Type": "multipart/form-data"
+    //     },
+    //     [
+    //       // { name: "photo", filename: fileName, data: fileImg },
+    //       { name: "photoktp", filename: fileNameKtp, data: filektp },
+    //       { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+    //       // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+    //       // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+    //       { name: "data", data: JSON.stringify(frmData) }
+    //     ]
+    //   ).then(resp => {
+    //     console.log("res_if", resp);
+    //     const res = JSON.parse(resp.data);
+    //     console.log("res", res);
+    //     // const res = JSON.stringify(resp.data);
 
-        if (!res.Error) {
-          // Actions.pop()
-          this.setState({ isLogin: true }, () => {
-            alert(res.Pesan);
-            // Actions.pop()
-            // Actions.Login()
-            _navigate("FormPayment", { prevItems: frmData });
-          });
-        } else {
-          this.setState({ isLoaded: !this.state.isLoaded }, () => {
-            alert(res.Pesan);
-            // console.log('url',this.state.pickUrlKtp.uri)
-          });
-        }
-        alert(res.Pesan);
-      });
-    } else {
-      this.setState({ isLoaded: !this.state.isLoaded }, () => {
-        alert("Please assign your ID Picture");
-        // alert(res.Pesan);
-        // console.log('url',this.state.pickUrlKtp.uri)
-      });
-      // alert("Please assign your ID Picture");
-      // console.log('url else',this.state.pickUrlKtp.uri)
-    }
+    //     if (!res.Error) {
+    //       // Actions.pop()
+    //       this.setState({ isLogin: true }, () => {
+    //         alert(res.Pesan);
+    //         // Actions.pop()
+    //         // Actions.Login()
+    //         _navigate("FormPayment", { prevItems: frmData });
+    //       });
+    //     } else {
+    //       this.setState({ isLoaded: !this.state.isLoaded }, () => {
+    //         alert(res.Pesan);
+    //         // console.log('url',this.state.pickUrlKtp.uri)
+    //       });
+    //     }
+    //     alert(res.Pesan);
+    //   });
+    // } else {
+    //   this.setState({ isLoaded: !this.state.isLoaded }, () => {
+    //     alert("Please assign your ID Picture");
+    //     // alert(res.Pesan);
+    //     // console.log('url',this.state.pickUrlKtp.uri)
+    //   });
+    //   // alert("Please assign your ID Picture");
+    //   // console.log('url else',this.state.pickUrlKtp.uri)
+    // }
   };
+
+  cariNIK(carinik) {
+    console.log("carinik", carinik);
+    if (carinik) {
+      let nik_no = carinik.carinik;
+      console.log("nikno", nik_no);
+      this.getDataFromNik(nik_no);
+    }
+    //   if (this.state.dataFromNik == 0) {
+
+    //   }
+  }
+
+  getDataFromNik(nik_no) {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_nup/getDataFromNik/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              nik_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                // this.setState({ dataFromNik: resData });
+                this.cekNIK({ dataFromNik: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  //   alert(res.Pesan);
+                  console.log(res.Pesan);
+                });
+              }
+              console.log("dataFromNik", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  cekNIK(dataFromNik) {
+    console.log("cekNIK", dataFromNik);
+
+    if (dataFromNik) {
+      this.setState({
+        fullname: dataFromNik.dataFromNik[0].full_name,
+
+        mobilephone: dataFromNik.dataFromNik[0].mobile_phone,
+        email: dataFromNik.dataFromNik[0].email,
+        // nik: dataFromNik.dataFromNik[0].nik,
+        npwp: dataFromNik.dataFromNik[0].npwp_no,
+        //---------foto attachment
+        // pictUrlKtp: dataFromNik.dataFromNik[0].ktp_attachment, //ktp
+        // pictUrlNPWP: dataFromNik.dataFromNik[0].npwp_attachment,
+        //---------end foto attachment
+
+        bank_name: dataFromNik.dataFromNik[0].bank_name,
+        account_name: dataFromNik.dataFromNik[0].account_name,
+        account_no: dataFromNik.dataFromNik[0].account_no
+      });
+      // fullname = dataFromNik.dataFromNik[0].full_name;
+      // console.log("fullname", fullname);
+      //   console.log("fullname", this.state.fullname);
+    }
+  }
 
   render() {
     return (
@@ -495,6 +585,80 @@ class FormBooking extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 40 }}>
+          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                <Text style={styles.overviewTitles}>Full Name</Text>
+                            </View> */}
+            <Item floatingLabel style={Styles.marginround}>
+              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                NIK
+              </Label>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                </View> */}
+              <Input
+                // placeholder='Full Name'
+                // autoCapitalize="numeric"
+                keyboardType="numeric"
+                placeholderTextColor={Colors.greyUrban}
+                value={this.state.nik}
+                onChangeText={val => this.setState({ nik: val })}
+                // onChangeText={val => this.getNik({ val })}
+                style={Styles.positionTextInput}
+                ref="nik"
+              />
+
+              {this.state.errornik ? (
+                <Icon
+                  style={{
+                    color: "red",
+                    bottom: 3,
+                    position: "absolute",
+                    right: 30
+                  }}
+                  name="close-circle"
+                />
+              ) : null}
+              {/* <Icon name='close-circle' /> */}
+            </Item>
+            <Icon
+              style={{
+                color: Colors.greyUrban,
+                bottom: 20,
+                fontSize: 25,
+                position: "absolute",
+                right: 20
+              }}
+              name="search"
+              onPress={() => this.cariNIK({ carinik: this.state.nik })}
+            />
+            {/* <Text
+              style={{
+                position: "absolute",
+                bottom: 3,
+                left: 15,
+                color: "red",
+                fontSize: 12
+              }}
+            >
+              NIK Required
+            </Text> */}
+            {this.state.errornik ? (
+              <Text
+                style={{
+                  position: "absolute",
+                  bottom: 3,
+                  left: 15,
+                  color: "red",
+                  fontSize: 12
+                }}
+              >
+                NIK Required
+              </Text>
+            ) : null}
+          </View>
+
           <View style={{ paddingBottom: 15, marginTop: 8 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
@@ -509,6 +673,7 @@ class FormBooking extends React.Component {
                                     </View> */}
               <Input
                 // placeholder='Full Name'
+                // editable={true}
                 autoCapitalize="words"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.fullname}
@@ -533,7 +698,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -543,7 +708,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
@@ -583,7 +747,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -593,7 +757,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Full Name</Text>
@@ -632,7 +795,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -642,57 +805,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
-                NIK
-              </Label>
-              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                </View> */}
-              <Input
-                // placeholder='Full Name'
-                // autoCapitalize="numeric"
-                keyboardType="numeric"
-                placeholderTextColor={Colors.greyUrban}
-                value={this.state.nik}
-                onChangeText={val => this.setState({ nik: val })}
-                style={Styles.positionTextInput}
-                ref="nik"
-              />
-              {this.state.errornik ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
-              ) : null}
-              {/* <Icon name='close-circle' /> */}
-            </Item>
-            {this.state.errornik ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 10,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                NIK Required
-              </Text>
-            ) : null}
-          </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             <View
               style={{
@@ -749,7 +861,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -759,7 +871,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Full Name</Text>
@@ -797,7 +908,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -807,7 +918,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Full Name</Text>
@@ -844,7 +954,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -854,7 +964,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Full Name</Text>
@@ -894,7 +1003,7 @@ class FormBooking extends React.Component {
               <Text
                 style={{
                   position: "absolute",
-                  bottom: 10,
+                  bottom: 3,
                   left: 15,
                   color: "red",
                   fontSize: 12
@@ -904,7 +1013,6 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
-
           {/* KTP */}
           <View style={{ paddingTop: 10 }}>
             {this.state.pictUrlKtp == null || this.state.pictUrlKtp == "" ? (
@@ -956,7 +1064,6 @@ class FormBooking extends React.Component {
               </Item>
             )}
           </View>
-
           {/* NPWP */}
           <View style={{ paddingTop: 25, paddingBottom: 10 }}>
             {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == "" ? (
@@ -1008,7 +1115,6 @@ class FormBooking extends React.Component {
               </Item>
             )}
           </View>
-
           <View>
             <View style={{ paddingTop: 50 }}>
               <Button style={Styles.btnMedium} onPress={() => this.submit()}>

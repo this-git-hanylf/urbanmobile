@@ -194,5 +194,61 @@ export default {
     height: 64,
     borderRadius: 5,
     textAlign: "center"
+  },
+  inputAttach: {
+    height: 40,
+    // marginBottom: 4,
+    paddingBottom: 15,
+    marginLeft: 12,
+    marginRight: 12,
+    // backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderColor: Colors.greyUrban
+    // textAlignVertical: 'bottom',
+  },
+  textAttach: {
+    color: Colors.greyUrban,
+    fontFamily: Fonts.type.proximaNovaBoldWeb,
+    position: "absolute",
+    left: 10,
+    fontSize: 13
+  },
+  inputAttachLarge: {
+    height: "auto",
+    marginBottom: 4,
+    marginLeft: 12,
+    marginRight: 12,
+    paddingBottom: 10,
+    paddingTop: 10,
+    // backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderColor: Colors.greyUrban,
+    textAlignVertical: "bottom"
+  },
+  containImageTop_no: {
+    // backgroundColor: "#fff",
+    width: Metrics.WIDTH * 0.84,
+    // width: Metrics.WIDTH,
+    // borderBottomLeftRadius: 15,
+    // borderBottomRightRadius: 15,
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "center",
+    elevation: 3
+  },
+  btnMedium: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 40,
+    width: 300,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5
   }
 };

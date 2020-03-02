@@ -104,7 +104,7 @@ class FormPayment extends React.Component {
     const data = {
       fullname: this.props.prevItems.fullname,
       total: this.props.prevItems.total,
-      rekening: "1239202"
+      rekening: "2740001414"
     };
     console.log("data", data);
 

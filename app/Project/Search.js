@@ -75,7 +75,7 @@ export default class Project extends React.Component {
       <Container style={Style.bgMain}>
         <Header style={Style.navigation}>
           <StatusBar
-            backgroundColor={Colors.statusBarOrange}
+            backgroundColor={Colors.statusBarNavy}
             animated
             barStyle="dark-content"
           />

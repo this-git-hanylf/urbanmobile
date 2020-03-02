@@ -146,9 +146,9 @@ export default class Intro extends React.Component {
       .then(res => {
         if (!res.Error) {
           if (res.Data.isResetPass != 1) {
-            // this.getTower(res);
+            this.getTower(res);
             this.setState({ isLoaded: !this.state.isLoaded });
-            this.skipLoginBlank();
+            // this.skipLoginBlank();
           } else {
             this.setState({ isLoaded: !this.state.isLoaded });
             Actions.ResetPass({ email: res.Data.user });
