@@ -88,10 +88,10 @@ import ReportNew from "./ReportNew/ReportNew";
 import Comission from "./Comission/Comission";
 
 // NUP
-import NUPPage from "./NUP";
-import NUPPay from "./NUP/NUP_Pay";
-import NUPDetail from "./NUP/NUPDetail";
-import NUPTerm from "./NUP/NUPTerm";
+// import NUPPage from "./NUP";
+// import NUPPay from "./NUP/NUP_Pay";
+// import NUPDetail from "./NUP/NUPDetail";
+// import NUPTerm from "./NUP/NUPTerm";
 
 import Dashboard from "./Reports/Dashboard";
 
@@ -459,12 +459,12 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-            <Scene
+            {/* <Scene
               key="NUPPage"
               component={NUPPage}
               hideNavBar={true}
               title=""
-            />
+            /> */}
             <Scene
               key="SignupGuest"
               component={SignupGuest}
@@ -528,8 +528,8 @@ class Routes extends Component {
             />
             <Scene key="menu" component={Akun} hideNavBar={true} title="" />
             <Scene key="Feed" component={Feed} hideNavBar={true} title="" />
-            <Scene key="NUPPay" component={NUPPay} hideNavBar={true} title="" />
-            <Scene
+            {/* <Scene key="NUPPay" component={NUPPay} hideNavBar={true} title="" /> */}
+            {/* <Scene
               key="NUPDetail"
               component={NUPDetail}
               hideNavBar={true}
@@ -540,7 +540,7 @@ class Routes extends Component {
               component={NUPTerm}
               hideNavBar={true}
               title=""
-            />
+            /> */}
             <Scene
               key="ProspectPage"
               component={ProspectPage}

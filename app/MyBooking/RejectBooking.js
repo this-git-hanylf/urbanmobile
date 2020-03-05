@@ -89,6 +89,7 @@ class RejectBooking extends Component {
       project: await _getData("@UserProject"),
       debtor: await _getData("@Debtor"),
       group: await _getData("@Group"),
+      agent_cd: await _getData("@AgentCd"),
       entity_cd: dataItems.entity_cd,
       project_no: dataItems.project_no,
       db_profile: dataItems.db_profile
@@ -108,6 +109,7 @@ class RejectBooking extends Component {
     const project_no = this.state.project_no;
     console.log("en", project_no);
     const db_profile = this.state.db_profile;
+    const agent_cd = this.state.agent_cd;
     //  const dataItems=  await _getData("@dataItems")
     // const project_no = this.props.items.project_no;
     fetch(
@@ -117,7 +119,9 @@ class RejectBooking extends Component {
         "/" +
         entity_cd +
         "/" +
-        project_no,
+        project_no +
+        "/" +
+        agent_cd,
 
       {
         method: "GET"

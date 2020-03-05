@@ -53,26 +53,26 @@ class Event extends Component {
 
   onSuccess(e) {
     console.log("e", e.data);
-    this.setState({
-      dataqr: this.state.dataqr + ", " + e.data,
-      status: "Coba Lagi"
-    });
-    // Alert.alert(
-    //   "QR Code",
-    //   "Code : " + e.data,
-    //   [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-    //   { cancelable: false }
-    // );
-    setTimeout(() => {
-      Actions.refresh({
-        event_cd: e.data,
-        entity_cd: this.state.entity_cd,
-        project_no: this.state.project_no,
-        db_profile: this.state.db_profile
-      });
-    }, 500);
-    // console.log("event_cd", e.data);
-    Actions.EventDetail();
+    // this.setState({
+    //   dataqr: this.state.dataqr + ", " + e.data,
+    //   status: "Coba Lagi"
+    // });
+    Alert.alert(
+      "QR Code",
+      "Code : " + e.data,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
+    // setTimeout(() => {
+    //   Actions.refresh({
+    //     event_cd: e.data,
+    //     entity_cd: this.state.entity_cd,
+    //     project_no: this.state.project_no,
+    //     db_profile: this.state.db_profile
+    //   });
+    // }, 500);
+    // // console.log("event_cd", e.data);
+    // Actions.EventDetail();
   }
   clickReading() {
     Actions.reading();
