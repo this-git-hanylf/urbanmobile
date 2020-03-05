@@ -79,7 +79,8 @@ class FormBooking extends React.Component {
       bank_name: "",
       account_no: "",
       account_name: "",
-      dataFromNik: []
+      dataFromNik: [],
+      cor: ""
       //data data dari nik
       //   full_name: ""
     };
@@ -104,7 +105,8 @@ class FormBooking extends React.Component {
     const data = {
       project_no: this.props.items.project_no,
       entity: this.props.items.entity_cd,
-      audit_user: await _getData("@UserId"),
+      //   audit_user: await _getData("@UserId"),
+      audit_user: await _getData("@AgentCd"),
       projectdesc: this.props.items.project_descs,
       subtot: this.props.subtot,
       totalqty: this.props.totalqty
@@ -121,7 +123,7 @@ class FormBooking extends React.Component {
     console.log("data", data);
 
     this.setState(data, () => {
-      this.getDataFromNik();
+      //   this.getDataFromNik();
     });
   }
 
@@ -225,8 +227,8 @@ class FormBooking extends React.Component {
     // RNFetchBlob.wrap(
     //     this.state.pictUrlKtp.uri.replace("file://", "")
     // );
-
-    if (this.state.pictUrlKtp.length == 0) {
+    // console.log("pic not nul", this.state.pictUrlKtp);
+    if (this.state.pictUrlKtp == 0) {
       console.log("replace", this.state.replaceFoto);
       // filektp = "@Asset/images/icon/dropdown.png";
       filektp = "./img/noimage.png";
@@ -247,7 +249,7 @@ class FormBooking extends React.Component {
       // this.state.pictUrlKtp.uri.replace("file://", "")
     }
 
-    if (this.state.pictUrlNPWP.length == 0) {
+    if (this.state.pictUrlNPWP == 0) {
       console.log("replace", this.state.replaceFoto);
       filenpwp = "./img/noimage.png";
       console.log("pic nul", this.state.pictUrlKtp);
@@ -283,7 +285,8 @@ class FormBooking extends React.Component {
       totalqty,
       bank_name,
       account_name,
-      account_no
+      account_no,
+      cor
     } = this.state;
 
     const frmData = {
@@ -307,7 +310,9 @@ class FormBooking extends React.Component {
       audit_user: audit_user,
       bank_name: bank_name,
       account_name: account_name,
-      account_no: account_no
+      account_no: account_no,
+      cor: cor,
+      agent_cd: audit_user
     };
 
     const isValid = this.validating({
@@ -376,52 +381,73 @@ class FormBooking extends React.Component {
 
     // }
     //
-    // if (isValid) {
-    //   RNFetchBlob.fetch(
-    //     "POST",
-    //     // urlApi + "c_auth/SignUpAgent",
-    //     urlApi + "c_nup/saveNup/IFCAPB/",
-    //     {
-    //       "Content-Type": "multipart/form-data"
-    //     },
-    //     [
-    //       // { name: "photo", filename: fileName, data: fileImg },
-    //       { name: "photoktp", filename: fileNameKtp, data: filektp },
-    //       { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-    //       // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
-    //       // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-    //       { name: "data", data: JSON.stringify(frmData) }
-    //     ]
-    //   ).then(resp => {
-    //     console.log("res_if", resp);
-    //     const res = JSON.parse(resp.data);
-    //     console.log("res", res);
-    //     // const res = JSON.stringify(resp.data);
+    if (isValid) {
+      RNFetchBlob.fetch(
+        "POST",
+        // urlApi + "c_auth/SignUpAgent",
+        urlApi + "c_nup/saveNup/IFCAPB/",
+        {
+          "Content-Type": "multipart/form-data"
+        },
+        [
+          // { name: "photo", filename: fileName, data: fileImg },
+          { name: "photoktp", filename: fileNameKtp, data: filektp },
+          { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+          // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+          // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+          { name: "data", data: JSON.stringify(frmData) }
+        ]
+      ).then(resp => {
+        console.log("res_if", resp);
+        const res = JSON.parse(resp.data);
+        console.log("res", res);
+        // const res = JSON.stringify(resp.data);
 
-    //     if (!res.Error) {
-    //       // Actions.pop()
-    //       this.setState({ isLogin: true }, () => {
-    //         alert(res.Pesan);
-    //         // Actions.pop()
-    //         // Actions.Login()
-    //         _navigate("FormPayment", { prevItems: frmData });
-    //       });
-    //     } else {
-    //       this.setState({ isLoaded: !this.state.isLoaded }, () => {
-    //         alert(res.Pesan);
-    //         // console.log('url',this.state.pickUrlKtp.uri)
-    //       });
-    //     }
-    //     alert(res.Pesan);
-    //   });
+        if (!res.Error) {
+          // Actions.pop()
+          this.setState({ isLogin: true }, () => {
+            alert(res.Pesan);
+            // Actions.pop()
+            // Actions.Login()
+            _navigate("FormPayment", { prevItems: frmData });
+          });
+        } else {
+          this.setState({ isLoaded: !this.state.isLoaded }, () => {
+            alert(res.Pesan);
+            // console.log('url',this.state.pickUrlKtp.uri)
+          });
+        }
+        alert(res.Pesan);
+      });
+    } else {
+      this.setState({ isLoaded: !this.state.isLoaded }, () => {
+        alert("Please assign your ID Picture");
+        // alert(res.Pesan);
+        // console.log('url',this.state.pickUrlKtp.uri)
+      });
+      // alert("Please assign your ID Picture");
+      // console.log('url else',this.state.pickUrlKtp.uri)
+    }
+  };
+
+  submit2 = () => {
+    let filektp = "";
+    console.log("pic not nulaa", this.state.pictUrlKtp);
+    console.log("replace", this.state.pictUrlKtp.replace("http://", ""));
+    // if (this.state.pictUrlKtp == 0) {
+    //   console.log("replace", this.state.replaceFoto);
+    //   // filektp = "@Asset/images/icon/dropdown.png";
+    //   filektp = "./img/noimage.png";
+
+    //   console.log("pic nul", this.state.pictUrlKtp);
+    //   // this.state.replaceFoto.uri.replace("file://", "")
     // } else {
-    //   this.setState({ isLoaded: !this.state.isLoaded }, () => {
-    //     alert("Please assign your ID Picture");
-    //     // alert(res.Pesan);
-    //     // console.log('url',this.state.pickUrlKtp.uri)
-    //   });
-    //   // alert("Please assign your ID Picture");
-    //   // console.log('url else',this.state.pickUrlKtp.uri)
+    //   // alert('not null')
+    //   filektp = RNFetchBlob.wrap(
+    //     this.state.pictUrlKtp.uri.replace("http://", "")
+    //   );
+    //   console.log("pic not nul", this.state.pictUrlKtp);
+    //   // this.state.pictUrlKtp.uri.replace("file://", "")
     // }
   };
 
@@ -466,7 +492,7 @@ class FormBooking extends React.Component {
                 this.cekNIK({ dataFromNik: resData });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  //   alert(res.Pesan);
+                  alert(res.Pesan);
                   console.log(res.Pesan);
                 });
               }
@@ -502,6 +528,8 @@ class FormBooking extends React.Component {
       // fullname = dataFromNik.dataFromNik[0].full_name;
       // console.log("fullname", fullname);
       //   console.log("fullname", this.state.fullname);
+    } else {
+      alert("Nik not found");
     }
   }
 
@@ -806,6 +834,54 @@ class FormBooking extends React.Component {
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                <Text style={styles.overviewTitles}>Full Name</Text>
+                            </View> */}
+            <Item floatingLabel style={Styles.marginround}>
+              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Correspondence
+              </Label>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                </View> */}
+              <Input
+                // placeholder='Full Name'
+                autoCapitalize="words"
+                placeholderTextColor={Colors.greyUrban}
+                value={this.state.cor}
+                onChangeText={val => this.setState({ cor: val })}
+                style={Styles.positionTextInput}
+                ref="email"
+              />
+              {this.state.errorcor ? (
+                <Icon
+                  style={{
+                    color: "red",
+                    bottom: 3,
+                    position: "absolute",
+                    right: 0
+                  }}
+                  name="close-circle"
+                />
+              ) : null}
+              {/* <Icon name='close-circle' /> */}
+            </Item>
+            {this.state.errorcor ? (
+              <Text
+                style={{
+                  position: "absolute",
+                  bottom: 3,
+                  left: 15,
+                  color: "red",
+                  fontSize: 12
+                }}
+              >
+                Corespondence Required
+              </Text>
+            ) : null}
+          </View>
+          <View style={{ paddingBottom: 15, marginTop: 4 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -1013,6 +1089,7 @@ class FormBooking extends React.Component {
               </Text>
             ) : null}
           </View>
+
           {/* KTP */}
           <View style={{ paddingTop: 10 }}>
             {this.state.pictUrlKtp == null || this.state.pictUrlKtp == "" ? (

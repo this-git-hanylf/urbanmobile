@@ -52,6 +52,7 @@ import { _storeData, _getData } from "@Component/StoreAsync";
 import { urlApi } from "@Config/services";
 import moment from "moment";
 import numFormat from "@Component/numFormat";
+import diffDate from "@Component/diffDate";
 
 let isMount = false;
 // create a component
@@ -71,7 +72,8 @@ class PendingBooking extends Component {
       entity_cd: "",
       project_no: "",
       db_profile: "",
-      dataPending: []
+      dataPending: [],
+      order_date: ""
     };
 
     console.log("props cf", props);
@@ -80,6 +82,9 @@ class PendingBooking extends Component {
   async componentDidMount() {
     isMount = true;
     const dataItems = await _getData("@dataItems");
+    const order_date = this.state.order_date;
+    console.log("order_date", order_date);
+
     const data = {
       hd: new Headers({
         Token: await _getData("@Token")
@@ -136,7 +141,9 @@ class PendingBooking extends Component {
         if (!res.Error) {
           const resData = res.Data;
 
-          this.setState({ dataPending: resData });
+          this.setState({
+            dataPending: resData
+          });
           console.log("datapending", resData);
         }
       })
@@ -164,9 +171,10 @@ class PendingBooking extends Component {
   }
 
   render() {
-    // const tables = {
-    //   tableHead: ["Date", "Description", "Amount", "Status"]
-    // };
+    // let dataPending = this.state.dataPending.order_date;
+    // console.log("dataaaa", dataPending);
+    // let order_date = dataPending.dataPending.order_date;
+    // console.log("order_date", order_date);
 
     return (
       <Container style={Style.bgMain}>
@@ -232,12 +240,12 @@ class PendingBooking extends Component {
               </Text>
             </View>
           ) : (
-            <View>
+            <ScrollView>
               {this.state.dataPending.map((data, key) => (
                 <ListItem onPress={() => this.DetailBooking(data)} key={key}>
                   <View
                     style={{
-                      flexDirection: "column",
+                      // flexDirection: "column",
                       height: 70,
                       // width: "100%",
                       right: 20,
@@ -290,7 +298,13 @@ class PendingBooking extends Component {
                         </Text>
                       </Left>
                     </View>
-                    <View style={{ width: "100%" }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        paddingBottom: 20,
+                        flexDirection: "row"
+                      }}
+                    >
                       <Left style={{ position: "absolute", left: 20 }}>
                         <Text
                           style={{
@@ -301,14 +315,56 @@ class PendingBooking extends Component {
                             fontSize: 13
                           }}
                         >
-                          {moment(data.order_date).format("DD MMM YYYY")}
+                          {moment(data.order_date).format("DD MMM YYYY")} -{" "}
+                          {/* {diffDate(data.order_date) > 1 ? (
+                            <Text>Time Out</Text>
+                          ) : (
+                            <Text>Waiting Payment</Text>
+                          )} */}
                         </Text>
                       </Left>
                     </View>
                   </View>
+                  <View style={{ width: "100%", paddingBottom: 0 }}>
+                    {data.hour_diff > 24 ? (
+                      <Right
+                        style={{ position: "absolute", right: 20, top: 25 }}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: Fonts.type.proximaNovaBold,
+                            alignSelf: "flex-end",
+                            color: Colors.redWine,
+                            marginBottom: 5,
+                            fontSize: 13
+                            // right: 0
+                          }}
+                        >
+                          Time Out
+                        </Text>
+                      </Right>
+                    ) : (
+                      <Right
+                        style={{ position: "absolute", right: 20, top: 25 }}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: Fonts.type.proximaNovaBold,
+                            alignSelf: "flex-end",
+                            color: Colors.yellow,
+                            marginBottom: 5,
+                            fontSize: 13
+                            // right: 0
+                          }}
+                        >
+                          Waiting Payment
+                        </Text>
+                      </Right>
+                    )}
+                  </View>
                 </ListItem>
               ))}
-            </View>
+            </ScrollView>
           )}
         </Content>
       </Container>
