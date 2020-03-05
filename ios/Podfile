@@ -49,6 +49,10 @@ pod 'Firebase/Core', '~> 6.3.0'
 # pod 'FBSDKLoginKit', '~> 5.13'
 # pod 'FBSDKShareKit', '~> 5.13'
 
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'UrbanTests' do
     inherit! :search_paths
     # Pods for testing

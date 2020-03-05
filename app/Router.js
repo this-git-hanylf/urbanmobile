@@ -141,6 +141,9 @@ import DetailBooking from "./MyBooking/DetailBooking";
 import DetailRejectBooking from "./MyBooking/DetailRejectBooking";
 import DetailApproveBooking from "./MyBooking/DetailApproveBooking";
 
+import Event from "./Event/Event";
+import EventDetail from "./Event/EventDetail";
+
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -728,6 +731,22 @@ class Routes extends Component {
             <Scene
               key="DetailApproveBooking"
               component={DetailApproveBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="Event"
+              component={Event}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="EventDetail"
+              component={EventDetail}
               title=""
               hideNavBar
               translucent={true}

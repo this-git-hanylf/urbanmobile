@@ -288,6 +288,18 @@ export default class extends React.Component {
     // }
     // console.log("menu", val);
   }
+
+  myevent() {
+    // Actions.MyBooking();
+    Actions.project({ goTo: "Event" });
+
+    // if (val.isProject == 1) {
+    //   Actions.project({ goTo: val.URL_angular });
+    // } else {
+    //   Actions[val.URL_angular]();
+    // }
+    // console.log("menu", val);
+  }
   // goToFeed = (val) =>{
   //       if(val.isProject == 1){
   //           Actions.project({goTo : val.URL_angular})
@@ -344,6 +356,14 @@ export default class extends React.Component {
                 </View>
 
                 <View>
+                  <ListItem
+                    style={Styles.infoItem}
+                    onPress={() => this.myevent()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>Event</Text>
+                    </View>
+                  </ListItem>
                   <ListItem
                     style={Styles.infoItem}
                     onPress={() => this.skipLoginBlank()}
