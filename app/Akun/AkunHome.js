@@ -300,6 +300,18 @@ export default class extends React.Component {
     // }
     // console.log("menu", val);
   }
+
+  subordinat() {
+    // Actions.MyBooking();
+    Actions.project({ goTo: "Subordinate" });
+
+    // if (val.isProject == 1) {
+    //   Actions.project({ goTo: val.URL_angular });
+    // } else {
+    //   Actions[val.URL_angular]();
+    // }
+    // console.log("menu", val);
+  }
   // goToFeed = (val) =>{
   //       if(val.isProject == 1){
   //           Actions.project({goTo : val.URL_angular})
@@ -356,14 +368,14 @@ export default class extends React.Component {
                 </View>
 
                 <View>
-                  <ListItem
+                  {/* <ListItem
                     style={Styles.infoItem}
                     onPress={() => this.myevent()}
                   >
                     <View>
                       <Text style={Styles.textMenu}>Event</Text>
                     </View>
-                  </ListItem>
+                  </ListItem> */}
                   <ListItem
                     style={Styles.infoItem}
                     onPress={() => this.skipLoginBlank()}
@@ -384,10 +396,21 @@ export default class extends React.Component {
 
                   <ListItem
                     style={Styles.infoItem}
-                    onPress={() => this.skipLoginBlank()}
+                    onPress={() => this.myevent()}
                   >
                     <View>
                       <Text style={Styles.textMenu}>My QR Code</Text>
+                    </View>
+                  </ListItem>
+
+                  <ListItem
+                    style={Styles.infoItem}
+                    // onPress={() => this.myevent()}
+                    // onPress={() => alert("tes")}
+                    onPress={() => this.subordinat()}
+                  >
+                    <View>
+                      <Text style={Styles.textMenu}>Subordinate</Text>
                     </View>
                   </ListItem>
 

@@ -144,6 +144,10 @@ import DetailApproveBooking from "./MyBooking/DetailApproveBooking";
 import Event from "./Event/Event";
 import EventDetail from "./Event/EventDetail";
 
+import Subordinate from "./Subordinate/Subordinate";
+import SubOfficeAgents from "./Subordinate/SubOfficeAgents";
+import SubAgents from "./Subordinate/SubAgents";
+
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -747,6 +751,30 @@ class Routes extends Component {
             <Scene
               key="EventDetail"
               component={EventDetail}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="Subordinate"
+              component={Subordinate}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="SubOfficeAgents"
+              component={SubOfficeAgents}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="SubAgents"
+              component={SubAgents}
               title=""
               hideNavBar
               translucent={true}

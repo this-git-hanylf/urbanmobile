@@ -1192,21 +1192,29 @@ class FormBooking extends React.Component {
               </Item>
             )}
           </View>
+         
           <View>
-            <View style={{ paddingTop: 50 }}>
+            <View
+              style={{ paddingTop: 50 }}
+              pointerEvents={this.state.isLoaded ? "auto" : "none"}
+            >
               <Button style={Styles.btnMedium} onPress={() => this.submit()}>
-                <Text
-                  style={{
-                    width: "100%",
-                    fontSize: 14,
-                    alignItems: "center",
-                    textAlign: "center",
-                    fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1
-                  }}
-                >
-                  Next
-                </Text>
+                {!this.state.isLoaded ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontSize: 14,
+                      alignItems: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      letterSpacing: 1
+                    }}
+                  >
+                    Next
+                  </Text>
+                )}
               </Button>
             </View>
           </View>

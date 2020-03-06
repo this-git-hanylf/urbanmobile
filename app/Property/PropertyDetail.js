@@ -16,7 +16,7 @@ import {
   Linking,
   Alert,
   YellowBox
-// WebView
+  // WebView
 } from "react-native";
 import {
   Container,
@@ -41,698 +41,733 @@ import {
   Tabs,
   Fab,
   Form,
-  Label,
+  Label
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
-import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel";
-import {urlApi} from '@Config/services';
+import Carousel, {
+  Pagination,
+  ParallaxImage
+} from "react-native-snap-carousel";
+import { urlApi } from "@Config/services";
 import GALLERY from "./Gallery";
 import AMENITIES from "./Amenities";
 import SIMILAR from "./Similar";
-import {_storeData,_getData,_navigate} from '@Component/StoreAsync';
+import { _storeData, _getData, _navigate } from "@Component/StoreAsync";
 
 import { Style, Colors, Fonts } from "../Themes/index";
 import Styles from "./Style";
 
-import ImageViewer from 'react-native-image-zoom-viewer';
-import HTML from 'react-native-render-html';
+import ImageViewer from "react-native-image-zoom-viewer";
+import HTML from "react-native-render-html";
 import Mailer from "react-native-mail";
-import { WebView } from 'react-native-webview';
+import { WebView } from "react-native-webview";
 import styles, { colors } from "./componen/index";
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import NavigationService from "@Service/Navigation";
-import FooterTabsIconText from '@Component/BottomBar';
+import FooterTabsIconText from "@Component/BottomBar";
 // import Routes from './../Router';
 // import BottomBarDua from '@Component/BottomBarDua';
 // import { sliderWidth, itemWidth } from "./componen/SliderEntry";
 // import SliderEntry from "../components/SlideEntry";
 // const { height, width } = Dimensions.get('window')
 
-
-
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get("window");
 
-let isMount = false
-
+let isMount = false;
 
 const API_KEY = "AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8";
 // const API_KEY = "AIzaSyBFhdZb-_5FCA5IhbLhB9-KimWC_QlOKLs";
 
-const IS_IOS = Platform.OS === 'ios';
+const IS_IOS = Platform.OS === "ios";
 
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-function wp (percentage) {
-    const value = (percentage * viewportWidth) / 100;
-    return Math.round(value);
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
 }
 
 const slideHeight = viewportHeight * 0.45;
-const slideWidth = wp(62); 
+const slideWidth = wp(62);
 const itemHorizontalMargin = wp(4);
-                 
+
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
-
-
 export default class extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        title : '',
-        picture_url : '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      picture_url: "",
 
-        active: false,
-        isVisible: false,
-        isView : false,
-        isUnitView : false,
-        isLogin : false,
+      active: false,
+      isVisible: false,
+      isView: false,
+      isUnitView: false,
+      isLogin: false,
 
-        hd : new Headers,
-        email : '',
-        userId : '',
-        descs : '',
-        refEmail : '',
+      hd: new Headers(),
+      email: "",
+      userId: "",
+      descs: "",
+      refEmail: "",
 
-        amenities  : null,
-        feature : null,
-        overview : null,
-        project : null,
-        gallery : null,
-        plans : null,
+      amenities: null,
+      feature: null,
+      overview: null,
+      project: null,
+      gallery: null,
+      plans: null,
 
-        imagesPreview :[],
-        unitPlanPreview : [],
-        dataPromo:[],
-        index : 0,
-        wa_no: '',
-        email_add: '',
-        tower: [],
-        amen: [],
-        unit:[],
-        tes:'',
-        stat:'',
-        stylehtml: "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
-        pict_hardcode: require('@Asset/images/project_suite_urban.png'),
-      };
+      imagesPreview: [],
+      unitPlanPreview: [],
+      dataPromo: [],
+      index: 0,
+      wa_no: "",
+      email_add: "",
+      tower: [],
+      amen: [],
+      unit: [],
+      tes: "",
+      stat: "",
+      stylehtml:
+        "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
+      pict_hardcode: require("@Asset/images/project_suite_urban.png")
+    };
 
-      console.log('props',props);
-      this._renderItemTower = this._renderItemTower.bind(this);
-      this.nupBooking = this.nupBooking.bind(this); //add this line
-      // this.selectAmen = this.selectAmen.bind(this); //add this line
-      // this.renderItemNews = this.renderItemNews.bind(this);
+    console.log("props", props);
+    this._renderItemTower = this._renderItemTower.bind(this);
+    this.nupBooking = this.nupBooking.bind(this); //add this line
+    // this.selectAmen = this.selectAmen.bind(this); //add this line
+    // this.renderItemNews = this.renderItemNews.bind(this);
+  }
 
-    }
-      
-async componentDidMount() {
-  console.disableYellowBox = true;
+  async componentDidMount() {
+    console.disableYellowBox = true;
     Actions.refresh({ backTitle: () => this.props.title });
 
     const data = {
-      hd : new Headers({
-        'Token' : await _getData('@Token')
+      hd: new Headers({
+        Token: await _getData("@Token")
       }),
-      email : await _getData('@User'),
-      userId : await _getData('@UserId'),
-      name : await _getData('@Name'),
-      handphone : await _getData('@Handphone'),
-      isLogin : await _getData('@isLogin'),
-      title : this.props.items.project_descs,
-      group: await _getData('@Group'),
+      email: await _getData("@User"),
+      userId: await _getData("@UserId"),
+      name: await _getData("@Name"),
+      handphone: await _getData("@Handphone"),
+      isLogin: await _getData("@isLogin"),
+      title: this.props.items.project_descs,
+      group: await _getData("@Group"),
       // descs : this.props.items.project_descs,
-      descs : 'Saya tertarik reservasi ' + this.props.items.project_descs + '\n\nHubungi saya untuk info detail.',
-      picture_url : this.props.items.picture_url
-    }
-    console.log('dataIm',data);
+      descs:
+        "Saya tertarik reservasi " +
+        this.props.items.project_descs +
+        "\n\nHubungi saya untuk info detail.",
+      picture_url: this.props.items.picture_url
+    };
+    console.log("dataIm", data);
 
-    isMount=true
+    isMount = true;
 
-    this.setState(data,()=>{
-      this.getDataDetails(this.props.items)
-      this.getDataGallery(this.props.items)
-      this.getPromo()
-      this.getDataUnitPlan(this.props.items)
-      this.getTower()
-      this.getDataAminities(this.props.items)
-      this.getUnit()
+    this.setState(data, () => {
+      this.getDataDetails(this.props.items);
+      this.getDataGallery(this.props.items);
+      this.getPromo();
+      this.getDataUnitPlan(this.props.items);
+      this.getTower();
+      this.getDataAminities(this.props.items);
+      this.getUnit();
       // this.goTo()
-      
+    });
+  }
+
+  componentWillUnmount() {
+    // this.setState({isMount:false})
+    isMount = false;
+  }
+
+  getPromo = () => {
+    fetch(urlApi + "c_newsandpromo/getDatapromo2/IFCAMOBILE", {
+      method: "GET"
     })
+      .then(response => response.json())
+      .then(res => {
+        if (!res.Error) {
+          const resData = res.Data;
 
-}
-
-componentWillUnmount(){
-  // this.setState({isMount:false})
-  isMount =false
-}
-
-getPromo = () => {
-  fetch(urlApi+'c_newsandpromo/getDatapromo2/IFCAMOBILE' ,{
-      method : "GET",
-  })
-  .then((response) => response.json())
-  .then((res)=>{
-      if(!res.Error){
-        const resData = res.Data
-
-        this.setState({dataPromo:resData})
-        console.log('dataPRopmo',resData);
-      }
-  }).catch((error) => {
-      console.log(error);
-  });
-}
-
-getDataDetails = (item) => {
-    {isMount ?
-    fetch(urlApi+'c_reservation/getDataDetails/'+item.db_profile+'/'+item.entity_cd+'/'+item.project_no,{
-        method:'GET',
-        headers : this.state.hd,
-    }).then((response) => response.json())
-    .then((res)=>{
-        if(!res.Error){
-            const resData = res.Data
-            const data = {
-              amenities : resData.amenities,
-              feature : resData.feature,
-              overview : resData.overview,
-              project : resData.project,
-            }
-            console.log('data',data);
-            this.setState(data)
-        } else {
-            this.setState({isLoaded: !this.state.isLoaded},()=>{
-                alert(res.Pesan)
-            });
+          this.setState({ dataPromo: resData });
+          console.log("dataPRopmo", resData);
         }
-        console.log('getDAtaDetails',res);
-    }).catch((error) => {
+      })
+      .catch(error => {
         console.log(error);
-    })
-    :null}
-}
+      });
+  };
 
-getDataGallery = (item) => {
-  {isMount ?
-  fetch(urlApi+'c_reservation/getGallery/'+item.db_profile+'/'+item.entity_cd+'/'+item.project_no,{
-      method:'GET',
-      headers : this.state.hd,
-  }).then((response) => response.json())
-  .then((res)=>{
-      if(!res.Error){
-          console.log(resData)
-          const resData = res.Data
-          this.setState({gallery : resData.gallery})
-          resData.gallery.map((item)=>{
-            this.setState(prevState=>({
-              imagesPreview : [...prevState.imagesPreview, {url:item.gallery_url}]
-            }))
-          })
-      } else {
-          this.setState({isLoaded: !this.state.isLoaded},()=>{
-              alert(res.Pesan)
-          });
-      }
-      console.log('getData Galerry',res);
-  }).catch((error) => {
-      console.log(error);
-  })
-  :null}
-}
-
-getDataUnitPlan = (item) => {
-  {isMount ?
-  // fetch(urlApi+'c_reservation/getGallery/'+item.entity_cd+'/'+item.project_no,{
-    fetch(urlApi+'c_reservation/getGallery/'+item.db_profile+'/'+item.entity_cd+'/'+item.project_no,{
-      method:'GET',
-      headers : this.state.hd,
-  }).then((response) => response.json())
-  .then((res)=>{
-      if(!res.Error){
-          console.log(resData)
-          const resData = res.Data
-          this.setState({plans : resData.plans})
-          resData.plans.map((item)=>{
-            this.setState(prevState=>({
-              unitPlanPreview : [...prevState.unitPlanPreview, {url:item.plan_url}]
-            }))
-          })
-      } else {
-          this.setState({isLoaded: !this.state.isLoaded},()=>{
-              alert(res.Pesan)
-          });
-      }
-      console.log('getData Plans',res);
-  }).catch((error) => {
-      console.log(error);
-  })
-  :null}
-}
-
-sendWa(){
-
-  const noHp = this.state.project[0].wa_no
-  const descs = this.state.descs
-  Linking.openURL('https://wa.me/+62'+noHp+'?text='+descs)
-  console.log('hp wa', noHp);
-
-}
-
-sendEmail(){
-  // noHp = '';
-  const email_add = this.state.project[0].email_add
-  const descs = this.props.items.project_descs
-  
-  // alert(email_add);
-
-console.log('email send add', email_add)
-  Mailer.mail(
+  getDataDetails = item => {
     {
-      subject: "Saya tertarik reservasi " + descs,
-      recipients: [`${email_add}`],
-      ccRecipients: [""],
-      bccRecipients: [""],
-      body: "",
-      isHTML: true
-    },
-    (error, event) => {
-      Alert.alert(
-        error,
-        event,
-        [
-          {
-            text: "Ok",
-            onPress: () => console.log("OK: Email Error Response")
-          },
-          {
-            text: "Cancel",
-            onPress: () => console.log("CANCEL: Email Error Response")
-          }
-        ],
-        { cancelable: true }
-      );
+      isMount
+        ? fetch(
+            urlApi +
+              "c_reservation/getDataDetails/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                const data = {
+                  amenities: resData.amenities,
+                  feature: resData.feature,
+                  overview: resData.overview,
+                  project: resData.project
+                };
+                console.log("data", data);
+                this.setState(data);
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getDAtaDetails", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
     }
-  );
-};
+  };
 
-showModal(){
-  this.setState({isVisible:true})
-}
+  getDataGallery = item => {
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_reservation/getGallery/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                console.log(resData);
+                const resData = res.Data;
+                this.setState({ gallery: resData.gallery });
+                resData.gallery.map(item => {
+                  this.setState(prevState => ({
+                    imagesPreview: [
+                      ...prevState.imagesPreview,
+                      { url: item.gallery_url }
+                    ]
+                  }));
+                });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getData Galerry", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
 
-clickToNavigate = (to,param) =>{
-  Actions[to](param);
-  this.setState({click:true})
-}
+  getDataUnitPlan = item => {
+    {
+      isMount
+        ? // fetch(urlApi+'c_reservation/getGallery/'+item.entity_cd+'/'+item.project_no,{
+          fetch(
+            urlApi +
+              "c_reservation/getGallery/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                console.log(resData);
+                const resData = res.Data;
+                this.setState({ plans: resData.plans });
+                resData.plans.map(item => {
+                  this.setState(prevState => ({
+                    unitPlanPreview: [
+                      ...prevState.unitPlanPreview,
+                      { url: item.plan_url }
+                    ]
+                  }));
+                });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getData Plans", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
 
-showAlert = () => {
-  Alert.alert(
-      '',
-      'Please Login First',
+  sendWa() {
+    const noHp = this.state.project[0].wa_no;
+    const descs = this.state.descs;
+    Linking.openURL("https://wa.me/+62" + noHp + "?text=" + descs);
+    console.log("hp wa", noHp);
+  }
+
+  sendEmail() {
+    // noHp = '';
+    const email_add = this.state.project[0].email_add;
+    const descs = this.props.items.project_descs;
+
+    // alert(email_add);
+
+    console.log("email send add", email_add);
+    Mailer.mail(
+      {
+        subject: "Saya tertarik reservasi " + descs,
+        recipients: [`${email_add}`],
+        ccRecipients: [""],
+        bccRecipients: [""],
+        body: "",
+        isHTML: true
+      },
+      (error, event) => {
+        Alert.alert(
+          error,
+          event,
+          [
+            {
+              text: "Ok",
+              onPress: () => console.log("OK: Email Error Response")
+            },
+            {
+              text: "Cancel",
+              onPress: () => console.log("CANCEL: Email Error Response")
+            }
+          ],
+          { cancelable: true }
+        );
+      }
+    );
+  }
+
+  showModal() {
+    this.setState({ isVisible: true });
+  }
+
+  clickToNavigate = (to, param) => {
+    Actions[to](param);
+    this.setState({ click: true });
+  };
+
+  showAlert = () => {
+    Alert.alert(
+      "",
+      "Please Login First",
       [
-          {text: 'Cancel',onPress: () => console.log('Cancel Pressed'), style: 'cancel',},
-          {text: 'OK', onPress: () => Actions.Login()},
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => Actions.Login() }
       ],
-      {cancelable: false},
-  );
-};
+      { cancelable: false }
+    );
+  };
 
-// goTo(item){
-//   alert('t')
-// };
-goTo(item) {
-  console.log('item',item);
-  // alert('t')
-  // const itemyangdibawa = item;
-  // console.log('itemyangdibawa', itemyangdibawa)
-  // const datapentingtower = this.props.items;
-  // console.log('datapentingtower', datapentingtower);
-  const data = this.props.items;
-  data["tower"] = item.property_cd;
-  data["towerDescs"] = item.descs;
-  data["picture_url"] = item.picture_url;
-  console.log('data',data);
-  if(this.props.dyn){
-    _navigate("UnitEnquiryProjectPage", { prevItems: data }); 
-  } else {
-    // _navigate("chooseZone", { items: this.props.items });
-    _navigate("ChooseZoneModif", { items: this.props.items, prevItems: data});
-  }
-}
-// tes(){
-//   alert('s')
-// }
-
-_renderItemTower ({item, index}, parallaxProps) {
-  // console.log('item towersss', item)
-  return (
-      <TouchableOpacity style={styles.item} 
-      // onPress={() => this.goTo()}
-      // onPress={()=>this.goTo()}
-      onPress={() => this.goTo(item)}
-      // onPress={this.goTo()}
-      // onPress={() => this.goTo()}
-      // onPress={()=>Actions.ProductProjectPage({items : item})}
-
-     
-      >
-          <ParallaxImage
-          // onPress={()=>this.goTo(item)}
-              source={{ uri: item.picture_url }}
-              containerStyle={styles.imageContainer}
-              style={styles.image}
-              parallaxFactor={0.1}
-              {...parallaxProps}
-          />
-          <View style={styles.newsTitle} onPress={()=>this.goTo()}>
-            <Text style={styles.newsTitleText_small}>
-                { item.descs }
-            </Text>
-          </View>
-      </TouchableOpacity>
-  );
-}
-
-_renderItemUnit ({item, index}, parallaxProps) {
-  return (
-      <TouchableOpacity style={styles.item}>
-          <ParallaxImage
-              source={{ uri: item.picture_url }}
-              containerStyle={styles.imageContainer}
-              style={styles.image}
-              parallaxFactor={0.1}
-              {...parallaxProps}
-          />
-          <View style={styles.newsTitle}>
-            <Text style={styles.newsTitleText_small}>
-                { item.descs }
-            </Text>
-          </View>
-      </TouchableOpacity>
-  );
-}
-
-getTower = () => {
-  const item = this.props.items;
-  console.log('item tower', item);
-  {
-    isMount
-      ? fetch(
-          urlApi +
-            "c_product_info/getTower/" +
-            item.db_profile +
-            "/" +
-            item.entity_cd +
-            "/" +
-            item.project_no,
-          {
-            method: "GET",
-            headers: this.state.hd
-          }
-        )
-          .then(response => response.json())
-          .then(res => {
-            if (!res.Error) {
-              const resData = res.Data;
-              this.setState({ tower: resData });
-            } else {
-              this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                alert(res.Pesan);
-              });
-            }
-            console.log("getTower", res);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      : null;
-  }
-};
-
-getDataAminities = () => {
-  const item = this.props.items;
-  console.log('item tower', item);
-  {
-    isMount
-      ? fetch(
-          urlApi +
-            "c_reservation/getDataDetailsAmenities/" +
-            item.db_profile +
-            "/" +
-            item.entity_cd +
-            "/" +
-            item.project_no,
-          {
-            method: "GET",
-            headers: this.state.hd
-          }
-        )
-          .then(response => response.json())
-          .then(res => {
-            if (!res.Error) {
-              const resData = res.Data;
-              this.setState({ amen: resData });
-            } else {
-              this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                alert(res.Pesan);
-              });
-            }
-            console.log("amenitis", res);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      : null;
-  }
-};
-
-getUnit = () => {
-  const item = this.props.items;
-  console.log('item tower', item);
-  {
-    isMount
-      ? fetch(
-          urlApi +
-            "c_product_info/getUnitProp/" +
-            item.db_profile +
-            "/" +
-            item.entity_cd +
-            "/" +
-            item.project_no,
-          {
-            method: "GET",
-            headers: this.state.hd
-          }
-        )
-          .then(response => response.json())
-          .then(res => {
-            if (!res.Error) {
-              const resData = res.Data;
-              this.setState({ unit: resData });
-            } else {
-              this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                alert(res.Pesan);
-              });
-            }
-            console.log("unit", res);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      : null;
-  }
-};
-
-sendEmail(){
-  // alert('email');
-  const email_add = this.state.project[0].email_add
-  // const descs_ = this.state.descs_wa
-  // noHp = '';
-  // const email_add = this.state.projects[0].email_add
-  // const descs = this.props.items.project_descs
-  
-  // alert(email_add);
-
-  console.log('email send add', email_add)
-  Mailer.mail(
-    {
-      // subject: "Saya tertarik reservasi " + descs_,
-      subject: "",
-      recipients: [`${email_add}`],
-      ccRecipients: [""],
-      bccRecipients: [""],
-      body: "",
-      isHTML: true
-    },
-    (error, event) => {
-      Alert.alert(
-        error,
-        event,
-        [
-          {
-            text: "Ok",
-            onPress: () => console.log("OK: Email Error Response")
-          },
-          {
-            text: "Cancel",
-            onPress: () => console.log("CANCEL: Email Error Response")
-          }
-        ],
-        { cancelable: true }
-      );
+  // goTo(item){
+  //   alert('t')
+  // };
+  goTo(item) {
+    console.log("item", item);
+    // alert('t')
+    // const itemyangdibawa = item;
+    // console.log('itemyangdibawa', itemyangdibawa)
+    // const datapentingtower = this.props.items;
+    // console.log('datapentingtower', datapentingtower);
+    const data = this.props.items;
+    data["tower"] = item.property_cd;
+    data["towerDescs"] = item.descs;
+    data["picture_url"] = item.picture_url;
+    console.log("data", data);
+    if (this.props.dyn) {
+      _navigate("UnitEnquiryProjectPage", { prevItems: data });
+    } else {
+      // _navigate("chooseZone", { items: this.props.items });
+      _navigate("ChooseZoneModif", {
+        items: this.props.items,
+        prevItems: data
+      });
     }
-  );
-};
-
-
-// renderItemNews(item){
-//   return (
-//     <View
-//       style={Styles.itemBoxAmen_not_gold}
-//       underlayColor="transparent"
-//       // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-//       >
-//       <View>
-//         <View>
-//           <Image
-//             source={{ uri: item.amenities_url }}
-//             style={Styles.itemAmen_not_gold}
-//           />
-//         </View>
-//         {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-//         {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-        
-//       </View>
-//     </View>
-    
-    
-//   )
-// }
-
-
-nupBooking = () =>{
-  // alert('tes')
-  const data = this.props.items;
-  console.log('lempar data',data);
-
-  if(data){
-
-    Actions.NupBooking({items: data})
-    // alert('ada data');
-    // console.log('da')
   }
-  // else{
-  //   alert('gada');
+  // tes(){
+  //   alert('s')
   // }
-}
 
-alertNUP = () => {
-  Alert.alert(
-    "Attention",
-    "Please contact your agent for booking",
-    [
-        { text: "Close", onPress: () => console.log("Close"), style: "default"},
+  _renderItemTower({ item, index }, parallaxProps) {
+    // console.log('item towersss', item)
+    return (
+      <TouchableOpacity
+        style={styles.item}
+        // onPress={() => this.goTo()}
+        // onPress={()=>this.goTo()}
+        onPress={() => this.goTo(item)}
+        // onPress={this.goTo()}
+        // onPress={() => this.goTo()}
+        // onPress={()=>Actions.ProductProjectPage({items : item})}
+      >
+        <ParallaxImage
+          // onPress={()=>this.goTo(item)}
+          source={{ uri: item.picture_url }}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0.1}
+          {...parallaxProps}
+        />
+        <View style={styles.newsTitle} onPress={() => this.goTo()}>
+          <Text style={styles.newsTitleText_small}>{item.descs}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  _renderItemUnit({ item, index }, parallaxProps) {
+    return (
+      <TouchableOpacity style={styles.item}>
+        <ParallaxImage
+          source={{ uri: item.picture_url }}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0.1}
+          {...parallaxProps}
+        />
+        <View style={styles.newsTitle}>
+          <Text style={styles.newsTitleText_small}>{item.descs}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  getTower = () => {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getTower/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ tower: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getTower", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
+
+  getDataAminities = () => {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_reservation/getDataDetailsAmenities/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ amen: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("amenitis", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
+
+  getUnit = () => {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getUnitProp/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ unit: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("unit", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
+
+  sendEmail() {
+    // alert('email');
+    const email_add = this.state.project[0].email_add;
+    // const descs_ = this.state.descs_wa
+    // noHp = '';
+    // const email_add = this.state.projects[0].email_add
+    // const descs = this.props.items.project_descs
+
+    // alert(email_add);
+
+    console.log("email send add", email_add);
+    Mailer.mail(
+      {
+        // subject: "Saya tertarik reservasi " + descs_,
+        subject: "",
+        recipients: [`${email_add}`],
+        ccRecipients: [""],
+        bccRecipients: [""],
+        body: "",
+        isHTML: true
+      },
+      (error, event) => {
+        Alert.alert(
+          error,
+          event,
+          [
+            {
+              text: "Ok",
+              onPress: () => console.log("OK: Email Error Response")
+            },
+            {
+              text: "Cancel",
+              onPress: () => console.log("CANCEL: Email Error Response")
+            }
+          ],
+          { cancelable: true }
+        );
+      }
+    );
+  }
+
+  // renderItemNews(item){
+  //   return (
+  //     <View
+  //       style={Styles.itemBoxAmen_not_gold}
+  //       underlayColor="transparent"
+  //       // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+  //       >
+  //       <View>
+  //         <View>
+  //           <Image
+  //             source={{ uri: item.amenities_url }}
+  //             style={Styles.itemAmen_not_gold}
+  //           />
+  //         </View>
+  //         {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+  //         {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+
+  //       </View>
+  //     </View>
+
+  //   )
+  // }
+
+  nupBooking = () => {
+    // alert('tes')
+    const data = this.props.items;
+    console.log("lempar data", data);
+
+    if (data) {
+      Actions.NupBooking({ items: data });
+      // alert('ada data');
+      // console.log('da')
+    }
+    // else{
+    //   alert('gada');
+    // }
+  };
+
+  alertNUP = () => {
+    Alert.alert(
+      "Attention",
+      "Please contact your agent for booking",
+      [
+        { text: "Close", onPress: () => console.log("Close"), style: "default" }
         // { text: "Camera", onPress: () => this.fromCamera() },
         // {
         //     text: "Cancel",
         //     onPress: () => console.log("User Cancel"),
         //     style: {backgroundColor: "#000"}
         // }
-    ],
-    { cancelable: false }
-);
-}
+      ],
+      { cancelable: false }
+    );
+  };
 
-selectAmenDining(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  // const stat = '';
-  if (status == 'D'){
-    this.setState({stat: 'D'});
+  selectAmenDining(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    // const stat = '';
+    if (status == "D") {
+      this.setState({ stat: "D" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
 
-selectAmenMall(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  const stat = '';
-  if (status == 'M'){
-    this.setState({stat: 'M'});
+  selectAmenMall(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    const stat = "";
+    if (status == "M") {
+      this.setState({ stat: "M" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
 
-selectAmenGym(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  const stat = '';
-  if (status == 'G'){
-    this.setState({stat: 'G'});
+  selectAmenGym(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    const stat = "";
+    if (status == "G") {
+      this.setState({ stat: "G" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
 
-selectAmenLrt(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  const stat = '';
-  if (status == 'L'){
-    this.setState({stat: 'L'});
+  selectAmenLrt(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    const stat = "";
+    if (status == "L") {
+      this.setState({ stat: "L" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
 
-selectAmenPool(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  const stat = '';
-  if (status == 'P'){
-    this.setState({stat: 'P'});
+  selectAmenPool(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    const stat = "";
+    if (status == "P") {
+      this.setState({ stat: "P" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
 
-selectAmenPlay(status){
-  // console.log('status',status)
-  const items=this.props.items;
-  console.log('items',items);
-  const stat = '';
-  if (status == 'Y'){
-    this.setState({stat: 'Y'});
+  selectAmenPlay(status) {
+    // console.log('status',status)
+    const items = this.props.items;
+    console.log("items", items);
+    const stat = "";
+    if (status == "Y") {
+      this.setState({ stat: "Y" });
 
-    Actions.DetailAmenities({stat: this.state.stat,items:items});
-    console.log('stat',);
+      Actions.DetailAmenities({ stat: this.state.stat, items: items });
+      console.log("stat");
+    }
   }
-}
-  
-  
 
-
-
- 
   render() {
-    
     // let feature = ''
     // if(this.state.feature){
     //   feature = this.state.feature[0].feature_info.replace(/<div class="col-md-6">|<\/div>|<\/b>|<b>|<ul class="list-unstyled">|<\/ul>/gi, '')
@@ -743,10 +778,18 @@ selectAmenPlay(status){
 
     return (
       <Container style={Style.bgMain}>
-         <ImageBackground style={Styles.backgroundImage} source={require("../Images/background-blue.png")}>
-         <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" translucent={true}/> 
-           
-        {/* <Header style={Style.navigation}>
+        <ImageBackground
+          style={Styles.backgroundImage}
+          source={require("../Images/background-blue.png")}
+        >
+          <StatusBar
+            backgroundColor={Colors.statusBarNavy}
+            animated
+            barStyle="light-content"
+            translucent={true}
+          />
+
+          {/* <Header style={Style.navigation}>
           
           <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" />          
          
@@ -771,82 +814,101 @@ selectAmenPlay(status){
           </View>
             
         </Header> */}
-       
-        <ScrollView>
-          <View style={{top:25}}>
-            <ImageBackground 
+
+          <ScrollView>
+            <View style={{ top: 25 }}>
+              <ImageBackground
                 // source={this.state.picture_url}
-              source={this.state.pict_hardcode}
-              imageStyle={"cover"}
-              // source={require("@Asset/images/project_suite_urban.png")} 
-              // style={[Style.coverImg,{flex:1}]}
-              style={Styles.coverImg}
+                source={this.state.pict_hardcode}
+                imageStyle={"cover"}
+                // source={require("@Asset/images/project_suite_urban.png")}
+                // style={[Style.coverImg,{flex:1}]}
+                style={Styles.coverImg}
               >
-                <View style={{paddingLeft: 15,paddingTop: 15}}>
-                <Button
+                <View style={{ paddingLeft: 15, paddingTop: 15 }}>
+                  <Button
                     transparent
                     style={Style.actionBarBtn}
                     onPress={Actions.pop}
-                >
-                    <Icon
-                        active
-                        name="arrow-left"
-                        style={[Style.textWhite,{fontSize: 28}]}
-                        type="MaterialCommunityIcons"
-                    />
-                </Button>
-                </View>
-                
-                <View>
-                  <Text 
-                  style={{fontWeight:'900', color: '#FFFFFF',fontSize: 14,textAlign: 'center',}}
-                  // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                   >
-                      
-                      {this.state.title.toUpperCase()}
-                      
+                    <Icon
+                      active
+                      name="arrow-left"
+                      style={[Style.textWhite, { fontSize: 28 }]}
+                      type="MaterialCommunityIcons"
+                    />
+                  </Button>
+                </View>
+
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: "900",
+                      color: "#FFFFFF",
+                      fontSize: 14,
+                      textAlign: "center"
+                    }}
+                    // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                  >
+                    {this.state.title.toUpperCase()}
                   </Text>
                   {/* <Text style={Style.actionBarText}>
                   
                       {this.state.towerDescs}
                       
                   </Text> */}
-
                 </View>
               </ImageBackground>
-          </View>
+            </View>
 
-          {this.state.group !== "AGENT" ?
-          <View style={{paddingTop: 50}} >
-            <Button style={Style.signInBtnMedium}
-            // onPress={()=>this.alertNUP()}
-            onPress={()=>this.nupBooking()}
-            >
-              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
-                Booking Priority Pass
-              </Text>
-            </Button>
-          </View> 
-          : 
-          <View style={{paddingTop: 50}} >
-            <Button style={Style.signInBtnMedium}
-            onPress={()=>this.nupBooking()}
-            >
-              <Text style={{width: '100%', fontSize: 16, alignItems:'center',textAlign:'center', fontFamily: Fonts.type.proximaNovaBold, letterSpacing:1}}>
-                Booking Priority Pass
-              </Text>
-            </Button>
-          </View> 
-          }
-          
+            {this.state.group !== "AGENT" ? (
+              <View style={{ paddingTop: 50 }}>
+                <Button
+                  style={Style.signInBtnMedium}
+                  // onPress={() => this.alertNUP()}
+                  onPress={() => this.nupBooking()}
+                >
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontSize: 16,
+                      alignItems: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      letterSpacing: 1
+                    }}
+                  >
+                    Booking Priority Pass
+                  </Text>
+                </Button>
+              </View>
+            ) : (
+              <View style={{ paddingTop: 50 }}>
+                <Button
+                  style={Style.signInBtnMedium}
+                  onPress={() => this.nupBooking()}
+                >
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontSize: 16,
+                      alignItems: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      letterSpacing: 1
+                    }}
+                  >
+                    Booking Priority Pass
+                  </Text>
+                </Button>
+              </View>
+            )}
 
- 
-
-            <View style={{paddingTop: 30}}>
-            {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
-                {/* <Text style={{color: Colors.white}}>Overview</Text> */}
-                {/* <Text style={[Styles.titleGold,{fontSize: 18}]}>Overview</Text> */}
-                {/* <Text style={{color: Colors.white, 
+            <View style={{ paddingTop: 30 }}>
+              {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
+              {/* <Text style={{color: Colors.white}}>Overview</Text> */}
+              {/* <Text style={[Styles.titleGold,{fontSize: 18}]}>Overview</Text> */}
+              {/* <Text style={{color: Colors.white, 
                   textAlign:'center', 
                   fontSize: 18, 
                   paddingVertical: 10, 
@@ -877,20 +939,31 @@ selectAmenPlay(status){
                 meeting point bagi penduduk di
                 sekitarnya.
                 </Text> */}
-                {this.state.overview ? 
-                <Text style={{color: Colors.white, 
-                  textAlign:'center',
-                  // alignContent:'center', 
-                  fontSize: 18, 
-                  paddingVertical: 10,
-               
-                  paddingHorizontal: 25, 
-                  fontFamily: Fonts.type.proximaNovaReg,
-                  letterSpacing: 2,
-                  lineHeight: 25}}>{this.state.overview[0].overview_info.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
-                  :<ActivityIndicator /> }
+              {this.state.overview ? (
+                <Text
+                  style={{
+                    color: Colors.white,
+                    textAlign: "center",
+                    // alignContent:'center',
+                    fontSize: 18,
+                    paddingVertical: 10,
 
-                {/* {this.state.overview ? 
+                    paddingHorizontal: 25,
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    letterSpacing: 2,
+                    lineHeight: 25
+                  }}
+                >
+                  {this.state.overview[0].overview_info.replace(
+                    /<\/?[^>]+(>|$)/g,
+                    ""
+                  )}
+                </Text>
+              ) : (
+                <ActivityIndicator />
+              )}
+
+              {/* {this.state.overview ? 
                 
                 // tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }
                 // <Text style={{color: Colors.white}}>
@@ -918,46 +991,46 @@ selectAmenPlay(status){
               // />
                 // </Text>
                  :<ActivityIndicator /> } */}
-                
             </View>
 
-            <View style={{paddingBottom: 20}} >
-                  <View style={{paddingVertical: 10}} >
-                    <Text style={[Styles.titleGold,{fontSize: 18}]}>TOWERS</Text>
-                  </View>
-                  {/* <View style={styles.corContainerStyle}> */}
-                  <Carousel
-                    autoplay={false}
-                    autoplayDelay={1000}
-                    autoplayInterval={3000}
-                    // sliderWidth={width}
-                    // sliderHeight={width}
-                    sliderWidth={sliderWidth}
-                    itemWidth={itemWidth}
-                    // itemWidth={width - 60}
-                    data={this.state.tower}
-                    renderItem={this._renderItemTower}
-                    hasParallaxImages={true}
-                    containerCustomStyle={styles.slider}
-                    
-                    // contentContainerCustomStyle={styles.sliderContentContainer}
-                    // resizeMode={ImageResizeMode.contain}
-                  />
+            <View style={{ paddingBottom: 20 }}>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>TOWERS</Text>
+              </View>
+              {/* <View style={styles.corContainerStyle}> */}
+              <Carousel
+                autoplay={false}
+                autoplayDelay={1000}
+                autoplayInterval={3000}
+                // sliderWidth={width}
+                // sliderHeight={width}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                // itemWidth={width - 60}
+                data={this.state.tower}
+                renderItem={this._renderItemTower}
+                hasParallaxImages={true}
+                containerCustomStyle={styles.slider}
 
-                  {/* </View> */}
-                  
+                // contentContainerCustomStyle={styles.sliderContentContainer}
+                // resizeMode={ImageResizeMode.contain}
+              />
 
-                  <View style={{paddingVertical: 10}}>
-                    <TouchableOpacity onPress={() => {
-                _navigate('ProductProjectPage',{items:this.props.items})
-              }}>
-                <Text style={Styles.titleWhiteSmall}>See all tower</Text>
+              {/* </View> */}
 
-                    </TouchableOpacity>
-                    
-                  </View>
+              <View style={{ paddingVertical: 10 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    _navigate("ProductProjectPage", {
+                      items: this.props.items
+                    });
+                  }}
+                >
+                  <Text style={Styles.titleWhiteSmall}>See all tower</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            
+
             {/* <View style={styles.sectionTransparent}>
                   <View style={{paddingVertical: 10}}>
                     <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
@@ -973,140 +1046,148 @@ selectAmenPlay(status){
             </View> */}
 
             <View style={styles.sectionTransparent}>
-                  <View style={{paddingVertical: 10}}>
-                    <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
-                  </View>
-                    
-                <Grid>
-                  <Row>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenDining('D')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/dining.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
-                        </View>
-                    </Col>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenGym('G')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/gym.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
-                        </View>
-                    </Col>
-                  </Row>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                  AMENITIES
+                </Text>
+              </View>
 
-                  <Row>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenLrt('L')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/LRT.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
+              <Grid>
+                <Row>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenDining("D")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/dining.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
                         </View>
-                    </Col>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenMall('M')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/mall.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenGym("G")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/gym.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
                         </View>
-                    </Col>
-                  </Row>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                </Row>
 
-                  <Row>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenPool('P')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/pool.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
+                <Row>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenLrt("L")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/LRT.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
                         </View>
-                    </Col>
-                    <Col style={{textAlign: 'center', alignItems:'center' }} onPress={() => this.selectAmenPlay('Y')}>
-                        <View
-                          style={Styles.itemBoxAmen_not_gold}
-                          underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                          >
-                          <View>
-                            <View>
-                              <Image
-                                source={require('@Asset/images/amenitis/playground.png')}
-                                style={Styles.itemAmen_not_gold}
-                              />
-                            </View>
-                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                            
-                          </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenMall("M")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/mall.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
                         </View>
-                    </Col>
-                  </Row>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                </Row>
 
-                  
-
-
-                  
-                </Grid>
-               
+                <Row>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenPool("P")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/pool.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenPlay("Y")}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/playground.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                </Row>
+              </Grid>
             </View>
 
             {/* <View style={styles.sectionTransparent}>
@@ -1123,117 +1204,140 @@ selectAmenPlay(status){
                   />
             </View> */}
 
-            <View style={{paddingBottom: 20}}>
-                  <View style={{paddingVertical: 10}}>
-                    <Text style={[Styles.titleGold,{fontSize: 18}]}>UNIT</Text>
-                  </View>
-                  {/* <View style={styles.corContainerStyle}> */}
-                  <Carousel
-                    autoplay={false}
-                    autoplayDelay={1000}
-                    autoplayInterval={3000}
-                    // sliderWidth={width}
-                    // sliderHeight={width}
-                    sliderWidth={sliderWidth}
-                    itemWidth={itemWidth}
-                    // itemWidth={width - 60}
-                    data={this.state.unit}
-                    renderItem={this._renderItemUnit}
-                    hasParallaxImages={true}
-                    containerCustomStyle={styles.slider}
-                    // contentContainerCustomStyle={styles.sliderContentContainer}
-                    // resizeMode={ImageResizeMode.contain}
-                  />
+            <View style={{ paddingBottom: 20 }}>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>UNIT</Text>
+              </View>
+              {/* <View style={styles.corContainerStyle}> */}
+              <Carousel
+                autoplay={false}
+                autoplayDelay={1000}
+                autoplayInterval={3000}
+                // sliderWidth={width}
+                // sliderHeight={width}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                // itemWidth={width - 60}
+                data={this.state.unit}
+                renderItem={this._renderItemUnit}
+                hasParallaxImages={true}
+                containerCustomStyle={styles.slider}
+                // contentContainerCustomStyle={styles.sliderContentContainer}
+                // resizeMode={ImageResizeMode.contain}
+              />
 
-                  {/* </View> */}
-                  
+              {/* </View> */}
 
-                  {/* <View style={{paddingVertical: 10}}>
+              {/* <View style={{paddingVertical: 10}}>
                     <Text style={Styles.titleWhiteSmall}>See all unit</Text>
                   </View> */}
             </View>
-            
+
             <View style={Styles.overview}>
-              <View style={{paddingVertical: 10}}>
-                <Text style={[Styles.titleGold,{fontSize: 18}]}>GALLERY</Text>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                  GALLERY
+                </Text>
               </View>
-              {this.state.gallery ?
-              <FlatList
-              data={this.state.gallery}
-              horizontal
-              style={[Styles.slider,{paddingTop: 10}]}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={item =>item.line_no}
-              renderItem={({ item,index }) => (
-                <TouchableOpacity
-                  underlayColor="transparent"
-                  onPress={() => {
-                    this.setState({isView:true,index:index})
-                  }}
-                >
-                  <View>
-                    <Image
-                      source={{ uri: item.gallery_url }}
-                      style={Styles.sliderImg}
-                    />
-                    {/* <Text>{item.gallery_title}</Text> */}
-                  </View>
-                </TouchableOpacity>
-              )}
-            />  
-              :<ActivityIndicator/>}
-            </View>
-            <Modal visible={this.state.isView} transparent={true}
-                  onRequestClose={() => {
-                    this.setState({ isView: !this.state.isView })
-                  }}>
-                  <Header style={Style.navigationModal}>
-                    <StatusBar
-                      backgroundColor={Colors.statusBarNavy}
-                      animated
-                      barStyle="light-content"
-                    />
-                    <View style={Style.actionBarRight}>
-                      <Button
-                        transparent
-                        style={Style.actionBtnRight}
-                        onPress={() => {
-                          this.setState({ isView: !this.state.isView })
-                        }}            
-                        >
-                        <Icon
-                          active
-                          name="close"
-                          style={Style.actionIcon}
-                          type="FontAwesome"
+              {this.state.gallery ? (
+                <FlatList
+                  data={this.state.gallery}
+                  horizontal
+                  style={[Styles.slider, { paddingTop: 10 }]}
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={item => item.line_no}
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                      underlayColor="transparent"
+                      onPress={() => {
+                        this.setState({ isView: true, index: index });
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={{ uri: item.gallery_url }}
+                          style={Styles.sliderImg}
                         />
-                      </Button>
-                    </View>
-                  </Header>
-                  {this.state.imagesPreview ? <ImageViewer enableImageZoom={true} enableSwipeDown={true} onSwipeDown={()=>this.setState({ isView: !this.state.isView })} index={this.state.index} imageUrls={this.state.imagesPreview}/> : null}
-                </Modal>
-
-          <View>
-            <View style={{paddingVertical: 10}}>
-              <Text style={[Styles.titleGold,{fontSize: 18,paddingBottom: 10}]}>LOCATION</Text>
+                        {/* <Text>{item.gallery_title}</Text> */}
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              ) : (
+                <ActivityIndicator />
+              )}
             </View>
-              {this.state.project ? 
-              //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-            
-              //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-              //  <HTML html={this.state.project[0].coordinat_project} />
-              // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
-              // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
-              // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
-              // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>  
+            <Modal
+              visible={this.state.isView}
+              transparent={true}
+              onRequestClose={() => {
+                this.setState({ isView: !this.state.isView });
+              }}
+            >
+              <Header style={Style.navigationModal}>
+                <StatusBar
+                  backgroundColor={Colors.statusBarNavy}
+                  animated
+                  barStyle="light-content"
+                />
+                <View style={Style.actionBarRight}>
+                  <Button
+                    transparent
+                    style={Style.actionBtnRight}
+                    onPress={() => {
+                      this.setState({ isView: !this.state.isView });
+                    }}
+                  >
+                    <Icon
+                      active
+                      name="close"
+                      style={Style.actionIcon}
+                      type="FontAwesome"
+                    />
+                  </Button>
+                </View>
+              </Header>
+              {this.state.imagesPreview ? (
+                <ImageViewer
+                  enableImageZoom={true}
+                  enableSwipeDown={true}
+                  onSwipeDown={() =>
+                    this.setState({ isView: !this.state.isView })
+                  }
+                  index={this.state.index}
+                  imageUrls={this.state.imagesPreview}
+                />
+              ) : null}
+            </Modal>
 
-              <WebView
-                scalesPageToFit={false}
-                bounces={false}
-                javaScriptEnabled
-                style={{ height: 240, width: null, marginHorizontal: 20}}
-                source={{
-                  html: `
+            <View>
+              <View style={{ paddingVertical: 10 }}>
+                <Text
+                  style={[
+                    Styles.titleGold,
+                    { fontSize: 18, paddingBottom: 10 }
+                  ]}
+                >
+                  LOCATION
+                </Text>
+              </View>
+              {this.state.project ? (
+                //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+
+                //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+                //  <HTML html={this.state.project[0].coordinat_project} />
+                // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
+                // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
+                // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
+                // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>
+
+                <WebView
+                  scalesPageToFit={false}
+                  bounces={false}
+                  javaScriptEnabled
+                  style={{ height: 240, width: null, marginHorizontal: 20 }}
+                  source={{
+                    html: `
                         <!DOCTYPE html>
                         <html>
                           <head></head>
@@ -1241,184 +1345,415 @@ selectAmenPlay(status){
                             <div id="baseDiv"><iframe width="350" height="300" frameborder="0" style="border:0, margin: 0"  src='${this.state.project[0].coordinat_project}'></iframe></div>
                           </body>
                         </html>
-                  `,
-                }}
-                automaticallyAdjustContentInsets={false}
-              
-              />
-              :<ActivityIndicator />  }
-          </View>
-          <View>
-            {this.state.project ? 
-            <View style={Styles.overview}>
-            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].project_descs}</Text>
-            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].coordinat_name}</Text>
-            <Text style={{color: 'white', fontSize: 14, fontFamily: Fonts.type.proximaNovaReg}}>{this.state.project[0].coordinat_address}</Text>
-            </View>
-
-            :<ActivityIndicator /> }
-          </View>
-
-          <View>
-              <View style={{paddingVertical: 10}}>
-                <Text style={[Styles.titleGold,{fontSize: 18}]}>CONTACT</Text>
-              </View>
-              {this.state.project ? 
-            <Grid>
-              <Row>
-                <Col style={{height: 90,textAlign: 'center', alignItems:'center' }} onPress={() =>  Linking.openURL('tel:'+this.state.project[0].office_no)}>
-                <Icon
-                  raised
-                  name='phone'
-                  type='FontAwesome'
-                  style={{color: '#fff'}}
-                  />
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Call</Text>
-                </Col>
-
-                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() =>  Linking.openURL(this.state.project[0].web_url)}>
-              
-                <Icon
-                    reverse
-                    name='ios-globe'
-                    type='Ionicons'
-                    style={{color: '#fff'}}
-                  />
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Website</Text>
-                </Col>
-                
-                <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }} onPress={() => this.sendEmail()}>
-                
-                <Icon
-                  raised
-                  name='envelope'
-                  type='FontAwesome'
-                  style={{color: '#fff'}}
-                  />
-                    <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Email</Text>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].facebook_url)}>
-                
-                <Icon
-                  raised
-                  name='facebook-square'
-                  type='FontAwesome'
-                  style={{color: '#fff'}}
-                  />
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Facebook</Text>
-                </Col>
-                
-                <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].instagram_url)}>
-              
-                <Icon
-                  raised
-                  name='instagram'
-                  type='FontAwesome'
-                  style={{color: '#fff'}}
-                  />
-                  {/* <Text>{this.state.project[0].instagram_url}</Text> */}
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Instagram</Text>
-                </Col>
-      
-                <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL(this.state.project[0].youtube_url)}>
-                
-                  <Icon
-                  raised
-                  name='youtube'
-                  type='FontAwesome'
-                  style={{color: '#fff'}}
-                  />
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Youtube</Text>
-                </Col>
-              </Row>
-              
-            </Grid>
-
-              : 
-            <Grid>
-              <Row>
-              <Col style={{height: 90,textAlign: 'center', alignItems:'center' }}>
-              <Icon
-                raised
-                name='phone'
-                type='FontAwesome'
-                style={{color: '#fff'}}
-                 />
-                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Call</Text>
-              </Col>
-
-              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }}>
-             
-               <Icon
-                  reverse
-                  name='ios-globe'
-                  type='Ionicons'
-                  style={{color: '#fff'}}
+                  `
+                  }}
+                  automaticallyAdjustContentInsets={false}
                 />
-                <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Website</Text>
-              </Col>
-              
-              <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }}>
-              
-              <Icon
-                raised
-                name='envelope'
-                type='FontAwesome'
-                style={{color: '#fff'}}
-                 />
-                  <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Email</Text>
-              </Col>
-              </Row>
+              ) : (
+                <ActivityIndicator />
+              )}
+            </View>
+            <View>
+              {this.state.project ? (
+                <View style={Styles.overview}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 14,
+                      fontFamily: Fonts.type.proximaNovaReg
+                    }}
+                  >
+                    {this.state.project[0].project_descs}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 14,
+                      fontFamily: Fonts.type.proximaNovaReg
+                    }}
+                  >
+                    {this.state.project[0].coordinat_name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 14,
+                      fontFamily: Fonts.type.proximaNovaReg
+                    }}
+                  >
+                    {this.state.project[0].coordinat_address}
+                  </Text>
+                </View>
+              ) : (
+                <ActivityIndicator />
+              )}
+            </View>
+            <View style={{ paddingBottom: 20, paddingTop: 20 }}>
+              <Button
+                style={Style.signInBtnMedium}
+                // onPress={() => this.downloadBrosur()}
+                onPress={() =>
+                  Actions.ProjectDownloadPage({ items: this.props.items })
+                }
+              >
+                <Text
+                  style={{
+                    width: "100%",
+                    fontSize: 14,
+                    alignItems: "center",
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    letterSpacing: 1
+                  }}
+                >
+                  Download File/Brochure
+                </Text>
+              </Button>
+            </View>
+            <View>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                  CONTACT
+                </Text>
+              </View>
+              {this.state.project ? (
+                <Grid>
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() =>
+                        Linking.openURL(
+                          "tel:" + this.state.project[0].office_no
+                        )
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="phone"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Call
+                      </Text>
+                    </Col>
 
-              <Row>
-              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }}>
-              
-              <Icon
-                raised
-                name='facebook-square'
-                type='FontAwesome'
-                style={{color: '#fff'}}
-                 />
-                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Facebook</Text>
-              </Col>
-              <Col style={{height: 90, textAlign: 'center', alignItems:'center' }} onPress={() => Linking.openURL('http://google.com')}>
-            
-              <Icon
-                raised
-                name='instagram'
-                type='FontAwesome'
-                style={{color: '#fff'}}
-                 />
-                 {/* <Text>{this.state.project[0].instagram_url}</Text> */}
-                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Instagram</Text>
-              </Col>
-              
-              <Col style={{height: 90,  textAlign: 'center', alignItems:'center' }}>
-              
-                <Icon
-                raised
-                name='youtube'
-                type='FontAwesome'
-                style={{color: '#fff'}}
-                 />
-                 <Text style={{fontFamily: Fonts.type.proximaNovaReg, color: Colors.white, fontSize: 14, paddingTop: 5}}>Youtube</Text>
-              </Col>
-              
-              
-              </Row>
-              
-            </Grid> }
-              
-          </View>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].web_url)
+                      }
+                    >
+                      <Icon
+                        reverse
+                        name="ios-globe"
+                        type="Ionicons"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Website
+                      </Text>
+                    </Col>
 
-        </ScrollView>
-        
-       
-        {/* <BottomBarDua /> */}
-        {/* <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() => this.sendEmail()}
+                    >
+                      <Icon
+                        raised
+                        name="envelope"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Email
+                      </Text>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].facebook_url)
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="facebook-square"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Facebook
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].instagram_url)
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="instagram"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Instagram
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].youtube_url)
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="youtube"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Youtube
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              ) : (
+                <Grid>
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Icon
+                        raised
+                        name="phone"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Call
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Icon
+                        reverse
+                        name="ios-globe"
+                        type="Ionicons"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Website
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Icon
+                        raised
+                        name="envelope"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Email
+                      </Text>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Icon
+                        raised
+                        name="facebook-square"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Facebook
+                      </Text>
+                    </Col>
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                      onPress={() => Linking.openURL("http://google.com")}
+                    >
+                      <Icon
+                        raised
+                        name="instagram"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Instagram
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        textAlign: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Icon
+                        raised
+                        name="youtube"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5
+                        }}
+                      >
+                        Youtube
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              )}
+            </View>
+          </ScrollView>
+
+          {/* <BottomBarDua /> */}
+          {/* <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{
           this.state.isLogin ? this.showModal()
           : this.showAlert()
           
@@ -1427,7 +1762,6 @@ selectAmenPlay(status){
         </Button> */}
         </ImageBackground>
         {/* <FooterTabsIconText /> */}
-        
       </Container>
     );
   }
