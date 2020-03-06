@@ -783,7 +783,8 @@ export default class extends React.Component {
           source={require("../Images/background-blue.png")}
         >
           <StatusBar
-            backgroundColor={Colors.statusBarNavy}
+            // backgroundColor={Colors.statusBarNavy}
+            backgroundColor="transparent"
             animated
             barStyle="light-content"
             translucent={true}
@@ -865,8 +866,8 @@ export default class extends React.Component {
               <View style={{ paddingTop: 50 }}>
                 <Button
                   style={Style.signInBtnMedium}
-                  // onPress={() => this.alertNUP()}
-                  onPress={() => this.nupBooking()}
+                  onPress={() => this.alertNUP()}
+                  // onPress={() => this.nupBooking()}
                 >
                   <Text
                     style={{
