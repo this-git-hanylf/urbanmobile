@@ -138,7 +138,7 @@ export default class extends React.Component {
       stat: "",
       stylehtml:
         "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
-      pict_hardcode: require("@Asset/images/project_suite_urban.png")
+      pict_hardcode: require("@Asset/images/project_suite_urban.jpg")
     };
 
     console.log("props", props);
@@ -693,8 +693,9 @@ export default class extends React.Component {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    // const stat = '';
+
     if (status == "D") {
+      const stat = "";
       this.setState({ stat: "D" });
 
       Actions.DetailAmenities({ stat: this.state.stat, items: items });

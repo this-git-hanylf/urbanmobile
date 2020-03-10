@@ -16,7 +16,7 @@ import {
   Linking,
   Alert,
   YellowBox
-// WebView
+  // WebView
 } from "react-native";
 import {
   Container,
@@ -41,116 +41,111 @@ import {
   Tabs,
   Fab,
   Form,
-  Label,
+  Label
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
-import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel";
-import {urlApi} from '@Config/services';
+import Carousel, {
+  Pagination,
+  ParallaxImage
+} from "react-native-snap-carousel";
+import { urlApi } from "@Config/services";
 import GALLERY from "./Gallery";
 import AMENITIES from "./Amenities";
 import SIMILAR from "./Similar";
-import {_storeData,_getData,_navigate} from '@Component/StoreAsync';
+import { _storeData, _getData, _navigate } from "@Component/StoreAsync";
 
 import { Style, Colors, Fonts } from "../Themes/index";
 import Styles from "./Style";
 
-import ImageViewer from 'react-native-image-zoom-viewer';
-import HTML from 'react-native-render-html';
+import ImageViewer from "react-native-image-zoom-viewer";
+import HTML from "react-native-render-html";
 import Mailer from "react-native-mail";
-import { WebView } from 'react-native-webview';
+import { WebView } from "react-native-webview";
 import styles, { colors } from "./componen/index";
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import NavigationService from "@Service/Navigation";
-import FooterTabsIconText from '@Component/BottomBar';
+import FooterTabsIconText from "@Component/BottomBar";
 // import Routes from './../Router';
 // import BottomBarDua from '@Component/BottomBarDua';
 // import { sliderWidth, itemWidth } from "./componen/SliderEntry";
 // import SliderEntry from "../components/SlideEntry";
 // const { height, width } = Dimensions.get('window')
 
-
-
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get("window");
 
-let isMount = false
-
+let isMount = false;
 
 const API_KEY = "AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8";
 // const API_KEY = "AIzaSyBFhdZb-_5FCA5IhbLhB9-KimWC_QlOKLs";
 
-const IS_IOS = Platform.OS === 'ios';
+const IS_IOS = Platform.OS === "ios";
 
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-function wp (percentage) {
-    const value = (percentage * viewportWidth) / 100;
-    return Math.round(value);
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
 }
 
 const slideHeight = viewportHeight * 0.45;
-const slideWidth = wp(62); 
+const slideWidth = wp(62);
 const itemHorizontalMargin = wp(4);
-                 
+
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
-
-
 class DetailAmenities extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-          amenitis_title:'',
-          amenitis_info:'',
-          amenitis_url:''
-       
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      amenitis_title: "",
+      amenitis_info: "",
+      amenitis_url: ""
+      // gallery_1: require("@Asset/images/amenitis/dining/gallery1.jpg")
+      // require("@Asset/images/project_suite_urban.jpg")
+    };
 
-      console.log('props',props);
-    
-      // this.renderItemNews = this.renderItemNews.bind(this);
+    console.log("props", props);
 
-    }
-      
-async componentDidMount() {
-  console.disableYellowBox = true;
+    // this.renderItemNews = this.renderItemNews.bind(this);
+  }
+
+  async componentDidMount() {
+    console.disableYellowBox = true;
     Actions.refresh({ backTitle: () => this.props.title });
 
     const data = {
-      hd : new Headers({
-        'Token' : await _getData('@Token')
-      }),
-   
-    }
-    console.log('dataIm',data);
+      group: await _getData("@Group"),
+      hd: new Headers({
+        Token: await _getData("@Token")
+      })
+    };
+    console.log("dataIm", data);
 
-    isMount=true
+    isMount = true;
 
-    this.setState(data,()=>{
-      
-      this.getDataAminities()
-     
+    this.setState(data, () => {
+      this.getDataAminities();
+
       // this.goTo()
-      
-    })
+    });
+  }
 
-}
+  componentWillUnmount() {
+    // this.setState({isMount:false})
+    isMount = false;
+  }
 
-componentWillUnmount(){
-  // this.setState({isMount:false})
-  isMount =false
-}
-
-getDataAminities = () => {
+  getDataAminities = () => {
     const stat = this.props.stat;
-    console.log('stat',stat);
+    console.log("stat", stat);
     const item = this.props.items;
-    console.log('item tower', item);
+    console.log("item tower", item);
     {
       isMount
         ? fetch(
@@ -162,7 +157,7 @@ getDataAminities = () => {
               "/" +
               item.project_no +
               "/" +
-                stat,
+              stat,
             {
               method: "GET",
               headers: this.state.hd
@@ -188,11 +183,7 @@ getDataAminities = () => {
     }
   };
 
-
-
- 
   render() {
-    
     // let feature = ''
     // if(this.state.feature){
     //   feature = this.state.feature[0].feature_info.replace(/<div class="col-md-6">|<\/div>|<\/b>|<b>|<ul class="list-unstyled">|<\/ul>/gi, '')
@@ -203,10 +194,18 @@ getDataAminities = () => {
 
     return (
       <Container style={Style.bgMain}>
-         <ImageBackground style={Styles.backgroundImage} source={require("../Images/background-blue.png")}>
-         <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" translucent={true}/> 
-           
-        {/* <Header style={Style.navigation}>
+        <ImageBackground
+          style={Styles.backgroundImage}
+          source={require("../Images/background-blue.png")}
+        >
+          <StatusBar
+            backgroundColor={Colors.statusBarNavy}
+            animated
+            barStyle="light-content"
+            translucent={true}
+          />
+
+          {/* <Header style={Style.navigation}>
           
           <StatusBar backgroundColor={Colors.statusBarNavy} animated barStyle="light-content" />          
          
@@ -232,50 +231,16 @@ getDataAminities = () => {
             
         </Header> */}
 
-
-
-       <View style={{top:25, paddingBottom: 60}}>
-            <View style={{paddingLeft: 15,paddingTop: 15}}>
-                <Button
-                transparent
-                style={Style.actionBarBtn}
-                onPress={Actions.pop}
-            >
-                <Icon
-                    active
-                    name="arrow-left"
-                    // style={[Style.textWhite,{fontSize: 28}]}
-                    style={{color: Colors.white}}
-                    type="MaterialCommunityIcons"
-                />
-            </Button>
-            </View>
-            
+          <ScrollView>
+            {/* <View>
+              <Image source={this.state.gallery_1}></Image>
+            </View> */}
             <View>
-                {this.state.amen ? 
-                <Text style={{fontWeight:'900', color: '#FFFFFF',fontSize: 14,textAlign: 'center',}}>{this.state.amen[0].amenities_title}</Text>
-                : 
-                null}
-                
+              <Text>t</Text>
             </View>
-
-            
-                
-    
-        </View>
-        <ScrollView>
-            {/* {this.state.amen ? 
-             <View>
-             <Image source={{uri: this.state.amen[0].amenities_url}}></Image>
-         </View>
-         :
-        null } */}
-       
-
-         </ScrollView>
+          </ScrollView>
         </ImageBackground>
         {/* <FooterTabsIconText /> */}
-        
       </Container>
     );
   }
