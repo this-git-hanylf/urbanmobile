@@ -34,131 +34,135 @@ import {
   Tabs,
   Fab,
   Form,
-  Label,
+  Label
 } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel";
+import Carousel, {
+  Pagination,
+  ParallaxImage
+} from "react-native-snap-carousel";
 import { sliderWidth, itemWidth } from "./styles/SliderEntry";
 import SliderEntry from "../components/SlideEntry";
 import styles, { colors } from "./styles/index";
-import { Fonts } from '../Themes/';
+import { Fonts } from "../Themes/";
 import { ENTRIES1, ENTRIES2 } from "./static/entries";
 import { scrollInterpolators, animatedStyles } from "./utils/animations";
 import CardSlide from "../components/CardSlide";
-const { height, width } = Dimensions.get('window')
-import {urlApi} from '@Config/services';
-import {_storeData,_getData} from '@Component/StoreAsync';
+const { height, width } = Dimensions.get("window");
+import { urlApi } from "@Config/services";
+import { _storeData, _getData } from "@Component/StoreAsync";
 import { Actions } from "react-native-router-flux";
 import Styles from "./Style";
 const IS_ANDROID = Platform.OS === "android";
 const SLIDER_1_FIRST_ITEM = 0;
 import SIMILAR from "../Property/Similar";
-import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode'
+import ImageResizeMode from "react-native/Libraries/Image/ImageResizeMode";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
-      name : '',
-      email  : '',
-      dataTower : [],
-      dataPromo : [],
-      dataNews : [],
-      tes: '',
+      name: "",
+      email: "",
+      dataTower: [],
+      dataPromo: [],
+      dataNews: [],
+      tes: "",
 
-      isCorLoaded : false,
+      isCorLoaded: false
     };
   }
 
   componentWillMount() {
-    this.startHeaderHeight = 80
-    if (Platform.OS == 'android') {
-        this.startHeaderHeight = 100 + StatusBar.currentHeight
+    this.startHeaderHeight = 80;
+    if (Platform.OS == "android") {
+      this.startHeaderHeight = 100 + StatusBar.currentHeight;
     }
   }
 
-  async componentDidMount(){
-    console.log('Data Project',await _getData('@UserProject'));
+  async componentDidMount() {
+    console.log("Data Project", await _getData("@UserProject"));
     const data = {
-      email :  await _getData('@User'),
-      name : await _getData('@Name'),
-      dataTower : await _getData('@UserProject'),
-      isCorLoaded : true
-    }
+      email: await _getData("@User"),
+      name: await _getData("@Name"),
+      dataTower: await _getData("@UserProject"),
+      isCorLoaded: true
+    };
 
-    this.setState(data,()=>{
-      this.getPromo()
-      this.getNews()
-    })
+    this.setState(data, () => {
+      this.getPromo();
+      this.getNews();
+    });
   }
 
   getPromo = () => {
-    fetch(urlApi+'c_newsandpromo/getDatapromo2/IFCAMOBILE' ,{
-        method : "GET",
+    fetch(urlApi + "c_newsandpromo/getDatapromo2/IFCAMOBILE", {
+      method: "GET"
     })
-    .then((response) => response.json())
-    .then((res)=>{
-        if(!res.Error){
-          const resData = res.Data
+      .then(response => response.json())
+      .then(res => {
+        if (!res.Error) {
+          const resData = res.Data;
 
-          this.setState({dataPromo:resData})
-          console.log('dataPRopmo',resData);
+          this.setState({ dataPromo: resData });
+          console.log("dataPRopmo", resData);
         }
-    }).catch((error) => {
+      })
+      .catch(error => {
         console.log(error);
-    });
-  }
+      });
+  };
 
   getNews = () => {
-    fetch(urlApi+'c_newsandpromo/getDatanews2/IFCAMOBILE' ,{
-        method : "GET",
+    fetch(urlApi + "c_newsandpromo/getDatanews2/IFCAMOBILE", {
+      method: "GET"
     })
-    .then((response) => response.json())
-    .then((res)=>{
-        if(!res.Error){
-          const resData = res.Data
+      .then(response => response.json())
+      .then(res => {
+        if (!res.Error) {
+          const resData = res.Data;
 
-          this.setState({dataNews:resData})
-          console.log('dataNews',resData);
+          this.setState({ dataNews: resData });
+          console.log("dataNews", resData);
         }
-    }).catch((error) => {
+      })
+      .catch(error => {
         console.log(error);
-    });
-  }
-  
+      });
+  };
 
   // _renderItem({ item, index }) {
   //   return <SliderEntry data={item} even={(index + 1) % 2 === 0} />;
   // }
 
-  _renderItemPromo ({item, index}, parallaxProps) {
+  _renderItemPromo({ item, index }, parallaxProps) {
     return (
-        <TouchableOpacity style={styles.item} onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
-            <ParallaxImage
-                source={{ uri: item.picture }}
-                containerStyle={styles.imageContainer}
-                style={styles.image}
-                parallaxFactor={0.4}
-                {...parallaxProps}
-            />
-            <View style={styles.newsTitle}>
-              <Text style={styles.newsTitleText} numberOfLines={2}>
-                  { item.subject }
-
-              </Text>
-              <Text style={styles.newsTitleText_small}>
-                  { item.descs }
-              </Text>
-            </View>
-            {/* <View style={styles.newsTitle_small}>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => Actions.NewsAndPromoDetail({ items: item })}
+      >
+        <ParallaxImage
+          source={{ uri: item.picture }}
+          containerStyle={styles.imageContainer}
+          style={styles.image}
+          parallaxFactor={0.4}
+          {...parallaxProps}
+        />
+        <View style={styles.newsTitle}>
+          <Text style={styles.newsTitleText} numberOfLines={2}>
+            {item.subject}
+          </Text>
+          <Text style={styles.newsTitleText_small}>{item.descs}</Text>
+        </View>
+        {/* <View style={styles.newsTitle_small}>
               <Text style={styles.newsTitleText_small} numberOfLines={2}>
                   { item.descs }
               </Text>
             </View> */}
-        </TouchableOpacity>
+      </TouchableOpacity>
     );
-}
+  }
 
   _renderItemWithParallax({ item, index }, parallaxProps) {
     return (
@@ -167,7 +171,7 @@ export default class Home extends Component {
         even={(index + 1) % 2 === 0}
         parallax={true}
         parallaxProps={parallaxProps}
-        onPress={()=>Actions.propertydetail({items:item})}
+        onPress={() => Actions.propertydetail({ items: item })}
       />
     );
   }
@@ -183,7 +187,7 @@ export default class Home extends Component {
   handleNavigation = () => {
     // alert('Coming soon');
     // console.log('itrem',item);
-    Actions.ChooseLocation()
+    Actions.ChooseLocation();
     // this.goToScreen("screen.CategoryHelp");
     // this.setState({ isDisabled: true }, () => {
     //     if (this.state.appType == "") {
@@ -192,7 +196,7 @@ export default class Home extends Component {
     //         this.goToScreen("screen.SubmitHelpDesk");
     //     }
     // });
-};
+  };
 
   mainExample(number, title) {
     const { slider1ActiveSlide } = this.state;
@@ -204,31 +208,60 @@ export default class Home extends Component {
         {/* <Text style={styles.title}>Urban Jakarta Propertindo</Text>
         <Text style={styles.subtitle}>{`This is what you need!`}</Text> */}
 
-        <View style={{flexDirection:'column'}}>
-          <ImageBackground  style={styles.backgroundImage2} source={require("../Images/bg-gedung.png")}></ImageBackground>
-          <View style={{marginLeft: 20, marginRight: 20}}>
+        <View style={{ flexDirection: "column" }}>
+          <ImageBackground
+            style={styles.backgroundImage2}
+            source={require("../Images/tes3copy.png")}
+          ></ImageBackground>
+          <View style={{ marginLeft: 20, marginRight: 20 }}>
             {/* <Item style={styles.marginround}  > */}
-            <Item style={styles.marginround} onPress={()=>this.handleNavigation()} >
-              <Input 
+            <Item
+              style={styles.marginround}
+              onPress={() => this.handleNavigation()}
+            >
+              <Input
                 editable={false}
-                placeholder='Find a residance'
-                value={this.state.tes} 
-                style={
-                  {fontFamily: this.state.tes ?  Fonts.type.proximaNovaThin :  Fonts.type.proximaNovaThin, fontWeight: this.state.tes ?  '100' :  '400',
-                  marginLeft: 20, fontSize: 16}}
-                >
-              </Input>
-              <Icon style={{color: colors.greyUrban, bottom: 4, position: "absolute", right: 10, fontSize: 26}} name='search' />
+                placeholder="Find a residance"
+                value={this.state.tes}
+                style={{
+                  fontFamily: this.state.tes
+                    ? Fonts.type.proximaNovaThin
+                    : Fonts.type.proximaNovaThin,
+                  fontWeight: this.state.tes ? "100" : "400",
+                  marginLeft: 20,
+                  fontSize: 16
+                }}
+              ></Input>
+              <Icon
+                style={{
+                  color: colors.greyUrban,
+                  bottom: 4,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 26
+                }}
+                name="search"
+              />
             </Item>
           </View>
         </View>
 
-        <View style={{paddingVertical: 30}}>
-          <Text style={{color: colors.gold, fontFamily: Fonts.type.proximaNovaBoldWeb,letterSpacing: 1.5, alignItems: 'center', textAlign: 'center', paddingTop: 10, fontSize: 15}}>DISCOVER</Text>
-          
+        <View style={{ paddingVertical: 30 }}>
+          <Text
+            style={{
+              color: colors.gold,
+              fontFamily: Fonts.type.proximaNovaBoldWeb,
+              letterSpacing: 1.5,
+              alignItems: "center",
+              textAlign: "center",
+              paddingTop: 10,
+              fontSize: 15
+            }}
+          >
+            DISCOVER
+          </Text>
         </View>
-       
-        
+
         {/* <View
           style={{
             justifyContent: "flex-end",
@@ -247,40 +280,41 @@ export default class Home extends Component {
           </Button>
         </View> */}
 
-          {/* <Button
+        {/* <Button
             small
             rounded
             style={Styles.sBtnHead}
             onPress={()=>Actions.ListingProjectPage()}>
             <Text style={Styles.sLinkHead}>ALL PROJECT</Text>
           </Button> */}
-        
+
         <View style={styles.corContainerStyle}>
-          {this.state.dataTower.length == 0 ? <ActivityIndicator size="large" color="#fff" /> :
+          {this.state.dataTower.length == 0 ? (
+            <ActivityIndicator size="large" color="#fff" />
+          ) : (
             <Carousel
-            ref={c => (this._slider1Ref = c)}
-            data={this.state.dataTower}
-            renderItem={this._renderItemWithParallax}
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            hasParallaxImages={true}
-            firstItem={SLIDER_1_FIRST_ITEM}
-            inactiveSlideScale={0.94}
-            inactiveSlideOpacity={0.7}
-            inactiveSlideShift={20}
-            containerCustomStyle={styles.slider}
-            contentContainerCustomStyle={styles.sliderContentContainer}
-            loop={false}
-            loopClonesPerSide={2}
-            enableMomentum={false}
-            lockScrollWhileSnapping={true}
-            autoplay={false}
-            autoplayDelay={1000}
-            autoplayInterval={3000}
-          />
-          }
+              ref={c => (this._slider1Ref = c)}
+              data={this.state.dataTower}
+              renderItem={this._renderItemWithParallax}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              hasParallaxImages={true}
+              firstItem={SLIDER_1_FIRST_ITEM}
+              inactiveSlideScale={0.94}
+              inactiveSlideOpacity={0.7}
+              inactiveSlideShift={20}
+              containerCustomStyle={styles.slider}
+              contentContainerCustomStyle={styles.sliderContentContainer}
+              loop={false}
+              loopClonesPerSide={2}
+              enableMomentum={false}
+              lockScrollWhileSnapping={true}
+              autoplay={false}
+              autoplayDelay={1000}
+              autoplayInterval={3000}
+            />
+          )}
         </View>
-        
       </View>
     );
   }
@@ -296,48 +330,40 @@ export default class Home extends Component {
     );
   }
 
-  renderItemNews(item){
+  renderItemNews(item) {
     return (
       <TouchableOpacity
         style={Styles.item}
         underlayColor="transparent"
-        onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
+        onPress={() => Actions.NewsAndPromoDetail({ items: item })}
+      >
         <View>
           <View>
-            <Image
-              source={{ uri: item.picture }}
-              style={Styles.itemImg}
-            />
+            <Image source={{ uri: item.picture }} style={Styles.itemImg} />
           </View>
           <Text style={Styles.itemPrice}>{item.descs}</Text>
           <Text style={Styles.itemLocation}>{item.subject}</Text>
-          
         </View>
       </TouchableOpacity>
-      
-      
-    )
+    );
   }
 
-  renderItemPromo(item){
+  renderItemPromo(item) {
     return (
       <TouchableOpacity
         style={Styles.item}
         underlayColor="transparent"
-        onPress={()=>Actions.NewsAndPromoDetail({items : item})}>
+        onPress={() => Actions.NewsAndPromoDetail({ items: item })}
+      >
         <View>
           <View>
-            <Image
-              source={{ uri: item.picture }}
-              style={Styles.itemImg}
-            />
+            <Image source={{ uri: item.picture }} style={Styles.itemImg} />
           </View>
           <Text style={Styles.itemPrice}>{item.descs}</Text>
           <Text style={Styles.itemLocation}>{item.subject}</Text>
-          
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   render() {
@@ -351,22 +377,28 @@ export default class Home extends Component {
     // const example8 = this.customExample(8, 'Custom animation 4', 4, this._renderLightItem);
 
     return (
-      <ImageBackground  style={styles.backgroundImage} source={require("../Images/background-blue.png")}>
-      <View style={styles.container}>
-        <StatusBar
-          translucent={true}
-          backgroundColor={"rgba(0, 0, 0, 0.3)"}
-          barStyle={"light-content"}
-        />
-        {/* {this.gradient} */}
-        
+      <ImageBackground
+        style={styles.backgroundImage}
+        source={require("../Images/background-blue.png")}
+      >
+        <View style={styles.container}>
+          <StatusBar
+            translucent={true}
+            backgroundColor={"rgba(0, 0, 0, 0.3)"}
+            barStyle={"light-content"}
+          />
+          {/* {this.gradient} */}
+
           <ScrollView
             style={styles.scrollview}
             scrollEventThrottle={200}
-            directionalLockEnabled={true}>
-          
+            directionalLockEnabled={true}
+          >
             {example1}
-            <ScrollView scrollEventThrottle={16} source={require("../Images/background-blue.png")}>
+            <ScrollView
+              scrollEventThrottle={16}
+              source={require("../Images/background-blue.png")}
+            >
               <View style={{ flex: 1 }}>
                 {/* <View style={Styles.sectionTransparent}>
                   <View style={Styles.headerBg}>
@@ -422,13 +454,10 @@ export default class Home extends Component {
                     renderItem={({ item }) => this.renderItemNews(item)}
                   />
                 </View> */}
-              
               </View>
-            </ScrollView>          
+            </ScrollView>
           </ScrollView>
-       
-        
-      </View>
+        </View>
       </ImageBackground>
     );
   }

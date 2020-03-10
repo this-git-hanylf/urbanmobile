@@ -31,7 +31,12 @@ import PageTerm from "./Akun/PageTerm";
 import PDFViewer from "./components/PDFViewer/index";
 
 import PropertyDetail from "./Property/PropertyDetail";
-import DetailAmenities from "./Property/DetailAmenities";
+import DetailAmenitiesDining from "./Property/DetailAmenitiesDining";
+import DetailAmenitiesMall from "./Property/DetailAmenitiesMall";
+import DetailAmenitiesGym from "./Property/DetailAmenitiesGym";
+import DetailAmenitiesLRT from "./Property/DetailAmenitiesLRT";
+import DetailAmenitiesPool from "./Property/DetailAmenitiesPool";
+import DetailAmenitiesPlay from "./Property/DetailAmenitiesPlay";
 
 import Categoris from "./Categoris/Categoris";
 import Unitgoris from "./Categoris/Unitgoris";
@@ -148,6 +153,8 @@ import Subordinate from "./Subordinate/Subordinate";
 import SubOfficeAgents from "./Subordinate/SubOfficeAgents";
 import SubAgents from "./Subordinate/SubAgents";
 
+// import ComingSoon from "./"
+
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -227,8 +234,10 @@ class Routes extends Component {
                 // tintColor="#ad1819"
               />
               <Scene
+                // key="SkipLoginBlank"
+                component={SkipLoginBlank2}
                 key="ListingProjectPage"
-                component={Search}
+                // component={Search}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
@@ -237,18 +246,22 @@ class Routes extends Component {
                 icon={TabIcon}
               />
               <Scene
+                // key="SkipLoginBlank"
+                component={SkipLoginBlank2}
                 key="Menu"
-                component={Menu}
+                // component={Menu}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
-                tabBarLabel="Menu"
-                iconName="bars"
+                tabBarLabel="News"
+                iconName="newspaper-o"
                 icon={TabIcon}
               />
               <Scene
                 key="notif"
-                component={Notif}
+                component={SkipLoginBlank2}
+                // key="notif"
+                // component={Notif}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
@@ -672,8 +685,51 @@ class Routes extends Component {
             />
 
             <Scene
-              key="DetailAmenities"
-              component={DetailAmenities}
+              key="DetailAmenitiesDining"
+              component={DetailAmenitiesDining}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
+            <Scene
+              key="DetailAmenitiesMall"
+              component={DetailAmenitiesMall}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="DetailAmenitiesGym"
+              component={DetailAmenitiesGym}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="DetailAmenitiesLRT"
+              component={DetailAmenitiesLRT}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
+            <Scene
+              key="DetailAmenitiesPool"
+              component={DetailAmenitiesPool}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
+            <Scene
+              key="DetailAmenitiesPlay"
+              component={DetailAmenitiesPlay}
               title=""
               hideNavBar
               translucent={true}

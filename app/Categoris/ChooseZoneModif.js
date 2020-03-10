@@ -46,13 +46,30 @@ import Styles from "./Style";
 import { _storeData, _getData, _navigate } from "@Component/StoreAsync";
 import { urlApi } from "@Config/services";
 import ImageViewer from "react-native-image-zoom-viewer";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import Carousel, {
+  Pagination,
+  ParallaxImage
+} from "react-native-snap-carousel";
 
 //const {width, height} = Dimensions.get('window')
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
 //     "window"
 // );
-const { height, width } = Dimensions.get("window");
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
+  "window"
+);
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+const slideWidth = wp(62);
+const itemHorizontalMargin = wp(4);
+
 let isMount = false;
+
+export const sliderWidth = viewportWidth;
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 // create a component
 class ChooseZoneModif extends React.Component {
@@ -64,13 +81,14 @@ class ChooseZoneModif extends React.Component {
 
       tower: [],
       amen: [],
-      pict_hardcode: require("@Asset/images/project_suite_urban.jpg"),
+      pict_hardcode: require("@Asset/images/bg_headertowerurbain.png"),
       towerDescs: "",
       title: "",
       isView: false,
       gallery: "",
       imagesPreview: [],
-      picture_url: ""
+      picture_url: "",
+      unit: []
     };
     isMount = true;
     console.log("props", this.props);
@@ -95,6 +113,7 @@ class ChooseZoneModif extends React.Component {
       // this.getTower();
       this.getDataAminities(this.props.items);
       this.getDataGallery(this.props.items);
+      this.getUnit();
     });
   }
 
@@ -243,6 +262,23 @@ class ChooseZoneModif extends React.Component {
     }
   };
 
+  _renderItemUnit({ item, index }, parallaxProps) {
+    return (
+      <TouchableOpacity style={Styles.item_unit}>
+        <ParallaxImage
+          source={{ uri: item.picture_url }}
+          containerStyle={Styles.imageContainer}
+          style={Styles.image}
+          parallaxFactor={0.1}
+          {...parallaxProps}
+        />
+        <View style={Styles.newsTitle}>
+          <Text style={Styles.newsTitleText_small}>{item.descs}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   renderItemNews(item) {
     return (
       <View
@@ -266,6 +302,43 @@ class ChooseZoneModif extends React.Component {
       </View>
     );
   }
+
+  getUnit = () => {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getUnitProp/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd
+            }
+          )
+            .then(response => response.json())
+            .then(res => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ unit: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("unit", res);
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
 
   render() {
     return (
@@ -319,12 +392,15 @@ class ChooseZoneModif extends React.Component {
           <ScrollView>
             <View style={{ top: 25 }}>
               <ImageBackground
-                // source={this.state.picture_url}
-                source={{
-                  uri: this.state.picture_url
-                }}
+                source={this.state.pict_hardcode}
+                // source={{
+                //   uri: this.state.picture_url
+                // }}
                 // source={require("@Asset/images/project_suite_urban.png")}
-                style={[Style.coverImg, { flex: 1 }]}
+                style={{
+                  flex: 1,
+                  height: 730
+                }}
               >
                 <View style={{ paddingLeft: 15, paddingTop: 15 }}>
                   <Button
@@ -357,24 +433,25 @@ class ChooseZoneModif extends React.Component {
                     {this.state.towerDescs}
                   </Text>
                 </View>
+                <View style={{ paddingTop: "130%" }}>
+                  <Button style={Style.signInBtnMedium}>
+                    <Text
+                      style={{
+                        width: "100%",
+                        fontSize: 16,
+                        alignItems: "center",
+                        textAlign: "center",
+                        fontFamily: Fonts.type.proximaNovaBold,
+                        letterSpacing: 1
+                      }}
+                    >
+                      Booking Priority Pass
+                    </Text>
+                  </Button>
+                </View>
               </ImageBackground>
             </View>
-            <View style={{ paddingTop: 50 }}>
-              <Button style={Style.signInBtnMedium}>
-                <Text
-                  style={{
-                    width: "100%",
-                    fontSize: 16,
-                    alignItems: "center",
-                    textAlign: "center",
-                    fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1
-                  }}
-                >
-                  Booking Priority Pass
-                </Text>
-              </Button>
-            </View>
+
             <View style={{ paddingTop: 20 }}>
               <Text
                 style={{
@@ -402,14 +479,134 @@ class ChooseZoneModif extends React.Component {
                   AMENITIES
                 </Text>
               </View>
+              <Grid>
+                <Row>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenMall()}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/mall.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenDining()}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/dining.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                </Row>
 
-              <FlatList
+                <Row>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenGym()}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/gym.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                  <Col
+                    style={{ textAlign: "center", alignItems: "center" }}
+                    onPress={() => this.selectAmenPool()}
+                  >
+                    <View
+                      style={Styles.itemBoxAmen_not_gold}
+                      underlayColor="transparent"
+                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    >
+                      <View>
+                        <View>
+                          <Image
+                            source={require("@Asset/images/amenitis/pool.png")}
+                            style={Styles.itemAmen_not_gold}
+                          />
+                        </View>
+                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                      </View>
+                    </View>
+                  </Col>
+                </Row>
+              </Grid>
+
+              {/* <FlatList
                 data={this.state.amen}
                 contentContainerStyle={Style.flatList}
                 keyExtractor={item => item.rowID}
                 numColumns={2}
                 renderItem={({ item }) => this.renderItemNews(item)}
+              /> */}
+            </View>
+
+            <View style={{ paddingBottom: 20 }}>
+              <View style={{ paddingVertical: 10 }}>
+                <Text style={[Styles.titleGold, { fontSize: 18 }]}>UNIT</Text>
+              </View>
+              {/* <View style={styles.corContainerStyle}> */}
+              <Carousel
+                autoplay={false}
+                autoplayDelay={1000}
+                autoplayInterval={3000}
+                // sliderWidth={width}
+                // sliderHeight={width}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                // itemWidth={width - 60}
+                data={this.state.unit}
+                renderItem={this._renderItemUnit}
+                hasParallaxImages={true}
+                containerCustomStyle={Styles.slider_unit}
+                // contentContainerCustomStyle={styles.sliderContentContainer}
+                // resizeMode={ImageResizeMode.contain}
               />
+
+              {/* </View> */}
+
+              {/* <View style={{paddingVertical: 10}}>
+                    <Text style={Styles.titleWhiteSmall}>See all unit</Text>
+                  </View> */}
             </View>
 
             <View style={Styles.overview}>

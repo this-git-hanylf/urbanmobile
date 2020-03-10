@@ -138,7 +138,7 @@ export default class extends React.Component {
       stat: "",
       stylehtml:
         "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
-      pict_hardcode: require("@Asset/images/project_suite_urban.jpg")
+      pict_hardcode: require("@Asset/images/project_suite_urban.png")
     };
 
     console.log("props", props);
@@ -689,83 +689,89 @@ export default class extends React.Component {
     );
   };
 
-  selectAmenDining(status) {
+  selectAmenDining() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
+    Actions.DetailAmenitiesDining({ items: items });
 
-    if (status == "D") {
-      const stat = "";
-      this.setState({ stat: "D" });
+    // if (status == "D") {
+    //   const stat = "";
+    //   this.setState({ stat: "D" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenitiesDining({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
-  selectAmenMall(status) {
+  selectAmenMall() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    const stat = "";
-    if (status == "M") {
-      this.setState({ stat: "M" });
+    // const stat = "";
+    Actions.DetailAmenitiesMall({ items: items });
+    // if (status == "M") {
+    //   this.setState({ stat: "M" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenities({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
-  selectAmenGym(status) {
+  selectAmenGym() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    const stat = "";
-    if (status == "G") {
-      this.setState({ stat: "G" });
+    // const stat = "";
+    Actions.DetailAmenitiesGym({ items: items });
+    // if (status == "G") {
+    //   this.setState({ stat: "G" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenities({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
-  selectAmenLrt(status) {
+  selectAmenLrt() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    const stat = "";
-    if (status == "L") {
-      this.setState({ stat: "L" });
+    // const stat = "";
+    Actions.DetailAmenitiesLRT({ items: items });
+    // if (status == "L") {
+    //   this.setState({ stat: "L" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenities({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
-  selectAmenPool(status) {
+  selectAmenPool() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    const stat = "";
-    if (status == "P") {
-      this.setState({ stat: "P" });
+    // const stat = "";
+    Actions.DetailAmenitiesPool({ items: items });
+    // if (status == "P") {
+    //   this.setState({ stat: "P" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenities({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
-  selectAmenPlay(status) {
+  selectAmenPlay() {
     // console.log('status',status)
     const items = this.props.items;
     console.log("items", items);
-    const stat = "";
-    if (status == "Y") {
-      this.setState({ stat: "Y" });
+    Actions.DetailAmenitiesPlay({ items: items });
+    // const stat = "";
+    // if (status == "Y") {
+    //   this.setState({ stat: "Y" });
 
-      Actions.DetailAmenities({ stat: this.state.stat, items: items });
-      console.log("stat");
-    }
+    //   Actions.DetailAmenities({ stat: this.state.stat, items: items });
+    //   console.log("stat");
+    // }
   }
 
   render() {
@@ -860,51 +866,50 @@ export default class extends React.Component {
                       
                   </Text> */}
                 </View>
+                {this.state.group !== "AGENT" ? (
+                  <View style={{ paddingTop: "130%" }}>
+                    <Button
+                      style={Style.signInBtnMedium}
+                      onPress={() => this.alertNUP()}
+                      // onPress={() => this.nupBooking()}
+                    >
+                      <Text
+                        style={{
+                          width: "100%",
+                          fontSize: 16,
+                          alignItems: "center",
+                          textAlign: "center",
+                          fontFamily: Fonts.type.proximaNovaBold,
+                          letterSpacing: 1
+                        }}
+                      >
+                        Booking Priority Pass
+                      </Text>
+                    </Button>
+                  </View>
+                ) : (
+                  <View style={{ paddingTop: "130%" }}>
+                    <Button
+                      style={Style.signInBtnMedium}
+                      onPress={() => this.nupBooking()}
+                    >
+                      <Text
+                        style={{
+                          width: "100%",
+                          fontSize: 16,
+                          alignItems: "center",
+                          textAlign: "center",
+                          fontFamily: Fonts.type.proximaNovaBold,
+                          letterSpacing: 1
+                        }}
+                      >
+                        Booking Priority Pass
+                      </Text>
+                    </Button>
+                  </View>
+                )}
               </ImageBackground>
             </View>
-
-            {this.state.group !== "AGENT" ? (
-              <View style={{ paddingTop: 50 }}>
-                <Button
-                  style={Style.signInBtnMedium}
-                  onPress={() => this.alertNUP()}
-                  // onPress={() => this.nupBooking()}
-                >
-                  <Text
-                    style={{
-                      width: "100%",
-                      fontSize: 16,
-                      alignItems: "center",
-                      textAlign: "center",
-                      fontFamily: Fonts.type.proximaNovaBold,
-                      letterSpacing: 1
-                    }}
-                  >
-                    Booking Priority Pass
-                  </Text>
-                </Button>
-              </View>
-            ) : (
-              <View style={{ paddingTop: 50 }}>
-                <Button
-                  style={Style.signInBtnMedium}
-                  onPress={() => this.nupBooking()}
-                >
-                  <Text
-                    style={{
-                      width: "100%",
-                      fontSize: 16,
-                      alignItems: "center",
-                      textAlign: "center",
-                      fontFamily: Fonts.type.proximaNovaBold,
-                      letterSpacing: 1
-                    }}
-                  >
-                    Booking Priority Pass
-                  </Text>
-                </Button>
-              </View>
-            )}
 
             <View style={{ paddingTop: 30 }}>
               {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
@@ -1058,7 +1063,7 @@ export default class extends React.Component {
                 <Row>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenDining("D")}
+                    onPress={() => this.selectAmenDining()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
@@ -1079,7 +1084,7 @@ export default class extends React.Component {
                   </Col>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenGym("G")}
+                    onPress={() => this.selectAmenGym()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
@@ -1103,7 +1108,7 @@ export default class extends React.Component {
                 <Row>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenLrt("L")}
+                    onPress={() => this.selectAmenLrt()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
@@ -1124,7 +1129,7 @@ export default class extends React.Component {
                   </Col>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenMall("M")}
+                    onPress={() => this.selectAmenMall()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
@@ -1148,7 +1153,7 @@ export default class extends React.Component {
                 <Row>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenPool("P")}
+                    onPress={() => this.selectAmenPool()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
@@ -1169,7 +1174,7 @@ export default class extends React.Component {
                   </Col>
                   <Col
                     style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenPlay("Y")}
+                    onPress={() => this.selectAmenPlay()}
                   >
                     <View
                       style={Styles.itemBoxAmen_not_gold}
