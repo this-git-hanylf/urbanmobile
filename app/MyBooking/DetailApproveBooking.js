@@ -100,7 +100,7 @@ class DetailApproveBooking extends Component {
       }),
       user: await _getData("@User"),
       name: await _getData("@UserId"),
-      project: await _getData("@UserProject"),
+      // project: await _getData("@UserProject"),
       debtor: await _getData("@Debtor"),
       group: await _getData("@Group"),
       full_name: dataProps.full_name,

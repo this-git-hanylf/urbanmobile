@@ -82,6 +82,7 @@ class PendingBooking extends Component {
   async componentDidMount() {
     isMount = true;
     const dataItems = await _getData("@dataItems");
+    // const dataItems = this.props.items;
     const order_date = this.state.order_date;
     console.log("order_date", order_date);
 
@@ -91,7 +92,7 @@ class PendingBooking extends Component {
       }),
       user: await _getData("@User"),
       name: await _getData("@UserId"),
-      project: await _getData("@UserProject"),
+      // project: await _getData("@UserProject"),
       debtor: await _getData("@Debtor"),
       group: await _getData("@Group"),
       agent_cd: await _getData("@AgentCd"),

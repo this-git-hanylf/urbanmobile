@@ -97,13 +97,13 @@ class MyBooking extends Component {
       hd: new Headers({
         Token: await _getData("@Token")
       }),
-      user: await _getData("@User"),
-      name: await _getData("@UserId"),
-      project: await _getData("@UserProject"),
-      debtor: await _getData("@Debtor"),
-      group: await _getData("@Group"),
-      entity_cd: items.entity_cd,
-      project_no: items.project_no
+      // user: await _getData("@User"),
+      name: await _getData("@UserId")
+      // project: await _getData("@UserProject"),
+      // debtor: await _getData("@Debtor"),
+      // group: await _datapgetData("@Group"),
+      // entity_cd: items.entity_cd,
+      // project_no: items.project_no
     };
     console.log("data", data);
     this.setState(data, () => {
@@ -193,11 +193,11 @@ class MyBooking extends Component {
               {/* {this.state.projectdesc} */}
             </Text>
           </View>
-          <TabBar
+          {/* <TabBar
             navState={this.state.navState}
             navScene={this.state.navScene}
             style={{ paddingTop: 10 }}
-          />
+          /> */}
         </View>
         <TabBar
           navState={this.state.navState}
