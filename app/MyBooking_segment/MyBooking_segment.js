@@ -57,7 +57,7 @@ import numFormat from "@Component/numFormat";
 
 let isMount = false;
 // create a component
-class MyBooking extends Component {
+class MyBooking_segment extends Component {
   constructor(props) {
     super(props);
 
@@ -220,60 +220,6 @@ class MyBooking extends Component {
         console.log(error);
       });
   };
-
-  DetailBooking(data) {
-    const db_profile = this.state.db_profile;
-    console.log("db", db_profile);
-    console.log("data", data);
-    console.log("order_id", data.order_id);
-    const entity_cd = this.state.entity_cd;
-    console.log("en pending", entity_cd);
-    const project_no = this.state.project_no;
-    console.log("pro pending", project_no);
-    Actions.DetailBooking({
-      order_id: data.order_id,
-      data: data,
-      db_profile: db_profile,
-      entity_cd: entity_cd,
-      project_no: project_no
-    });
-  }
-
-  DetailRejectBooking(data) {
-    const db_profile = this.state.db_profile;
-    console.log("db", db_profile);
-    console.log("data", data);
-    console.log("order_id", data.order_id);
-    const entity_cd = this.state.entity_cd;
-    console.log("en", entity_cd);
-    const project_no = this.state.project_no;
-    console.log("en", project_no);
-    Actions.DetailRejectBooking({
-      order_id: data.order_id,
-      data: data,
-      db_profile: db_profile,
-      entity_cd: entity_cd,
-      project_no: project_no
-    });
-  }
-
-  DetailApproveBooking(data) {
-    const db_profile = this.state.db_profile;
-    console.log("db", db_profile);
-    console.log("data", data);
-    console.log("order_id", data.order_id);
-    const entity_cd = this.state.entity_cd;
-    console.log("en", entity_cd);
-    const project_no = this.state.project_no;
-    console.log("en", project_no);
-    Actions.DetailApproveBooking({
-      order_id: data.order_id,
-      data: data,
-      db_profile: db_profile,
-      entity_cd: entity_cd,
-      project_no: project_no
-    });
-  }
 
   selectComponent = activePage => () => this.setState({ activePage });
 
@@ -809,4 +755,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default MyBooking;
+export default MyBooking_segment;

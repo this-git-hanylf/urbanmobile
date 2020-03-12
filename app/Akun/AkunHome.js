@@ -280,6 +280,7 @@ export default class extends React.Component {
   mybooking() {
     // Actions.MyBooking();
     Actions.project({ goTo: "MyBooking" });
+    // Actions.project({ goTo: "MyBooking_segment" });
 
     // if (val.isProject == 1) {
     //   Actions.project({ goTo: val.URL_angular });

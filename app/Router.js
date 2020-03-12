@@ -146,6 +146,9 @@ import DetailBooking from "./MyBooking/DetailBooking";
 import DetailRejectBooking from "./MyBooking/DetailRejectBooking";
 import DetailApproveBooking from "./MyBooking/DetailApproveBooking";
 
+//mybookingsegment
+import MyBooking_segment from "./MyBooking_segment/MyBooking_segment";
+
 import Event from "./Event/Event";
 import EventDetail from "./Event/EventDetail";
 
@@ -791,6 +794,15 @@ class Routes extends Component {
             <Scene
               key="DetailApproveBooking"
               component={DetailApproveBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
+            <Scene
+              key="MyBooking_segment"
+              component={MyBooking_segment}
               title=""
               hideNavBar
               translucent={true}
