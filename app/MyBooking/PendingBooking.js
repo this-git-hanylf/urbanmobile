@@ -62,13 +62,6 @@ class PendingBooking extends Component {
 
     this.state = {
       hd: null,
-
-      units: [],
-      user: "",
-      name: "",
-      project: [],
-      dataRow: [],
-      entity: [],
       entity_cd: "",
       project_no: "",
       db_profile: "",
@@ -80,6 +73,8 @@ class PendingBooking extends Component {
   }
 
   async componentDidMount() {
+    const tesid = this.props.route.tesID;
+    console.log("tes", tesid);
     isMount = true;
     const dataItems = await _getData("@dataItems");
     // const dataItems = this.props.items;
@@ -90,11 +85,11 @@ class PendingBooking extends Component {
       hd: new Headers({
         Token: await _getData("@Token")
       }),
-      user: await _getData("@User"),
-      name: await _getData("@UserId"),
+      // user: await _getData("@User"),
+      // name: await _getData("@UserId"),
       // project: await _getData("@UserProject"),
-      debtor: await _getData("@Debtor"),
-      group: await _getData("@Group"),
+      // debtor: await _getData("@Debtor"),
+      // group: await _getData("@Group"),
       agent_cd: await _getData("@AgentCd"),
       entity_cd: dataItems.entity_cd,
       project_no: dataItems.project_no,
@@ -107,14 +102,6 @@ class PendingBooking extends Component {
       this.getBookingPending();
       //   this.getBilling("", "", data.debtor, "");
     });
-  }
-  componentWillReceiveProps(props) {
-    const attach = props.resDataa; // props dari B
-    // console.log("props getback", resDataa);
-    console.log("attach", attach);
-    // if (resDataa) {
-    //   this.setState({ bank_name: resDataa.value });
-    // }
   }
 
   getBookingPending = () => {
@@ -163,9 +150,9 @@ class PendingBooking extends Component {
     console.log("data", data);
     console.log("order_id", data.order_id);
     const entity_cd = this.state.entity_cd;
-    console.log("en", entity_cd);
+    console.log("en pending", entity_cd);
     const project_no = this.state.project_no;
-    console.log("en", project_no);
+    console.log("pro pending", project_no);
     Actions.DetailBooking({
       order_id: data.order_id,
       data: data,
@@ -320,7 +307,7 @@ class PendingBooking extends Component {
                             fontSize: 13
                           }}
                         >
-                          {moment(data.order_date).format("DD MMM YYYY")} -{" "}
+                          {moment(data.order_date).format("DD MMM YYYY")}
                           {/* {diffDate(data.order_date) > 1 ? (
                             <Text>Time Out</Text>
                           ) : (

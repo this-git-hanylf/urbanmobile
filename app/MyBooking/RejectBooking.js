@@ -84,11 +84,11 @@ class RejectBooking extends Component {
       hd: new Headers({
         Token: await _getData("@Token")
       }),
-      user: await _getData("@User"),
-      name: await _getData("@UserId"),
-      // project: await _getData("@UserProject"),
-      debtor: await _getData("@Debtor"),
-      group: await _getData("@Group"),
+      // user: await _getData("@User"),
+      // name: await _getData("@UserId"),
+      // // project: await _getData("@UserProject"),
+      // debtor: await _getData("@Debtor"),
+      // group: await _getData("@Group"),
       agent_cd: await _getData("@AgentCd"),
       entity_cd: dataItems.entity_cd,
       project_no: dataItems.project_no,

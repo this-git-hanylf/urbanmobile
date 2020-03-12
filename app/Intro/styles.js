@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: Metrics.WIDTH,
-    height: Metrics.HEIGHT
+    height: Metrics.HEIGHT,
+    resizeMode: "contain"
     // backgroundColor: "#f7f0d7"
   },
   header: {

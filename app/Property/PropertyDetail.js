@@ -423,6 +423,7 @@ export default class extends React.Component {
     data["tower"] = item.property_cd;
     data["towerDescs"] = item.descs;
     data["picture_url"] = item.picture_url;
+    data["property_cd"] = item.property_cd;
     console.log("data", data);
     if (this.props.dyn) {
       _navigate("UnitEnquiryProjectPage", { prevItems: data });

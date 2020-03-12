@@ -267,7 +267,7 @@ export default class extends React.Component {
   };
 
   skipLoginBlank() {
-    Actions.SkipLoginBlank();
+    Actions.SkipLoginBlank2();
   }
 
   term() {

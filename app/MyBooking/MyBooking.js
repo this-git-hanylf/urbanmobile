@@ -83,6 +83,7 @@ class MyBooking extends Component {
         pending: PendingBooking,
         reject: RejectBooking
       }
+      // dataPending: []
     };
 
     console.log("props cf", props);
@@ -93,20 +94,28 @@ class MyBooking extends Component {
     const items = this.props.items;
     _storeData("@dataItems", items);
     console.log("itemsnih", items);
+
+    // const dataPending = this.state.dataPending;
+    // console.log("datapen", dataPending);
     const data = {
       hd: new Headers({
         Token: await _getData("@Token")
       }),
       // user: await _getData("@User"),
-      name: await _getData("@UserId")
+      name: await _getData("@Name")
       // project: await _getData("@UserProject"),
       // debtor: await _getData("@Debtor"),
       // group: await _datapgetData("@Group"),
       // entity_cd: items.entity_cd,
       // project_no: items.project_no
+
+      // entity_cd: items.entity_cd,
+      // project_no: items.project_no,
+      // db_profile: items.db_profile
     };
     console.log("data", data);
     this.setState(data, () => {
+      // this.getBookingPending();
       //   this.getBilling("", "", data.debtor, "");
     });
   }

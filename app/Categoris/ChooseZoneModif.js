@@ -88,7 +88,8 @@ class ChooseZoneModif extends React.Component {
       gallery: "",
       imagesPreview: [],
       picture_url: "",
-      unit: []
+      unit: [],
+      property_cd: ""
     };
     isMount = true;
     console.log("props", this.props);
@@ -101,6 +102,7 @@ class ChooseZoneModif extends React.Component {
       towerDescs: this.props.items.towerDescs,
       title: this.props.items.title,
       picture_url: this.props.prevItems.picture_url,
+      property_cd: this.props.prevItems.property_cd,
       // towerDescs : item.towerDescs,
       // console.log('twr descs', towerDescs);
       hd: new Headers({
@@ -304,18 +306,21 @@ class ChooseZoneModif extends React.Component {
   }
 
   getUnit = () => {
+    const property_cd = this.state.property_cd;
     const item = this.props.items;
     console.log("item tower", item);
     {
       isMount
         ? fetch(
             urlApi +
-              "c_product_info/getUnitProp/" +
+              "c_product_info/getUnitPropTower/" +
               item.db_profile +
               "/" +
               item.entity_cd +
               "/" +
-              item.project_no,
+              item.project_no +
+              "/" +
+              property_cd,
             {
               method: "GET",
               headers: this.state.hd
@@ -338,6 +343,64 @@ class ChooseZoneModif extends React.Component {
             })
         : null;
     }
+  };
+
+  selectAmenDining() {
+    const items = this.props.items;
+    console.log("items", items);
+    Actions.DetailAmenitiesDining({ items: items });
+  }
+
+  selectAmenMall() {
+    const items = this.props.items;
+    console.log("items", items);
+
+    Actions.DetailAmenitiesMall({ items: items });
+  }
+
+  selectAmenGym() {
+    const items = this.props.items;
+    console.log("items", items);
+
+    Actions.DetailAmenitiesGym({ items: items });
+  }
+  selectAmenPool() {
+    const items = this.props.items;
+    console.log("items", items);
+
+    Actions.DetailAmenitiesPool({ items: items });
+  }
+
+  nupBooking() {
+    // alert('tes')
+    const data = this.props.items;
+    console.log("lempar data", data);
+
+    if (data) {
+      Actions.NupBooking({ items: data });
+      // alert('ada data');
+      // console.log('da')
+    }
+    // else{
+    //   alert('gada');
+    // }
+  }
+
+  alertNUP = () => {
+    Alert.alert(
+      "Attention",
+      "Please contact your agent for booking",
+      [
+        { text: "Close", onPress: () => console.log("Close"), style: "default" }
+        // { text: "Camera", onPress: () => this.fromCamera() },
+        // {
+        //     text: "Cancel",
+        //     onPress: () => console.log("User Cancel"),
+        //     style: {backgroundColor: "#000"}
+        // }
+      ],
+      { cancelable: false }
+    );
   };
 
   render() {
@@ -433,22 +496,48 @@ class ChooseZoneModif extends React.Component {
                     {this.state.towerDescs}
                   </Text>
                 </View>
-                <View style={{ paddingTop: "130%" }}>
-                  <Button style={Style.signInBtnMedium}>
-                    <Text
-                      style={{
-                        width: "100%",
-                        fontSize: 16,
-                        alignItems: "center",
-                        textAlign: "center",
-                        fontFamily: Fonts.type.proximaNovaBold,
-                        letterSpacing: 1
-                      }}
+                {this.state.group !== "AGENT" ? (
+                  <View style={{ paddingTop: "130%" }}>
+                    <Button
+                      style={Style.signInBtnMedium}
+                      // onPress={() => this.alertNUP()}
+                      onPress={() => this.nupBooking()}
                     >
-                      Booking Priority Pass
-                    </Text>
-                  </Button>
-                </View>
+                      <Text
+                        style={{
+                          width: "100%",
+                          fontSize: 16,
+                          alignItems: "center",
+                          textAlign: "center",
+                          fontFamily: Fonts.type.proximaNovaBold,
+                          letterSpacing: 1
+                        }}
+                      >
+                        Booking Priority Pass
+                      </Text>
+                    </Button>
+                  </View>
+                ) : (
+                  <View style={{ paddingTop: "130%" }}>
+                    <Button
+                      style={Style.signInBtnMedium}
+                      onPress={() => this.nupBooking()}
+                    >
+                      <Text
+                        style={{
+                          width: "100%",
+                          fontSize: 16,
+                          alignItems: "center",
+                          textAlign: "center",
+                          fontFamily: Fonts.type.proximaNovaBold,
+                          letterSpacing: 1
+                        }}
+                      >
+                        Booking Priority Pass
+                      </Text>
+                    </Button>
+                  </View>
+                )}
               </ImageBackground>
             </View>
 

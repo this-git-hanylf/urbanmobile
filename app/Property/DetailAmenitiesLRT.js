@@ -313,7 +313,7 @@ class DetailAmenitiesLRT extends React.Component {
                         textAlign: "center"
                       }}
                     >
-                      Ameninties
+                      Amenities
                     </Text>
                   </View>
                   {this.state.group !== "AGENT" ? (

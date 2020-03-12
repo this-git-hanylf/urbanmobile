@@ -61,7 +61,8 @@ export default {
   backgroundImage_bg: {
     flex: 1,
     width: Metrics.WIDTH,
-    height: Metrics.HEIGHT
+    height: Metrics.HEIGHT,
+    resizeMode: "contain"
     // backgroundColor: "#febe29"
   },
   coverImg: {

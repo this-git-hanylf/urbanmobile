@@ -6,7 +6,8 @@ const Style = {
   backgroundImage: {
     flex: 1,
     width: Metrics.WIDTH,
-    height: Metrics.HEIGHT
+    height: Metrics.HEIGHT,
+    resizeMode: "contain"
     // backgroundColor: "#febe29"
   },
   header: {

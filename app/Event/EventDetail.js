@@ -92,10 +92,11 @@ class ListProspect extends Component {
 
   getData = () => {
     const entity_cd = this.props.entity_cd;
-    console.log("en", entity_cd);
+    console.log("entiy", entity_cd);
     const project_no = this.props.project_no;
-    console.log("en", project_no);
+    console.log("projek", project_no);
     const db_profile = this.props.db_profile;
+    console.log("dbprofil", db_profile);
     const event_cd = this.props.event_cd;
     console.log("eve", event_cd);
     // const event_cd = this.props.event_cd.event_cd;
@@ -263,14 +264,24 @@ class ListProspect extends Component {
                     <View style={Style.actionBarRight} />
                 </Header> */}
         {this.state.detail == 0 ? (
-          <ActivityIndicator />
+          <View
+            style={{
+              alignSelf: "center",
+              justifyContent: "center",
+              alignContent: "center",
+              paddingTop: 200
+              // flexDirection: "column"
+            }}
+          >
+            <ActivityIndicator />
+          </View>
         ) : (
           <View style={{ paddingBottom: 45, paddingTop: 20 }}>
             <View style={{ paddingLeft: 15, paddingTop: 15 }}>
               <Button
                 transparent
                 style={Style.actionBarBtn}
-                onPress={Actions.pop}
+                onPress={Actions.akun}
               >
                 <Icon
                   active
