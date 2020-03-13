@@ -424,6 +424,7 @@ export default class extends React.Component {
     data["towerDescs"] = item.descs;
     data["picture_url"] = item.picture_url;
     data["property_cd"] = item.property_cd;
+    data["hidden_picture_url"] = item.hidden_picture_url;
     console.log("data", data);
     if (this.props.dyn) {
       _navigate("UnitEnquiryProjectPage", { prevItems: data });
@@ -826,90 +827,93 @@ export default class extends React.Component {
 
           <ScrollView>
             <View style={{ top: 25 }}>
-              <ImageBackground
-                // source={this.state.picture_url}
-                source={this.state.pict_hardcode}
-                imageStyle={"cover"}
-                // source={require("@Asset/images/project_suite_urban.png")}
-                // style={[Style.coverImg,{flex:1}]}
-                style={Styles.coverImg}
-              >
-                <View style={{ paddingLeft: 15, paddingTop: 15 }}>
-                  <Button
-                    transparent
-                    style={Style.actionBarBtn}
-                    onPress={Actions.pop}
-                  >
-                    <Icon
-                      active
-                      name="arrow-left"
-                      style={[Style.textWhite, { fontSize: 28 }]}
-                      type="MaterialCommunityIcons"
-                    />
-                  </Button>
-                </View>
+              {this.state.project ? (
+                <ImageBackground
+                  // source={this.state.picture_url}
+                  // source={this.state.pict_hardcode}
+                  source={{ uri: this.state.project[0].hidden_picture_url }}
+                  imageStyle={"cover"}
+                  // source={require("@Asset/images/project_suite_urban.png")}
+                  // style={[Style.coverImg,{flex:1}]}
+                  style={Styles.coverImg}
+                >
+                  <View style={{ paddingLeft: 15, paddingTop: 15 }}>
+                    <Button
+                      transparent
+                      style={Style.actionBarBtn}
+                      onPress={Actions.pop}
+                    >
+                      <Icon
+                        active
+                        name="arrow-left"
+                        style={[Style.textWhite, { fontSize: 28 }]}
+                        type="MaterialCommunityIcons"
+                      />
+                    </Button>
+                  </View>
 
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "900",
-                      color: "#FFFFFF",
-                      fontSize: 14,
-                      textAlign: "center"
-                    }}
-                    // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
-                  >
-                    {this.state.title.toUpperCase()}
-                  </Text>
-                  {/* <Text style={Style.actionBarText}>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: "900",
+                        color: "#FFFFFF",
+                        fontSize: 14,
+                        textAlign: "center"
+                      }}
+                      // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                    >
+                      {this.state.title.toUpperCase()}
+                    </Text>
+                    {/* <Text style={Style.actionBarText}>
                   
                       {this.state.towerDescs}
                       
                   </Text> */}
-                </View>
-                {this.state.group !== "AGENT" ? (
-                  <View style={{ paddingTop: "130%" }}>
-                    <Button
-                      style={Style.signInBtnMedium}
-                      onPress={() => this.alertNUP()}
-                      // onPress={() => this.nupBooking()}
-                    >
-                      <Text
-                        style={{
-                          width: "100%",
-                          fontSize: 16,
-                          alignItems: "center",
-                          textAlign: "center",
-                          fontFamily: Fonts.type.proximaNovaBold,
-                          letterSpacing: 1
-                        }}
-                      >
-                        Booking Priority Pass
-                      </Text>
-                    </Button>
                   </View>
-                ) : (
-                  <View style={{ paddingTop: "130%" }}>
-                    <Button
-                      style={Style.signInBtnMedium}
-                      onPress={() => this.nupBooking()}
-                    >
-                      <Text
-                        style={{
-                          width: "100%",
-                          fontSize: 16,
-                          alignItems: "center",
-                          textAlign: "center",
-                          fontFamily: Fonts.type.proximaNovaBold,
-                          letterSpacing: 1
-                        }}
+                  {this.state.group !== "AGENT" ? (
+                    <View style={{ paddingTop: "130%" }}>
+                      <Button
+                        style={Style.signInBtnMedium}
+                        // onPress={() => this.alertNUP()}
+                        onPress={() => this.nupBooking()}
                       >
-                        Booking Priority Pass
-                      </Text>
-                    </Button>
-                  </View>
-                )}
-              </ImageBackground>
+                        <Text
+                          style={{
+                            width: "100%",
+                            fontSize: 16,
+                            alignItems: "center",
+                            textAlign: "center",
+                            fontFamily: Fonts.type.proximaNovaBold,
+                            letterSpacing: 1
+                          }}
+                        >
+                          Booking Priority Pass
+                        </Text>
+                      </Button>
+                    </View>
+                  ) : (
+                    <View style={{ paddingTop: "130%" }}>
+                      <Button
+                        style={Style.signInBtnMedium}
+                        onPress={() => this.nupBooking()}
+                      >
+                        <Text
+                          style={{
+                            width: "100%",
+                            fontSize: 16,
+                            alignItems: "center",
+                            textAlign: "center",
+                            fontFamily: Fonts.type.proximaNovaBold,
+                            letterSpacing: 1
+                          }}
+                        >
+                          Booking Priority Pass
+                        </Text>
+                      </Button>
+                    </View>
+                  )}
+                </ImageBackground>
+              ) : null}
             </View>
 
             <View style={{ paddingTop: 30 }}>

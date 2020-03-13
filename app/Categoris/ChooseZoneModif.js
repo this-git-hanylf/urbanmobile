@@ -89,7 +89,8 @@ class ChooseZoneModif extends React.Component {
       imagesPreview: [],
       picture_url: "",
       unit: [],
-      property_cd: ""
+      property_cd: "",
+      hidden_pict: ""
     };
     isMount = true;
     console.log("props", this.props);
@@ -103,6 +104,8 @@ class ChooseZoneModif extends React.Component {
       title: this.props.items.title,
       picture_url: this.props.prevItems.picture_url,
       property_cd: this.props.prevItems.property_cd,
+      hidden_pict: this.props.prevItems.hidden_picture_url,
+
       // towerDescs : item.towerDescs,
       // console.log('twr descs', towerDescs);
       hd: new Headers({
@@ -455,10 +458,10 @@ class ChooseZoneModif extends React.Component {
           <ScrollView>
             <View style={{ top: 25 }}>
               <ImageBackground
-                source={this.state.pict_hardcode}
-                // source={{
-                //   uri: this.state.picture_url
-                // }}
+                // source={this.state.pict_hardcode}
+                source={{
+                  uri: this.state.hidden_pict
+                }}
                 // source={require("@Asset/images/project_suite_urban.png")}
                 style={{
                   flex: 1,

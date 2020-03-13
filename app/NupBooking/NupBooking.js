@@ -811,6 +811,7 @@ class NupBooking extends React.Component {
                         value=""
                         style={{ textAlign: "right" }}
                       />
+
                       {this.state.tower.map(
                         (data, key) => (
                           <Picker.Item
