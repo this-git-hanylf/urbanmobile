@@ -80,7 +80,8 @@ class FormBooking extends React.Component {
       account_no: "",
       account_name: "",
       dataFromNik: [],
-      cor: ""
+      cor: "",
+      projectdesc: ""
       //data data dari nik
       //   full_name: ""
     };
@@ -608,7 +609,18 @@ class FormBooking extends React.Component {
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
               BOOKING PRIORITY PASS
-              {/* {this.state.projectdesc} */}
+            </Text>
+            <Text
+              style={{
+                // fontWeight: "900",
+                color: Colors.goldUrban,
+                fontSize: 13,
+                textAlign: "center",
+                fontFamily: Fonts.type.proximaNovaBold,
+                letterSpacing: 1
+              }}
+            >
+              {this.state.projectdesc}
             </Text>
           </View>
         </View>
@@ -694,21 +706,27 @@ class FormBooking extends React.Component {
             <Item floatingLabel style={Styles.marginround}>
               <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
                 Full Name
+                {/* <Text>Full Name</Text>
+                <Text>(customer)</Text> */}
               </Label>
+              {/* <Label>customer</Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                         <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                     </View> */}
               <Input
-                // placeholder='Full Name'
+                // placeholder="Full Name"
                 // editable={true}
                 autoCapitalize="words"
                 placeholderTextColor={Colors.greyUrban}
+                // placeholderStyle={{ paddingLeft: 20 }}
                 value={this.state.fullname}
                 onChangeText={val => this.setState({ fullname: val })}
                 style={Styles.positionTextInput}
                 ref="fullname"
+                // textAlign={"right"}
               />
+
               {this.state.errorfullname ? (
                 <Icon
                   style={{
@@ -720,8 +738,24 @@ class FormBooking extends React.Component {
                   name="close-circle"
                 />
               ) : null}
+
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.fullname ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
+
+            {/* <Text>(customer)</Text> */}
             {this.state.errorfullname ? (
               <Text
                 style={{
@@ -771,6 +805,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.mobilephone ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.errormobilephone ? (
               <Text
                 style={{
@@ -819,6 +866,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.email ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.erroremail ? (
               <Text
                 style={{
@@ -867,6 +927,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.cor ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.errorcor ? (
               <Text
                 style={{
@@ -933,6 +1006,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {/* {this.state.bank_name ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )} */}
             {this.state.errorbank_name ? (
               <Text
                 style={{
@@ -980,6 +1066,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.account_no ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.erroraccount_no ? (
               <Text
                 style={{
@@ -1026,6 +1125,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.account_name ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.erroraccount_name ? (
               <Text
                 style={{
@@ -1075,6 +1187,19 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
+            {this.state.npwp ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12
+                }}
+              >
+                (customer)
+              </Text>
+            )}
             {this.state.errornpwp ? (
               <Text
                 style={{
@@ -1192,7 +1317,7 @@ class FormBooking extends React.Component {
               </Item>
             )}
           </View>
-         
+
           <View>
             <View
               style={{ paddingTop: 50 }}

@@ -313,6 +313,9 @@ export default class extends React.Component {
     // }
     // console.log("menu", val);
   }
+  toProfile() {
+    Actions.profile({ onBack: () => this.receiveProps() });
+  }
   // goToFeed = (val) =>{
   //       if(val.isProject == 1){
   //           Actions.project({goTo : val.URL_angular})
@@ -359,7 +362,7 @@ export default class extends React.Component {
                 <View style={{ paddingVertical: 25 }}>
                   <Button
                     style={Styles.btnSmall}
-                    onPress={() => this.skipLoginBlank()}
+                    onPress={() => this.toProfile()}
                     // onPress={() =>
                     //   Actions.profile({ onBack: () => this.receiveProps() })
                     // }

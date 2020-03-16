@@ -95,6 +95,7 @@ class NupBooking extends React.Component {
 
       arrayTower: [
         {
+          // property_cd: props.items.property_cd,//munculin nama tower
           property_cd: "",
           lot_type: "",
           harga: [],
@@ -623,6 +624,7 @@ class NupBooking extends React.Component {
 
   addItem = () => {
     const data = {
+      // property_cd: this.state.property_cd, //munculin nama tower
       property_cd: "",
       lot_type: "",
       harga: [],
@@ -760,7 +762,9 @@ class NupBooking extends React.Component {
               <Text style={Styles.textLeft}>PROJECT</Text>
               <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
             </View>
-            <Text>{this.state.towerDescs}</Text>
+
+            {/* <Text>{this.state.towerDescs}</Text> */}
+            {/* nih tulisan tower shelton gue munculin disini supaya tau, bisa dapet nama tower. tapi seharusnya nama tower sheltonnya ada di dropdown, terdefault muncul */}
 
             {this.state.arrayTower.map((item, index) => (
               <View key={index}>

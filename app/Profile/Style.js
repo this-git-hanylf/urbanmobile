@@ -3,6 +3,21 @@ const { Platform } = React;
 import { Colors, Fonts, Metrics } from "../Themes/";
 import { StatusBar } from "react-native";
 export default {
+  btnMedium: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 30,
+    width: 200,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5
+  },
   layoutContent: {
     flex: 1,
     alignItems: "center",
@@ -50,7 +65,7 @@ export default {
   owner: {
     flex: 1,
     width: "100%",
-    height: 200,
+    height: 50,
     paddingHorizontal: 20,
     flexDirection: "column",
     justifyContent: "center",
@@ -164,10 +179,11 @@ export default {
     fontSize: 12,
     width: "100%",
     borderRadius: 5,
-    textAlignVertical: "top",
-    paddingVertical: 15,
+    // textAlignVertical: "top",
+    paddingVertical: 0,
     paddingHorizontal: 20,
-    color: "#666"
+    // color: "#666"
+    color: Colors.white
   },
   textInputMulti: {
     fontFamily: "Montserrat-Regular",

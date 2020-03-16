@@ -674,7 +674,7 @@ export default class extends React.Component {
     // }
   };
 
-  alertNUP = () => {
+  alertNUP() {
     Alert.alert(
       "Attention",
       "Please contact your agent for booking",
@@ -689,7 +689,7 @@ export default class extends React.Component {
       ],
       { cancelable: false }
     );
-  };
+  }
 
   selectAmenDining() {
     // console.log('status',status)
@@ -874,8 +874,8 @@ export default class extends React.Component {
                     <View style={{ paddingTop: "130%" }}>
                       <Button
                         style={Style.signInBtnMedium}
-                        // onPress={() => this.alertNUP()}
-                        onPress={() => this.nupBooking()}
+                        onPress={() => this.alertNUP()}
+                        // onPress={() => this.nupBooking()}
                       >
                         <Text
                           style={{

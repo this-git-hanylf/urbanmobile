@@ -51,7 +51,12 @@ class ListProspect extends Component {
       agent_name: "",
       agent_phone: "",
       number_cust: "",
-      agent_cd: ""
+      agent_cd: "",
+      dataProfile: [],
+      gender: "",
+      email: "",
+      userId: "",
+      token: ""
       //   handphone: "",
       //   descs: ""
     };
@@ -65,10 +70,13 @@ class ListProspect extends Component {
     // console.log("eve", event_cd);
     // Actions.refresh({ backTitle: () => this.props.status_cd });
     const data = {
-      agent_name: await _getData("@Name"),
-      agent_phone: await _getData("@Handphone"),
+      // agent_name: await _getData("@Name"),
+      // agent_phone: await _getData("@Handphone"),
       event_cd: this.props.event_cd,
       agent_cd: await _getData("@AgentCd"),
+      email: await _getData("@User"),
+      userId: await _getData("@UserId"),
+      token: await _getData("@Token"),
       //   entity_cd: dataItems.entity_cd,
       //   project_no: dataItems.project_no,
       //   db_profile: dataItems.db_profile,
@@ -80,6 +88,7 @@ class ListProspect extends Component {
     isMount = true;
     this.setState(data, () => {
       this.getData();
+      this.getProfile();
       // this.getDataFollowUp(this.props.datas)
       // this.getStatus()
     });
@@ -89,6 +98,43 @@ class ListProspect extends Component {
     // this.setState({isMount:false})
     isMount = false;
   }
+
+  getProfile = () => {
+    fetch(
+      urlApi +
+        "c_profil/getData/IFCAMOBILE/" +
+        this.state.email +
+        "/" +
+        this.state.userId,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Token: this.state.token
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(res => {
+        const resData = res.Data;
+
+        // ? Agar Gambar Tidak ter cache
+        // let url = resData.pict + "?random_number=" + new Date().getTime();
+        // let urlHeader =
+        //   resData.pict_header + "?random_number=" + new Date().getTime();
+        this.setState({
+          dataProfile: resData
+          // fotoProfil: { uri: url },
+          // fotoHeader:{uri:urlHeader},
+          // gender: resData.gender
+        });
+        console.log("res Profil", res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   getData = () => {
     const entity_cd = this.props.entity_cd;
@@ -423,7 +469,8 @@ class ListProspect extends Component {
                   // editable={true}
                   autoCapitalize="words"
                   placeholderTextColor={Colors.greyUrban}
-                  value={this.state.agent_name}
+                  // value={this.state.agent_name}
+                  value={this.state.dataProfile[0].name}
                   onChangeText={val => this.setState({ agent_name: val })}
                   style={Styles.positionTextInput}
                   ref="agent_name"
@@ -472,7 +519,7 @@ class ListProspect extends Component {
                   // autoCapitalize="numeric"
                   keyboardType="numeric"
                   placeholderTextColor={Colors.greyUrban}
-                  value={this.state.agent_phone}
+                  value={this.state.dataProfile[0].Handphone}
                   onChangeText={val => this.setState({ agent_phone: val })}
                   style={Styles.positionTextInput}
                   ref="agent_phone"

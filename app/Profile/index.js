@@ -13,7 +13,8 @@ import {
   ScrollView,
   Platform,
   SafeAreaView,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from "react-native";
 import {
   Container,
@@ -65,6 +66,7 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
+      isLoaded: true,
       gender: null,
       email: "",
       name: "",
@@ -80,7 +82,8 @@ export default class Profile extends React.Component {
 
       dataProfile: [],
       fotoProfil: require("@Asset/images/1.png"),
-      fotoHeader: require("@Asset/images/header.png")
+      fotoHeader: require("@Asset/images/header.png"),
+      password: ""
     };
 
     this.renderAccordionHeader = this.renderAccordionHeader.bind(this);
@@ -139,6 +142,7 @@ export default class Profile extends React.Component {
         this.setState({
           dataProfile: resData,
           fotoProfil: { uri: url },
+          // pass_nih: resData.password,
           // fotoHeader:{uri:urlHeader},
           gender: resData.gender
         });
@@ -150,6 +154,7 @@ export default class Profile extends React.Component {
   };
 
   save = () => {
+    this.setState({ isLoaded: !this.state.isLoaded });
     const { email, name, hp, gender } = this.state;
 
     const formData = {
@@ -160,28 +165,35 @@ export default class Profile extends React.Component {
       wherename: name
     };
 
-    fetch(urlApi + "c_profil/save/", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Token: this.state.token
-      }
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (!res.Error) {
-          alert(res.Pesan);
-          _storeData("@Name", name);
-          _storeData("@Handphone", hp);
-          _storeData("@ProfileUpdate", true);
-        }
-        console.log("save profile", res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    console.log("save data", formData);
+    // fetch(urlApi + "c_profil/save/", {
+    //   method: "POST",
+    //   body: JSON.stringify(formData),
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     Token: this.state.token
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(res => {
+    //     if (!res.Error) {
+    //       alert(res.Pesan);
+    //       _storeData("@Name", name);
+    //       _storeData("@Handphone", hp);
+    //       _storeData("@ProfileUpdate", true);
+    //     } else {
+    //       this.setState({ isLoaded: !this.state.isLoaded }, () => {
+    //         alert(res.Pesan);
+    //         // console.log('url',this.state.pickUrlKtp.uri)
+    //       });
+    //     }
+
+    //     console.log("save profile", res);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   changePassPress = () => {
@@ -521,7 +533,7 @@ export default class Profile extends React.Component {
                   active
                   name="arrow-left"
                   // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#000" }}
+                  style={{ color: "#fff" }}
                   type="MaterialCommunityIcons"
                 />
               </Button>
@@ -532,14 +544,14 @@ export default class Profile extends React.Component {
                 style={{
                   fontWeight: "900",
                   color: Colors.goldUrban,
-                  fontSize: 16,
+                  fontSize: 14,
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
                   letterSpacing: 1
                 }}
                 // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
               >
-                PRIORITY PASS
+                PROFILE SETTING
                 {/* {this.state.projectdesc} */}
               </Text>
             </View>
@@ -571,16 +583,226 @@ export default class Profile extends React.Component {
               <View style={[Styles.owner, Style.actionBarIn]}>
                 <View style={Styles.ownerBg}>
                   <Image source={fotoProfil} style={Styles.ownerAvatarImg} />
-                  <Icons
+                  {/* <Icons
                     name="camera"
                     onPress={() => this.showAlert()}
                     style={Styles.iconEdit}
-                  />
+                  /> */}
                 </View>
-                <View style={Styles.ownerInfo}>
+
+                {/* <View style={Styles.ownerInfo}>
                   <Text style={Styles.ownerName}>{this.state.name}</Text>
                   <Text style={Styles.ownerLocation}>{this.state.group}</Text>
+                </View> */}
+                <View style={{ top: 25 }}>
+                  <TouchableOpacity onPress={() => this.showAlert()}>
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: "Montserrat-Regular",
+                        borderBottomColor: "#fff",
+                        borderWidth: 1,
+                        borderTopWidth: 0,
+                        borderRightWidth: 0,
+                        borderLeftWidth: 0
+                      }}
+                    >
+                      Change Profile Picture
+                    </Text>
+                  </TouchableOpacity>
                 </View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 40,
+                alignItems: "flex-end",
+                marginBottom: 10
+                // width: "100%"
+              }}
+            >
+              <View style={{ alignItems: "flex-start", width: "30%" }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: 12
+                  }}
+                >
+                  Name
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", width: "70%" }}>
+                <TextInput
+                  editable={false}
+                  style={Styles.textInput}
+                  placeholder={"First Name"}
+                  value={this.state.name}
+                  onChangeText={val => {
+                    this.setState({ name: val });
+                  }}
+                />
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 40,
+                alignItems: "flex-end",
+                marginBottom: 10
+                // width: "100%"
+              }}
+            >
+              <View style={{ alignItems: "flex-start", width: "30%" }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: 12
+                  }}
+                >
+                  Position
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", width: "70%" }}>
+                <TextInput
+                  editable={false}
+                  style={Styles.textInput}
+                  placeholder={"First Name"}
+                  value={this.state.group}
+                  onChangeText={val => {
+                    this.setState({ group: val });
+                  }}
+                />
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 40,
+                alignItems: "flex-end",
+                marginBottom: 10
+                // width: "100%"
+              }}
+            >
+              <View style={{ alignItems: "flex-start", width: "30%" }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: 12
+                  }}
+                >
+                  Email
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", width: "70%" }}>
+                <TextInput
+                  editable={false}
+                  style={Styles.textInput}
+                  placeholder={"First Name"}
+                  value={this.state.email}
+                  onChangeText={val => {
+                    this.setState({ email: val });
+                  }}
+                />
+              </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 40,
+                alignItems: "flex-end",
+                marginBottom: 10
+                // width: "100%"
+              }}
+            >
+              <View style={{ alignItems: "flex-start", width: "30%" }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: 12
+                  }}
+                >
+                  Phone
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", width: "70%" }}>
+                <TextInput
+                  // editable={false}
+                  style={Styles.textInput}
+                  keyboardType="numeric"
+                  placeholder={"First Name"}
+                  value={this.state.hp}
+                  onChangeText={val => {
+                    this.setState({ hp: val });
+                  }}
+                />
+              </View>
+            </View>
+
+            {/* <View
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 40,
+                alignItems: "flex-end",
+                marginBottom: 10
+                // width: "100%"
+              }}
+            >
+              <View style={{ alignItems: "flex-start", width: "30%" }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: 12
+                  }}
+                >
+                  Password
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", width: "70%" }}>
+                <TextInput
+                  style={Styles.textInput}
+                  secureTextEntry={true}
+                  // placeholder={"Current Password"}
+                  onChangeText={val => this.setState({ curPass: val })}
+                  value={this.state.dataProfile.password}
+                />
+              </View>
+            
+            </View> */}
+
+            <View>
+              <View
+                style={{ paddingTop: 50 }}
+                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <Button style={Styles.btnMedium} onPress={() => this.save()}>
+                  {!this.state.isLoaded ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    <Text
+                      style={{
+                        width: "100%",
+                        fontSize: 12,
+                        alignItems: "center",
+                        textAlign: "center",
+                        fontFamily: Fonts.type.proximaNovaBold,
+                        letterSpacing: 1
+                      }}
+                    >
+                      Save
+                    </Text>
+                  )}
+                </Button>
               </View>
             </View>
           </Content>

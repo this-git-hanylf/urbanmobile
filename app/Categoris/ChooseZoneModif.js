@@ -15,7 +15,8 @@ import {
   SafeAreaView,
   View,
   FlatList,
-  Modal
+  Modal,
+  Alert
 } from "react-native";
 import {
   Container,
@@ -381,6 +382,10 @@ class ChooseZoneModif extends React.Component {
 
     if (data) {
       Actions.NupBooking({ items: data });
+
+      //masalahnya adalah: ketika klik nupbooking ini, kan menuju ke screen Nup Booking yg tab sebelah nih...
+      //nah di screen sebelah itu, ada dropdown kan yg waktu itu lu bikin. harus muncul nama tower yg udah dipiliih
+
       // alert('ada data');
       // console.log('da')
     }
