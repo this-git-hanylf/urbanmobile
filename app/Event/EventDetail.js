@@ -56,7 +56,9 @@ class ListProspect extends Component {
       gender: "",
       email: "",
       userId: "",
-      token: ""
+      token: "",
+      name: ""
+      // Handphone: ""
       //   handphone: "",
       //   descs: ""
     };
@@ -69,9 +71,10 @@ class ListProspect extends Component {
     // const event_cd = this.props.event_cd;
     // console.log("eve", event_cd);
     // Actions.refresh({ backTitle: () => this.props.status_cd });
+
     const data = {
-      // agent_name: await _getData("@Name"),
-      // agent_phone: await _getData("@Handphone"),
+      agent_name: await _getData("@Name"),
+      agent_phone: await _getData("@Handphone"),
       event_cd: this.props.event_cd,
       agent_cd: await _getData("@AgentCd"),
       email: await _getData("@User"),
@@ -83,6 +86,7 @@ class ListProspect extends Component {
       //   status_cd: this.props.datas.status_cd,
       //   descs: this.props.datas.descs,
       email: await _getData("@User")
+      // agent_name: this.state.dataProfile[0].name
     };
     console.log("data di list", data);
     isMount = true;
@@ -117,20 +121,30 @@ class ListProspect extends Component {
     )
       .then(response => response.json())
       .then(res => {
-        const resData = res.Data;
+        if (!res.Error) {
+          const resData = res.Data;
 
-        // ? Agar Gambar Tidak ter cache
-        // let url = resData.pict + "?random_number=" + new Date().getTime();
-        // let urlHeader =
-        //   resData.pict_header + "?random_number=" + new Date().getTime();
-        this.setState({
-          dataProfile: resData
-          // fotoProfil: { uri: url },
-          // fotoHeader:{uri:urlHeader},
-          // gender: resData.gender
-        });
-        console.log("res Profil", res);
+          this.setState({
+            dataProfile: resData
+          });
+          console.log("res Profil", resData);
+        }
       })
+      // .then(res => {
+      //   const resData = res.Data;
+
+      //   // ? Agar Gambar Tidak ter cache
+      //   // let url = resData.pict + "?random_number=" + new Date().getTime();
+      //   // let urlHeader =
+      //   //   resData.pict_header + "?random_number=" + new Date().getTime();
+      //   this.setState({
+      //     dataProfile: resData
+      //     // fotoProfil: { uri: url },
+      //     // fotoHeader:{uri:urlHeader},
+      //     // gender: resData.gender
+      //   });
+      //   console.log("res Profil", resData);
+      // })
       .catch(error => {
         console.log(error);
       });
@@ -338,7 +352,6 @@ class ListProspect extends Component {
                 />
               </Button>
             </View>
-
             <View>
               <Text
                 style={{
@@ -452,6 +465,13 @@ class ListProspect extends Component {
                 {/* {this.state.projectdesc} */}
               </Text>
             </View>
+            {/* //fullname */}
+            {/* Button */}
+          </View>
+        )}
+        {this.state.dataProfile == 0 ? (
+          <View>
+            {/* <Text>{this.state.dataProfile[0].email}</Text> */}
             <View style={{ paddingBottom: 15, marginTop: 8 }}>
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
@@ -470,7 +490,7 @@ class ListProspect extends Component {
                   autoCapitalize="words"
                   placeholderTextColor={Colors.greyUrban}
                   // value={this.state.agent_name}
-                  value={this.state.dataProfile[0].name}
+                  // value={this.state.dataProfile[0].name}
                   onChangeText={val => this.setState({ agent_name: val })}
                   style={Styles.positionTextInput}
                   ref="agent_name"
@@ -519,7 +539,159 @@ class ListProspect extends Component {
                   // autoCapitalize="numeric"
                   keyboardType="numeric"
                   placeholderTextColor={Colors.greyUrban}
-                  value={this.state.dataProfile[0].Handphone}
+                  // value={this.state.dataProfile[0].Handphone}
+                  onChangeText={val => this.setState({ agent_phone: val })}
+                  style={Styles.positionTextInput}
+                  ref="agent_phone"
+                />
+                {this.state.erroragent_phone ? (
+                  <Icon
+                    style={{
+                      color: "red",
+                      bottom: 3,
+                      position: "absolute",
+                      right: 0
+                    }}
+                    name="close-circle"
+                  />
+                ) : null}
+                {/* <Icon name='close-circle' /> */}
+              </Item>
+              {this.state.erroragent_phone ? (
+                <Text
+                  style={{
+                    position: "absolute",
+                    bottom: 3,
+                    left: 15,
+                    color: "red",
+                    fontSize: 12
+                  }}
+                >
+                  Mobile Phone Required
+                </Text>
+              ) : null}
+            </View>
+            <View style={{ paddingBottom: 15, marginTop: 8 }}>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+              <Item floatingLabel style={Styles.marginround}>
+                <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                  Number of Customer
+                </Label>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                <Input
+                  // placeholder='Full Name'
+                  // editable={true}
+                  keyboardType="numeric"
+                  placeholderTextColor={Colors.greyUrban}
+                  // value={this.state.number_cust}
+                  onChangeText={val => this.setState({ number_cust: val })}
+                  style={Styles.positionTextInput}
+                  ref="number_cust"
+                />
+                {this.state.errornumber_cust ? (
+                  <Icon
+                    style={{
+                      color: "red",
+                      bottom: 3,
+                      position: "absolute",
+                      right: 0
+                    }}
+                    name="close-circle"
+                  />
+                ) : null}
+                {/* <Icon name='close-circle' /> */}
+              </Item>
+              {this.state.errornumber_cust ? (
+                <Text
+                  style={{
+                    position: "absolute",
+                    bottom: 3,
+                    left: 15,
+                    color: "red",
+                    fontSize: 12
+                  }}
+                >
+                  Number of Customer Required
+                </Text>
+              ) : null}
+            </View>
+          </View>
+        ) : (
+          <View>
+            {/* <Text>{this.state.dataProfile[0].email}</Text> */}
+            <View style={{ paddingBottom: 15, marginTop: 8 }}>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+              <Item floatingLabel style={Styles.marginround}>
+                <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                  Full Name
+                </Label>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                <Input
+                  // placeholder='Full Name'
+                  // editable={true}
+                  autoCapitalize="words"
+                  placeholderTextColor={Colors.greyUrban}
+                  value={this.state.agent_name}
+                  // value={this.state.dataProfile[0].name}
+                  onChangeText={val => this.setState({ agent_name: val })}
+                  style={Styles.positionTextInput}
+                  ref="agent_name"
+                />
+                {this.state.erroragent_name ? (
+                  <Icon
+                    style={{
+                      color: "red",
+                      bottom: 3,
+                      position: "absolute",
+                      right: 0
+                    }}
+                    name="close-circle"
+                  />
+                ) : null}
+                {/* <Icon name='close-circle' /> */}
+              </Item>
+              {this.state.erroragent_name ? (
+                <Text
+                  style={{
+                    position: "absolute",
+                    bottom: 3,
+                    left: 15,
+                    color: "red",
+                    fontSize: 12
+                  }}
+                >
+                  Full Name Required
+                </Text>
+              ) : null}
+            </View>
+            <View style={{ paddingBottom: 15, marginTop: 4 }}>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Text style={styles.overviewTitles}>Full Name</Text>
+                                </View> */}
+              <Item floatingLabel style={Styles.marginround}>
+                <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                  Mobile Phone
+                </Label>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                        <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                        <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                    </View> */}
+                <Input
+                  // placeholder='Full Name'
+                  // autoCapitalize="numeric"
+                  keyboardType="numeric"
+                  placeholderTextColor={Colors.greyUrban}
+                  value={this.state.agent_phone}
                   onChangeText={val => this.setState({ agent_phone: val })}
                   style={Styles.positionTextInput}
                   ref="agent_phone"
@@ -600,28 +772,27 @@ class ListProspect extends Component {
                 </Text>
               ) : null}
             </View>
-            <View>
-              <View style={{ paddingTop: 50 }}>
-                <Button style={Styles.btnMedium} onPress={() => this.submit()}>
-                  <Text
-                    style={{
-                      width: "100%",
-                      fontSize: 14,
-                      alignItems: "center",
-                      textAlign: "center",
-                      fontFamily: Fonts.type.proximaNovaReg,
-                      letterSpacing: 1,
-                      textTransform: "capitalize"
-                    }}
-                  >
-                    Submit
-                  </Text>
-                </Button>
-              </View>
-            </View>
           </View>
         )}
-
+        <View>
+          <View style={{ paddingTop: 50 }}>
+            <Button style={Styles.btnMedium} onPress={() => this.submit()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Submit
+              </Text>
+            </Button>
+          </View>
+        </View>
         {/* <FooterTabsIconText /> */}
       </Container>
     );

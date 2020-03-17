@@ -163,37 +163,43 @@ export default class Profile extends React.Component {
       Handphone: hp,
       Gender: gender,
       wherename: name
+      // cpassword: curPass
     };
 
     console.log("save data", formData);
-    // fetch(urlApi + "c_profil/save/", {
-    //   method: "POST",
-    //   body: JSON.stringify(formData),
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     Token: this.state.token
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(res => {
-    //     if (!res.Error) {
-    //       alert(res.Pesan);
-    //       _storeData("@Name", name);
-    //       _storeData("@Handphone", hp);
-    //       _storeData("@ProfileUpdate", true);
-    //     } else {
-    //       this.setState({ isLoaded: !this.state.isLoaded }, () => {
-    //         alert(res.Pesan);
-    //         // console.log('url',this.state.pickUrlKtp.uri)
-    //       });
-    //     }
 
-    //     console.log("save profile", res);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    fetch(urlApi + "c_profil/save/", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Token: this.state.token
+      }
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (!res.Error) {
+          this.setState({ isLogin: true }, () => {
+            this.changePass();
+            alert(res.Pesan);
+            _storeData("@Name", name);
+            _storeData("@Handphone", hp);
+            _storeData("@ProfileUpdate", true);
+            // this.changePass();
+          });
+        } else {
+          this.setState({ isLoaded: !this.state.isLoaded }, () => {
+            alert(res.Pesan);
+            // console.log('url',this.state.pickUrlKtp.uri)
+          });
+        }
+
+        console.log("save profile", res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   changePassPress = () => {
@@ -748,7 +754,7 @@ export default class Profile extends React.Component {
               </View>
             </View>
 
-            {/* <View
+            <View
               style={{
                 flexDirection: "row",
                 marginHorizontal: 40,
@@ -772,13 +778,12 @@ export default class Profile extends React.Component {
                 <TextInput
                   style={Styles.textInput}
                   secureTextEntry={true}
-                  // placeholder={"Current Password"}
+                  placeholder={"New Password"}
                   onChangeText={val => this.setState({ curPass: val })}
-                  value={this.state.dataProfile.password}
+                  value={this.state.curPass}
                 />
               </View>
-            
-            </View> */}
+            </View>
 
             <View>
               <View
