@@ -317,13 +317,15 @@ class FormBooking extends React.Component {
     };
 
     const isValid = this.validating({
-      // email: { require: true },
+      email: { require: true },
       nik: { require: true },
-      fullname: { require: true }
-      // // nik: { require: true },
-      // nohp: { require: true },
-      // selectedType: { require: true },
-      // selectedProject: { require: true }
+      fullname: { require: true },
+      account_name: { require: true },
+      account_no: { require: true },
+      bank_name: { require: true },
+      cor: { require: true },
+      mobilephone: { require: true },
+      npwp: { require: true }
     });
 
     let fileNameKtp = "";
@@ -418,15 +420,20 @@ class FormBooking extends React.Component {
             // console.log('url',this.state.pickUrlKtp.uri)
           });
         }
-        alert(res.Pesan);
+        this.setState({ isLoaded: !this.state.isLoaded }, () => {
+          alert(res.Pesan);
+          // console.log('url',this.state.pickUrlKtp.uri)
+        });
+        // alert(res.Pesan);
       });
     } else {
-      this.setState({ isLoaded: !this.state.isLoaded }, () => {
-        alert("Please assign your ID Picture");
+      // alert("Please input field");
+      this.setState({ isLoaded: this.state.isLoaded }, () => {
+        alert("Please input field");
         // alert(res.Pesan);
         // console.log('url',this.state.pickUrlKtp.uri)
       });
-      // alert("Please assign your ID Picture");
+      // alert("Please");
       // console.log('url else',this.state.pickUrlKtp.uri)
     }
   };
@@ -650,15 +657,7 @@ class FormBooking extends React.Component {
               />
 
               {this.state.errornik ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 30
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -685,20 +684,9 @@ class FormBooking extends React.Component {
               NIK Required
             </Text> */}
             {this.state.errornik ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                NIK Required
-              </Text>
+              <Text style={Styles.text_error}>NIK Required</Text>
             ) : null}
           </View>
-
           <View style={{ paddingBottom: 15, marginTop: 8 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Text style={styles.overviewTitles}>Full Name</Text>
@@ -728,15 +716,7 @@ class FormBooking extends React.Component {
               />
 
               {this.state.errorfullname ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
 
               {/* <Icon name='close-circle' /> */}
@@ -757,17 +737,7 @@ class FormBooking extends React.Component {
 
             {/* <Text>(customer)</Text> */}
             {this.state.errorfullname ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Full Name Required
-              </Text>
+              <Text style={Styles.text_error}>Full Name Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -793,15 +763,7 @@ class FormBooking extends React.Component {
                 ref="mobilephone"
               />
               {this.state.errormobilephone ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -819,17 +781,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.errormobilephone ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Mobile Phone Required
-              </Text>
+              <Text style={Styles.text_error}>Mobile Phone Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -854,15 +806,7 @@ class FormBooking extends React.Component {
                 ref="email"
               />
               {this.state.erroremail ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -880,17 +824,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.erroremail ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Email Required
-              </Text>
+              <Text style={Styles.text_error}>Email Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -915,15 +849,7 @@ class FormBooking extends React.Component {
                 ref="email"
               />
               {this.state.errorcor ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -941,17 +867,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.errorcor ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Corespondence Required
-              </Text>
+              <Text style={Styles.text_error}>Corespondence Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -994,43 +910,13 @@ class FormBooking extends React.Component {
                 source={require("@Asset/images/icon/dropdown_navy.png")}
               ></Image>
               {this.state.errorbank_name ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
-            {/* {this.state.bank_name ? null : (
-              <Text
-                style={{
-                  color: Colors.greyUrban,
-                  bottom: 25,
-                  position: "absolute",
-                  right: 10,
-                  fontSize: 12
-                }}
-              >
-                (customer)
-              </Text>
-            )} */}
+
             {this.state.errorbank_name ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Bank Name Required
-              </Text>
+              <Text style={Styles.text_error}>Bank Name Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -1054,15 +940,7 @@ class FormBooking extends React.Component {
               />
 
               {this.state.erroraccount_no ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -1080,15 +958,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.erroraccount_no ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
+              <Text style={Styles.text_error}>
                 Bank Account Number Required
               </Text>
             ) : null}
@@ -1113,15 +983,7 @@ class FormBooking extends React.Component {
                 ref="account_name"
               />
               {this.state.erroraccount_name ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -1139,17 +1001,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.erroraccount_name ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                Bank Account Name Required
-              </Text>
+              <Text style={Styles.text_error}>Bank Account Name Required</Text>
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -1175,15 +1027,7 @@ class FormBooking extends React.Component {
                 ref="npwp"
               />
               {this.state.errornpwp ? (
-                <Icon
-                  style={{
-                    color: "red",
-                    bottom: 3,
-                    position: "absolute",
-                    right: 0
-                  }}
-                  name="close-circle"
-                />
+                <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
@@ -1201,17 +1045,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.errornpwp ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  bottom: 3,
-                  left: 15,
-                  color: "red",
-                  fontSize: 12
-                }}
-              >
-                NPWP Required
-              </Text>
+              <Text style={Styles.text_error}>NPWP Required</Text>
             ) : null}
           </View>
 
