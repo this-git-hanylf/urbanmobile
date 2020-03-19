@@ -92,6 +92,7 @@ class NupBooking extends React.Component {
       unitDes: "",
 
       inputValue: "",
+      type: false,
 
       arrayTower: [
         {
@@ -394,36 +395,6 @@ class NupBooking extends React.Component {
     const choose_UN = chooseUn.lot_type;
     console.log("cho", choose_UN);
 
-    // const property_cd = this.state.prop_cd;
-    // console.log('propsty',property_cd);
-
-    // const nama = chooseUn.descNama.label;
-    // console.log('nama',nama);
-
-    // alert(val);
-    // if(chooseUn.descNama[0]){
-    //     const data = {
-    //         property_cd : prop_cd,
-    //         towerDes:chooseTo.descNamaTower[0].descs,
-    //         lot_type : "",
-    //         harga : [],
-    //         qty: 0,
-    //         unitDes:""
-    //     };
-
-    //     const arrayTower = this.state.arrayTower;
-
-    //     arrayTower[chooseTo.index] = data;
-
-    //     this.setState({arrayTower},()=>{
-
-    //         // this.getTowerDescs(chooseTo.index,prop_cd);
-    //         this.getUnit(prop_cd);
-
-    //         console.log("Tower sadasda",this.state.arrayTower);
-    //     })
-    // }
-
     if (choose_UN) {
       const arrayTower = this.state.arrayTower;
 
@@ -524,18 +495,9 @@ class NupBooking extends React.Component {
       console.log("plus");
       arrayTower[index].qty = qty + 1;
       this.setState({ arrayTower });
+      this.setState({ type: true });
       console.log("qty plus", arrayTower);
     }
-
-    // type == "minus" ?
-    //     qty > 1 ?
-    //             arrayTower[index].qty = qty--;
-    //             this.setState({qty : qty - 1})
-    //         : null
-    //     :
-    // arrayTower[index].qty = qty++;
-    // this.setState({arrayTower});
-    // console.log('qty',qty);
   }
 
   handleBuyNow() {
@@ -579,32 +541,11 @@ class NupBooking extends React.Component {
     const subtot = this.state.subTotal;
     // const total_qty = this.state.total_qty;
     console.log("subtot", subtot);
-    const {
-      // arr,
-      // subTotal,
-      // price,
-      // projectdesc,
-      // project_no,
-      // entity,
-      // audit_user,
-      // property_cd,
-      // towerDes,
-      // lot_type,
-      // unitDes,
-      // qty,
-      // subTotal,
-    } = this.state;
+    const {} = this.state;
 
     const frmData = {
       // project_descs: projectdesc,
       array_tower: arr
-      // harga: arr.harga,
-      // nama_tower: arrayTower[index].towerDes,
-      // lot_type: arrayTower[index].lot_type,
-      // nama_unit: arrayTower[index].unitDes,
-      // qty:arrayTower[index].qty,
-      // harga: arrayTower[index].harga,
-      // total: subTotal,
     };
     if (frmData) {
       _navigate("FormBooking", {
@@ -633,32 +574,9 @@ class NupBooking extends React.Component {
     this.setState({ arrayTower: [...this.state.arrayTower, data] });
   };
 
-  // _handleTextChange = (value) => {
-  //     const inputValue = value;
-  //     this.setState(() => ({
-  //       inputValue,
-  //     }));
-  //   }
-  //   _handleSendButtonPress = () => {
-  //     if (!this.state.inputValue) {
-  //       return;
-  //     }
-  //     const textArray = this.state.dataSource._dataBlob.s1;
-  //     textArray.push(this.state.inputValue);
-  //     // textArray.push(this.state.property_cd);
-  //     this.setState(() => ({
-  //       dataSource: this.state.dataSource.cloneWithRows(textArray),
-  //       inputValue: '',
-  //     }));
-  //   };
-  //   _handleDeleteButtonPress = (id) => {
-  //     this.setState((a) => {
-  //       const newItem = a.dataSource._dataBlob.s1.filter((item, i) => (parseInt(id) !== i));
-  //       return {
-  //         dataSource: this.state.dataSource.cloneWithRows(newItem),
-  //       }
-  //     });
-  //   };
+  add() {
+    this.setState({ add: true });
+  }
 
   render() {
     let subTotal = 0;
@@ -854,10 +772,6 @@ class NupBooking extends React.Component {
                         color: "red",
                         textAlign: "right"
                       }}
-                      // itemStyle={{color:"blue",position:'absolute',right:0}}
-                      // itemTextStyle={{color:"blue",position:'absolute',right:0}}
-                      // onValueChange={(chooseUn)=>this.setState({lot_type:chooseUn})}
-                      // onValueChange={(chooseUn)=>this.chooseUnit(chooseUn)}
                       onValueChange={chooseUn => {
                         const namaUnit = this.state.unit.filter(
                           item => item.value == chooseUn
@@ -868,11 +782,6 @@ class NupBooking extends React.Component {
                           descNama: namaUnit
                         });
                       }}
-                      // onValueChange={(chooseUn)=> {
-                      //     const namaUnit = this.state.unit.filter(item=>item.value==chooseUn)
-                      //     this.chooseUnit({lot_type:chooseUn,tes:namaUnit})}}
-
-                      // onValueChange={(val)=>alert(val)}
                     >
                       <Picker.Item label="" value="" />
                       {this.state.unit.map((data, key) => (
@@ -902,55 +811,12 @@ class NupBooking extends React.Component {
                             top: -5
                           }}
                         >
-                          <View
-                            style={{
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              borderWidth: 1,
-                              borderColor: Colors.greyUrban,
-                              borderRadius: 5
-                            }}
+                          {/* <Button
+                            onPress={type => this.handleQty(index, "plus")}
                           >
-                            <TouchableOpacity
-                              onPress={() => this.handleQty(index, "minus")}
-                            >
-                              <View>
-                                <Text
-                                  style={{
-                                    marginLeft: 10,
-                                    color: Colors.greyUrban
-                                  }}
-                                >
-                                  -
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-
-                            <Text
-                              style={{
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                alignItems: "center",
-                                alignSelf: "center"
-                              }}
-                            >
-                              {item.qty}
-                            </Text>
-
-                            <TouchableOpacity
-                              onPress={type => this.handleQty(index, "plus")}
-                            >
-                              <View>
-                                <Text
-                                  style={{
-                                    marginRight: 10,
-                                    color: Colors.greyUrban
-                                  }}
-                                >
-                                  +
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          </View>
+                            <Text>tes</Text>
+                          </Button>
+                          */}
                         </View>
                       </View>
                     ))}
