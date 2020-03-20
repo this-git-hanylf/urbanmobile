@@ -189,10 +189,10 @@ export default class Profile extends React.Component {
             // this.changePass();
           });
         } else {
-          this.setState({ isLoaded: !this.state.isLoaded }, () => {
-            alert(res.Pesan);
-            // console.log('url',this.state.pickUrlKtp.uri)
-          });
+          // this.setState({ isLoaded: this.state.isLoaded }, () => {
+          alert(res.Pesan);
+          // console.log('url',this.state.pickUrlKtp.uri)
+          // });
         }
 
         console.log("save profile", res);
@@ -217,6 +217,7 @@ export default class Profile extends React.Component {
   };
 
   changePass = () => {
+    this.setState({ isLoaded: !this.state.isLoaded });
     const { email, newPass, curPass } = this.state;
 
     const formData = {

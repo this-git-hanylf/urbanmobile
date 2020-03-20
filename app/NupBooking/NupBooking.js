@@ -92,7 +92,7 @@ class NupBooking extends React.Component {
       unitDes: "",
 
       inputValue: "",
-      // type: false,
+      type: false,
 
       arrayTower: [
         {
@@ -102,7 +102,9 @@ class NupBooking extends React.Component {
           harga: [],
           qty: 0,
           towerDes: "",
-          unitDes: ""
+          unitDes: "",
+          type: false
+          // type: "false"
         }
       ]
       // subTotal:0
@@ -401,6 +403,7 @@ class NupBooking extends React.Component {
       arrayTower[chooseUn.index].lot_type = choose_UN;
       arrayTower[chooseUn.index].harga = [];
       arrayTower[chooseUn.index].qty = 0;
+      arrayTower[chooseUn.index].type = false;
       if (chooseUn.descNama[0]) {
         arrayTower[chooseUn.index].unitDes = chooseUn.descNama[0].label;
       }
@@ -486,6 +489,7 @@ class NupBooking extends React.Component {
       if (qty > 0) {
         console.log(">1");
         arrayTower[index].qty = qty - 1;
+        arrayTower[index].type = false;
         this.setState({ arrayTower });
         console.log("qty minus", arrayTower);
       } else {
@@ -498,6 +502,13 @@ class NupBooking extends React.Component {
       // this.setState({ type: true });
       console.log("qty plus", arrayTower);
     }
+  }
+  typetrue(index) {
+    const arrayTower = this.state.arrayTower;
+    arrayTower[index].type = true;
+    this.setState({ arrayTower });
+    // this.setState({ type: true });
+    this.handleQty(index, "plus");
   }
 
   handleBuyNow() {
@@ -569,7 +580,9 @@ class NupBooking extends React.Component {
       property_cd: "",
       lot_type: "",
       harga: [],
-      qty: 0
+      qty: 0,
+      type: false
+      // type: "false"
     };
     this.setState({ arrayTower: [...this.state.arrayTower, data] });
   };
@@ -811,61 +824,80 @@ class NupBooking extends React.Component {
                             top: -5
                           }}
                         >
-                          {/* <Button
-                            onPress={type => this.handleQty(index, "plus")}
-                          >
-                            <Text>tes</Text>
-                          </Button> */}
-
-                          <View
-                            style={{
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              borderWidth: 1,
-                              borderColor: Colors.greyUrban,
-                              borderRadius: 5
-                            }}
-                          >
-                            <TouchableOpacity
-                              onPress={() => this.handleQty(index, "minus")}
-                            >
-                              <View>
-                                <Text
-                                  style={{
-                                    marginLeft: 10,
-                                    color: Colors.greyUrban
-                                  }}
-                                >
-                                  -
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-
-                            <Text
+                          {item.type == false ? (
+                            <Button
                               style={{
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                alignItems: "center",
-                                alignSelf: "center"
+                                backgroundColor: Colors.goldUrban,
+                                width: 90,
+                                height: 25,
+                                borderRadius: 5,
+                                textAlign: "center"
+                              }}
+                              // onPress={type => this.handleQty(index, "plus")}
+                              onPress={() => this.typetrue(index)}
+                            >
+                              <Text
+                                style={{
+                                  // textTransform: "capitalize",
+                                  fontSize: 11,
+                                  textAlign: "center",
+                                  width: "100%"
+                                }}
+                              >
+                                Add +
+                              </Text>
+                            </Button>
+                          ) : (
+                            <View
+                              style={{
+                                justifyContent: "space-between",
+                                flexDirection: "row",
+                                borderWidth: 1,
+                                borderColor: Colors.greyUrban,
+                                borderRadius: 5
                               }}
                             >
-                              {item.qty}
-                            </Text>
+                              <TouchableOpacity
+                                onPress={() => this.handleQty(index, "minus")}
+                              >
+                                <View>
+                                  <Text
+                                    style={{
+                                      marginLeft: 10,
+                                      color: Colors.greyUrban
+                                    }}
+                                  >
+                                    -
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
 
-                            <TouchableOpacity
-                              onPress={type => this.handleQty(index, "plus")}
-                            >
-                              <View>
-                                <Text
-                                  style={{
-                                    marginRight: 10,
-                                    color: Colors.greyUrban
-                                  }}
-                                >
-                                  +
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          </View>
+                              <Text
+                                style={{
+                                  fontFamily: Fonts.type.proximaNovaBold,
+                                  alignItems: "center",
+                                  alignSelf: "center"
+                                }}
+                              >
+                                {item.qty}
+                              </Text>
+
+                              <TouchableOpacity
+                                onPress={type => this.handleQty(index, "plus")}
+                              >
+                                <View>
+                                  <Text
+                                    style={{
+                                      marginRight: 10,
+                                      color: Colors.greyUrban
+                                    }}
+                                  >
+                                    +
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
+                            </View>
+                          )}
                         </View>
                       </View>
                     ))}
