@@ -92,7 +92,7 @@ class NupBooking extends React.Component {
       unitDes: "",
 
       inputValue: "",
-      type: false,
+      // type: false,
 
       arrayTower: [
         {
@@ -495,7 +495,7 @@ class NupBooking extends React.Component {
       console.log("plus");
       arrayTower[index].qty = qty + 1;
       this.setState({ arrayTower });
-      this.setState({ type: true });
+      // this.setState({ type: true });
       console.log("qty plus", arrayTower);
     }
   }
@@ -815,8 +815,57 @@ class NupBooking extends React.Component {
                             onPress={type => this.handleQty(index, "plus")}
                           >
                             <Text>tes</Text>
-                          </Button>
-                          */}
+                          </Button> */}
+
+                          <View
+                            style={{
+                              justifyContent: "space-between",
+                              flexDirection: "row",
+                              borderWidth: 1,
+                              borderColor: Colors.greyUrban,
+                              borderRadius: 5
+                            }}
+                          >
+                            <TouchableOpacity
+                              onPress={() => this.handleQty(index, "minus")}
+                            >
+                              <View>
+                                <Text
+                                  style={{
+                                    marginLeft: 10,
+                                    color: Colors.greyUrban
+                                  }}
+                                >
+                                  -
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+
+                            <Text
+                              style={{
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                alignItems: "center",
+                                alignSelf: "center"
+                              }}
+                            >
+                              {item.qty}
+                            </Text>
+
+                            <TouchableOpacity
+                              onPress={type => this.handleQty(index, "plus")}
+                            >
+                              <View>
+                                <Text
+                                  style={{
+                                    marginRight: 10,
+                                    color: Colors.greyUrban
+                                  }}
+                                >
+                                  +
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                     ))}
