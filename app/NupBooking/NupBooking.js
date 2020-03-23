@@ -489,7 +489,14 @@ class NupBooking extends React.Component {
       if (qty > 0) {
         console.log(">1");
         arrayTower[index].qty = qty - 1;
-        arrayTower[index].type = false;
+        console.log("berkurng qty", arrayTower[index].qty);
+        if (arrayTower[index].qty == 0) {
+          arrayTower[index].type = false;
+          // console.log("hasil nol");
+        }
+        // if ((qty = 0)) {
+        //   arrayTower[index].type = false;
+        // }
         this.setState({ arrayTower });
         console.log("qty minus", arrayTower);
       } else {

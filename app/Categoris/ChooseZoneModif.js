@@ -508,8 +508,8 @@ class ChooseZoneModif extends React.Component {
                   <View style={{ paddingTop: "130%" }}>
                     <Button
                       style={Style.signInBtnMedium}
-                      // onPress={() => this.alertNUP()}
-                      onPress={() => this.nupBooking()}
+                      onPress={() => this.alertNUP()}
+                      // onPress={() => this.nupBooking()}
                     >
                       <Text
                         style={{
