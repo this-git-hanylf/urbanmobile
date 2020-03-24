@@ -143,7 +143,9 @@ export default class extends React.Component {
 
     console.log("props", props);
     this._renderItemTower = this._renderItemTower.bind(this);
-    this.nupBooking = this.nupBooking.bind(this); //add this line
+    this._renderItemUnit = this._renderItemUnit.bind(this);
+    this.nupBooking = this.nupBooking.bind(this);
+    // this.alertNUP = this.alertNUP.bind(this); //add this line
     // this.selectAmen = this.selectAmen.bind(this); //add this line
     // this.renderItemNews = this.renderItemNews.bind(this);
   }
@@ -468,8 +470,9 @@ export default class extends React.Component {
   }
 
   _renderItemUnit({ item, index }, parallaxProps) {
+    // this.alertNUP = this.alertNUP.bind(this);
     return (
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={() => this.tes(item)}>
         <ParallaxImage
           source={{ uri: item.picture_url }}
           containerStyle={styles.imageContainer}
@@ -482,6 +485,12 @@ export default class extends React.Component {
         </View>
       </TouchableOpacity>
     );
+  }
+
+  tes(item) {
+    console.log("item dari unit", item);
+    // alert("tes");
+    Actions.SkipLoginBlank2();
   }
 
   getTower = () => {

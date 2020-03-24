@@ -130,6 +130,7 @@ import ProjectLocation from "./Locations/ProjectLocation";
 
 //NupBooking
 import NupBooking from "./NupBooking/NupBooking";
+import NupBooking_tower from "./NupBooking/NupBooking_tower";
 import FormBooking from "./NupBooking/FormBooking";
 import FormPayment from "./NupBooking/FormPayment";
 import UploadBukti from "./NupBooking/UploadBukti";
@@ -662,6 +663,15 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
+            <Scene
+              key="NupBooking_tower"
+              component={NupBooking_tower}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+
             <Scene
               key="FormBooking"
               component={FormBooking}

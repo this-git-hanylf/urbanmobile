@@ -95,6 +95,7 @@ class ChooseZoneModif extends React.Component {
     };
     isMount = true;
     console.log("props", this.props);
+    this._renderItemUnit = this._renderItemUnit.bind(this);
   }
 
   async componentDidMount() {
@@ -270,7 +271,7 @@ class ChooseZoneModif extends React.Component {
 
   _renderItemUnit({ item, index }, parallaxProps) {
     return (
-      <TouchableOpacity style={Styles.item_unit}>
+      <TouchableOpacity style={Styles.item_unit} onPress={() => this.tes(item)}>
         <ParallaxImage
           source={{ uri: item.picture_url }}
           containerStyle={Styles.imageContainer}
@@ -283,6 +284,12 @@ class ChooseZoneModif extends React.Component {
         </View>
       </TouchableOpacity>
     );
+  }
+
+  tes(item) {
+    console.log("item dari unit", item);
+    // alert("tes");
+    Actions.SkipLoginBlank2();
   }
 
   renderItemNews(item) {
