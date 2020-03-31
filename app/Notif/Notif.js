@@ -88,44 +88,101 @@ export default class Notif extends React.Component {
 
     if (this.state.isLogin) {
       return (
-        <Container style={Style.bgMain}>
-          <StatusBar
-            backgroundColor={"rgba(0, 0, 0, 0)"}
-            animated
-            barStyle="dark-content"
-          />
-          <Content
-            style={Style.layoutInner}
-            contentContainerStyle={Style.layoutContent}
+        // <Container style={Style.bgMain}>
+        //   <StatusBar
+        //     backgroundColor={"rgba(0, 0, 0, 0)"}
+        //     animated
+        //     barStyle="dark-content"
+        //   />
+        //   <Content
+        //     style={Style.layoutInner}
+        //     contentContainerStyle={Style.layoutContent}
+        //   >
+        //     <View style={Styles.section}>
+        //       <View style={Styles.message}>
+        //         <FlatList
+        //           data={MESSAGES}
+        //           style={Styles.item}
+        //           renderItem={({ item, separators, key }) => (
+        //             <TouchableHighlight key={key} underlayColor="transparent">
+        //               <View style={Styles.record}>
+        //                 <Image
+        //                   source={{ uri: item.image }}
+        //                   style={Styles.itemImg}
+        //                 />
+        //                 <View style={Styles.itemInfo}>
+        //                   <Text style={Styles.itemTitle}>{item.name}</Text>
+        //                   <Text style={Styles.itemDesc}>{item.desc}</Text>
+        //                 </View>
+        //                 <Text style={Styles.itemDate}>{item.date}</Text>
+        //               </View>
+        //             </TouchableHighlight>
+        //           )}
+        //         />
+        //       </View>
+        //     </View>
+        //   </Content>
+        // </Container>
+        <Container>
+          <ImageBackground
+            style={Styles.backgroundImage_2}
+            source={require("../Images/background-blue.png")}
           >
-            <View style={Styles.section}>
-              <View style={Styles.message}>
-                <FlatList
-                  data={MESSAGES}
-                  style={Styles.item}
-                  renderItem={({ item, separators, key }) => (
-                    <TouchableHighlight key={key} underlayColor="transparent">
-                      <View style={Styles.record}>
-                        <Image
-                          source={{ uri: item.image }}
-                          style={Styles.itemImg}
-                        />
-                        <View style={Styles.itemInfo}>
-                          <Text style={Styles.itemTitle}>{item.name}</Text>
-                          <Text style={Styles.itemDesc}>{item.desc}</Text>
-                        </View>
-                        <Text style={Styles.itemDate}>{item.date}</Text>
-                      </View>
-                    </TouchableHighlight>
-                  )}
-                />
-              </View>
+            <Header style={Styles.header}>
+              <StatusBar
+                backgroundColor={"rgba(0, 0, 0, 0)"}
+                animated
+                barStyle="dark-content"
+              />
+              <Left style={Styles.left}>
+                <Button
+                  transparent
+                  style={Style.actionBarBtn}
+                  onPress={Actions.pop}
+                >
+                  <Icon
+                    active
+                    name="arrow-left"
+                    style={Style.textWhite}
+                    type="MaterialCommunityIcons"
+                  />
+                </Button>
+              </Left>
+              <Body style={Styles.body}>
+                <Text
+                  style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
+                >
+                  {/* {"Registration"} */}
+                  {/* {this.Capitalize("Registration")} */}
+                </Text>
+              </Body>
+              <Right style={Styles.right}></Right>
+            </Header>
+            {/* <ScrollView> */}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: Fonts.type.proximaNovaBoldWeb,
+                  fontSize: 20
+                }}
+              >
+                Coming Soon
+              </Text>
             </View>
-          </Content>
+            {/* </ScrollView> */}
+          </ImageBackground>
         </Container>
       );
     } else {
-      return this.state.isLoaded ? (
+      return (
         <ImageBackground
           style={Styles.backgroundImage}
           source={require("../Images/Alert02-min.png")}
@@ -134,14 +191,15 @@ export default class Notif extends React.Component {
             style={{
               position: "absolute",
               bottom: 140,
-              alignSelf: "center"
+              alignSelf: "center",
+              flexDirection: "row"
             }}
           >
-            <Button style={Styles.btnLarge} onPress={() => this.signin()}>
+            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
               <Text
                 style={{
                   width: "100%",
-                  fontSize: 18,
+                  fontSize: 14,
                   alignItems: "center",
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
@@ -152,10 +210,23 @@ export default class Notif extends React.Component {
                 Sign In
               </Text>
             </Button>
+            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Sign Up
+              </Text>
+            </Button>
           </View>
         </ImageBackground>
-      ) : (
-        <ActivityIndicator />
       );
 
       // <View style={LoginStyle.container}>

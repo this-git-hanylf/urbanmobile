@@ -33,7 +33,7 @@ import {
 } from "native-base";
 import RadioGroup from "react-native-custom-radio-group";
 import { Actions } from "react-native-router-flux";
-import { Style } from "../Themes/";
+import { Style, Fonts, Colors } from "../Themes/";
 import Styles from "./Style";
 import { _storeData, _getData } from "@Component/StoreAsync";
 // import Shimmer from 'react-native-shimmer';
@@ -46,16 +46,23 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
 export default class Search extends React.Component {
   state = {
     dataTower: [],
-    isVisible: false
+    isVisible: false,
+    isLogin: false,
+    isLoaded: false
   };
 
   async componentDidMount() {
     const data = {
-      dataTower: await _getData("@UserProject")
+      dataTower: await _getData("@UserProject"),
+      isLogin: await _getData("@isLogin")
     };
 
+    console.log("data progres", data);
+
+    this.setState(data, () => {});
+
     setTimeout(() => {
-      this.setState(data);
+      this.setState({ isLoaded: true });
     }, 2000);
   }
 
@@ -65,10 +72,15 @@ export default class Search extends React.Component {
     Actions.propertydetail({ items: item });
     this.setState({ click: true });
   }
+  signin() {
+    Actions.Login();
+  }
+
   render() {
-    return (
-      <Container style={Style.bgMain}>
-        <StatusBar
+    if (this.state.isLogin) {
+      return (
+        <Container style={Style.bgMain}>
+          {/* <StatusBar
           backgroundColor="rgba(0,0,0,0)"
           animated
           barStyle="dark-content"
@@ -85,22 +97,13 @@ export default class Search extends React.Component {
                 <Text style={Styles.sHeader}>
                   {"All Project".toUpperCase()}
                 </Text>
-                {/* <Right>
-                            <Button small rounded style={Styles.sBtn} onPress={() => { NavigationService.navigate('PublicProperties') }}>
-                                <Text style={Styles.sLink} >See All</Text>
-                            </Button>
-                        </Right> */}
+                
               </View>
 
               {this.state.dataTower.length == 0 ? (
                 <ActivityIndicator />
               ) : (
-                // <View style={Styles.city}>
-                //     <Shimmer autoRun={true} style={Styles.btnCity} />
-                //     <Shimmer autoRun={true} style={Styles.btnCity} />
-                //     <Shimmer autoRun={true} style={Styles.btnCity} />
-                //     <Shimmer autoRun={true} style={Styles.btnCity} />
-                // </View>
+               
                 <View style={Styles.city}>
                   {this.state.dataTower.map((item, key) => (
                     <TouchableOpacity
@@ -130,7 +133,113 @@ export default class Search extends React.Component {
             </View>
           </ScrollView>
         </Content>
-      </Container>
-    );
+      */}
+          <ImageBackground
+            style={Styles.backgroundImage_2}
+            source={require("../Images/background-blue.png")}
+          >
+            <Header style={Styles.header}>
+              <StatusBar
+                backgroundColor={"rgba(0, 0, 0, 0)"}
+                animated
+                barStyle="dark-content"
+              />
+              <Left style={Styles.left}>
+                <Button
+                  transparent
+                  style={Style.actionBarBtn}
+                  onPress={Actions.pop}
+                >
+                  <Icon
+                    active
+                    name="arrow-left"
+                    style={Style.textWhite}
+                    type="MaterialCommunityIcons"
+                  />
+                </Button>
+              </Left>
+              <Body style={Styles.body}>
+                <Text
+                  style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
+                >
+                  {/* {"Registration"} */}
+                  {/* {this.Capitalize("Registration")} */}
+                </Text>
+              </Body>
+              <Right style={Styles.right}></Right>
+            </Header>
+            {/* <ScrollView> */}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: Fonts.type.proximaNovaBoldWeb,
+                  fontSize: 20
+                }}
+              >
+                Coming Soon
+              </Text>
+            </View>
+            {/* </ScrollView> */}
+          </ImageBackground>
+        </Container>
+      );
+    } else {
+      return this.state.isLoaded ? (
+        <ImageBackground
+          style={Styles.backgroundImage_2}
+          source={require("../Images/Alert03-min.png")}
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: 100,
+              alignSelf: "center",
+              flexDirection: "row"
+            }}
+          >
+            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Sign In
+              </Text>
+            </Button>
+            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Sign Up
+              </Text>
+            </Button>
+          </View>
+        </ImageBackground>
+      ) : (
+        <ActivityIndicator style={{ justifyContent: "center" }} />
+      );
+    }
   }
 }

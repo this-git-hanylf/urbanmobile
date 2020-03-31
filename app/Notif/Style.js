@@ -203,5 +203,55 @@ export default {
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10
+  },
+  btnSmall: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 40,
+    width: 150,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    // borderRadius: 10,
+    marginHorizontal: 10
+  },
+
+  //style coming soon
+  backgroundImage_2: {
+    flex: 1,
+    width: Metrics.WIDTH,
+    height: Metrics.HEIGHT,
+    resizeMode: "contain"
+    // backgroundColor: "#f7f0d7"
+  },
+  header: {
+    backgroundColor: Colors.transparent,
+    height: Metrics.WIDTH * 0.15,
+    borderBottomWidth: 0,
+    ...Platform.select({
+      ios: {},
+      android: {
+        marginTop: Fonts.moderateScale(25)
+      }
+    }),
+    elevation: 0
+  },
+  left: {
+    flex: 0.5,
+    backgroundColor: "transparent"
+  },
+  body: {
+    flex: 3,
+    alignItems: "center",
+    backgroundColor: "transparent"
+  },
+
+  right: {
+    flex: 0.5
   }
 };

@@ -71,7 +71,8 @@ import FooterTabsIconText from "@Component/BottomBar";
 // import { sliderWidth, itemWidth } from "./componen/SliderEntry";
 // import SliderEntry from "../components/SlideEntry";
 // const { height, width } = Dimensions.get('window')
-
+// import alertCustom from "@Component/alert_Custom";
+import AlertCustom from "@Component/alert_Custom";
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
@@ -94,15 +95,22 @@ function wp(percentage) {
 
 const slideHeight = viewportHeight * 0.45;
 const slideWidth = wp(62);
+const slideWidth_tower = wp(55);
 const itemHorizontalMargin = wp(4);
+const itemHorizontalMargin_tower = wp(2);
 
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+
+export const itemWidth_tower =
+  slideWidth_tower + itemHorizontalMargin_tower * 2;
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      Alert_Visibility: false,
+      pesan: "",
       title: "",
       picture_url: "",
 
@@ -457,13 +465,13 @@ export default class extends React.Component {
         <ParallaxImage
           // onPress={()=>this.goTo(item)}
           source={{ uri: item.picture_url }}
-          containerStyle={styles.imageContainer}
+          containerStyle={styles.imageContainer_tower}
           style={styles.image}
           parallaxFactor={0.1}
           {...parallaxProps}
         />
-        <View style={styles.newsTitle} onPress={() => this.goTo()}>
-          <Text style={styles.newsTitleText_small}>{item.descs}</Text>
+        <View style={styles.newsTitle_tower} onPress={() => this.goTo()}>
+          <Text style={styles.newsTitleText_small_tower}>{item.descs}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -784,6 +792,21 @@ export default class extends React.Component {
     //   console.log("stat");
     // }
   }
+  Show_Custom_Alert(visible) {
+    this.setState({ Alert_Visibility: visible });
+  }
+
+  downloadBrosur() {
+    if (this.state.isLogin) {
+      Actions.ProjectDownloadPage({ items: this.props.items });
+    } else {
+      const pesan = "Please Sign in to Access";
+      this.alertFillBlank(true, pesan);
+    }
+  }
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
 
   render() {
     // let feature = ''
@@ -835,6 +858,90 @@ export default class extends React.Component {
         </Header> */}
 
           <ScrollView>
+            <Modal
+              visible={this.state.Alert_Visibility}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center"
+                    }}
+                  >
+                    {this.state.pesan}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around"
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>No</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "space-around",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        // Actions.Login();
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                        Actions.Login();
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Yes</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
             <View style={{ top: 25 }}>
               {this.state.project ? (
                 <ImageBackground
@@ -844,7 +951,8 @@ export default class extends React.Component {
                   imageStyle={"cover"}
                   // source={require("@Asset/images/project_suite_urban.png")}
                   // style={[Style.coverImg,{flex:1}]}
-                  style={Styles.coverImg}
+                  // style={Styles.coverImg}
+                  style={{ flex: 1, height: 700 }}
                 >
                   <View style={{ paddingLeft: 15, paddingTop: 15 }}>
                     <Button
@@ -879,6 +987,7 @@ export default class extends React.Component {
                       
                   </Text> */}
                   </View>
+                  <AlertCustom />
                   {this.state.group !== "AGENT" ? (
                     <View style={{ paddingTop: "130%" }}>
                       <Button
@@ -924,42 +1033,23 @@ export default class extends React.Component {
                 </ImageBackground>
               ) : null}
             </View>
-
+            {/* <Button
+              style={{
+                width: "100%",
+                fontSize: 16,
+                alignItems: "center",
+                textAlign: "center",
+                fontFamily: Fonts.type.proximaNovaBold,
+                letterSpacing: 1
+              }}
+              onPress={() => {
+                this.Show_Custom_Alert(true);
+              }}
+              // title="Click Here To Show Custom Alert Dialog"
+            >
+              <Text>Click Here To Show Custom Alert Dialog</Text>
+            </Button> */}
             <View style={{ paddingTop: 30 }}>
-              {/* tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }, */}
-              {/* <Text style={{color: Colors.white}}>Overview</Text> */}
-              {/* <Text style={[Styles.titleGold,{fontSize: 18}]}>Overview</Text> */}
-              {/* <Text style={{color: Colors.white, 
-                  textAlign:'center', 
-                  fontSize: 18, 
-                  paddingVertical: 10, 
-                  paddingHorizontal: 30, 
-                  fontFamily: Fonts.type.proximaNovaReg,
-                  letterSpacing: 2,
-                  lineHeight: 25}}>
-                Dikembangkan dengan konsep
-                TOD diatas lahan sekitar
-                15.475m2, dengan 4 menara yang
-                terdiri dari 14.600m2 area
-                komersial.</Text>
-                <Text style={{color: Colors.white, 
-                  textAlign:'center', 
-                  fontSize: 18, 
-                  paddingVertical: 10, 
-                  paddingHorizontal: 30, 
-                  fontFamily: Fonts.type.proximaNovaReg,
-                  letterSpacing: 2,
-                  lineHeight: 25}}>
-                Merupakan kawasan terbaik
-                karena lokasinya yang sangat
-                strategis, bukan hanya karena
-                terintegerasi langsung dengan
-                stasiun LRT Cikunir 1, namun
-                berada di persimpangan Caman
-                sehingga akan menjadi hub serta
-                meeting point bagi penduduk di
-                sekitarnya.
-                </Text> */}
               {this.state.overview ? (
                 <Text
                   style={{
@@ -1026,7 +1116,7 @@ export default class extends React.Component {
                 // sliderWidth={width}
                 // sliderHeight={width}
                 sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
+                itemWidth={itemWidth_tower}
                 // itemWidth={width - 60}
                 data={this.state.tower}
                 renderItem={this._renderItemTower}
@@ -1412,10 +1502,10 @@ export default class extends React.Component {
             <View style={{ paddingBottom: 20, paddingTop: 20 }}>
               <Button
                 style={Style.signInBtnMedium}
-                // onPress={() => this.downloadBrosur()}
-                onPress={() =>
-                  Actions.ProjectDownloadPage({ items: this.props.items })
-                }
+                onPress={() => this.downloadBrosur()}
+                // onPress={() =>
+                //   Actions.ProjectDownloadPage({ items: this.props.items })
+                // }
               >
                 <Text
                   style={{

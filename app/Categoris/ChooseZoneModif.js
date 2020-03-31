@@ -107,6 +107,7 @@ class ChooseZoneModif extends React.Component {
       picture_url: this.props.prevItems.picture_url,
       property_cd: this.props.prevItems.property_cd,
       hidden_pict: this.props.prevItems.hidden_picture_url,
+      group: await _getData("@Group"),
 
       // towerDescs : item.towerDescs,
       // console.log('twr descs', towerDescs);
@@ -468,7 +469,12 @@ class ChooseZoneModif extends React.Component {
                 </Header> */}
 
           <ScrollView>
-            <View style={{ top: 25 }}>
+            <View
+              style={{
+                top: 25
+                // width: "100%"
+              }}
+            >
               <ImageBackground
                 // source={this.state.pict_hardcode}
                 source={{
@@ -477,7 +483,11 @@ class ChooseZoneModif extends React.Component {
                 // source={require("@Asset/images/project_suite_urban.png")}
                 style={{
                   flex: 1,
-                  height: 730
+                  height: 700,
+                  // width: "100%"
+                  resizeMode: "contain"
+
+                  // width: 30
                 }}
               >
                 <View style={{ paddingLeft: 15, paddingTop: 15 }}>
@@ -512,7 +522,7 @@ class ChooseZoneModif extends React.Component {
                   </Text>
                 </View>
                 {this.state.group !== "AGENT" ? (
-                  <View style={{ paddingTop: "130%" }}>
+                  <View style={{ paddingTop: "110%" }}>
                     <Button
                       style={Style.signInBtnMedium}
                       onPress={() => this.alertNUP()}
@@ -533,7 +543,7 @@ class ChooseZoneModif extends React.Component {
                     </Button>
                   </View>
                 ) : (
-                  <View style={{ paddingTop: "130%" }}>
+                  <View style={{ paddingTop: "110%" }}>
                     <Button
                       style={Style.signInBtnMedium}
                       onPress={() => this.nupBooking()}

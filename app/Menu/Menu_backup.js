@@ -37,7 +37,7 @@ import {
 
 import NavigationService from "../Service/Navigation";
 
-import { Fonts, Metrics, Colors, Style } from "../Themes/";
+import { Fonts, Metrics, Colors, Style } from "../Themes";
 import Styles from "./Style";
 import Styles2 from "./Style2";
 import { _storeData, _getData } from "@Component/StoreAsync";
@@ -48,7 +48,7 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
 
-export default class Menu extends React.Component {
+export default class Menu_backup extends React.Component {
   constructor(props) {
     super(props);
 
@@ -139,60 +139,86 @@ export default class Menu extends React.Component {
     console.log("menu", val);
   };
 
-  signin() {
-    Actions.Login();
-  }
-
   render() {
     let dashmenu = this.state.dashmenu.length % 3;
     let secLoop = [0, 1];
 
-    if (this.state.isLogin) {
-      return (
-        <Container style={Style.bgMain}>
-          <StatusBar
-            backgroundColor="rgba(0,0,0,0)"
-            animated
-            barStyle="dark-content"
-          />
+    return (
+      <Container style={Style.bgMain}>
+        <StatusBar
+          backgroundColor="rgba(0,0,0,0)"
+          animated
+          barStyle="dark-content"
+        />
 
-          {/* <Content style={Style.layoutInner} contentContainerStyle={Style.layoutContent}>
-                        <View style={Styles.section}>
+        <Content
+          style={Style.layoutInner}
+          contentContainerStyle={Style.layoutContent}
+        >
+          <View style={Styles.section}>
+            <List style={Styles2.infoTab}>
+              {this.state.dashmenu.map((val, key) =>
+                key < this.state.dashmenu.length - 1 ? (
+                  <ListItem
+                    key={key}
+                    style={Styles2.infoItem}
+                    onPress={() => this.goToFeed(val)}
+                  >
+                    <Image
+                      source={{
+                        uri: urlApi + "images/dashPict/" + val.picture
+                      }}
+                      style={Styles2.infoIcon}
+                    />
+                    <View
+                      style={{ alignSelf: "center" }}
+                      style={{ alignSelf: "center" }}
+                    >
+                      <Text style={Styles2.infoHeader}>{val.Title}</Text>
+                      <Text style={Styles2.infoDesc}>{val.title_descs}</Text>
+                    </View>
 
+                    <Right style={{ position: "absolute", right: 10 }}>
+                      <Icon
+                        name="ios-arrow-dropright"
+                        style={{ fontSize: 30 }}
+                      />
+                    </Right>
+                  </ListItem>
+                ) : (
+                  <ListItem
+                    key={key}
+                    style={Styles2.infoItemLast}
+                    onPress={() => this.goToFeed(val)}
+                  >
+                    <Image
+                      source={{
+                        uri: urlApi + "images/dashPict/" + val.picture
+                      }}
+                      style={Styles2.infoIcon}
+                    />
+                    <View
+                      style={{ alignSelf: "center" }}
+                      style={{ alignSelf: "center" }}
+                    >
+                      <Text style={Styles2.infoHeader}>{val.Title}</Text>
+                      <Text style={Styles2.infoDesc}>
+                        {"Account Setting & Change Password"}
+                      </Text>
+                    </View>
 
-                            <List style={Styles2.infoTab}>
+                    <Right style={{ position: "absolute", right: 10 }}>
+                      <Icon
+                        name="ios-arrow-dropright"
+                        style={{ fontSize: 30 }}
+                      />
+                    </Right>
+                  </ListItem>
+                )
+              )}
+            </List>
 
-                                {this.state.dashmenu.map((val, key) =>
-
-                                    key < this.state.dashmenu.length - 1 ?
-                                        <ListItem key={key} style={Styles2.infoItem} onPress={() => this.goToFeed(val)}>
-                                            <Image source={{ uri: urlApi + "images/dashPict/" + val.picture }} style={Styles2.infoIcon} />
-                                            <View style={{ alignSelf: 'center' }} style={{ alignSelf: 'center' }}>
-                                                <Text style={Styles2.infoHeader}>{val.Title}</Text>
-                                                <Text style={Styles2.infoDesc}>{val.title_descs}</Text>
-                                            </View>
-
-                                            <Right style={{ position: 'absolute', right: 10 }}>
-                                                <Icon name="ios-arrow-dropright" style={{ fontSize: 30, }} />
-                                            </Right>
-                                        </ListItem>
-                                        :
-                                        <ListItem key={key} style={Styles2.infoItemLast} onPress={() => this.goToFeed(val)}>
-                                            <Image source={{ uri: urlApi + "images/dashPict/" + val.picture }} style={Styles2.infoIcon} />
-                                            <View style={{ alignSelf: 'center' }} style={{ alignSelf: 'center' }}>
-                                                <Text style={Styles2.infoHeader}>{val.Title}</Text>
-                                                <Text style={Styles2.infoDesc}>{'Account Setting & Change Password'}</Text>
-                                            </View>
-
-                                            <Right style={{ position: 'absolute', right: 10 }}>
-                                                <Icon name="ios-arrow-dropright" style={{ fontSize: 30, }} />
-                                            </Right>
-                                        </ListItem>
-                                    
-                                )}
-                            </List> */}
-
-          {/* {this.state.isLogin ? 
+            {/* {this.state.isLogin ? 
                                     <View style={Styles.profile}>
                                         <Image source={{uri:this.state.fotoProfil}} style={Styles.avatar} />
                                         <View>
@@ -217,7 +243,7 @@ export default class Menu extends React.Component {
                                     </View>
                                 } */}
 
-          {/* <View style={Styles.btnLayout}>
+            {/* <View style={Styles.btnLayout}>
                             { this.state.dashmenu.map((val,key)=>
                                 <TouchableOpacity key={key} style={Styles.btnBox} onPress={() => {
                                     this.goToFeed(val)
@@ -227,7 +253,7 @@ export default class Menu extends React.Component {
                                 </TouchableOpacity>
                             )} */}
 
-          {/* <TouchableOpacity style={Styles.btnBox} onPress={() => {
+            {/* <TouchableOpacity style={Styles.btnBox} onPress={() => {
                                     NavigationService.navigate('MemberMessages')
                                 }}>
                                     <Image source={require('@Asset/images/btn-messages.png')} style={Styles.btnImg} />
@@ -255,13 +281,13 @@ export default class Menu extends React.Component {
                                     <Text style={Styles.btnText}>Settings</Text>
                                 </TouchableOpacity> */}
 
-          {/* <TouchableOpacity style={Styles.btnBox}
+            {/* <TouchableOpacity style={Styles.btnBox}
                                 onPress={()=>this.goToFeed({URL_angular : "ReportNew",isProject:1})}>
                                 <Image source={{uri : urlApi+"images/dashPict/profits.png"}} style={Styles.imgBtn} />
                                 <Text style={Styles.btnText}>New Report</Text>
                             </TouchableOpacity> */}
 
-          {/* <TouchableOpacity style={Styles.btnBox}
+            {/* <TouchableOpacity style={Styles.btnBox}
                                 onPress={()=>this.goToFeed({URL_angular : "NUPPage",isProject:1})}>
                                 <Image source={{uri : urlApi+"images/dashPict/profits.png"}} style={Styles.imgBtn} />
                                 <Text style={Styles.btnText}>NUP</Text>
@@ -278,7 +304,7 @@ export default class Menu extends React.Component {
                             : null}
                             </View> */}
 
-          {/* <View style={Styles.message}>
+            {/* <View style={Styles.message}>
                                 <View style={Styles.headerBg}>
                                     <Icon name="envelope" type="FontAwesome" style={Styles.headerIcon} />
                                     <Text style={Styles.sHeader}>{'Recent Messages'.toUpperCase()}</Text>
@@ -305,116 +331,10 @@ export default class Menu extends React.Component {
                                     )}
                                 />
                             </View> */}
-          {/* </View>
-                    </Content> */}
-
-          <ImageBackground
-            style={Styles.backgroundImage_2}
-            source={require("../Images/background-blue.png")}
-          >
-            <Header style={Styles.header}>
-              <StatusBar
-                backgroundColor={"rgba(0, 0, 0, 0)"}
-                animated
-                barStyle="dark-content"
-              />
-              <Left style={Styles.left}>
-                <Button
-                  transparent
-                  style={Style.actionBarBtn}
-                  onPress={Actions.pop}
-                >
-                  <Icon
-                    active
-                    name="arrow-left"
-                    style={Style.textWhite}
-                    type="MaterialCommunityIcons"
-                  />
-                </Button>
-              </Left>
-              <Body style={Styles.body}>
-                <Text
-                  style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
-                >
-                  {/* {"Registration"} */}
-                  {/* {this.Capitalize("Registration")} */}
-                </Text>
-              </Body>
-              <Right style={Styles.right}></Right>
-            </Header>
-            {/* <ScrollView> */}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                alignContent: "center"
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: Fonts.type.proximaNovaBoldWeb,
-                  fontSize: 20
-                }}
-              >
-                Coming Soon
-              </Text>
-            </View>
-            {/* </ScrollView> */}
-          </ImageBackground>
-        </Container>
-      );
-    } else {
-      return this.state.isLoaded ? (
-        <ImageBackground
-          style={Styles.backgroundImage_2}
-          source={require("../Images/Alert03-min.png")}
-        >
-          <View
-            style={{
-              position: "absolute",
-              bottom: 100,
-              alignSelf: "center",
-              flexDirection: "row"
-            }}
-          >
-            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
-              <Text
-                style={{
-                  width: "100%",
-                  fontSize: 14,
-                  alignItems: "center",
-                  textAlign: "center",
-                  fontFamily: Fonts.type.proximaNovaReg,
-                  letterSpacing: 1,
-                  textTransform: "capitalize"
-                }}
-              >
-                Sign In
-              </Text>
-            </Button>
-            <Button style={Styles.btnSmall} onPress={() => this.signin()}>
-              <Text
-                style={{
-                  width: "100%",
-                  fontSize: 14,
-                  alignItems: "center",
-                  textAlign: "center",
-                  fontFamily: Fonts.type.proximaNovaReg,
-                  letterSpacing: 1,
-                  textTransform: "capitalize"
-                }}
-              >
-                Sign Up
-              </Text>
-            </Button>
           </View>
-        </ImageBackground>
-      ) : (
-        <ActivityIndicator style={{ justifyContent: "center" }} />
-      );
-    }
+        </Content>
+      </Container>
+    );
   }
 }
 

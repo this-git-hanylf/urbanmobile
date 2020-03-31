@@ -239,9 +239,9 @@ class Routes extends Component {
               />
               <Scene
                 // key="SkipLoginBlank"
-                component={SkipLoginBlank2}
+                // component={SkipLoginBlank}
                 key="ListingProjectPage"
-                // component={Search}
+                component={Search}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
@@ -251,9 +251,9 @@ class Routes extends Component {
               />
               <Scene
                 // key="SkipLoginBlank"
-                component={SkipLoginBlank2}
+                // component={SkipLoginBlank}
                 key="Menu"
-                // component={Menu}
+                component={Menu}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
@@ -263,9 +263,9 @@ class Routes extends Component {
               />
               <Scene
                 key="notif"
-                component={SkipLoginBlank2}
+                // component={SkipLoginBlank2}
                 // key="notif"
-                // component={Notif}
+                component={Notif}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""

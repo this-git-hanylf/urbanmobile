@@ -81,7 +81,9 @@ class FormBooking extends React.Component {
       account_name: "",
       dataFromNik: [],
       cor: "",
-      projectdesc: ""
+      projectdesc: "",
+      Alert_Visibility: false,
+      pesan: ""
       //data data dari nik
       //   full_name: ""
     };
@@ -89,6 +91,7 @@ class FormBooking extends React.Component {
     isMount = true;
 
     this.showAlert = this.showAlert.bind(this);
+    // this.alertFillBlank = this.alertFillBlank.bind(this);
   }
 
   async componentDidMount() {
@@ -409,19 +412,25 @@ class FormBooking extends React.Component {
         if (!res.Error) {
           // Actions.pop()
           this.setState({ isLogin: true }, () => {
-            alert(res.Pesan);
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
             // Actions.pop()
             // Actions.Login()
             _navigate("FormPayment", { prevItems: frmData });
           });
         } else {
-          this.setState({ isLoaded: !this.state.isLoaded }, () => {
-            alert(res.Pesan);
+          this.setState({ isLoaded: this.state.isLoaded }, () => {
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
             // console.log('url',this.state.pickUrlKtp.uri)
           });
         }
-        this.setState({ isLoaded: !this.state.isLoaded }, () => {
-          alert(res.Pesan);
+        this.setState({ isLoaded: this.state.isLoaded }, () => {
+          // alert(res.Pesan);
+          const pesan = res.Pesan;
+          this.alertFillBlank(true, pesan);
           // console.log('url',this.state.pickUrlKtp.uri)
         });
         // alert(res.Pesan);
@@ -429,7 +438,9 @@ class FormBooking extends React.Component {
     } else {
       // alert("Please input field");
       this.setState({ isLoaded: this.state.isLoaded }, () => {
-        alert("Please input field");
+        const pesan = "Please input field";
+        this.alertFillBlank(true, pesan);
+        // alert("Please input field");
         // alert(res.Pesan);
         // console.log('url',this.state.pickUrlKtp.uri)
       });
@@ -499,8 +510,10 @@ class FormBooking extends React.Component {
                 // this.setState({ dataFromNik: resData });
                 this.cekNIK({ dataFromNik: resData });
               } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                this.setState({ isLoaded: this.state.isLoaded }, () => {
+                  const pesan = res.Pesan;
+                  this.alertFillBlank(true, pesan);
+                  // alert(res.Pesan);
                   console.log(res.Pesan);
                 });
               }
@@ -537,8 +550,13 @@ class FormBooking extends React.Component {
       // console.log("fullname", fullname);
       //   console.log("fullname", this.state.fullname);
     } else {
-      alert("Nik not found");
+      const pesan = "Nik not found, please try again";
+      this.alertFillBlank(true, pesan);
+      // alert("Nik not found");
     }
+  }
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
   render() {
@@ -632,6 +650,64 @@ class FormBooking extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 40 }}>
+          <Modal
+            visible={this.state.Alert_Visibility}
+            transparent={true}
+            animationType={"slide"}
+            onRequestClose={() => {
+              this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+            }}
+            // activeOpacity={1}
+          >
+            <View
+              style={{
+                // backgroundColor: "red",
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "white",
+                  width: "70%",
+                  height: "20%",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    fontSize: 17,
+                    paddingBottom: 15,
+                    color: Colors.black,
+                    textAlign: "center"
+                  }}
+                >
+                  {this.state.pesan}
+                </Text>
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: Colors.goldUrban,
+                      height: 40,
+                      width: 100,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                    onPress={() => {
+                      this.alertFillBlank(!this.state.Alert_Visibility);
+                    }}
+                    // activeOpacity={0.7}
+                  >
+                    <Text style={{ color: Colors.white }}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                 <Text style={styles.overviewTitles}>Full Name</Text>

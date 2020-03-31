@@ -326,9 +326,9 @@ export default class extends React.Component {
   //   }
 
   render() {
-    return (
-      <Container style={Style.bgMain}>
-        {this.state.isLogin ? (
+    if (this.state.isLogin) {
+      return (
+        <Container style={Style.bgMain}>
           <ImageBackground
             style={Styles.backgroundImage}
             source={require("../Images/background-blue.png")}
@@ -454,33 +454,55 @@ export default class extends React.Component {
               </View>
             </Content>
           </ImageBackground>
-        ) : (
-          <ImageBackground
-            style={Styles.backgroundImage}
-            source={require("../Images/Alert01-min.png")}
+        </Container>
+      );
+    } else {
+      return (
+        <ImageBackground
+          style={Styles.backgroundImage}
+          source={require("../Images/Alert01-min.png")}
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: 140,
+              alignSelf: "center",
+              flexDirection: "row"
+            }}
           >
-            <View
-              style={{ position: "absolute", bottom: 140, alignSelf: "center" }}
-            >
-              <Button style={Styles.btnLarge} onPress={() => this.signin()}>
-                <Text
-                  style={{
-                    width: "100%",
-                    fontSize: 18,
-                    alignItems: "center",
-                    textAlign: "center",
-                    fontFamily: Fonts.type.proximaNovaReg,
-                    letterSpacing: 1,
-                    textTransform: "capitalize"
-                  }}
-                >
-                  Sign In
-                </Text>
-              </Button>
-            </View>
-          </ImageBackground>
-        )}
-      </Container>
-    );
+            <Button style={Styles.btnSmall_2} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Sign In
+              </Text>
+            </Button>
+            <Button style={Styles.btnSmall_2} onPress={() => this.signin()}>
+              <Text
+                style={{
+                  width: "100%",
+                  fontSize: 14,
+                  alignItems: "center",
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  letterSpacing: 1,
+                  textTransform: "capitalize"
+                }}
+              >
+                Sign Up
+              </Text>
+            </Button>
+          </View>
+        </ImageBackground>
+      );
+    }
   }
 }

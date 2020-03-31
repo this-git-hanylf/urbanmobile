@@ -93,6 +93,8 @@ class NupBooking extends React.Component {
 
       inputValue: "",
       type: false,
+      Alert_Visibility: false,
+      pesan: "",
 
       arrayTower: [
         {
@@ -552,6 +554,8 @@ class NupBooking extends React.Component {
     // console.log('tot',total);
     // const price =
     const arr = this.state.arrayTower;
+    const valid_qty = this.state.arrayTower[0].qty;
+    console.log("valid qty", valid_qty);
     const harga = this.state.arrayTower.harga;
     console.log("arr", harga);
     console.log("arr", arr);
@@ -565,21 +569,30 @@ class NupBooking extends React.Component {
       // project_descs: projectdesc,
       array_tower: arr
     };
-    if (frmData) {
+    console.log("formdata", frmData);
+    if (frmData && valid_qty != 0) {
       _navigate("FormBooking", {
         prevItems: frmData,
         items: items,
         subtot: subTotal,
         totalqty: total_qty
       });
+    } else {
+      const pesan = "Please input field";
+      this.alertFillBlank(true, pesan);
+      // alert("please input");
     }
-    //   else {
-    //     // _navigate("chooseZone", { items: this.props.items });
-    //     _navigate("ChooseZoneModif", { items: this.props.items, prevItems: data});
-    //   }
+    // else {
+    //   // _navigate("chooseZone", { items: this.props.items });
+    //   _navigate("ChooseZoneModif", { items: this.props.items, prevItems: data});
+    // }
 
     console.log("save", frmData);
   };
+
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
 
   addItem = () => {
     const data = {
@@ -695,6 +708,64 @@ class NupBooking extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 50 }}>
+          <Modal
+            visible={this.state.Alert_Visibility}
+            transparent={true}
+            animationType={"slide"}
+            onRequestClose={() => {
+              this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+            }}
+            // activeOpacity={1}
+          >
+            <View
+              style={{
+                // backgroundColor: "red",
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "white",
+                  width: "70%",
+                  height: "20%",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    fontSize: 17,
+                    paddingBottom: 15,
+                    color: Colors.black,
+                    textAlign: "center"
+                  }}
+                >
+                  {this.state.pesan}
+                </Text>
+                <View>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: Colors.goldUrban,
+                      height: 40,
+                      width: 100,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                    onPress={() => {
+                      this.alertFillBlank(!this.state.Alert_Visibility);
+                    }}
+                    // activeOpacity={0.7}
+                  >
+                    <Text style={{ color: Colors.white }}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
           <View>
             <View style={Styles.viewRow}>
               <Text style={Styles.textLeft}>PROJECT</Text>

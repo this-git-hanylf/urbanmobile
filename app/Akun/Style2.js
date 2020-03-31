@@ -502,6 +502,22 @@ export default {
     justifyContent: "center",
     borderRadius: 5
   },
+  btnSmall_2: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 40,
+    width: 150,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    // borderRadius: 10,
+    marginHorizontal: 10
+  },
   textBtnSmall: {
     textTransform: "capitalize",
     fontFamily: Fonts.type.proximaNovaReg,
