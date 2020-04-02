@@ -225,6 +225,7 @@ export default class Profile extends React.Component {
       password: newPass,
       cpassword: curPass
     };
+    console.log("form ganti pas", formData);
 
     fetch(urlApi + "c_profil/changePassReact/", {
       method: "POST",
@@ -524,7 +525,7 @@ export default class Profile extends React.Component {
           source={require("../Images/background-blue.png")}
         >
           <StatusBar
-            backgroundColor={Colors.statusBarNavy}
+            backgroundColor="transparent"
             animated
             barStyle="light-content"
           />
@@ -647,6 +648,7 @@ export default class Profile extends React.Component {
                   editable={false}
                   style={Styles.textInput}
                   placeholder={"First Name"}
+                  placeholderTextColor={Colors.greyUrban}
                   value={this.state.name}
                   onChangeText={val => {
                     this.setState({ name: val });
@@ -679,7 +681,8 @@ export default class Profile extends React.Component {
                 <TextInput
                   editable={false}
                   style={Styles.textInput}
-                  placeholder={"First Name"}
+                  placeholder={"Position"}
+                  placeholderTextColor={Colors.greyUrban}
                   value={this.state.group}
                   onChangeText={val => {
                     this.setState({ group: val });
@@ -712,7 +715,7 @@ export default class Profile extends React.Component {
                 <TextInput
                   editable={false}
                   style={Styles.textInput}
-                  placeholder={"First Name"}
+                  placeholder={"Email"}
                   value={this.state.email}
                   onChangeText={val => {
                     this.setState({ email: val });
@@ -746,7 +749,8 @@ export default class Profile extends React.Component {
                   // editable={false}
                   style={Styles.textInput}
                   keyboardType="numeric"
-                  placeholder={"First Name"}
+                  placeholder={"Number Phone"}
+                  placeholderTextColor={Colors.greyUrban}
                   value={this.state.hp}
                   onChangeText={val => {
                     this.setState({ hp: val });
@@ -780,6 +784,7 @@ export default class Profile extends React.Component {
                   style={Styles.textInput}
                   secureTextEntry={true}
                   placeholder={"New Password"}
+                  placeholderTextColor={Colors.greyUrban}
                   onChangeText={val => this.setState({ curPass: val })}
                   value={this.state.curPass}
                 />

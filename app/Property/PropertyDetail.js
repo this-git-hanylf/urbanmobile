@@ -470,9 +470,9 @@ export default class extends React.Component {
           parallaxFactor={0.1}
           {...parallaxProps}
         />
-        <View style={styles.newsTitle_tower} onPress={() => this.goTo()}>
+        {/* <View style={styles.newsTitle_tower} onPress={() => this.goTo()}>
           <Text style={styles.newsTitleText_small_tower}>{item.descs}</Text>
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   }
