@@ -78,9 +78,9 @@ export default class SliderEntry extends Component {
             style={[styles.subtitle, even ? styles.subtitleEven : {}]}
             numberOfLines={2}
           >
-                    LRT Cikunir 1
-            { subtitle }
-          </Text> */}
+                    LRT Cikunir 1 */}
+          {/* {subtitle} */}
+          {/* </Text> */}
         </View>
       </TouchableOpacity>
     );
