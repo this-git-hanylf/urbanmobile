@@ -221,7 +221,7 @@ export default class Home extends Component {
             >
               <Input
                 editable={false}
-                placeholder="Find a residance"
+                placeholder="Find a residence"
                 value={this.state.tes}
                 style={{
                   fontFamily: this.state.tes

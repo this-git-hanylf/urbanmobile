@@ -791,9 +791,13 @@ class NupBooking extends React.Component {
                     }}
                   >
                     <Picker
-                      placeholder="-"
+                      placeholder="tes"
                       selectedValue={item.property_cd}
-                      style={{ width: "100%" }}
+                      style={{
+                        width: "100%",
+                        color: "red",
+                        alignContent: "flex-end"
+                      }}
                       textStyle={{
                         fontFamily: "Montserrat-Regular",
                         fontSize: 12,
@@ -820,9 +824,9 @@ class NupBooking extends React.Component {
                       // onValueChange={(val)=>alert(val)}
                     >
                       <Picker.Item
-                        label=""
+                        label="-Choose here-"
                         value=""
-                        style={{ textAlign: "right" }}
+                        // style={{ textAlign: "right" }}
                       />
 
                       {this.state.tower.map(
@@ -831,6 +835,7 @@ class NupBooking extends React.Component {
                             key={key}
                             label={data.label}
                             value={data.value}
+                            style={{ textAlign: "right" }}
                           />
                         )
                         // <Picker.Item key={key} label={data.label} value={data.value} onChange={(e)=>this.handleChange(e, key)} />
@@ -874,7 +879,7 @@ class NupBooking extends React.Component {
                         });
                       }}
                     >
-                      <Picker.Item label="" value="" />
+                      <Picker.Item label="-Choose here-" value="" />
                       {this.state.unit.map((data, key) => (
                         <Picker.Item
                           key={key}

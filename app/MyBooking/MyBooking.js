@@ -423,7 +423,7 @@ class MyBooking extends Component {
                               // right: 0
                             }}
                           >
-                            Waiting Payment
+                            Waiting Approval
                           </Text>
                         </Right>
                       )}

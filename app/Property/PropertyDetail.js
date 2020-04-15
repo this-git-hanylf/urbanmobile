@@ -808,6 +808,29 @@ export default class extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
+  // openMap(cordinat) {
+  //   console.log("cordinat", cordinat);
+  //   console.log("open directions");
+  // const cor = "";
+  // const cor = cordinat;
+
+  // console.log(cor);
+  // const tes = "https://goo.gl/maps/JvySCBA3VLqvMnfr8";
+  // Linking.openURL(cordinat);
+  // Platform.select({
+  //   ios: () => {
+  //     console.log("ios");
+  //     Linking.openURL("http://maps.apple.com/maps?daddr=");
+  //   },
+  //   android: () => {
+  //     console.log("andro");
+  //     // Linking.openURL("http://maps.google.com/maps?daddr=");
+  //     Linking.openURL(cordinat);
+  //   }
+  // });
+  // }
+  // openMap() { console.log('open directions') if (Platform.OS === "ios") { Linking.openURL('http://maps.apple.com/maps?daddr=') } else { Linking.openURL('http://maps.google.com/maps?daddr='); } };
+
   render() {
     // let feature = ''
     // if(this.state.feature){
@@ -1129,7 +1152,7 @@ export default class extends React.Component {
 
               {/* </View> */}
 
-              <View style={{ paddingVertical: 10 }}>
+              {/* <View style={{ paddingVertical: 10 }}>
                 <TouchableOpacity
                   onPress={() => {
                     _navigate("ProductProjectPage", {
@@ -1139,7 +1162,7 @@ export default class extends React.Component {
                 >
                   <Text style={Styles.titleWhiteSmall}>See all tower</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
 
             {/* <View style={styles.sectionTransparent}>
@@ -1432,6 +1455,7 @@ export default class extends React.Component {
                   LOCATION
                 </Text>
               </View>
+
               {this.state.project ? (
                 //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
 
@@ -1441,14 +1465,14 @@ export default class extends React.Component {
                 // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
                 // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
                 // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>
-
-                <WebView
-                  scalesPageToFit={false}
-                  bounces={false}
-                  javaScriptEnabled
-                  style={{ height: 240, width: null, marginHorizontal: 20 }}
-                  source={{
-                    html: `
+                <View style={{ marginTop: 10 }}>
+                  <WebView
+                    scalesPageToFit={false}
+                    bounces={false}
+                    javaScriptEnabled
+                    style={{ height: 240, width: null, marginHorizontal: 20 }}
+                    source={{
+                      html: `
                         <!DOCTYPE html>
                         <html>
                           <head></head>
@@ -1457,9 +1481,67 @@ export default class extends React.Component {
                           </body>
                         </html>
                   `
-                  }}
-                  automaticallyAdjustContentInsets={false}
-                />
+                    }}
+                    automaticallyAdjustContentInsets={false}
+                  />
+                  <Button
+                    style={{
+                      backgroundColor: Colors.goldUrban,
+
+                      height: 30,
+                      width: 120,
+
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      marginTop: 10,
+
+                      alignSelf: "center",
+
+                      borderRadius: 5
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() =>
+                        // console.log(
+                        //   "cordinat",
+                        //   this.state.project[0].direction_map
+                        // )
+                        // this.openMap(
+                        //   this.state.project[0].direction_map
+                        // )
+                        Linking.openURL(this.state.project[0].direction_map)
+                      }
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: Colors.white
+                          }}
+                        >
+                          Go to Direction
+                        </Text>
+                        <Icon
+                          name="md-navigate"
+                          style={{
+                            fontSize: 13,
+                            marginLeft: 10,
+                            color: Colors.white
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </Button>
+                </View>
               ) : (
                 <ActivityIndicator />
               )}

@@ -13,7 +13,8 @@ import {
   TouchableOpacity,
   BackHandler,
   I18nManager,
-  Dimensions
+  Dimensions,
+  Modal
 } from "react-native";
 import {
   Container,
@@ -37,7 +38,7 @@ import DeviceInfo from "react-native-device-info";
 import { urlApi } from "@Config/services";
 // import FBLoginButton from "../components/LoginFB";
 import GoogleLoginButton from "../components/LoginGoogle";
-import { Colors } from "../Themes";
+import { Colors, Fonts } from "../Themes";
 
 let isMount = false;
 
@@ -54,7 +55,9 @@ export default class Intro extends React.Component {
       isHide: false,
       isLogin: false,
       userDetails: "",
-      GoogleLogin: false
+      GoogleLogin: false,
+      Alert_Visibility: false,
+      pesan: ""
     };
   }
   async componentWillMount() {
@@ -171,6 +174,10 @@ export default class Intro extends React.Component {
     Actions.SkipLoginBlank();
   };
 
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
+
   doLoginSosMed = async data => {
     data.ipAddress = await DeviceInfo.getIPAddress().then(mac => mac);
 
@@ -183,23 +190,38 @@ export default class Intro extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
+      // body: data
     })
       .then(response => response.json())
       .then(res => {
-        try {
-          if (res.Error) {
-            Actions.SignupGuest({ sosmed: true, data });
-          } else {
-            // this.setState({ isLoaded: !this.state.isLoaded });
-            // this.skipLoginBlank();
-            this.setState({ isLogin: true }, () => {
-              // this.getTower(res);
-              this.skipLoginBlank();
-            });
-          }
-        } catch (error) {
-          console.log("error", error);
+        // try {
+        if (res.Error && res.olduser) {
+          // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+          // alert(res.Pesan);
+          const pesan = res.Pesan;
+          this.alertFillBlank(true, pesan);
+          // alert("udah pernah regis");
+          // });
+        } else {
+          Actions.SignupGuest({ sosmed: true, data });
         }
+
+        // if (res.Error) {
+        //   console.log("error", res.Error);
+        //   alert(res.Pesan);
+        //   // this.setState({ isLogin: true }, () => {
+        //   //   // this.getTower(res);
+        //   //   this.skipLoginBlank();
+        //   // });
+        // } else {
+        //   console.log("error", res.Error);
+        //   Actions.SignupGuest({ sosmed: true, data });
+        //   // this.setState({ isLoaded: !this.state.isLoaded });
+        //   // this.skipLoginBlank();
+        // }
+        // } catch (error) {
+        //   console.log("error", error);
+        // }
       })
       .catch(error => {
         console.log(error);
@@ -354,6 +376,65 @@ export default class Intro extends React.Component {
               <Body style={styles.body}></Body>
               <Right style={styles.right}></Right>
             </Header>
+            {/* <AlertCustom /> */}
+            <Modal
+              visible={this.state.Alert_Visibility}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center"
+                    }}
+                  >
+                    {this.state.pesan}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+
             <View style={styles.inputFieldStyles}>
               <View style={{ width: 300, height: 100, marginBottom: 65 }}>
                 <Image
