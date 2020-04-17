@@ -78,7 +78,9 @@ class DetailBooking extends Component {
       attach: "",
       total_amt: "",
       pictUrlAttach: "",
-      replaceFoto: "file:///urbanAPI/images/noimage-min.png"
+      replaceFoto: "file:///urbanAPI/images/noimage-min.png",
+      uploadfoto: false,
+      status: false
     };
 
     this.showAlert = this.showAlert.bind(this);
@@ -86,6 +88,7 @@ class DetailBooking extends Component {
   }
 
   async componentDidMount() {
+    console.disableYellowBox = true;
     isMount = true;
     const dataProps = this.props.data;
     const pict = dataProps.payment_attachment;
@@ -176,7 +179,7 @@ class DetailBooking extends Component {
       .then(image => {
         console.log("received image", image);
 
-        this.setState({ [key]: { uri: image.path } });
+        this.setState({ [key]: { uri: image.path, status: true } });
       })
       .catch(e => console.log("tag", e));
   }
@@ -190,7 +193,8 @@ class DetailBooking extends Component {
       .then(image => {
         console.log("received image", image);
 
-        this.setState({ [key]: { uri: image.path } });
+        this.setState({ [key]: { uri: image.path }, status: true });
+        console.log("status di gallert", this.state.status);
       })
       .catch(e => console.log("tag", e));
   }
@@ -199,6 +203,7 @@ class DetailBooking extends Component {
     alert("sdsd");
   }
   submit() {
+    // this.setState({ uploadfoto: !this.state.uploadfoto });
     const order_id = this.state.order_id;
     let fileattach = "";
     // console.log("pic nul", this.state.pictUrlAttach);
@@ -262,8 +267,12 @@ class DetailBooking extends Component {
             alert(res.Pesan);
             // if (res.Data) {
             Actions.pop();
+            // console.log("resdata", frmData);
+            // console.log("uploadfoto", uploadfoto);
+            // this.setState({ uploadfoto: true });
+            console.log("uploadfoto", !this.state.uploadfoto);
             setTimeout(() => {
-              Actions.refresh({ resDataa: res.Data });
+              Actions.refresh({ uploadfoto: !this.state.uploadfoto });
             }, 0);
             // }
             // Actions.pop();
@@ -547,32 +556,35 @@ class DetailBooking extends Component {
             >
               Upload Payment Attachment
             </Text>
-            {this.state.pictUrlAttach == null ||
-            this.state.pictUrlAttach == "" ? (
+
+            {this.state.status == true ? (
               <Item
                 regular
-                style={[{ borderRadius: 5 }, Styles.inputAttach]}
+                // style={[{ borderRadius: 5 }, Styles.inputAttach]}
+                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
                 onPress={() => this.showAlert("pictUrlAttach")}
-                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                // pointerEvents={this.state.isLoaded ? "auto" : "none"}
               >
                 <Text style={Styles.textAttach}>Payment Attachment</Text>
-                <Image
+                <TouchableOpacity
                   style={{
-                    width: 25,
-                    height: 25,
+                    width: 35,
+                    height: 35,
                     position: "absolute",
                     right: 10
                   }}
-                  source={require("@Asset/images/icon/image_blue.png")}
-                ></Image>
-              </Item>
-            ) : (
-              <Item
-                regular
-                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
-                onPress={() => this.showAlert("pictUrlAttach")}
-                pointerEvents={this.state.isLoaded ? "auto" : "none"}
-              >
+                >
+                  {/* <Text>klik</Text> */}
+                  <Image
+                    style={{
+                      width: 35,
+                      height: 35,
+                      position: "absolute",
+                      right: 10
+                    }}
+                    source={require("@Asset/images/icon/image_blue.png")}
+                  ></Image>
+                </TouchableOpacity>
                 <View style={[Styles.containImageTop_no]}>
                   <Image
                     // resizeMode="cover"
@@ -585,30 +597,64 @@ class DetailBooking extends Component {
                     // source={{ uri: this.state.pictUrlAttach }}
                   />
                 </View>
-
-                {/* <Image
+              </Item>
+            ) : (
+              <Item
+                regular
+                // style={[{ borderRadius: 5 }, Styles.inputAttach]}
+                onPress={() => this.showAlert("pictUrlAttach")}
+                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
+                // pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <Text style={Styles.textAttach}>Payment Attachment</Text>
+                <TouchableOpacity
                   style={{
-                    width: 25,
-                    height: 25,
+                    width: 35,
+                    height: 35,
                     position: "absolute",
                     right: 10
                   }}
-                  source={require("@Asset/images/icon/image.png")}
-                ></Image> */}
-                {/* <Image
-                  // resizeMode="cover"
-                  style={{
-                    width: 200,
-                    height: 130,
-                    alignContent: "center"
-                  }}
-                  source={{ uri: this.state.pictUrlAttach }}
-                  // source={{ uri: this.state.pictUrlAttach }}
-                /> */}
+                >
+                  {/* <Text>klik</Text> */}
+                  <Image
+                    style={{
+                      width: 35,
+                      height: 35,
+                      position: "absolute",
+                      right: 10
+                    }}
+                    source={require("@Asset/images/icon/image_blue.png")}
+                  ></Image>
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity
+                  onPress={() => alert("tes")}
+                  style={
+                    {
+                      // width: 35,
+                      // height: 35,
+                      // position: "absolute"
+                      // right: 10
+                    }
+                  }
+                >
+                  <Text>tes</Text>
+                </TouchableOpacity> */}
+                <View style={[Styles.containImageTop_no]}>
+                  <Image
+                    // resizeMode="cover"
+                    style={{
+                      width: 200,
+                      height: 130,
+                      alignContent: "center"
+                    }}
+                    // source={this.state.pictUrlAttach}
+                    source={{ uri: this.state.pictUrlAttach }}
+                  />
+                </View>
               </Item>
             )}
           </View>
-
           <View style={{ paddingTop: 50 }}>
             <Button style={Styles.btnMedium} onPress={() => this.submit()}>
               <Text

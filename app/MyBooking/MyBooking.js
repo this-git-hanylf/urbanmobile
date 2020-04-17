@@ -71,7 +71,9 @@ class MyBooking extends Component {
       entity_cd: "",
       project_no: "",
       db_profile: "",
-      agent_cd: ""
+      agent_cd: "",
+      payment_attachment: "",
+      tesfoto: []
 
       // dataPending: []
     };
@@ -136,8 +138,10 @@ class MyBooking extends Component {
 
           this.setState({
             dataPending: resData
+            // tesfoto: resData.payment_attachment
           });
           console.log("datapending", resData);
+          // console.log("tesfoto", resData.payment_attachment);
         }
       })
       .catch(error => {
@@ -275,6 +279,24 @@ class MyBooking extends Component {
     });
   }
 
+  componentWillReceiveProps(props) {
+    // props dari B
+    const uploadfoto = props.uploadfoto;
+    console.log("uploadfoto dimybooking", uploadfoto);
+    if (uploadfoto) {
+      // console.log("uploadfoto dimybooking", uploadfoto);
+      this.setState({ uploadfoto: uploadfoto });
+      if (uploadfoto == true) {
+        this.getBookingPending();
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    // this.setState({isMount:false})
+    isMount = false;
+  }
+
   selectComponent = activePage => () => this.setState({ activePage });
 
   _renderComponent = () => {
@@ -409,6 +431,23 @@ class MyBooking extends Component {
                             Time Out
                           </Text>
                         </Right>
+                      ) : data.payment_attachment == null ? (
+                        <Right
+                          style={{ position: "absolute", right: 20, top: 25 }}
+                        >
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaBold,
+                              alignSelf: "flex-end",
+                              color: Colors.yellow,
+                              marginBottom: 5,
+                              fontSize: 13
+                              // right: 0
+                            }}
+                          >
+                            Waiting Payment
+                          </Text>
+                        </Right>
                       ) : (
                         <Right
                           style={{ position: "absolute", right: 20, top: 25 }}
@@ -431,7 +470,7 @@ class MyBooking extends Component {
                   </ListItem>
                 ) : (
                   <View style={{ paddingTop: "50%" }}>
-                    <ActivityIndicator />
+                    <ActivityIndicator style={{ color: Colors.navyUrban }} />
                   </View>
                 )
               )}

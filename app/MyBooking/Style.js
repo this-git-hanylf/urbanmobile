@@ -196,6 +196,7 @@ export default {
     textAlign: "center"
   },
   inputAttach: {
+    // width: "100%",
     height: 40,
     // marginBottom: 4,
     paddingBottom: 15,
@@ -211,7 +212,8 @@ export default {
     fontFamily: Fonts.type.proximaNovaBoldWeb,
     position: "absolute",
     left: 10,
-    fontSize: 13
+    fontSize: 13,
+    top: 1
   },
   inputAttachLarge: {
     height: "auto",
@@ -219,7 +221,7 @@ export default {
     marginLeft: 12,
     marginRight: 12,
     paddingBottom: 10,
-    paddingTop: 10,
+    paddingTop: 20,
     // backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: Colors.greyUrban,

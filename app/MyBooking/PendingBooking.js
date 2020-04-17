@@ -66,10 +66,11 @@ class PendingBooking extends Component {
       project_no: "",
       db_profile: "",
       dataPending: [],
-      order_date: ""
+      order_date: "",
+      uploadfoto: ""
     };
 
-    console.log("props cf", props);
+    console.log("props cf", this.props);
   }
 
   async componentDidMount() {
@@ -349,7 +350,7 @@ class PendingBooking extends Component {
                             // right: 0
                           }}
                         >
-                          Waiting Approval
+                          Waiting Payment
                         </Text>
                       </Right>
                     )}

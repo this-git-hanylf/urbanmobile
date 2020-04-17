@@ -865,7 +865,7 @@ class NupBooking extends React.Component {
                       textStyle={{
                         fontFamily: "Montserrat-Regular",
                         fontSize: 12,
-                        color: "red",
+                        // color: "red",
                         textAlign: "right"
                       }}
                       onValueChange={chooseUn => {

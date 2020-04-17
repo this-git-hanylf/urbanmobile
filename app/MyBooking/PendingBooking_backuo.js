@@ -362,7 +362,7 @@ class PendingBooking_backup extends Component {
                             // right: 0
                           }}
                         >
-                          Waiting Approval
+                          Waiting Payment
                         </Text>
                       </Right>
                     )}

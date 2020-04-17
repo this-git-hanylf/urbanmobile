@@ -158,7 +158,9 @@ export default class Intro extends React.Component {
           }
         } else {
           this.setState({ isLoaded: !this.state.isLoaded }, () => {
-            alert(res.Pesan);
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
           });
         }
       })
