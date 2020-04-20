@@ -80,7 +80,9 @@ class DetailBooking extends Component {
       pictUrlAttach: "",
       replaceFoto: "file:///urbanAPI/images/noimage-min.png",
       uploadfoto: false,
-      status: false
+      status: false,
+      Alert_Visibility: false,
+      pesan: ""
     };
 
     this.showAlert = this.showAlert.bind(this);
@@ -264,43 +266,44 @@ class DetailBooking extends Component {
         if (!res.Error) {
           // Actions.pop()
           this.setState({ isLogin: true }, () => {
-            alert(res.Pesan);
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
             // if (res.Data) {
             Actions.pop();
-            // console.log("resdata", frmData);
-            // console.log("uploadfoto", uploadfoto);
-            // this.setState({ uploadfoto: true });
+
             console.log("uploadfoto", !this.state.uploadfoto);
             setTimeout(() => {
               Actions.refresh({ uploadfoto: !this.state.uploadfoto });
             }, 0);
-            // }
-            // Actions.pop();
-            // setTimeout(() => {
-            //   Actions.refresh({
-            //     someprop: Math.random() * 100
-            //   });
-            // }, 10);
-            // Actions.Login()
-            // _navigate("FormPayment", { prevItems: frmData });
           });
         } else {
           this.setState({ isLoaded: !this.state.isLoaded }, () => {
-            alert(res.Pesan);
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
             // console.log('url',this.state.pickUrlKtp.uri)
           });
         }
-        alert(res.Pesan);
+        const pesan = res.Pesan;
+        this.alertFillBlank(true, pesan);
+        // alert(res.Pesan);
       });
     } else {
       this.setState({ isLoaded: !this.state.isLoaded }, () => {
-        alert("Please upload attachment");
+        // alert("Please upload attachment");
+        const pesan = "Please upload attachment";
+        this.alertFillBlank(true, pesan);
         // alert(res.Pesan);
         // console.log('url',this.state.pickUrlKtp.uri)
       });
       // alert("Please assign your ID Picture");
       // console.log('url else',this.state.pickUrlKtp.uri)
     }
+  }
+
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
   render() {
@@ -341,6 +344,64 @@ class DetailBooking extends Component {
           </View>
           <View style={Style.actionBarRight}></View>
         </Header> */}
+        {/* <AlertCustom /> */}
+        <Modal
+          visible={this.state.Alert_Visibility}
+          transparent={true}
+          animationType={"slide"}
+          onRequestClose={() => {
+            this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+          }}
+          // activeOpacity={1}
+        >
+          <View
+            style={{
+              // backgroundColor: "red",
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "70%",
+                height: "20%",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  fontSize: 17,
+                  paddingBottom: 15,
+                  color: Colors.black,
+                  textAlign: "center"
+                }}
+              >
+                {this.state.pesan}
+              </Text>
+              <View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: Colors.goldUrban,
+                    height: 40,
+                    width: 100,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                  onPress={() => {
+                    this.alertFillBlank(!this.state.Alert_Visibility);
+                  }}
+                  // activeOpacity={0.7}
+                >
+                  <Text style={{ color: Colors.white }}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View style={{ top: 25, paddingBottom: 45 }}>
           <View style={{ paddingLeft: 15, paddingTop: 15 }}>
             <Button

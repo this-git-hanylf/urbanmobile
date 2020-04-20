@@ -13,7 +13,8 @@ import {
   Platform,
   SafeAreaView,
   FlatList,
-  Alert
+  Alert,
+  Modal
 } from "react-native";
 import {
   Container,
@@ -71,7 +72,9 @@ export default class extends React.Component {
       emailacc: "",
       email_add: "",
       descs: "",
-      datasysspec: ""
+      datasysspec: "",
+      Alert_Visibility: false,
+      pesan: ""
     };
     // this.logout = this.logout.bind(this);
   }
@@ -217,19 +220,21 @@ export default class extends React.Component {
   };
 
   logout = () => {
-    Alert.alert(
-      "",
-      "Are you want to Sign Out",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => this.signOut() }
-      ],
-      { cancelable: false }
-    );
+    const pesan = "Are you want to Sign Out?";
+    this.alertFillBlank(true, pesan);
+    // Alert.alert(
+    //   "",
+    //   "Are you want to Sign Out",
+    //   [
+    //     {
+    //       text: "Cancel",
+    //       onPress: () => console.log("Cancel Pressed"),
+    //       style: "cancel"
+    //     },
+    //     { text: "OK", onPress: () => this.signOut() }
+    //   ],
+    //   { cancelable: false }
+    // );
   };
 
   signOut = async () => {
@@ -250,7 +255,8 @@ export default class extends React.Component {
     })
       .then(response => response.json())
       .then(res => {
-        alert(res.Pesan);
+        alert("tes");
+        // alert(res.Pesan);
         console.log("save profile", res);
       })
       .catch(error => {
@@ -324,6 +330,9 @@ export default class extends React.Component {
   //       }
   //       console.log('menu',val);
   //   }
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
 
   render() {
     if (this.state.isLogin) {
@@ -343,6 +352,91 @@ export default class extends React.Component {
               style={Style.layoutInner}
               contentContainerStyle={Style.layoutContent}
             >
+              <Modal
+                visible={this.state.Alert_Visibility}
+                transparent={true}
+                animationType={"slide"}
+                onRequestClose={() => {
+                  this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+                }}
+                // activeOpacity={1}
+              >
+                <View
+                  style={{
+                    // backgroundColor: "red",
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      width: "70%",
+                      height: "20%",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: Fonts.type.proximaNovaReg,
+                        fontSize: 17,
+                        paddingBottom: 15,
+                        color: Colors.black,
+                        textAlign: "center"
+                      }}
+                    >
+                      {this.state.pesan}
+                    </Text>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignContent: "space-around"
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: Colors.goldUrban,
+                          height: 40,
+                          width: 100,
+                          alignContent: "space-around",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          marginHorizontal: 10
+                        }}
+                        onPress={() => {
+                          this.alertFillBlank(!this.state.Alert_Visibility);
+                        }}
+                        // activeOpacity={0.7}
+                      >
+                        <Text style={{ color: Colors.white }}>No</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: Colors.goldUrban,
+                          height: 40,
+                          width: 100,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          alignContent: "space-around",
+                          marginHorizontal: 10
+                        }}
+                        onPress={() => {
+                          // Actions.Login();
+                          this.alertFillBlank(!this.state.Alert_Visibility);
+                          this.signOut();
+                        }}
+                        // activeOpacity={0.7}
+                      >
+                        <Text style={{ color: Colors.white }}>Yes</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+
               <View style={Styles.owner}>
                 <View style={Styles.ownerAvatar}>
                   <Image

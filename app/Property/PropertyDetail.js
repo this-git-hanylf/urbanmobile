@@ -111,6 +111,8 @@ export default class extends React.Component {
     this.state = {
       Alert_Visibility: false,
       pesan: "",
+      Alert_Visibility2: false,
+      pesan2: "",
       title: "",
       picture_url: "",
 
@@ -692,20 +694,29 @@ export default class extends React.Component {
   };
 
   alertNUP() {
-    Alert.alert(
-      "Attention",
-      "Please contact your agent for booking",
-      [
-        { text: "Close", onPress: () => console.log("Close"), style: "default" }
-        // { text: "Camera", onPress: () => this.fromCamera() },
-        // {
-        //     text: "Cancel",
-        //     onPress: () => console.log("User Cancel"),
-        //     style: {backgroundColor: "#000"}
-        // }
-      ],
-      { cancelable: false }
-    );
+    const pesan2 = "Please contact your agent for booking";
+    this.alertFillBlank2(true, pesan2);
+    // Alert.alert(
+    //   "Attention",
+    //   "Please contact your agent for booking",
+    //   [
+    //     { text: "Close", onPress: () => console.log("Close"), style: "default" }
+    //     // { text: "Camera", onPress: () => this.fromCamera() },
+    //     // {
+    //     //     text: "Cancel",
+    //     //     onPress: () => console.log("User Cancel"),
+    //     //     style: {backgroundColor: "#000"}
+    //     // }
+    //   ],
+    //   { cancelable: false }
+    // );
+  }
+
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
+  alertFillBlank2(visible, pesan2) {
+    this.setState({ Alert_Visibility2: visible, pesan2: pesan2 });
   }
 
   selectAmenDining() {
@@ -803,9 +814,6 @@ export default class extends React.Component {
       const pesan = "Please Sign in to Access";
       this.alertFillBlank(true, pesan);
     }
-  }
-  alertFillBlank(visible, pesan) {
-    this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
   // openMap(cordinat) {
@@ -965,6 +973,73 @@ export default class extends React.Component {
                 </View>
               </View>
             </Modal>
+
+            <Modal
+              visible={this.state.Alert_Visibility2}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank2(!this.state.Alert_Visibility2, pesan2);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center"
+                    }}
+                  >
+                    {this.state.pesan2}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around"
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank2(!this.state.Alert_Visibility2);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+
             <View style={{ top: 25 }}>
               {this.state.project ? (
                 <ImageBackground

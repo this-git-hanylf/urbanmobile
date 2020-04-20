@@ -16,7 +16,7 @@ import {
   Alert,
   FlatList,
   TextInput,
-  Modal
+  Modal,
 } from "react-native";
 import {
   Container,
@@ -31,7 +31,7 @@ import {
   Title,
   ListItem,
   Label,
-  Content
+  Content,
   // CheckBox
 } from "native-base";
 import { SearchBar } from "react-native-elements";
@@ -55,13 +55,13 @@ const userType = [
   {
     key: 1,
     label: "Inhouse",
-    value: "I"
+    value: "I",
   },
   {
     key: 2,
     label: "Member",
-    value: "M"
-  }
+    value: "M",
+  },
 ];
 
 class SignupGuest extends React.Component {
@@ -112,7 +112,7 @@ class SignupGuest extends React.Component {
       // replaceFoto: "assets/images/download.png",
       // replaceFoto: "",
       // /Users/hany/Documents/Project React/urbanmobile/assets/images/download.png
-      replaceFoto: "file:///urbanAPI/images/noimage-min.png"
+      replaceFoto: "file:///urbanAPI/images/noimage-min.png",
     };
   }
 
@@ -122,7 +122,7 @@ class SignupGuest extends React.Component {
       email: this.props.datas_dari_regist.email,
       nohp: this.props.datas_dari_regist.hp,
       principle_cd: this.props.datas_dari_regist.code,
-      principle_name: this.props.resData[0].group_name
+      principle_name: this.props.resData[0].group_name,
       // principle_cd: this.props.itemPrinciple
     };
     console.log("email", data.email);
@@ -147,7 +147,7 @@ class SignupGuest extends React.Component {
     // console.log("email",email);
   }
 
-  chooseType = val => {
+  chooseType = (val) => {
     this.setState({ selectedType: val });
   };
 
@@ -172,7 +172,7 @@ class SignupGuest extends React.Component {
             alignSelf: "flex-start",
             color: "#333",
             marginBottom: 5,
-            fontSize: 15
+            fontSize: 15,
           }}
         >
           {item.label}
@@ -187,32 +187,32 @@ class SignupGuest extends React.Component {
 
   getProject = () => {
     fetch(urlApi + "c_auth/getProjects/", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         console.log("res", res);
         if (!res.Error) {
           this.setState({ dataProject: res.Data });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
   getPrinciples = () => {
     fetch(urlApi + "c_principal/zoomPrincipal/IFCAPB/", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         console.log("principle", res);
         if (!res.Error) {
           this.setState({ getPrin: res.Data });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -220,7 +220,7 @@ class SignupGuest extends React.Component {
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
-  selectedItem = item => {
+  selectedItem = (item) => {
     console.log("item select principle", item);
 
     // alert(val);
@@ -233,7 +233,7 @@ class SignupGuest extends React.Component {
     }
     this.setModalVisible(!this.state.modalVisible);
   };
-  validating = validationData => {
+  validating = (validationData) => {
     const keys = Object.keys(validationData);
     const errorKey = [];
     let isValid = false;
@@ -335,7 +335,7 @@ class SignupGuest extends React.Component {
       npwp,
       project_no,
       pictUrlKtp,
-      pictUrlNPWP
+      pictUrlNPWP,
     } = this.state;
 
     const frmData = {
@@ -362,14 +362,14 @@ class SignupGuest extends React.Component {
       accno: acc_no,
 
       principle: principle_cd,
-      principlename: principle_name
+      principlename: principle_name,
     };
 
     const isValid = this.validating({
       email: { require: true },
       fullname: { require: true },
       nik: { require: true },
-      nohp: { require: true }
+      nohp: { require: true },
       //   nik
       // selectedType: { require: true },
       // selectedProject: { require: true }
@@ -431,7 +431,7 @@ class SignupGuest extends React.Component {
         "POST",
         urlApi + "c_auth/SignUpAgent",
         {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
         [
           // { name: "photo", filename: fileName, data: fileImg },
@@ -439,9 +439,9 @@ class SignupGuest extends React.Component {
           { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
           // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
           // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) }
+          { name: "data", data: JSON.stringify(frmData) },
         ]
-      ).then(resp => {
+      ).then((resp) => {
         console.log("res_if", resp);
         const res = JSON.parse(resp.data);
         console.log("res", res);
@@ -489,10 +489,10 @@ class SignupGuest extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
-  handleCheck = data => {
+  handleCheck = (data) => {
     const { dataProject } = this.state;
 
-    dataProject.forEach(datas => {
+    dataProject.forEach((datas) => {
       if (datas.project_no === data.project_no) {
         if (datas.checked) {
           datas.checked = false;
@@ -504,13 +504,13 @@ class SignupGuest extends React.Component {
 
     this.setState({ dataProject }, () => {
       const selectedProject = this.state.dataProject.filter(
-        item => item.checked
+        (item) => item.checked
       );
       this.setState({ selectedProject });
     });
   };
 
-  showAlert = key => {
+  showAlert = (key) => {
     Alert.alert(
       "Select a Photo",
       "Choose the place where you want to get a photo",
@@ -520,8 +520,8 @@ class SignupGuest extends React.Component {
         {
           text: "Cancel",
           onPress: () => console.log("User Cancel"),
-          style: "cancel"
-        }
+          style: "cancel",
+        },
       ],
       { cancelable: false }
     );
@@ -531,31 +531,31 @@ class SignupGuest extends React.Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   fromGallery(key) {
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
-  updateSearch = text => {
+  updateSearch = (text) => {
     console.log("input search", text);
     this.setState({ search: text });
   };
@@ -654,16 +654,16 @@ class SignupGuest extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
                   style={{
                     backgroundColor: "white",
-                    width: "70%",
+                    width: "80%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -672,7 +672,7 @@ class SignupGuest extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -684,7 +684,7 @@ class SignupGuest extends React.Component {
                         height: 40,
                         width: 100,
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -712,7 +712,7 @@ class SignupGuest extends React.Component {
                   autoCapitalize="words"
                   placeholderTextColor={"#666"}
                   value={this.state.fullname}
-                  onChangeText={fullname => this.setState({ fullname })}
+                  onChangeText={(fullname) => this.setState({ fullname })}
                   style={styles.positionTextInput}
                   ref="fullname"
                 />
@@ -722,7 +722,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -736,7 +736,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Full Name Required
@@ -761,7 +761,7 @@ class SignupGuest extends React.Component {
                   keyboardType="numeric"
                   placeholderTextColor={"#666"}
                   value={this.state.nohp}
-                  onChangeText={val => this.setState({ nohp: val })}
+                  onChangeText={(val) => this.setState({ nohp: val })}
                   style={styles.positionTextInput}
                   ref="acc_no"
                 />
@@ -771,7 +771,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -785,7 +785,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Handphone Required
@@ -806,7 +806,7 @@ class SignupGuest extends React.Component {
                   // placeholder='Full Name'
                   placeholderTextColor={"#666"}
                   value={this.state.email}
-                  onChangeText={email => this.setState({ email })}
+                  onChangeText={(email) => this.setState({ email })}
                   style={styles.positionTextInput}
                   ref="email"
                 />
@@ -816,7 +816,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -830,7 +830,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Email Required
@@ -852,7 +852,7 @@ class SignupGuest extends React.Component {
                   keyboardType="numeric"
                   placeholderTextColor={"#666"}
                   value={this.state.nik}
-                  onChangeText={val => this.setState({ nik: val })}
+                  onChangeText={(val) => this.setState({ nik: val })}
                   style={styles.positionTextInput}
                   ref="nik"
                 />
@@ -862,7 +862,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -885,7 +885,7 @@ class SignupGuest extends React.Component {
                   keyboardType="numeric"
                   placeholderTextColor={"#666"}
                   value={this.state.npwp}
-                  onChangeText={val => this.setState({ npwp: val })}
+                  onChangeText={(val) => this.setState({ npwp: val })}
                   style={styles.positionTextInput}
                   ref="npwp"
                 />
@@ -895,7 +895,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -910,8 +910,8 @@ class SignupGuest extends React.Component {
                   style={[
                     styles.overviewTitles_Bank,
                     {
-                      color: this.state.bank_name ? "#B0C6DA" : "#fff"
-                    }
+                      color: this.state.bank_name ? "#B0C6DA" : "#fff",
+                    },
                   ]}
                 >
                   Bank Name
@@ -934,15 +934,15 @@ class SignupGuest extends React.Component {
 
                   value={this.state.bank_name}
                   editable={false}
-                  onChangeText={val => this.setState({ bank_name: val })}
+                  onChangeText={(val) => this.setState({ bank_name: val })}
                   style={[
                     styles.positionTextInput_Bank,
                     {
                       fontFamily: this.state.bank_name
                         ? Fonts.type.proximaNovaReg
                         : Fonts.type.proximaNovaBoldWeb,
-                      fontWeight: this.state.bank_name ? "100" : "200"
-                    }
+                      fontWeight: this.state.bank_name ? "100" : "200",
+                    },
                   ]}
                   ref="bank_name"
                 />
@@ -952,7 +952,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -970,7 +970,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Bank Name Required
@@ -994,7 +994,7 @@ class SignupGuest extends React.Component {
                   keyboardType="numeric"
                   placeholderTextColor={"#666"}
                   value={this.state.acc_no}
-                  onChangeText={val => this.setState({ acc_no: val })}
+                  onChangeText={(val) => this.setState({ acc_no: val })}
                   style={styles.positionTextInput}
                   ref="acc_no"
                 />
@@ -1004,7 +1004,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -1018,7 +1018,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Account Number Required
@@ -1042,7 +1042,7 @@ class SignupGuest extends React.Component {
                   autoCapitalize="words"
                   placeholderTextColor={"#666"}
                   value={this.state.acc_name}
-                  onChangeText={val => this.setState({ acc_name: val })}
+                  onChangeText={(val) => this.setState({ acc_name: val })}
                   style={styles.positionTextInput}
                   ref="acc_name"
                 />
@@ -1052,7 +1052,7 @@ class SignupGuest extends React.Component {
                       color: "red",
                       bottom: 3,
                       position: "absolute",
-                      right: 0
+                      right: 0,
                     }}
                     name="close-circle"
                   />
@@ -1066,7 +1066,7 @@ class SignupGuest extends React.Component {
                     bottom: 10,
                     left: 15,
                     color: "red",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Account Name Required
@@ -1089,7 +1089,7 @@ class SignupGuest extends React.Component {
                       width: 25,
                       height: 25,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image.png")}
                   ></Image>
@@ -1107,7 +1107,7 @@ class SignupGuest extends React.Component {
                       style={{
                         width: 200,
                         height: 130,
-                        alignContent: "center"
+                        alignContent: "center",
                       }}
                       source={this.state.pictUrlKtp}
                     />
@@ -1118,7 +1118,7 @@ class SignupGuest extends React.Component {
                       width: 25,
                       height: 25,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image.png")}
                   ></Image>
@@ -1142,7 +1142,7 @@ class SignupGuest extends React.Component {
                       width: 25,
                       height: 25,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image.png")}
                   ></Image>
@@ -1160,7 +1160,7 @@ class SignupGuest extends React.Component {
                       style={{
                         width: 200,
                         height: 130,
-                        alignContent: "center"
+                        alignContent: "center",
                       }}
                       source={this.state.pictUrlNPWP}
                     />
@@ -1171,7 +1171,7 @@ class SignupGuest extends React.Component {
                       width: 25,
                       height: 25,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image.png")}
                   ></Image>
@@ -1211,10 +1211,10 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 4,
     color: "black",
-    paddingRight: 30 // to ensure the text is never behind the icon
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
     ...styles.inputEmail,
-    fontSize: 17
-  }
+    fontSize: 17,
+  },
 });

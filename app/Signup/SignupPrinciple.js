@@ -17,7 +17,7 @@ import {
   FlatList,
   TextInput,
   Modal,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import {
   Container,
@@ -33,7 +33,7 @@ import {
   ListItem,
   Textarea,
   Picker,
-  Label
+  Label,
   // CheckBox
 } from "native-base";
 import { SearchBar } from "react-native-elements";
@@ -57,13 +57,13 @@ const userType = [
   {
     key: 1,
     label: "Inhouse",
-    value: "I"
+    value: "I",
   },
   {
     key: 2,
     label: "Member",
-    value: "M"
-  }
+    value: "M",
+  },
 ];
 
 class SignupPrinciple extends React.Component {
@@ -113,7 +113,7 @@ class SignupPrinciple extends React.Component {
       captchaHolder: 0,
       randomNumberOne: 0,
       capt: false,
-      officephone: ""
+      officephone: "",
     };
     // console.log('statte', this.state.title);
   }
@@ -124,7 +124,7 @@ class SignupPrinciple extends React.Component {
       email: this.props.datas_dari_regist.email,
       contactno: this.props.datas_dari_regist.hp,
       lead_cd: this.props.datas_dari_regist.code,
-      lead_name: this.props.resData[0].group_name
+      lead_name: this.props.resData[0].group_name,
     };
     console.log("email", data.email);
     console.log("data dari regis", data);
@@ -156,11 +156,11 @@ class SignupPrinciple extends React.Component {
 
   getFile = () => {
     fetch(urlApi + "c_termcondition/getTermCondition/IFCAMOBILE", {
-      method: "GET"
+      method: "GET",
       // headers : this.state.hd,
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
           this.setState({ files: resData });
@@ -171,7 +171,7 @@ class SignupPrinciple extends React.Component {
         }
         console.log("getFiles", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -187,7 +187,7 @@ class SignupPrinciple extends React.Component {
   //     Actions.NUPPay({nup : this.props.nup});
   // }
 
-  showAlert = key => {
+  showAlert = (key) => {
     Alert.alert(
       "Select a Photo",
       "Choose the place where you want to get a photo",
@@ -197,8 +197,8 @@ class SignupPrinciple extends React.Component {
         {
           text: "Cancel",
           onPress: () => console.log("User Cancel"),
-          style: "cancel"
-        }
+          style: "cancel",
+        },
       ],
       { cancelable: false }
     );
@@ -208,46 +208,46 @@ class SignupPrinciple extends React.Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
-      height: 600
+      height: 600,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   fromGallery(key) {
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
-      height: 600
+      height: 600,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   getLeadCd = () => {
     // const item = this.props.items
     fetch(urlApi + "c_principal/zoomLeadCode/IFCAPB/", {
-      method: "GET"
+      method: "GET",
       // headers : this.state.hd,
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
-          resData.map(data => {
-            this.setState(prevState => ({
+          resData.map((data) => {
+            this.setState((prevState) => ({
               getLeadCode: [
                 ...prevState.getLeadCode,
-                { label: data.lead_name, value: data.lead_cd }
-              ]
+                { label: data.lead_name, value: data.lead_cd },
+              ],
             }));
           });
         } else {
@@ -257,12 +257,12 @@ class SignupPrinciple extends React.Component {
         }
         console.log("leadcd", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  validating = validationData => {
+  validating = (validationData) => {
     const keys = Object.keys(validationData);
     const errorKey = [];
     let isValid = false;
@@ -421,7 +421,7 @@ class SignupPrinciple extends React.Component {
       contactno,
       lead_cd,
       lead_name,
-      officephone
+      officephone,
       // code,
       // lead_name,
       // getLeadCode,
@@ -452,7 +452,7 @@ class SignupPrinciple extends React.Component {
       // lead_cd: code
       lead_cd: lead_cd,
       lead_name: lead_name,
-      officephone: officephone
+      officephone: officephone,
       // lead_name: lead_name[0].label
       // lead_name: getLeadCode[0].lead_name,
     };
@@ -467,7 +467,7 @@ class SignupPrinciple extends React.Component {
       acc_name: { require: true },
       acc_no: { require: true },
       contactperson: { require: true },
-      contactno: { require: true }
+      contactno: { require: true },
       // lead_cd: { require: true }
       // filedomisili: { require: true}
       // address: { require: true },
@@ -542,7 +542,7 @@ class SignupPrinciple extends React.Component {
         "POST",
         urlApi + "c_auth/SignUpPrinciple",
         {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
         [
           // { name: "photo", filename: fileName, data: fileImg },
@@ -554,11 +554,11 @@ class SignupPrinciple extends React.Component {
           {
             name: "photoakte",
             filename: fileNameAktePendirian,
-            data: fileakte
+            data: fileakte,
           },
-          { name: "data", data: JSON.stringify(frmData) }
+          { name: "data", data: JSON.stringify(frmData) },
         ]
-      ).then(resp => {
+      ).then((resp) => {
         const res = JSON.parse(resp.data);
         // let res = JSON.stringify(resp.data);
         console.log("res", resp);
@@ -689,16 +689,16 @@ class SignupPrinciple extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
                   style={{
                     backgroundColor: "white",
-                    width: "70%",
+                    width: "80%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -707,7 +707,7 @@ class SignupPrinciple extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -719,7 +719,7 @@ class SignupPrinciple extends React.Component {
                         height: 40,
                         width: 100,
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -750,7 +750,7 @@ class SignupPrinciple extends React.Component {
                     autoCapitalize="words"
                     placeholderTextColor={"#666"}
                     value={this.state.agencyname}
-                    onChangeText={val => this.setState({ agencyname: val })}
+                    onChangeText={(val) => this.setState({ agencyname: val })}
                     style={styles.positionTextInput}
                     ref="agencyname"
                   />
@@ -760,7 +760,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -774,7 +774,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Agency Name Required
@@ -799,7 +799,7 @@ class SignupPrinciple extends React.Component {
                     autoCapitalize="words"
                     placeholderTextColor={"#666"}
                     value={this.state.companyname}
-                    onChangeText={val => this.setState({ companyname: val })}
+                    onChangeText={(val) => this.setState({ companyname: val })}
                     style={styles.positionTextInput}
                     ref="companyname"
                   />
@@ -809,7 +809,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -823,7 +823,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Company Name Required
@@ -843,7 +843,7 @@ class SignupPrinciple extends React.Component {
                   style={styles.inputAddress}
                   // style={styles.positionTextInput}
                   value={this.state.address}
-                  onChangeText={val => this.setState({ address: val })}
+                  onChangeText={(val) => this.setState({ address: val })}
                   placeholder="Company Address"
                   editable={true}
                   placeholderTextColor={"#666"}
@@ -861,7 +861,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Address Required
@@ -885,7 +885,7 @@ class SignupPrinciple extends React.Component {
                     keyboardType="numeric"
                     placeholderTextColor={"#666"}
                     value={this.state.officephone}
-                    onChangeText={val => this.setState({ officephone: val })}
+                    onChangeText={(val) => this.setState({ officephone: val })}
                     style={styles.positionTextInput}
                     ref="officephone"
                   />
@@ -895,7 +895,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -929,7 +929,7 @@ class SignupPrinciple extends React.Component {
                     keyboardType="numeric"
                     placeholderTextColor={"#666"}
                     value={this.state.npwp}
-                    onChangeText={val => this.setState({ npwp: val })}
+                    onChangeText={(val) => this.setState({ npwp: val })}
                     style={styles.positionTextInput}
                     ref="npwp"
                   />
@@ -939,7 +939,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -953,7 +953,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     NPWP Required
@@ -968,8 +968,8 @@ class SignupPrinciple extends React.Component {
                     style={[
                       styles.overviewTitles_Bank,
                       {
-                        color: this.state.bank_name ? "#B0C6DA" : "#fff"
-                      }
+                        color: this.state.bank_name ? "#B0C6DA" : "#fff",
+                      },
                     ]}
                   >
                     Bank Name
@@ -989,15 +989,15 @@ class SignupPrinciple extends React.Component {
                     editable={false}
                     placeholderTextColor={"#666"}
                     value={this.state.bank_name}
-                    onChangeText={val => this.setState({ bank_name: val })}
+                    onChangeText={(val) => this.setState({ bank_name: val })}
                     style={[
                       styles.positionTextInput_Bank,
                       {
                         fontFamily: this.state.bank_name
                           ? Fonts.type.proximaNovaReg
                           : Fonts.type.proximaNovaBoldWeb,
-                        fontWeight: this.state.bank_name ? "100" : "200"
-                      }
+                        fontWeight: this.state.bank_name ? "100" : "200",
+                      },
                     ]}
                     ref="bank_name"
                   />
@@ -1007,7 +1007,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1026,7 +1026,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Bank Name Required
@@ -1051,7 +1051,7 @@ class SignupPrinciple extends React.Component {
                     keyboardType="numeric"
                     placeholderTextColor={"#666"}
                     value={this.state.acc_no}
-                    onChangeText={val => this.setState({ acc_no: val })}
+                    onChangeText={(val) => this.setState({ acc_no: val })}
                     style={styles.positionTextInput}
                     ref="acc_no"
                   />
@@ -1061,7 +1061,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1075,7 +1075,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Account Number Required
@@ -1099,7 +1099,7 @@ class SignupPrinciple extends React.Component {
                     autoCapitalize="words"
                     placeholderTextColor={"#666"}
                     value={this.state.acc_name}
-                    onChangeText={val => this.setState({ acc_name: val })}
+                    onChangeText={(val) => this.setState({ acc_name: val })}
                     style={styles.positionTextInput}
                     ref="acc_name"
                   />
@@ -1109,7 +1109,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1123,7 +1123,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Account Name Required
@@ -1147,7 +1147,9 @@ class SignupPrinciple extends React.Component {
                     // placeholder='Full Name'
                     placeholderTextColor={"#666"}
                     value={this.state.contactperson}
-                    onChangeText={val => this.setState({ contactperson: val })}
+                    onChangeText={(val) =>
+                      this.setState({ contactperson: val })
+                    }
                     style={styles.positionTextInput}
                     ref="contactperson"
                   />
@@ -1157,7 +1159,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1171,7 +1173,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Contact Person Required
@@ -1195,7 +1197,7 @@ class SignupPrinciple extends React.Component {
                     keyboardType="numeric"
                     placeholderTextColor={"#666"}
                     value={this.state.contactno}
-                    onChangeText={val => this.setState({ contactno: val })}
+                    onChangeText={(val) => this.setState({ contactno: val })}
                     style={styles.positionTextInput}
                     ref="contactperson"
                   />
@@ -1205,7 +1207,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1219,7 +1221,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Contact Number Required
@@ -1240,7 +1242,7 @@ class SignupPrinciple extends React.Component {
                     // placeholder='Full Name'
                     placeholderTextColor={"#666"}
                     value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
+                    onChangeText={(email) => this.setState({ email })}
                     style={styles.positionTextInput}
                     ref="fullname"
                   />
@@ -1250,7 +1252,7 @@ class SignupPrinciple extends React.Component {
                         color: "red",
                         bottom: 3,
                         position: "absolute",
-                        right: 0
+                        right: 0,
                       }}
                       name="close-circle"
                     />
@@ -1264,7 +1266,7 @@ class SignupPrinciple extends React.Component {
                       bottom: 10,
                       left: 15,
                       color: "red",
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     Email Required
@@ -1279,7 +1281,7 @@ class SignupPrinciple extends React.Component {
                     regular
                     style={[
                       { borderRadius: 5, width: Metrics.WIDTH * 0.92 },
-                      styles.inputAttach
+                      styles.inputAttach,
                     ]}
                     onPress={() => this.showAlert("pictUrlKtp")}
                     pointerEvents={this.state.isLoaded ? "auto" : "none"}
@@ -1296,7 +1298,7 @@ class SignupPrinciple extends React.Component {
                     <Text
                       style={[
                         styles.textAttach,
-                        { width: Metrics.WIDTH * 0.92 }
+                        { width: Metrics.WIDTH * 0.92 },
                       ]}
                     >
                       Attach KTP
@@ -1306,7 +1308,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1325,7 +1327,7 @@ class SignupPrinciple extends React.Component {
                         style={{
                           width: 200,
                           height: 130,
-                          alignContent: "center"
+                          alignContent: "center",
                         }}
                         source={this.state.pictUrlKtp}
                       />
@@ -1336,7 +1338,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1359,7 +1361,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1377,7 +1379,7 @@ class SignupPrinciple extends React.Component {
                         style={{
                           width: 200,
                           height: 130,
-                          alignContent: "center"
+                          alignContent: "center",
                         }}
                         source={this.state.pictUrlNPWP}
                       />
@@ -1388,7 +1390,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1411,7 +1413,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1429,7 +1431,7 @@ class SignupPrinciple extends React.Component {
                         style={{
                           width: 200,
                           height: 130,
-                          alignContent: "center"
+                          alignContent: "center",
                         }}
                         source={this.state.pictUrlTDP}
                       />
@@ -1440,7 +1442,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1463,7 +1465,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1481,7 +1483,7 @@ class SignupPrinciple extends React.Component {
                         style={{
                           width: 200,
                           height: 130,
-                          alignContent: "center"
+                          alignContent: "center",
                         }}
                         source={this.state.pictUrlSIUP}
                       />
@@ -1492,7 +1494,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1517,7 +1519,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1535,7 +1537,7 @@ class SignupPrinciple extends React.Component {
                         style={{
                           width: 200,
                           height: 130,
-                          alignContent: "center"
+                          alignContent: "center",
                         }}
                         source={this.state.pictUrlAktePendirian}
                       />
@@ -1546,7 +1548,7 @@ class SignupPrinciple extends React.Component {
                         width: 25,
                         height: 25,
                         position: "absolute",
-                        right: 10
+                        right: 10,
                       }}
                       source={require("@Asset/images/icon/image.png")}
                     ></Image>
@@ -1565,8 +1567,8 @@ class SignupPrinciple extends React.Component {
                 height: 30,
                 marginTop: 8,
                 marginBottom: 8,
-                borderRadius: 10
-              }
+                borderRadius: 10,
+              },
             ]}
           >
             <CheckBox
@@ -1608,7 +1610,7 @@ class SignupPrinciple extends React.Component {
                         height: 50,
                         width: 80,
                         backgroundColor: Colors.goldUrban,
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                     >
                       <Text style={{ fontSize: 20, textAlign: "center" }}>
@@ -1625,7 +1627,7 @@ class SignupPrinciple extends React.Component {
                   <View style={styles.captchaChildContainerInput}>
                     <TextInput
                       placeholder="Enter Captcha"
-                      onChangeText={data =>
+                      onChangeText={(data) =>
                         this.setState({ textInputHolder: data })
                       }
                       style={styles.textInputStyle}
@@ -1641,7 +1643,7 @@ class SignupPrinciple extends React.Component {
                         borderRadius: 5,
                         backgroundColor: Colors.navyUrban,
                         textAlign: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       onPress={this.validateCaptchaCode}
                     >
@@ -1664,8 +1666,8 @@ class SignupPrinciple extends React.Component {
               style={[
                 styles.signInBtn,
                 {
-                  backgroundColor: !this.state.capt ? "#cccccc" : "#0691ce"
-                }
+                  backgroundColor: !this.state.capt ? "#cccccc" : "#0691ce",
+                },
               ]}
               onPress={() => this.submit()}
               disabled={!this.state.capt}
@@ -1694,11 +1696,11 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 4,
     color: "black",
-    paddingRight: 30 // to ensure the text is never behind the icon
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
     ...styles.inputEmail,
-    fontSize: 17
+    fontSize: 17,
   },
   textBox: {
     flex: 1,
@@ -1709,9 +1711,9 @@ const pickerSelectStyles = StyleSheet.create({
     marginTop: 20,
     paddingTop: 10,
     borderColor: "#333",
-    borderWidth: 1
+    borderWidth: 1,
   },
   checkBoxWrap: {
-    marginHorizontal: 10
-  }
+    marginHorizontal: 10,
+  },
 });

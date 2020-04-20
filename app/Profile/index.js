@@ -14,7 +14,8 @@ import {
   Platform,
   SafeAreaView,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Modal
 } from "react-native";
 import {
   Container,
@@ -66,6 +67,8 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
+      Alert_Visibility: true,
+      pesan: "",
       isLoaded: true,
       gender: null,
       email: "",
@@ -398,7 +401,9 @@ export default class Profile extends React.Component {
     })
       .then(response => response.json())
       .then(res => {
-        alert(res.Pesan);
+        // alert(res.Pesan);
+        const pesan = res.Pesan;
+        this.alertFillBlank(true, pesan);
         console.log("save profile", res);
       })
       .catch(error => {
@@ -413,6 +418,10 @@ export default class Profile extends React.Component {
     });
     Actions.reset("Login");
   };
+
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
 
   showAlert = () => {
     Alert.alert(
@@ -485,19 +494,21 @@ export default class Profile extends React.Component {
   };
 
   logout = () => {
-    Alert.alert(
-      "",
-      "Are you want to Logout",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => this.signOut() }
-      ],
-      { cancelable: false }
-    );
+    // Alert.alert(
+    //   "",
+    //   "Are you want to Logout",
+    //   [
+    //     {
+    //       text: "Cancel",
+    //       onPress: () => console.log("Cancel Pressed"),
+    //       style: "cancel"
+    //     },
+    //     { text: "OK", onPress: () => this.signOut() }
+    //   ],
+    //   { cancelable: false }
+    // );
+    const pesan = "Are you want to Logout?";
+    this.alertFillBlank(true, pesan);
   };
 
   showActionSheet() {
@@ -569,6 +580,91 @@ export default class Profile extends React.Component {
             style={Style.layoutInner}
             contentContainerStyle={Style.layoutContent}
           >
+            <Modal
+              visible={this.state.Alert_Visibility}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center"
+                    }}
+                  >
+                    {this.state.pesan}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around"
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>No</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "space-around",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        // Actions.Login();
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                        Actions.Login();
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Yes</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+
             {/* <View style={[Styles.back, Style.actionBarIn]}>
               <Button
                 transparent
@@ -632,7 +728,12 @@ export default class Profile extends React.Component {
                 // width: "100%"
               }}
             >
-              <View style={{ alignItems: "flex-start", width: "30%" }}>
+              <View
+                style={{
+                  alignItems: "flex-start",
+                  width: "30%"
+                }}
+              >
                 <Text
                   style={{
                     color: Colors.white,
@@ -666,7 +767,12 @@ export default class Profile extends React.Component {
                 // width: "100%"
               }}
             >
-              <View style={{ alignItems: "flex-start", width: "30%" }}>
+              <View
+                style={{
+                  alignItems: "flex-start",
+                  width: "30%"
+                }}
+              >
                 <Text
                   style={{
                     color: Colors.white,
@@ -700,7 +806,12 @@ export default class Profile extends React.Component {
                 // width: "100%"
               }}
             >
-              <View style={{ alignItems: "flex-start", width: "30%" }}>
+              <View
+                style={{
+                  alignItems: "flex-start",
+                  width: "30%"
+                }}
+              >
                 <Text
                   style={{
                     color: Colors.white,
@@ -733,7 +844,12 @@ export default class Profile extends React.Component {
                 // width: "100%"
               }}
             >
-              <View style={{ alignItems: "flex-start", width: "30%" }}>
+              <View
+                style={{
+                  alignItems: "flex-start",
+                  width: "30%"
+                }}
+              >
                 <Text
                   style={{
                     color: Colors.white,
@@ -768,7 +884,12 @@ export default class Profile extends React.Component {
                 // width: "100%"
               }}
             >
-              <View style={{ alignItems: "flex-start", width: "30%" }}>
+              <View
+                style={{
+                  alignItems: "flex-start",
+                  width: "30%"
+                }}
+              >
                 <Text
                   style={{
                     color: Colors.white,

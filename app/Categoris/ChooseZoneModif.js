@@ -91,7 +91,9 @@ class ChooseZoneModif extends React.Component {
       picture_url: "",
       unit: [],
       property_cd: "",
-      hidden_pict: ""
+      hidden_pict: "",
+      Alert_Visibility: false,
+      pesan: ""
     };
     isMount = true;
     console.log("props", this.props);
@@ -205,9 +207,10 @@ class ChooseZoneModif extends React.Component {
                 const resData = res.Data;
                 this.setState({ amen: resData });
               } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
+                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                //   alert(res.Pesan);
+                // });
+                console.log("amenitis", res);
               }
               console.log("amenitis", res);
             })
@@ -257,9 +260,10 @@ class ChooseZoneModif extends React.Component {
                   }));
                 });
               } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
+                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                //   alert(res.Pesan);
+                // });
+                console.log("getData Galerry", res);
               }
               console.log("getData Galerry", res);
             })
@@ -344,9 +348,10 @@ class ChooseZoneModif extends React.Component {
                 const resData = res.Data;
                 this.setState({ unit: resData });
               } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
+                console.log("unit", res);
+                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                //   alert(res.Pesan);
+                // });
               }
               console.log("unit", res);
             })
@@ -403,21 +408,26 @@ class ChooseZoneModif extends React.Component {
   }
 
   alertNUP = () => {
-    Alert.alert(
-      "Attention",
-      "Please contact your agent for booking",
-      [
-        { text: "Close", onPress: () => console.log("Close"), style: "default" }
-        // { text: "Camera", onPress: () => this.fromCamera() },
-        // {
-        //     text: "Cancel",
-        //     onPress: () => console.log("User Cancel"),
-        //     style: {backgroundColor: "#000"}
-        // }
-      ],
-      { cancelable: false }
-    );
+    const pesan = "Please contact your agent for booking";
+    this.alertFillBlank(true, pesan);
+    // Alert.alert(
+    //   "Attention",
+    //   "Please contact your agent for booking",
+    //   [
+    //     { text: "Close", onPress: () => console.log("Close"), style: "default" }
+    //     // { text: "Camera", onPress: () => this.fromCamera() },
+    //     // {
+    //     //     text: "Cancel",
+    //     //     onPress: () => console.log("User Cancel"),
+    //     //     style: {backgroundColor: "#000"}
+    //     // }
+    //   ],
+    //   { cancelable: false }
+    // );
   };
+  alertFillBlank(visible, pesan) {
+    this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
 
   render() {
     return (
@@ -469,6 +479,73 @@ class ChooseZoneModif extends React.Component {
                 </Header> */}
 
           <ScrollView>
+            {/* {Alert custom} */}
+            <Modal
+              visible={this.state.Alert_Visibility}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center"
+                    }}
+                  >
+                    {this.state.pesan}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around"
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+
             <View
               style={{
                 top: 25
