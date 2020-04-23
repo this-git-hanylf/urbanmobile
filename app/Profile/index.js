@@ -15,7 +15,7 @@ import {
   SafeAreaView,
   FlatList,
   ActivityIndicator,
-  Modal
+  Modal,
 } from "react-native";
 import {
   Container,
@@ -39,7 +39,7 @@ import {
   ListItem,
   Tab,
   Tabs,
-  Picker
+  Picker,
 } from "native-base";
 
 import NavigationService from "@Service/Navigation";
@@ -52,7 +52,7 @@ import {
   _storeData,
   _getData,
   _getAllData,
-  _removeData
+  _removeData,
 } from "@Component/StoreAsync";
 import { Style, Colors, Fonts } from "../Themes/";
 import ImagePicker from "react-native-image-crop-picker";
@@ -86,7 +86,7 @@ export default class Profile extends React.Component {
       dataProfile: [],
       fotoProfil: require("@Asset/images/1.png"),
       fotoHeader: require("@Asset/images/header.png"),
-      password: ""
+      password: "",
     };
 
     this.renderAccordionHeader = this.renderAccordionHeader.bind(this);
@@ -106,7 +106,7 @@ export default class Profile extends React.Component {
       name: await _getData("@Name"),
       group: await _getData("@Group"),
       token: await _getData("@Token"),
-      hp: await _getData("@Handphone")
+      hp: await _getData("@Handphone"),
     };
 
     this.setState(data, () => {
@@ -130,12 +130,12 @@ export default class Profile extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Token: this.state.token
-        }
+          Token: this.state.token,
+        },
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         const resData = res.Data[0];
 
         // ? Agar Gambar Tidak ter cache
@@ -147,11 +147,11 @@ export default class Profile extends React.Component {
           fotoProfil: { uri: url },
           // pass_nih: resData.password,
           // fotoHeader:{uri:urlHeader},
-          gender: resData.gender
+          gender: resData.gender,
         });
         console.log("res Profil", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -165,7 +165,7 @@ export default class Profile extends React.Component {
       Name: name,
       Handphone: hp,
       Gender: gender,
-      wherename: name
+      wherename: name,
       // cpassword: curPass
     };
 
@@ -177,11 +177,11 @@ export default class Profile extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Token: this.state.token
-      }
+        Token: this.state.token,
+      },
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           this.setState({ isLogin: true }, () => {
             this.changePass();
@@ -200,7 +200,7 @@ export default class Profile extends React.Component {
 
         console.log("save profile", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -226,7 +226,7 @@ export default class Profile extends React.Component {
     const formData = {
       email: email,
       password: newPass,
-      cpassword: curPass
+      cpassword: curPass,
     };
     console.log("form ganti pas", formData);
 
@@ -236,15 +236,15 @@ export default class Profile extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Token: this.state.token
-      }
+        Token: this.state.token,
+      },
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         alert(res.Pesan);
         console.log("save profile", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -290,7 +290,7 @@ export default class Profile extends React.Component {
           style={Styles.textInput}
           placeholder={"First Name"}
           value={name}
-          onChangeText={val => {
+          onChangeText={(val) => {
             this.setState({ name: val });
           }}
         />
@@ -309,7 +309,7 @@ export default class Profile extends React.Component {
             <Picker
               placeholder="Gender"
               selectedValue={this.state.gender}
-              onValueChange={val => this.setState({ gender: val })}
+              onValueChange={(val) => this.setState({ gender: val })}
               textStyle={{ fontSize: 12 }}
             >
               <Item label="Male" value="Male" />
@@ -322,7 +322,7 @@ export default class Profile extends React.Component {
           style={Styles.textInput}
           placeholder={"Handphone"}
           value={hp}
-          onChangeText={val => {
+          onChangeText={(val) => {
             this.setState({ hp: val });
           }}
         />
@@ -350,19 +350,19 @@ export default class Profile extends React.Component {
         <TextInput
           style={Styles.textInput}
           placeholder={"Current Password"}
-          onChangeText={val => this.setState({ curPass: val })}
+          onChangeText={(val) => this.setState({ curPass: val })}
           value={this.state.curPass}
         />
         <TextInput
           style={Styles.textInput}
           placeholder={"New Password"}
-          onChangeText={val => this.setState({ newPass: val })}
+          onChangeText={(val) => this.setState({ newPass: val })}
           value={this.state.newPass}
         />
         <TextInput
           style={Styles.textInput}
           placeholder={"Confirm Password"}
-          onChangeText={val => this.setState({ conPass: val })}
+          onChangeText={(val) => this.setState({ conPass: val })}
           value={this.state.conPass}
         />
         <Button
@@ -386,8 +386,8 @@ export default class Profile extends React.Component {
   signOut = async () => {
     const formData = {
       email: this.state.email,
-      ipAddress: await DeviceInfo.getIPAddress().then(mac => mac),
-      device: Platform.OS
+      ipAddress: await DeviceInfo.getIPAddress().then((mac) => mac),
+      device: Platform.OS,
     };
 
     fetch(urlApi + "c_auth/Logout/" + this.state.email, {
@@ -396,22 +396,22 @@ export default class Profile extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Token: this.state.token
-      }
+        Token: this.state.token,
+      },
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         // alert(res.Pesan);
-        const pesan = res.Pesan;
-        this.alertFillBlank(true, pesan);
+        // const pesan = res.Pesan;
+        // this.alertFillBlank(true, pesan);
         console.log("save profile", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     const data = await _getAllData();
-    data.map(val => {
+    data.map((val) => {
       if (val != "@isIntro") {
         _removeData(val);
       }
@@ -433,8 +433,8 @@ export default class Profile extends React.Component {
         {
           text: "Cancel",
           onPress: () => console.log("User Cancel"),
-          style: "cancel"
-        }
+          style: "cancel",
+        },
       ],
       { cancelable: false }
     );
@@ -444,32 +444,32 @@ export default class Profile extends React.Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 200,
-      height: 200
+      height: 200,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ fotoProfil: { uri: image.path } }, () =>
           this.uploadPhoto()
         );
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   fromGallery(cropping, mediaType = "photo") {
     ImagePicker.openPicker({
       multiple: false,
       width: 200,
-      height: 200
+      height: 200,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ fotoProfil: { uri: image.path } }, () =>
           this.uploadPhoto()
         );
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   uploadPhoto = async () => {
@@ -483,10 +483,10 @@ export default class Profile extends React.Component {
       urlApi + "/c_profil/upload/" + this.state.email,
       {
         "Content-Type": "multipart/form-data",
-        Token: this.state.token
+        Token: this.state.token,
       },
       [{ name: "photo", filename: fileName, data: fileImg }]
-    ).then(resp => {
+    ).then((resp) => {
       let res = JSON.stringify(resp.data);
       console.log("res", resp);
       _storeData("@ProfileUpdate", true);
@@ -516,9 +516,9 @@ export default class Profile extends React.Component {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: data,
-        cancelButtonIndex: 0
+        cancelButtonIndex: 0,
       },
-      buttonIndex => {
+      (buttonIndex) => {
         if (buttonIndex !== 0) {
           this.setState({ gender: data[buttonIndex] });
         }
@@ -566,7 +566,7 @@ export default class Profile extends React.Component {
                   fontSize: 14,
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
+                  letterSpacing: 1,
                 }}
                 // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
               >
@@ -594,7 +594,7 @@ export default class Profile extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -603,7 +603,7 @@ export default class Profile extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -612,7 +612,7 @@ export default class Profile extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -621,7 +621,7 @@ export default class Profile extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      alignContent: "space-around"
+                      alignContent: "space-around",
                     }}
                   >
                     <TouchableOpacity
@@ -632,7 +632,7 @@ export default class Profile extends React.Component {
                         alignContent: "space-around",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -649,7 +649,7 @@ export default class Profile extends React.Component {
                         alignItems: "center",
                         justifyContent: "center",
                         alignContent: "space-around",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         // Actions.Login();
@@ -709,7 +709,7 @@ export default class Profile extends React.Component {
                         borderWidth: 1,
                         borderTopWidth: 0,
                         borderRightWidth: 0,
-                        borderLeftWidth: 0
+                        borderLeftWidth: 0,
                       }}
                     >
                       Change Profile Picture
@@ -724,21 +724,21 @@ export default class Profile extends React.Component {
                 flexDirection: "row",
                 marginHorizontal: 40,
                 alignItems: "flex-end",
-                marginBottom: 10
+                marginBottom: 10,
                 // width: "100%"
               }}
             >
               <View
                 style={{
                   alignItems: "flex-start",
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "Montserrat-Regular",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Name
@@ -751,7 +751,7 @@ export default class Profile extends React.Component {
                   placeholder={"First Name"}
                   placeholderTextColor={Colors.greyUrban}
                   value={this.state.name}
-                  onChangeText={val => {
+                  onChangeText={(val) => {
                     this.setState({ name: val });
                   }}
                 />
@@ -763,21 +763,21 @@ export default class Profile extends React.Component {
                 flexDirection: "row",
                 marginHorizontal: 40,
                 alignItems: "flex-end",
-                marginBottom: 10
+                marginBottom: 10,
                 // width: "100%"
               }}
             >
               <View
                 style={{
                   alignItems: "flex-start",
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "Montserrat-Regular",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Position
@@ -790,7 +790,7 @@ export default class Profile extends React.Component {
                   placeholder={"Position"}
                   placeholderTextColor={Colors.greyUrban}
                   value={this.state.group}
-                  onChangeText={val => {
+                  onChangeText={(val) => {
                     this.setState({ group: val });
                   }}
                 />
@@ -802,21 +802,21 @@ export default class Profile extends React.Component {
                 flexDirection: "row",
                 marginHorizontal: 40,
                 alignItems: "flex-end",
-                marginBottom: 10
+                marginBottom: 10,
                 // width: "100%"
               }}
             >
               <View
                 style={{
                   alignItems: "flex-start",
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "Montserrat-Regular",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Email
@@ -828,7 +828,7 @@ export default class Profile extends React.Component {
                   style={Styles.textInput}
                   placeholder={"Email"}
                   value={this.state.email}
-                  onChangeText={val => {
+                  onChangeText={(val) => {
                     this.setState({ email: val });
                   }}
                 />
@@ -840,21 +840,21 @@ export default class Profile extends React.Component {
                 flexDirection: "row",
                 marginHorizontal: 40,
                 alignItems: "flex-end",
-                marginBottom: 10
+                marginBottom: 10,
                 // width: "100%"
               }}
             >
               <View
                 style={{
                   alignItems: "flex-start",
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "Montserrat-Regular",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Phone
@@ -868,7 +868,7 @@ export default class Profile extends React.Component {
                   placeholder={"Number Phone"}
                   placeholderTextColor={Colors.greyUrban}
                   value={this.state.hp}
-                  onChangeText={val => {
+                  onChangeText={(val) => {
                     this.setState({ hp: val });
                   }}
                 />
@@ -880,21 +880,21 @@ export default class Profile extends React.Component {
                 flexDirection: "row",
                 marginHorizontal: 40,
                 alignItems: "flex-end",
-                marginBottom: 10
+                marginBottom: 10,
                 // width: "100%"
               }}
             >
               <View
                 style={{
                   alignItems: "flex-start",
-                  width: "30%"
+                  width: "30%",
                 }}
               >
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "Montserrat-Regular",
-                    fontSize: 12
+                    fontSize: 12,
                   }}
                 >
                   Password
@@ -906,7 +906,7 @@ export default class Profile extends React.Component {
                   secureTextEntry={true}
                   placeholder={"New Password"}
                   placeholderTextColor={Colors.greyUrban}
-                  onChangeText={val => this.setState({ curPass: val })}
+                  onChangeText={(val) => this.setState({ curPass: val })}
                   value={this.state.curPass}
                 />
               </View>
@@ -928,7 +928,7 @@ export default class Profile extends React.Component {
                         alignItems: "center",
                         textAlign: "center",
                         fontFamily: Fonts.type.proximaNovaBold,
-                        letterSpacing: 1
+                        letterSpacing: 1,
                       }}
                     >
                       Save
