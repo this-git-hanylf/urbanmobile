@@ -14,7 +14,7 @@ import {
   SafeAreaView,
   FlatList,
   Alert,
-  Modal
+  Modal,
 } from "react-native";
 import {
   Container,
@@ -36,7 +36,7 @@ import {
   List,
   ListItem,
   Tab,
-  Tabs
+  Tabs,
 } from "native-base";
 
 import { Fonts, Metrics, Colors, Style } from "../Themes/";
@@ -45,7 +45,7 @@ import {
   _storeData,
   _getData,
   _getAllData,
-  _removeData
+  _removeData,
 } from "@Component/StoreAsync";
 import { Actions } from "react-native-router-flux";
 import { urlApi } from "@Config/services";
@@ -74,7 +74,7 @@ export default class extends React.Component {
       descs: "",
       datasysspec: "",
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
     };
     // this.logout = this.logout.bind(this);
   }
@@ -89,7 +89,7 @@ export default class extends React.Component {
       dashmenu: (await _getData("@DashMenu"))
         ? await _getData("@DashMenu")
         : [],
-      isLogin: await _getData("@isLogin")
+      isLogin: await _getData("@isLogin"),
     };
 
     console.log("datra", data);
@@ -107,7 +107,7 @@ export default class extends React.Component {
 
   receiveProps = async () => {
     const data = {
-      name: await _getData("@Name")
+      name: await _getData("@Name"),
     };
 
     if (await _getData("@ProfileUpdate")) {
@@ -130,12 +130,12 @@ export default class extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Token: this.state.token
-        }
+          Token: this.state.token,
+        },
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         const resData = res.Data[0];
 
         // ? Agar Gambar Tidak ter cache
@@ -143,7 +143,7 @@ export default class extends React.Component {
         this.setState({ fotoProfil: url });
         console.log("res Profileee", this.state);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -156,11 +156,11 @@ export default class extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Token: this.state.token
-      }
+        Token: this.state.token,
+      },
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -168,7 +168,7 @@ export default class extends React.Component {
           console.log("datasysspec", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -186,7 +186,7 @@ export default class extends React.Component {
         ccRecipients: [""],
         bccRecipients: [""],
         body: "",
-        isHTML: true
+        isHTML: true,
       },
       (error, event) => {
         Alert.alert(
@@ -195,12 +195,12 @@ export default class extends React.Component {
           [
             {
               text: "Ok",
-              onPress: () => console.log("OK: Email Error Response")
+              onPress: () => console.log("OK: Email Error Response"),
             },
             {
               text: "Cancel",
-              onPress: () => console.log("CANCEL: Email Error Response")
-            }
+              onPress: () => console.log("CANCEL: Email Error Response"),
+            },
           ],
           { cancelable: true }
         );
@@ -212,10 +212,10 @@ export default class extends React.Component {
     let link = "market://details?id=com.splus";
     console.log("link", link);
     Linking.canOpenURL(link).then(
-      supported => {
+      (supported) => {
         supported && Linking.openURL(link);
       },
-      err => console.log(err)
+      (err) => console.log(err)
     );
   };
 
@@ -240,8 +240,8 @@ export default class extends React.Component {
   signOut = async () => {
     const formData = {
       email: this.state.email,
-      ipAddress: await DeviceInfo.getIPAddress().then(mac => mac),
-      device: Platform.OS
+      ipAddress: await DeviceInfo.getIPAddress().then((mac) => mac),
+      device: Platform.OS,
     };
 
     fetch(urlApi + "c_auth/Logout/" + this.state.email, {
@@ -250,21 +250,21 @@ export default class extends React.Component {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Token: this.state.token
-      }
+        Token: this.state.token,
+      },
     })
-      .then(response => response.json())
-      .then(res => {
-        alert("tes");
+      .then((response) => response.json())
+      .then((res) => {
+        // alert("tes");
         // alert(res.Pesan);
         console.log("save profile", res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
 
     const data = await _getAllData();
-    data.map(val => {
+    data.map((val) => {
       if (val != "@isIntro") {
         _removeData(val);
       }
@@ -366,7 +366,7 @@ export default class extends React.Component {
                     // backgroundColor: "red",
                     flex: 1,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <View
@@ -375,7 +375,7 @@ export default class extends React.Component {
                       width: "70%",
                       height: "20%",
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <Text
@@ -384,7 +384,7 @@ export default class extends React.Component {
                         fontSize: 17,
                         paddingBottom: 15,
                         color: Colors.black,
-                        textAlign: "center"
+                        textAlign: "center",
                       }}
                     >
                       {this.state.pesan}
@@ -393,7 +393,7 @@ export default class extends React.Component {
                     <View
                       style={{
                         flexDirection: "row",
-                        alignContent: "space-around"
+                        alignContent: "space-around",
                       }}
                     >
                       <TouchableOpacity
@@ -404,7 +404,7 @@ export default class extends React.Component {
                           alignContent: "space-around",
                           alignItems: "center",
                           justifyContent: "center",
-                          marginHorizontal: 10
+                          marginHorizontal: 10,
                         }}
                         onPress={() => {
                           this.alertFillBlank(!this.state.Alert_Visibility);
@@ -421,7 +421,7 @@ export default class extends React.Component {
                           alignItems: "center",
                           justifyContent: "center",
                           alignContent: "space-around",
-                          marginHorizontal: 10
+                          marginHorizontal: 10,
                         }}
                         onPress={() => {
                           // Actions.Login();
@@ -561,7 +561,7 @@ export default class extends React.Component {
               position: "absolute",
               bottom: 140,
               alignSelf: "center",
-              flexDirection: "row"
+              flexDirection: "row",
             }}
           >
             <Button style={Styles.btnSmall_2} onPress={() => this.signin()}>
@@ -573,7 +573,7 @@ export default class extends React.Component {
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
                   letterSpacing: 1,
-                  textTransform: "capitalize"
+                  textTransform: "capitalize",
                 }}
               >
                 Sign In
@@ -588,7 +588,7 @@ export default class extends React.Component {
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
                   letterSpacing: 1,
-                  textTransform: "capitalize"
+                  textTransform: "capitalize",
                 }}
               >
                 Sign Up

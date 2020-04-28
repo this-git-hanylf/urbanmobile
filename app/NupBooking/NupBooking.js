@@ -16,7 +16,7 @@ import {
   View,
   FlatList,
   Modal,
-  ListView
+  ListView,
   // Picker
 } from "react-native";
 import {
@@ -37,7 +37,7 @@ import {
   Badge,
   Picker,
   Col,
-  ListItem
+  ListItem,
 } from "native-base";
 
 // import NavigationService from "@Service/Navigation";
@@ -105,10 +105,10 @@ class NupBooking extends React.Component {
           qty: 0,
           towerDes: "",
           unitDes: "",
-          type: false
+          type: false,
           // type: "false"
-        }
-      ]
+        },
+      ],
       // subTotal:0
       //   dataSource: ds.cloneWithRows([]),
     };
@@ -138,7 +138,7 @@ class NupBooking extends React.Component {
       db_profile: this.props.items.db_profile,
       audit_user: await _getData("@UserId"),
       property_cd: this.props.items.property_cd,
-      towerDescs: this.props.items.towerDescs
+      towerDescs: this.props.items.towerDescs,
 
       //   namtow : this.state.descNamaTower,
       //   harga_qty: this.state.harga[0].nup_amount
@@ -183,12 +183,12 @@ class NupBooking extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ tower: resData });
@@ -199,14 +199,14 @@ class NupBooking extends React.Component {
               }
               console.log("getTower", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  getUnit = prop_cd => {
+  getUnit = (prop_cd) => {
     const item = this.props.items;
     // console.log('item tower', item);
     {
@@ -223,12 +223,12 @@ class NupBooking extends React.Component {
               prop_cd,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ unit: resData });
@@ -241,14 +241,14 @@ class NupBooking extends React.Component {
               }
               console.log("getUnit", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  getTowerDescs = index => {
+  getTowerDescs = (index) => {
     const item = this.props.items;
     const datas = this.state.arrayTower;
     const prop = datas[0].property_cd;
@@ -269,12 +269,12 @@ class NupBooking extends React.Component {
             // prop,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 // this.setState({ towerDes: resData });
@@ -292,14 +292,14 @@ class NupBooking extends React.Component {
               }
               console.log("towerDes", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  getUnitDescs = choose_UN => {
+  getUnitDescs = (choose_UN) => {
     const item = this.props.items;
     const prop_cd = this.state.property_cd;
 
@@ -328,12 +328,12 @@ class NupBooking extends React.Component {
             // choose_UN,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ unitDes: resData });
@@ -346,14 +346,14 @@ class NupBooking extends React.Component {
               }
               console.log("unitDes", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  chooseTower = chooseTo => {
+  chooseTower = (chooseTo) => {
     console.log("tower change", chooseTo);
     console.log("TEST111");
 
@@ -375,7 +375,7 @@ class NupBooking extends React.Component {
           lot_type: "",
           harga: [],
           qty: 0,
-          unitDes: ""
+          unitDes: "",
         };
 
         const arrayTower = this.state.arrayTower;
@@ -392,7 +392,7 @@ class NupBooking extends React.Component {
     }
   };
 
-  chooseUnit = chooseUn => {
+  chooseUnit = (chooseUn) => {
     console.log("unit change", chooseUn);
     // console.log('nama unnit',descNama);
 
@@ -447,14 +447,14 @@ class NupBooking extends React.Component {
 
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               // method:'POST',
               // body: JSON.stringify({entity_cd:item.entity_cd,project_no:item.project_no,paramsUnit:chooseUn})
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 const arrayTower = this.state.arrayTower;
@@ -470,7 +470,7 @@ class NupBooking extends React.Component {
               }
               console.log("getHarga", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -533,7 +533,7 @@ class NupBooking extends React.Component {
     let subTotal = 0;
     let total_qty = 0;
 
-    this.state.arrayTower.map(data => {
+    this.state.arrayTower.map((data) => {
       if (data.harga.length != 0) {
         let price = parseFloat(data.harga[0].nup_amount);
         console.log("price", price);
@@ -567,7 +567,7 @@ class NupBooking extends React.Component {
 
     const frmData = {
       // project_descs: projectdesc,
-      array_tower: arr
+      array_tower: arr,
     };
     console.log("formdata", frmData);
     if (frmData && valid_qty != 0) {
@@ -575,7 +575,7 @@ class NupBooking extends React.Component {
         prevItems: frmData,
         items: items,
         subtot: subTotal,
-        totalqty: total_qty
+        totalqty: total_qty,
       });
     } else {
       const pesan = "Please input field";
@@ -601,7 +601,7 @@ class NupBooking extends React.Component {
       lot_type: "",
       harga: [],
       qty: 0,
-      type: false
+      type: false,
       // type: "false"
     };
     this.setState({ arrayTower: [...this.state.arrayTower, data] });
@@ -614,7 +614,7 @@ class NupBooking extends React.Component {
   render() {
     let subTotal = 0;
 
-    this.state.arrayTower.map(data => {
+    this.state.arrayTower.map((data) => {
       if (data.harga.length != 0) {
         let price = parseFloat(data.harga[0].nup_amount);
         console.log("price", price);
@@ -698,7 +698,7 @@ class NupBooking extends React.Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -722,7 +722,7 @@ class NupBooking extends React.Component {
                 // backgroundColor: "red",
                 flex: 1,
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               <View
@@ -731,7 +731,7 @@ class NupBooking extends React.Component {
                   width: "70%",
                   height: "20%",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Text
@@ -740,7 +740,7 @@ class NupBooking extends React.Component {
                     fontSize: 17,
                     paddingBottom: 15,
                     color: Colors.black,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   {this.state.pesan}
@@ -752,7 +752,7 @@ class NupBooking extends React.Component {
                       height: 40,
                       width: 100,
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                     onPress={() => {
                       this.alertFillBlank(!this.state.Alert_Visibility);
@@ -785,9 +785,9 @@ class NupBooking extends React.Component {
                   <Item
                     style={{
                       height: 35,
-                      width: 180,
+                      width: 190,
                       marginBottom: 10,
-                      borderBottomColor: "#fff"
+                      borderBottomColor: "#fff",
                     }}
                   >
                     <Picker
@@ -795,30 +795,31 @@ class NupBooking extends React.Component {
                       selectedValue={item.property_cd}
                       style={{
                         width: "100%",
-                        color: "red",
-                        alignContent: "flex-end"
+                        // color: "red",
+                        // paddingRight: 10,
+                        alignContent: "flex-end",
                       }}
                       textStyle={{
                         fontFamily: "Montserrat-Regular",
                         fontSize: 12,
                         color: "#666",
-                        textAlign: "right"
+                        textAlign: "right",
                       }}
-                      onValueChange={chooseTo => {
+                      onValueChange={(chooseTo) => {
                         const namaTower = this.state.tower.filter(
-                          item => item.value == chooseTo
+                          (item) => item.value == chooseTo
                         );
                         // const tes = namaTower.descs;
                         // console.log('ngambil nama',tes);
                         console.log(
                           this.state.tower.filter(
-                            item => item.value == chooseTo
+                            (item) => item.value == chooseTo
                           )
                         );
                         this.chooseTower({
                           index,
                           property_cd: chooseTo,
-                          descNamaTower: namaTower
+                          descNamaTower: namaTower,
                         });
                       }}
                       // onValueChange={(val)=>alert(val)}
@@ -855,7 +856,7 @@ class NupBooking extends React.Component {
                       height: 35,
                       marginBottom: 10,
                       borderBottomColor: "#fff",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}
                   >
                     <Picker
@@ -866,16 +867,16 @@ class NupBooking extends React.Component {
                         fontFamily: "Montserrat-Regular",
                         fontSize: 12,
                         // color: "red",
-                        textAlign: "right"
+                        textAlign: "right",
                       }}
-                      onValueChange={chooseUn => {
+                      onValueChange={(chooseUn) => {
                         const namaUnit = this.state.unit.filter(
-                          item => item.value == chooseUn
+                          (item) => item.value == chooseUn
                         );
                         this.chooseUnit({
                           index,
                           lot_type: chooseUn,
-                          descNama: namaUnit
+                          descNama: namaUnit,
                         });
                       }}
                     >
@@ -904,7 +905,7 @@ class NupBooking extends React.Component {
                             width: 100,
                             borderRadius: 5,
                             marginBottom: 5,
-                            top: -5
+                            top: -5,
                           }}
                         >
                           {item.type == false ? (
@@ -914,7 +915,7 @@ class NupBooking extends React.Component {
                                 width: 90,
                                 height: 25,
                                 borderRadius: 5,
-                                textAlign: "center"
+                                textAlign: "center",
                               }}
                               // onPress={type => this.handleQty(index, "plus")}
                               onPress={() => this.typetrue(index)}
@@ -924,7 +925,7 @@ class NupBooking extends React.Component {
                                   // textTransform: "capitalize",
                                   fontSize: 11,
                                   textAlign: "center",
-                                  width: "100%"
+                                  width: "100%",
                                 }}
                               >
                                 Add +
@@ -937,7 +938,7 @@ class NupBooking extends React.Component {
                                 flexDirection: "row",
                                 borderWidth: 1,
                                 borderColor: Colors.greyUrban,
-                                borderRadius: 5
+                                borderRadius: 5,
                               }}
                             >
                               <TouchableOpacity
@@ -947,7 +948,7 @@ class NupBooking extends React.Component {
                                   <Text
                                     style={{
                                       marginLeft: 10,
-                                      color: Colors.greyUrban
+                                      color: Colors.greyUrban,
                                     }}
                                   >
                                     -
@@ -959,20 +960,22 @@ class NupBooking extends React.Component {
                                 style={{
                                   fontFamily: Fonts.type.proximaNovaBold,
                                   alignItems: "center",
-                                  alignSelf: "center"
+                                  alignSelf: "center",
                                 }}
                               >
                                 {item.qty}
                               </Text>
 
                               <TouchableOpacity
-                                onPress={type => this.handleQty(index, "plus")}
+                                onPress={(type) =>
+                                  this.handleQty(index, "plus")
+                                }
                               >
                                 <View>
                                   <Text
                                     style={{
                                       marginRight: 10,
-                                      color: Colors.greyUrban
+                                      color: Colors.greyUrban,
                                     }}
                                   >
                                     +
@@ -988,7 +991,7 @@ class NupBooking extends React.Component {
             ))}
 
             <View style={Styles.viewAddmore}>
-              <TouchableOpacity onPress={prop_cd => this.addItem(prop_cd)}>
+              <TouchableOpacity onPress={(prop_cd) => this.addItem(prop_cd)}>
                 <Text
                   style={{
                     textAlign: "center",
@@ -998,7 +1001,7 @@ class NupBooking extends React.Component {
                     fontFamily: Fonts.type.proximaNovaBold,
                     color: Colors.loginBlue,
                     borderBottomWidth: 1,
-                    borderColor: Colors.loginBlue
+                    borderColor: Colors.loginBlue,
                   }}
                 >
                   add more +
@@ -1022,7 +1025,7 @@ class NupBooking extends React.Component {
                         style={{
                           color: "#000",
                           textAlign: "right",
-                          fontFamily: Fonts.type.proximaNovaBold
+                          fontFamily: Fonts.type.proximaNovaBold,
                         }}
                       >
                         {item.towerDes}
@@ -1031,7 +1034,7 @@ class NupBooking extends React.Component {
                         style={{
                           color: "#000",
                           textAlign: "right",
-                          fontFamily: Fonts.type.proximaNovaReg
+                          fontFamily: Fonts.type.proximaNovaReg,
                         }}
                       >
                         - {item.unitDes} ({item.qty.toString()} ITEM)
@@ -1078,7 +1081,7 @@ class NupBooking extends React.Component {
                     alignItems: "center",
                     textAlign: "center",
                     fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1
+                    letterSpacing: 1,
                   }}
                 >
                   Checkout

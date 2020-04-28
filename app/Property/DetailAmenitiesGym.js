@@ -15,7 +15,7 @@ import {
   ActivityIndicator,
   Linking,
   Alert,
-  YellowBox
+  YellowBox,
   // WebView
 } from "react-native";
 import {
@@ -41,13 +41,13 @@ import {
   Tabs,
   Fab,
   Form,
-  Label
+  Label,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
 import Carousel, {
   Pagination,
-  ParallaxImage
+  ParallaxImage,
 } from "react-native-snap-carousel";
 import { urlApi } from "@Config/services";
 import GALLERY from "./Gallery";
@@ -108,7 +108,7 @@ class DetailAmenitiesGym extends React.Component {
       amenitis_url: "",
       stat: "G",
       gallery_1: require("@Asset/images/amenitis/gym/gallery1.jpg"),
-      gallery_2: require("@Asset/images/amenitis/gym/gallery2.jpg")
+      gallery_2: require("@Asset/images/amenitis/gym/gallery2.jpg"),
       // require("@Asset/images/project_suite_urban.jpg")
     };
 
@@ -125,8 +125,8 @@ class DetailAmenitiesGym extends React.Component {
     const data = {
       group: await _getData("@Group"),
       hd: new Headers({
-        Token: await _getData("@Token")
-      })
+        Token: await _getData("@Token"),
+      }),
     };
     console.log("dataIm", data);
 
@@ -163,11 +163,11 @@ class DetailAmenitiesGym extends React.Component {
               stat,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 console.log(resData);
@@ -179,7 +179,7 @@ class DetailAmenitiesGym extends React.Component {
               }
               console.log("amenitis", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -206,7 +206,11 @@ class DetailAmenitiesGym extends React.Component {
       "Attention",
       "Please contact your agent for booking",
       [
-        { text: "Close", onPress: () => console.log("Close"), style: "default" }
+        {
+          text: "Close",
+          onPress: () => console.log("Close"),
+          style: "default",
+        },
         // { text: "Camera", onPress: () => this.fromCamera() },
         // {
         //     text: "Cancel",
@@ -266,7 +270,7 @@ class DetailAmenitiesGym extends React.Component {
             
         </Header> */}
 
-          <ScrollView>
+          <ScrollView style={Styles.scroll}>
             {/* <View>
               <Image source={this.state.gallery_1}></Image>
             </View> */}
@@ -299,7 +303,7 @@ class DetailAmenitiesGym extends React.Component {
                           fontWeight: "900",
                           color: "#FFFFFF",
                           fontSize: 14,
-                          textAlign: "center"
+                          textAlign: "center",
                         }}
                       >
                         {this.state.amen[0].amenities_title}
@@ -310,7 +314,7 @@ class DetailAmenitiesGym extends React.Component {
                         fontWeight: "900",
                         color: "#FFFFFF",
                         fontSize: 14,
-                        textAlign: "center"
+                        textAlign: "center",
                       }}
                     >
                       Amenities
@@ -330,7 +334,7 @@ class DetailAmenitiesGym extends React.Component {
                             alignItems: "center",
                             textAlign: "center",
                             fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1
+                            letterSpacing: 1,
                           }}
                         >
                           Booking Priority Pass
@@ -350,7 +354,7 @@ class DetailAmenitiesGym extends React.Component {
                             alignItems: "center",
                             textAlign: "center",
                             fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1
+                            letterSpacing: 1,
                           }}
                         >
                           Booking Priority Pass
@@ -377,7 +381,7 @@ class DetailAmenitiesGym extends React.Component {
                     paddingHorizontal: 25,
                     fontFamily: Fonts.type.proximaNovaReg,
                     letterSpacing: 2,
-                    lineHeight: 25
+                    lineHeight: 25,
                   }}
                 >
                   {this.state.amen[0].amenities_info.replace(
@@ -405,7 +409,7 @@ class DetailAmenitiesGym extends React.Component {
                 paddingLeft: 10,
                 paddingRight: 10,
                 paddingBottom: 20,
-                alignSelf: "center"
+                alignSelf: "center",
               }}
             >
               <Image

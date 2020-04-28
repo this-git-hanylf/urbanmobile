@@ -15,7 +15,7 @@ import {
   ActivityIndicator,
   Linking,
   Alert,
-  YellowBox
+  YellowBox,
   // WebView
 } from "react-native";
 import {
@@ -41,13 +41,13 @@ import {
   Tabs,
   Fab,
   Form,
-  Label
+  Label,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
 import Carousel, {
   Pagination,
-  ParallaxImage
+  ParallaxImage,
 } from "react-native-snap-carousel";
 import { urlApi } from "@Config/services";
 import GALLERY from "./Gallery";
@@ -148,7 +148,7 @@ export default class extends React.Component {
       stat: "",
       stylehtml:
         "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
-      pict_hardcode: require("@Asset/images/project_suite_urban.png")
+      pict_hardcode: require("@Asset/images/project_suite_urban.png"),
     };
 
     console.log("props", props);
@@ -166,7 +166,7 @@ export default class extends React.Component {
 
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
+        Token: await _getData("@Token"),
       }),
       email: await _getData("@User"),
       userId: await _getData("@UserId"),
@@ -180,7 +180,7 @@ export default class extends React.Component {
         "Saya tertarik reservasi " +
         this.props.items.project_descs +
         "\n\nHubungi saya untuk info detail.",
-      picture_url: this.props.items.picture_url
+      picture_url: this.props.items.picture_url,
     };
     console.log("dataIm", data);
 
@@ -205,10 +205,10 @@ export default class extends React.Component {
 
   getPromo = () => {
     fetch(urlApi + "c_newsandpromo/getDatapromo2/IFCAMOBILE", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -216,12 +216,12 @@ export default class extends React.Component {
           console.log("dataPRopmo", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  getDataDetails = item => {
+  getDataDetails = (item) => {
     {
       isMount
         ? fetch(
@@ -234,18 +234,18 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 const data = {
                   amenities: resData.amenities,
                   feature: resData.feature,
                   overview: resData.overview,
-                  project: resData.project
+                  project: resData.project,
                 };
                 console.log("data", data);
                 this.setState(data);
@@ -256,14 +256,14 @@ export default class extends React.Component {
               }
               console.log("getDAtaDetails", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  getDataGallery = item => {
+  getDataGallery = (item) => {
     {
       isMount
         ? fetch(
@@ -276,21 +276,21 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 console.log(resData);
                 const resData = res.Data;
                 this.setState({ gallery: resData.gallery });
-                resData.gallery.map(item => {
-                  this.setState(prevState => ({
+                resData.gallery.map((item) => {
+                  this.setState((prevState) => ({
                     imagesPreview: [
                       ...prevState.imagesPreview,
-                      { url: item.gallery_url }
-                    ]
+                      { url: item.gallery_url },
+                    ],
                   }));
                 });
               } else {
@@ -300,14 +300,14 @@ export default class extends React.Component {
               }
               console.log("getData Galerry", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  getDataUnitPlan = item => {
+  getDataUnitPlan = (item) => {
     {
       isMount
         ? // fetch(urlApi+'c_reservation/getGallery/'+item.entity_cd+'/'+item.project_no,{
@@ -321,21 +321,21 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 console.log(resData);
                 const resData = res.Data;
                 this.setState({ plans: resData.plans });
-                resData.plans.map(item => {
-                  this.setState(prevState => ({
+                resData.plans.map((item) => {
+                  this.setState((prevState) => ({
                     unitPlanPreview: [
                       ...prevState.unitPlanPreview,
-                      { url: item.plan_url }
-                    ]
+                      { url: item.plan_url },
+                    ],
                   }));
                 });
               } else {
@@ -345,7 +345,7 @@ export default class extends React.Component {
               }
               console.log("getData Plans", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -374,7 +374,7 @@ export default class extends React.Component {
         ccRecipients: [""],
         bccRecipients: [""],
         body: "",
-        isHTML: true
+        isHTML: true,
       },
       (error, event) => {
         Alert.alert(
@@ -383,12 +383,12 @@ export default class extends React.Component {
           [
             {
               text: "Ok",
-              onPress: () => console.log("OK: Email Error Response")
+              onPress: () => console.log("OK: Email Error Response"),
             },
             {
               text: "Cancel",
-              onPress: () => console.log("CANCEL: Email Error Response")
-            }
+              onPress: () => console.log("CANCEL: Email Error Response"),
+            },
           ],
           { cancelable: true }
         );
@@ -413,9 +413,9 @@ export default class extends React.Component {
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "OK", onPress: () => Actions.Login() }
+        { text: "OK", onPress: () => Actions.Login() },
       ],
       { cancelable: false }
     );
@@ -444,7 +444,7 @@ export default class extends React.Component {
       // _navigate("chooseZone", { items: this.props.items });
       _navigate("ChooseZoneModif", {
         items: this.props.items,
-        prevItems: data
+        prevItems: data,
       });
     }
   }
@@ -518,11 +518,11 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ tower: resData });
@@ -533,7 +533,7 @@ export default class extends React.Component {
               }
               console.log("getTower", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -555,11 +555,11 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ amen: resData });
@@ -570,7 +570,7 @@ export default class extends React.Component {
               }
               console.log("amenitis", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -592,11 +592,11 @@ export default class extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ unit: resData });
@@ -607,7 +607,7 @@ export default class extends React.Component {
               }
               console.log("unit", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -633,7 +633,7 @@ export default class extends React.Component {
         ccRecipients: [""],
         bccRecipients: [""],
         body: "",
-        isHTML: true
+        isHTML: true,
       },
       (error, event) => {
         Alert.alert(
@@ -642,12 +642,12 @@ export default class extends React.Component {
           [
             {
               text: "Ok",
-              onPress: () => console.log("OK: Email Error Response")
+              onPress: () => console.log("OK: Email Error Response"),
             },
             {
               text: "Cancel",
-              onPress: () => console.log("CANCEL: Email Error Response")
-            }
+              onPress: () => console.log("CANCEL: Email Error Response"),
+            },
           ],
           { cancelable: true }
         );
@@ -888,7 +888,7 @@ export default class extends React.Component {
             
         </Header> */}
 
-          <ScrollView>
+          <ScrollView style={Styles.scroll}>
             <Modal
               visible={this.state.Alert_Visibility}
               transparent={true}
@@ -903,7 +903,7 @@ export default class extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -912,7 +912,7 @@ export default class extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -921,7 +921,7 @@ export default class extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -930,7 +930,7 @@ export default class extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      alignContent: "space-around"
+                      alignContent: "space-around",
                     }}
                   >
                     <TouchableOpacity
@@ -941,7 +941,7 @@ export default class extends React.Component {
                         alignContent: "space-around",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -958,7 +958,7 @@ export default class extends React.Component {
                         alignItems: "center",
                         justifyContent: "center",
                         alignContent: "space-around",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         // Actions.Login();
@@ -988,7 +988,7 @@ export default class extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -997,7 +997,7 @@ export default class extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -1006,7 +1006,7 @@ export default class extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan2}
@@ -1015,7 +1015,7 @@ export default class extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      alignContent: "space-around"
+                      alignContent: "space-around",
                     }}
                   >
                     <TouchableOpacity
@@ -1026,7 +1026,7 @@ export default class extends React.Component {
                         alignContent: "space-around",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         this.alertFillBlank2(!this.state.Alert_Visibility2);
@@ -1073,7 +1073,7 @@ export default class extends React.Component {
                         fontWeight: "900",
                         color: "#FFFFFF",
                         fontSize: 14,
-                        textAlign: "center"
+                        textAlign: "center",
                       }}
                       // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                     >
@@ -1100,7 +1100,7 @@ export default class extends React.Component {
                             alignItems: "center",
                             textAlign: "center",
                             fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1
+                            letterSpacing: 1,
                           }}
                         >
                           Booking Priority Pass
@@ -1120,7 +1120,7 @@ export default class extends React.Component {
                             alignItems: "center",
                             textAlign: "center",
                             fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1
+                            letterSpacing: 1,
                           }}
                         >
                           Booking Priority Pass
@@ -1160,7 +1160,7 @@ export default class extends React.Component {
                     paddingHorizontal: 25,
                     fontFamily: Fonts.type.proximaNovaReg,
                     letterSpacing: 2,
-                    lineHeight: 25
+                    lineHeight: 25,
                   }}
                 >
                   {this.state.overview[0].overview_info.replace(
@@ -1454,7 +1454,7 @@ export default class extends React.Component {
                   horizontal
                   style={[Styles.slider, { paddingTop: 10 }]}
                   showsHorizontalScrollIndicator={false}
-                  keyExtractor={item => item.line_no}
+                  keyExtractor={(item) => item.line_no}
                   renderItem={({ item, index }) => (
                     <TouchableOpacity
                       underlayColor="transparent"
@@ -1515,6 +1515,7 @@ export default class extends React.Component {
                   }
                   index={this.state.index}
                   imageUrls={this.state.imagesPreview}
+                  // style={{ width: 200 }}
                 />
               ) : null}
             </Modal>
@@ -1524,7 +1525,7 @@ export default class extends React.Component {
                 <Text
                   style={[
                     Styles.titleGold,
-                    { fontSize: 18, paddingBottom: 10 }
+                    { fontSize: 18, paddingBottom: 10 },
                   ]}
                 >
                   LOCATION
@@ -1555,7 +1556,7 @@ export default class extends React.Component {
                             <div id="baseDiv"><iframe width="350" height="300" frameborder="0" style="border:0, margin: 0"  src='${this.state.project[0].coordinat_project}'></iframe></div>
                           </body>
                         </html>
-                  `
+                  `,
                     }}
                     automaticallyAdjustContentInsets={false}
                   />
@@ -1573,7 +1574,7 @@ export default class extends React.Component {
 
                       alignSelf: "center",
 
-                      borderRadius: 5
+                      borderRadius: 5,
                     }}
                   >
                     <TouchableOpacity
@@ -1594,13 +1595,13 @@ export default class extends React.Component {
                           paddingLeft: 10,
                           paddingRight: 10,
                           alignItems: "center",
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
                         <Text
                           style={{
                             fontSize: 12,
-                            color: Colors.white
+                            color: Colors.white,
                           }}
                         >
                           Go to Direction
@@ -1610,7 +1611,7 @@ export default class extends React.Component {
                           style={{
                             fontSize: 13,
                             marginLeft: 10,
-                            color: Colors.white
+                            color: Colors.white,
                           }}
                         />
                       </View>
@@ -1628,7 +1629,7 @@ export default class extends React.Component {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg
+                      fontFamily: Fonts.type.proximaNovaReg,
                     }}
                   >
                     {this.state.project[0].project_descs}
@@ -1637,7 +1638,7 @@ export default class extends React.Component {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg
+                      fontFamily: Fonts.type.proximaNovaReg,
                     }}
                   >
                     {this.state.project[0].coordinat_name}
@@ -1646,7 +1647,7 @@ export default class extends React.Component {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg
+                      fontFamily: Fonts.type.proximaNovaReg,
                     }}
                   >
                     {this.state.project[0].coordinat_address}
@@ -1671,7 +1672,7 @@ export default class extends React.Component {
                     alignItems: "center",
                     textAlign: "center",
                     fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1
+                    letterSpacing: 1,
                   }}
                 >
                   Download File/Brochure
@@ -1691,7 +1692,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() =>
                         Linking.openURL(
@@ -1710,7 +1711,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Call
@@ -1721,7 +1722,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() =>
                         Linking.openURL(this.state.project[0].web_url)
@@ -1738,7 +1739,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Website
@@ -1749,7 +1750,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() => this.sendEmail()}
                     >
@@ -1764,7 +1765,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Email
@@ -1777,7 +1778,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() =>
                         Linking.openURL(this.state.project[0].facebook_url)
@@ -1794,7 +1795,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Facebook
@@ -1805,7 +1806,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() =>
                         Linking.openURL(this.state.project[0].instagram_url)
@@ -1823,7 +1824,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Instagram
@@ -1834,7 +1835,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() =>
                         Linking.openURL(this.state.project[0].youtube_url)
@@ -1851,7 +1852,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Youtube
@@ -1866,7 +1867,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <Icon
@@ -1880,7 +1881,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Call
@@ -1891,7 +1892,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <Icon
@@ -1905,7 +1906,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Website
@@ -1916,7 +1917,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <Icon
@@ -1930,7 +1931,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Email
@@ -1943,7 +1944,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <Icon
@@ -1957,7 +1958,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Facebook
@@ -1967,7 +1968,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                       onPress={() => Linking.openURL("http://google.com")}
                     >
@@ -1983,7 +1984,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Instagram
@@ -1994,7 +1995,7 @@ export default class extends React.Component {
                       style={{
                         height: 90,
                         textAlign: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       <Icon
@@ -2008,7 +2009,7 @@ export default class extends React.Component {
                           fontFamily: Fonts.type.proximaNovaReg,
                           color: Colors.white,
                           fontSize: 14,
-                          paddingTop: 5
+                          paddingTop: 5,
                         }}
                       >
                         Youtube
