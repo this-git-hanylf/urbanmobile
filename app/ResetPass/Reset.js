@@ -11,7 +11,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   BackHandler,
-  I18nManager
+  I18nManager,
+  Modal,
 } from "react-native";
 import {
   Container,
@@ -23,13 +24,13 @@ import {
   Header,
   Left,
   Body,
-  Title
+  Title,
 } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
 import AppIntroSlider from "react-native-app-intro-slider";
 import styles from "./styles";
-import { Style, Colors } from "../Themes";
+import { Style, Colors, Fonts } from "../Themes";
 import { Actions } from "react-native-router-flux";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import DeviceInfo from "react-native-device-info";
@@ -45,7 +46,7 @@ class Reset extends React.Component {
       newpass: "",
       isHide: false,
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
     };
   }
 
@@ -56,9 +57,9 @@ class Reset extends React.Component {
     } else {
       const formData = {
         matching_passwords: {
-          newpass: newpass
+          newpass: newpass,
         },
-        email: this.props.email
+        email: this.props.email,
       };
 
       console.log("form", formData);
@@ -68,11 +69,11 @@ class Reset extends React.Component {
         body: JSON.stringify(formData),
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(response => response.json())
-        .then(res => {
+        .then((response) => response.json())
+        .then((res) => {
           console.log("res", res.Data);
 
           if (!res.Error) {
@@ -80,9 +81,19 @@ class Reset extends React.Component {
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
             Actions.pop();
+            // setTimeout(() => {
+            //   Actions.refresh({
+            //     p: Math.random(),
+            //   });
+            // }, 0);
+            setTimeout(() => {
+              Actions.refresh({
+                someprop: Math.random() * 100,
+              });
+            }, 10);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -139,7 +150,7 @@ class Reset extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -148,7 +159,7 @@ class Reset extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -157,32 +168,16 @@ class Reset extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
                   </Text>
-                  <View>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: Colors.goldUrban,
-                        height: 40,
-                        width: 100,
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                      onPress={() => {
-                        this.alertFillBlank(!this.state.Alert_Visibility);
-                      }}
-                      // activeOpacity={0.7}
-                    >
-                      <Text style={{ color: Colors.white }}>OK</Text>
-                    </TouchableOpacity>
-                  </View>
+
                   <View
                     style={{
                       flexDirection: "row",
-                      alignContent: "space-around"
+                      alignContent: "space-around",
                     }}
                   >
                     <TouchableOpacity
@@ -193,7 +188,7 @@ class Reset extends React.Component {
                         alignContent: "space-around",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -210,7 +205,7 @@ class Reset extends React.Component {
                         alignItems: "center",
                         justifyContent: "center",
                         alignContent: "space-around",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         Actions.home();
@@ -229,7 +224,7 @@ class Reset extends React.Component {
                 ref="newpass"
                 style={styles.inputEmail}
                 editable={true}
-                onChangeText={val => this.setState({ newpass: val })}
+                onChangeText={(val) => this.setState({ newpass: val })}
                 keyboardType="default"
                 returnKeyType="next"
                 autoCapitalize="none"
@@ -239,7 +234,7 @@ class Reset extends React.Component {
                 placeholder="New Password"
                 placeholderTextColor="rgba(0,0,0,0.20)"
                 secureTextEntry={true}
-                onChangeText={val => this.setState({ newpass: val })}
+                onChangeText={(val) => this.setState({ newpass: val })}
                 value={this.state.newpass}
                 secureTextEntry={!this.state.isHide}
               />
@@ -248,7 +243,7 @@ class Reset extends React.Component {
                 style={styles.eye}
                 onPress={() =>
                   this.setState({
-                    isHide: !this.state.isHide
+                    isHide: !this.state.isHide,
                   })
                 }
               />
@@ -259,7 +254,7 @@ class Reset extends React.Component {
                 ref="conpass"
                 style={styles.inputEmail}
                 editable={true}
-                onChangeText={val => this.setState({ conpass: val })}
+                onChangeText={(val) => this.setState({ conpass: val })}
                 keyboardType="default"
                 returnKeyType="done"
                 autoCapitalize="none"
@@ -269,7 +264,7 @@ class Reset extends React.Component {
                 placeholder="Confirm Password"
                 placeholderTextColor="rgba(0,0,0,0.20)"
                 secureTextEntry={true}
-                onChangeText={val => this.setState({ conpass: val })}
+                onChangeText={(val) => this.setState({ conpass: val })}
                 value={this.state.conpass}
                 secureTextEntry={!this.state.isHide}
               />
@@ -278,7 +273,7 @@ class Reset extends React.Component {
                 style={styles.eye}
                 onPress={() =>
                   this.setState({
-                    isHide: !this.state.isHide
+                    isHide: !this.state.isHide,
                   })
                 }
               />

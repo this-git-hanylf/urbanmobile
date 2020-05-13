@@ -17,6 +17,7 @@ import {
   FlatList,
   TextInput,
   Modal,
+  Dimensions,
 } from "react-native";
 import {
   Container,
@@ -67,7 +68,7 @@ const userType = [
 class SignupGuest extends React.Component {
   constructor(props) {
     super(props);
-
+    this.handleCheckbox = this.handleCheckbox.bind(this);
     this.state = {
       Alert_Visibility: false,
       pesan: "",
@@ -113,6 +114,13 @@ class SignupGuest extends React.Component {
       // replaceFoto: "",
       // /Users/hany/Documents/Project React/urbanmobile/assets/images/download.png
       replaceFoto: "file:///urbanAPI/images/noimage-min.png",
+
+      files: [],
+      checking: false,
+      textInputHolder: 0,
+      captchaHolder: 0,
+      randomNumberOne: 0,
+      capt: false,
     };
   }
 
@@ -134,6 +142,8 @@ class SignupGuest extends React.Component {
       this.getProject();
       // this.getProject2();
       this.getPrinciples();
+      this.getFile();
+      this.generateCaptcha();
 
       // this.getData(this.props.meterId);XMLDocument
       // this.getDataFollowUp(this.props.datas)
@@ -602,6 +612,85 @@ class SignupGuest extends React.Component {
     //     // this.CallFunction();
     //     // console.log("TEST 111");
     // }
+  }
+
+  handleCheckbox() {
+    // alert(!this.state.checked);
+    this.setState({ checking: !this.state.checking });
+    // Actions.pagePDF();
+    // Actions.pagePDF({item : item})
+  }
+
+  generateCaptcha = () => {
+    // this.setState({ isLoaded: !this.state.isLoaded });
+    // var charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+    var numberOne = Math.floor(Math.random() * 1000000) + 1;
+    // var numberOne = Math.floor(Math.random() * charsArray.length == 6) + 6;
+    var captchaCode = numberOne;
+    console.log("captcha", captchaCode);
+    this.setState({ randomNumberOne: numberOne });
+    this.setState({ captchaHolder: captchaCode });
+  };
+
+  validateCaptchaCode = () => {
+    // this.setState({ isLoaded: !this.state.isLoaded });
+    var temp = this.state.randomNumberOne;
+    if (this.state.textInputHolder == temp) {
+      //Captcha match
+      this.setState({ capt: this.state.textInputHolder });
+      //   Alert.alert("Captcha Matched");
+    } else {
+      //Captcha not match
+      Alert.alert("Captcha not matched");
+      this.generateCaptcha();
+    }
+    // Calling captcha function, to generate captcha code
+    // this.generateCaptcha();
+  };
+
+  titleCheckbox() {
+    return (
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flexDirection: "row" }}>
+          <Text>I have read and accept </Text>
+          <Text
+            onPress={() => alert("terms")}
+            style={{ textDecorationLine: "underline" }}
+          >
+            the terms & conditions
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  getFile = () => {
+    fetch(urlApi + "c_termcondition/getTermCondition/IFCAMOBILE", {
+      method: "GET",
+      // headers : this.state.hd,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data;
+          this.setState({ files: resData });
+        } else {
+          this.setState({ isLoaded: !this.state.isLoaded }, () => {
+            alert(res.Pesan);
+          });
+        }
+        console.log("getFiles", res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  downloadFile(val) {
+    // const android = RNFetchBlob.android
+    console.log("donload item", val);
+    Actions.pagePDF({ item: val });
+    this.setState({ click: true });
   }
 
   render() {
@@ -1180,13 +1269,142 @@ class SignupGuest extends React.Component {
             </View>
             {/* </Content> */}
           </ScrollView>
+
+          {/* term condition */}
+
           <View
+            style={[
+              pickerSelectStyles.checkBoxWrap,
+              {
+                flexDirection: "row",
+                backgroundColor: "#fff",
+                height: 30,
+                marginTop: 8,
+                marginBottom: 8,
+                borderRadius: 10,
+              },
+            ]}
+          >
+            <CheckBox
+              // title={`I have read and accept the terms & conditions`}
+              // title={this.titleCheckbox}
+
+              checked={this.state.checking}
+              onPress={this.handleCheckbox}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+              }}
+            />
+
+            {this.state.files.map((val, key) => (
+              // <View key={key}>
+              //   <Text>tes</Text>
+              // </View>
+              <View
+                key={key}
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text>I have read and accept </Text>
+                  <Text
+                    onPress={() => this.downloadFile(val)}
+                    style={{ textDecorationLine: "underline" }}
+                  >
+                    the terms & conditions
+                  </Text>
+                  {/* <Text>tes</Text> */}
+                </View>
+              </View>
+            ))}
+          </View>
+          {!this.state.checking ? null : (
+            <View>
+              <View style={styles.captchaContainerView}>
+                <View style={styles.captchaChildContainer}>
+                  {this.state.randomNumberOne.length == 0 ? (
+                    <ActivityIndicator color="#000" />
+                  ) : (
+                    <View
+                      style={{
+                        height: 50,
+                        width: 80,
+                        backgroundColor: Colors.goldUrban,
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ fontSize: 20, textAlign: "center" }}>
+                        {this.state.randomNumberOne}
+                      </Text>
+                    </View>
+                  )}
+
+                  <TouchableOpacity onPress={this.generateCaptcha}>
+                    <Icon name="ios-refresh" style={styles.iconCaptcha} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: "row", left: 25 }}>
+                  <View style={styles.captchaChildContainerInput}>
+                    <TextInput
+                      placeholder="Enter Captcha"
+                      onChangeText={(data) =>
+                        this.setState({ textInputHolder: data })
+                      }
+                      style={styles.textInputStyle}
+                      underlineColorAndroid="transparent"
+                    />
+                  </View>
+
+                  <View style={styles.captchaChildContainerButton}>
+                    <TouchableOpacity
+                      style={{
+                        width: 100,
+                        height: 35,
+                        borderRadius: 5,
+                        backgroundColor: Colors.navyUrban,
+                        textAlign: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={this.validateCaptchaCode}
+                    >
+                      <Text style={styles.text}>Im not robot</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          )}
+          {/* button */}
+          {/* <View
             style={styles.signbtnSec}
             pointerEvents={this.state.isLoaded ? "auto" : "none"}
           >
             <Button
               style={[styles.signInBtn, { backgroundColor: Colors.goldUrban }]}
               onPress={() => this.submit()}
+            >
+              {!this.state.isLoaded ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.signInBtnText}>Register Now</Text>
+              )}
+            </Button>
+          </View> */}
+          <View
+            style={styles.signbtnSec}
+            pointerEvents={this.state.isLoaded ? "auto" : "none"}
+          >
+            <Button
+              style={[
+                styles.signInBtn,
+                {
+                  backgroundColor: !this.state.capt ? "#cccccc" : "#0691ce",
+                },
+              ]}
+              onPress={() => this.submit()}
+              disabled={!this.state.capt}
+              // disabled={!this.state.capt}
             >
               {!this.state.isLoaded ? (
                 <ActivityIndicator color="#fff" />
@@ -1216,5 +1434,19 @@ const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     ...styles.inputEmail,
     fontSize: 17,
+  },
+  textBox: {
+    flex: 1,
+    height: Dimensions.get("window").height * 0.6,
+    backgroundColor: "#fff",
+    marginHorizontal: 30,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    paddingTop: 10,
+    borderColor: "#333",
+    borderWidth: 1,
+  },
+  checkBoxWrap: {
+    marginHorizontal: 10,
   },
 });

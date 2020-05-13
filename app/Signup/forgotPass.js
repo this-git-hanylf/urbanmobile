@@ -15,7 +15,7 @@ import {
   StyleSheet,
   Alert,
   TextInput,
-  Modal
+  Modal,
   // Content
 } from "react-native";
 import {
@@ -33,7 +33,7 @@ import {
   Content,
   Label,
   Switch,
-  InputGroup
+  InputGroup,
   // CheckBox
 } from "native-base";
 import { CheckBox } from "react-native-elements";
@@ -61,8 +61,8 @@ class forgotPass extends React.Component {
     this.state = {
       isLoaded: true,
       email: "",
-      Alert_Visibility: true,
-      pesan: ""
+      Alert_Visibility: false,
+      pesan: "",
     };
   }
 
@@ -71,7 +71,7 @@ class forgotPass extends React.Component {
 
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const isValid = this.validating({
-      email: { require: true }
+      email: { require: true },
     });
     if (isValid) {
       if (reg.test(this.state.email) === true) {
@@ -81,12 +81,12 @@ class forgotPass extends React.Component {
           method: "POST",
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email }),
         })
-          .then(response => response.json())
-          .then(res => {
+          .then((response) => response.json())
+          .then((res) => {
             // const resp = JSON.parse(res.Data);
             // console.log('res error', resp)
             if (!res.Error) {
@@ -105,7 +105,7 @@ class forgotPass extends React.Component {
               console.log("res pesan", res.Pesan);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       } else {
@@ -144,7 +144,7 @@ class forgotPass extends React.Component {
   //     }
   //     }
 
-  validating = validationData => {
+  validating = (validationData) => {
     const keys = Object.keys(validationData);
     const errorKey = [];
     let isValid = false;
@@ -216,7 +216,7 @@ class forgotPass extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -225,7 +225,7 @@ class forgotPass extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -234,7 +234,7 @@ class forgotPass extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -247,7 +247,7 @@ class forgotPass extends React.Component {
                         height: 40,
                         width: 100,
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -276,7 +276,7 @@ class forgotPass extends React.Component {
                 ref="email"
                 // onChangeText={(email) => this.setState({ email })}
                 // onChangeText={(email) => this.validate(email)}
-                onChangeText={val => this.setState({ email: val })}
+                onChangeText={(val) => this.setState({ email: val })}
                 // onChangeText={(text) => this.validate(text)}
                 style={styles.positionTextInput}
               />
@@ -286,7 +286,7 @@ class forgotPass extends React.Component {
                     color: "red",
                     bottom: 3,
                     position: "absolute",
-                    right: 0
+                    right: 0,
                   }}
                   name="close-circle"
                 />
@@ -299,7 +299,7 @@ class forgotPass extends React.Component {
                   bottom: 10,
                   left: 15,
                   color: "red",
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 Email Required
@@ -338,10 +338,10 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 4,
     color: "black",
-    paddingRight: 30 // to ensure the text is never behind the icon
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
     ...styles.inputEmail,
-    fontSize: 17
-  }
+    fontSize: 17,
+  },
 });

@@ -67,7 +67,7 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
-      Alert_Visibility: true,
+      Alert_Visibility: false,
       pesan: "",
       isLoaded: true,
       gender: null,
