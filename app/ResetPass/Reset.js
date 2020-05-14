@@ -80,7 +80,7 @@ class Reset extends React.Component {
             // alert(res.Pesan)
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
-            Actions.pop();
+
             // setTimeout(() => {
             //   Actions.refresh({
             //     p: Math.random(),
@@ -88,7 +88,7 @@ class Reset extends React.Component {
             // }, 0);
             // setTimeout(() => {
             //   Actions.refresh({
-            //     someprop: Math.random() * 100,
+            //     someprop: Math.random() * 1000,
             //   });
             // }, 10);
           }
@@ -100,6 +100,7 @@ class Reset extends React.Component {
   };
   alertFillBlank(visible, pesan) {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
+    // Actions.pop();
   }
 
   render() {
@@ -192,6 +193,7 @@ class Reset extends React.Component {
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
+                        Actions.pop();
                       }}
                       // activeOpacity={0.7}
                     >
@@ -208,8 +210,8 @@ class Reset extends React.Component {
                         marginHorizontal: 10,
                       }}
                       onPress={() => {
-                        Actions.home();
-                        //   this.alertFillBlank(!this.state.Alert_Visibility);
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                        Actions.Login();
                       }}
                       // activeOpacity={0.7}
                     >
