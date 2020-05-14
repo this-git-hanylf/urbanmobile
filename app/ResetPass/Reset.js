@@ -86,11 +86,11 @@ class Reset extends React.Component {
             //     p: Math.random(),
             //   });
             // }, 0);
-            setTimeout(() => {
-              Actions.refresh({
-                someprop: Math.random() * 100,
-              });
-            }, 10);
+            // setTimeout(() => {
+            //   Actions.refresh({
+            //     someprop: Math.random() * 100,
+            //   });
+            // }, 10);
           }
         })
         .catch((error) => {
