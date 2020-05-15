@@ -16,7 +16,7 @@ import {
   FlatList,
   Modal,
   Alert,
-  ListView
+  ListView,
 } from "react-native";
 import {
   Container,
@@ -34,7 +34,7 @@ import {
   Footer,
   FooterTab,
   Badge,
-  Card
+  Card,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -43,7 +43,7 @@ import {
   Row,
   Rows,
   TableWrapper,
-  Cell
+  Cell,
 } from "react-native-table-component";
 import { Style, Colors, Fonts } from "../Themes";
 import Styles from "./Style";
@@ -82,7 +82,7 @@ class DetailBooking extends Component {
       uploadfoto: false,
       status: false,
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
     };
 
     this.showAlert = this.showAlert.bind(this);
@@ -98,7 +98,7 @@ class DetailBooking extends Component {
     console.log("datapr", dataProps);
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
+        Token: await _getData("@Token"),
       }),
       user: await _getData("@User"),
       name: await _getData("@UserId"),
@@ -109,7 +109,7 @@ class DetailBooking extends Component {
       dateBook: dataProps.order_date,
       pictUrlAttach: dataProps.payment_attachment,
       order_id: dataProps.order_id,
-      total_amt: dataProps.total_amt
+      total_amt: dataProps.total_amt,
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
 
@@ -139,11 +139,11 @@ class DetailBooking extends Component {
         order_id,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -151,11 +151,11 @@ class DetailBooking extends Component {
           console.log("dataDetail", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
-  showAlert = key => {
+  showAlert = (key) => {
     Alert.alert(
       "Select a Photo",
       "Choose the place where you want to get a photo",
@@ -165,8 +165,8 @@ class DetailBooking extends Component {
         {
           text: "Cancel",
           onPress: () => console.log("User Cancel"),
-          style: "cancel"
-        }
+          style: "cancel",
+        },
       ],
       { cancelable: false }
     );
@@ -176,29 +176,29 @@ class DetailBooking extends Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path, status: true } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   fromGallery(key) {
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path }, status: true });
         console.log("status di gallert", this.state.status);
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   tes() {
@@ -223,7 +223,7 @@ class DetailBooking extends Component {
     const frmData = {
       //---------foto attachment
       order_id: order_id,
-      pictUrlAttach: fileattach
+      pictUrlAttach: fileattach,
       //---------end foto attachment
     };
 
@@ -247,7 +247,7 @@ class DetailBooking extends Component {
         // urlApi + "c_auth/SignUpAgent",
         urlApi + "c_nup/saveAttachment/IFCAPB/",
         {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
         [
           // { name: "photo", filename: fileName, data: fileImg },
@@ -255,9 +255,9 @@ class DetailBooking extends Component {
           { name: "photoattach", filename: fileNameAttach, data: fileattach },
           // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
           // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) }
+          { name: "data", data: JSON.stringify(frmData) },
         ]
-      ).then(resp => {
+      ).then((resp) => {
         console.log("res_if", resp);
         const res = JSON.parse(resp.data);
         console.log("res", res);
@@ -270,7 +270,7 @@ class DetailBooking extends Component {
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
             // if (res.Data) {
-            Actions.pop();
+            // Actions.pop();
 
             console.log("uploadfoto", !this.state.uploadfoto);
             setTimeout(() => {
@@ -311,7 +311,7 @@ class DetailBooking extends Component {
     //   tableHead: ["Date", "Description", "Amount", "Status"]
     // };
     const numbers = [0];
-    const listItems = numbers.map(number => number + 1);
+    const listItems = numbers.map((number) => number + 1);
     console.log("nomor", listItems);
 
     return (
@@ -359,7 +359,7 @@ class DetailBooking extends Component {
               // backgroundColor: "red",
               flex: 1,
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <View
@@ -368,7 +368,7 @@ class DetailBooking extends Component {
                 width: "70%",
                 height: "20%",
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               <Text
@@ -377,7 +377,7 @@ class DetailBooking extends Component {
                   fontSize: 17,
                   paddingBottom: 15,
                   color: Colors.black,
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
               >
                 {this.state.pesan}
@@ -389,10 +389,14 @@ class DetailBooking extends Component {
                     height: 40,
                     width: 100,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                   onPress={() => {
                     this.alertFillBlank(!this.state.Alert_Visibility);
+                    Actions.pop();
+                    setTimeout(() => {
+                      Actions.refresh({ uploadfoto: !this.state.uploadfoto });
+                    }, 0);
                   }}
                   // activeOpacity={0.7}
                 >
@@ -427,7 +431,7 @@ class DetailBooking extends Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -441,7 +445,7 @@ class DetailBooking extends Component {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -460,7 +464,7 @@ class DetailBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Order Id : {this.state.order_id}
@@ -474,7 +478,7 @@ class DetailBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.goldUrban,
                     marginBottom: 5,
-                    fontSize: 13
+                    fontSize: 13,
                   }}
                 >
                   {moment(this.state.order_date).format("DD MMM YYYY")}
@@ -490,7 +494,7 @@ class DetailBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Name : {this.state.full_name}
@@ -508,7 +512,7 @@ class DetailBooking extends Component {
                         alignSelf: "flex-start",
                         color: Colors.navyUrban,
                         marginBottom: 5,
-                        fontSize: 16
+                        fontSize: 16,
                       }}
                     >
                       {data.property_descs}
@@ -520,7 +524,7 @@ class DetailBooking extends Component {
                           alignSelf: "flex-start",
                           color: Colors.navyUrban,
                           marginBottom: 5,
-                          fontSize: 16
+                          fontSize: 16,
                         }}
                       >
                         {data.lot_descs} - ({data.qty} Items)
@@ -533,7 +537,7 @@ class DetailBooking extends Component {
                           marginBottom: 5,
                           fontSize: 16,
                           right: 130,
-                          position: "absolute"
+                          position: "absolute",
                         }}
                       >
                         Rp.
@@ -546,7 +550,7 @@ class DetailBooking extends Component {
                           marginBottom: 5,
                           fontSize: 16,
                           right: 20,
-                          position: "absolute"
+                          position: "absolute",
                         }}
                       >
                         {/* {data.total_amt} */}
@@ -566,7 +570,7 @@ class DetailBooking extends Component {
                   right: 130,
                   position: "absolute",
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 Rp.
@@ -583,7 +587,7 @@ class DetailBooking extends Component {
                   borderTopWidth: 2,
                   borderTopColor: Colors.navyUrban,
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 {/* {this.state.total_amt} */}
@@ -612,7 +616,7 @@ class DetailBooking extends Component {
                 alignSelf: "flex-start",
                 color: Colors.navyUrban,
                 marginBottom: 5,
-                fontSize: 14
+                fontSize: 14,
               }}
             >
               Upload Payment Attachment
@@ -632,7 +636,7 @@ class DetailBooking extends Component {
                     width: 35,
                     height: 35,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                 >
                   {/* <Text>klik</Text> */}
@@ -641,7 +645,7 @@ class DetailBooking extends Component {
                       width: 35,
                       height: 35,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image_blue.png")}
                   ></Image>
@@ -652,7 +656,7 @@ class DetailBooking extends Component {
                     style={{
                       width: 200,
                       height: 130,
-                      alignContent: "center"
+                      alignContent: "center",
                     }}
                     source={this.state.pictUrlAttach}
                     // source={{ uri: this.state.pictUrlAttach }}
@@ -673,7 +677,7 @@ class DetailBooking extends Component {
                     width: 35,
                     height: 35,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                 >
                   {/* <Text>klik</Text> */}
@@ -682,7 +686,7 @@ class DetailBooking extends Component {
                       width: 35,
                       height: 35,
                       position: "absolute",
-                      right: 10
+                      right: 10,
                     }}
                     source={require("@Asset/images/icon/image_blue.png")}
                   ></Image>
@@ -707,7 +711,7 @@ class DetailBooking extends Component {
                     style={{
                       width: 200,
                       height: 130,
-                      alignContent: "center"
+                      alignContent: "center",
                     }}
                     // source={this.state.pictUrlAttach}
                     source={{ uri: this.state.pictUrlAttach }}
@@ -725,7 +729,7 @@ class DetailBooking extends Component {
                   alignItems: "center",
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
+                  letterSpacing: 1,
                 }}
               >
                 Submit
@@ -744,12 +748,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2c3e50"
+    backgroundColor: "#2c3e50",
   },
   text: {
     textAlign: "center",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 //make this component available to the app
