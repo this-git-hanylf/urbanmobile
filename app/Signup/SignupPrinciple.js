@@ -119,6 +119,7 @@ class SignupPrinciple extends React.Component {
   }
 
   componentDidMount() {
+    console.disableYellowBox = true;
     const data = {
       contactperson: this.props.datas_dari_regist.fullname,
       email: this.props.datas_dari_regist.email,
@@ -572,7 +573,7 @@ class SignupPrinciple extends React.Component {
             Actions.Login();
           });
         } else {
-          this.setState({ isLoaded: this.state.isLoaded }, () => {
+          this.setState({ isLoaded: !this.state.isLoaded }, () => {
             // alert(res.Pesan);
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
@@ -723,6 +724,9 @@ class SignupPrinciple extends React.Component {
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
+                        this.generateCaptcha();
+                        this.setState({ capt: !this.state.capt });
+                        this.textInputHolder.clear();
                       }}
                       // activeOpacity={0.7}
                     >
@@ -1632,6 +1636,9 @@ class SignupPrinciple extends React.Component {
                       }
                       style={styles.textInputStyle}
                       underlineColorAndroid="transparent"
+                      ref={(data) => {
+                        this.textInputHolder = data;
+                      }}
                     />
                   </View>
 

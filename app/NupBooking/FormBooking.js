@@ -17,7 +17,7 @@ import {
   FlatList,
   Modal,
   ListView,
-  Alert
+  Alert,
   // Picker
 } from "react-native";
 import {
@@ -39,7 +39,7 @@ import {
   Picker,
   Col,
   ListItem,
-  Label
+  Label,
 } from "native-base";
 
 // import NavigationService from "@Service/Navigation";
@@ -83,7 +83,7 @@ class FormBooking extends React.Component {
       cor: "",
       projectdesc: "",
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
       //data data dari nik
       //   full_name: ""
     };
@@ -113,7 +113,7 @@ class FormBooking extends React.Component {
       audit_user: await _getData("@AgentCd"),
       projectdesc: this.props.items.project_descs,
       subtot: this.props.subtot,
-      totalqty: this.props.totalqty
+      totalqty: this.props.totalqty,
       //   fullname: this.state.dataFromNik.dataFormNik[0].full_name
       //   full_name: this.state.dataFromNik[0].full_name
       // lot_type: this.props.prevItems.lot_type,
@@ -136,7 +136,7 @@ class FormBooking extends React.Component {
     isMount = false;
   }
 
-  validating = validationData => {
+  validating = (validationData) => {
     const keys = Object.keys(validationData);
     const errorKey = [];
     let isValid = false;
@@ -165,7 +165,7 @@ class FormBooking extends React.Component {
   // showAlert = (key) =>{
   //     alert('tes')
   // }
-  showAlert = key => {
+  showAlert = (key) => {
     Alert.alert(
       "Select a Photo",
       "Choose the place where you want to get a photo",
@@ -175,8 +175,8 @@ class FormBooking extends React.Component {
         {
           text: "Cancel",
           onPress: () => console.log("User Cancel"),
-          style: "cancel"
-        }
+          style: "cancel",
+        },
       ],
       { cancelable: false }
     );
@@ -186,28 +186,28 @@ class FormBooking extends React.Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   fromGallery(key) {
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
-      height: 500
+      height: 500,
     })
-      .then(image => {
+      .then((image) => {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
       })
-      .catch(e => console.log("tag", e));
+      .catch((e) => console.log("tag", e));
   }
 
   modalBankMaster() {
@@ -290,7 +290,7 @@ class FormBooking extends React.Component {
       bank_name,
       account_name,
       account_no,
-      cor
+      cor,
     } = this.state;
 
     const frmData = {
@@ -316,7 +316,7 @@ class FormBooking extends React.Component {
       account_name: account_name,
       account_no: account_no,
       cor: cor,
-      agent_cd: audit_user
+      agent_cd: audit_user,
     };
 
     const isValid = this.validating({
@@ -328,7 +328,7 @@ class FormBooking extends React.Component {
       bank_name: { require: true },
       cor: { require: true },
       mobilephone: { require: true },
-      npwp: { require: true }
+      npwp: { require: true },
     });
 
     let fileNameKtp = "";
@@ -393,7 +393,7 @@ class FormBooking extends React.Component {
         // urlApi + "c_auth/SignUpAgent",
         urlApi + "c_nup/saveNup/IFCAPB/",
         {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
         [
           // { name: "photo", filename: fileName, data: fileImg },
@@ -401,9 +401,9 @@ class FormBooking extends React.Component {
           { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
           // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
           // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) }
+          { name: "data", data: JSON.stringify(frmData) },
         ]
-      ).then(resp => {
+      ).then((resp) => {
         console.log("res_if", resp);
         const res = JSON.parse(resp.data);
         console.log("res", res);
@@ -499,12 +499,12 @@ class FormBooking extends React.Component {
               nik_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
               //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 // this.setState({ dataFromNik: resData });
@@ -519,7 +519,7 @@ class FormBooking extends React.Component {
               }
               console.log("dataFromNik", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -544,7 +544,7 @@ class FormBooking extends React.Component {
 
         bank_name: dataFromNik.dataFromNik[0].bank_name,
         account_name: dataFromNik.dataFromNik[0].account_name,
-        account_no: dataFromNik.dataFromNik[0].account_no
+        account_no: dataFromNik.dataFromNik[0].account_no,
       });
       // fullname = dataFromNik.dataFromNik[0].full_name;
       // console.log("fullname", fullname);
@@ -629,7 +629,7 @@ class FormBooking extends React.Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -642,7 +642,7 @@ class FormBooking extends React.Component {
                 fontSize: 13,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
             >
               {this.state.projectdesc}
@@ -664,7 +664,7 @@ class FormBooking extends React.Component {
                 // backgroundColor: "red",
                 flex: 1,
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               <View
@@ -673,7 +673,7 @@ class FormBooking extends React.Component {
                   width: "70%",
                   height: "20%",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Text
@@ -682,7 +682,7 @@ class FormBooking extends React.Component {
                     fontSize: 17,
                     paddingBottom: 15,
                     color: Colors.black,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   {this.state.pesan}
@@ -694,7 +694,7 @@ class FormBooking extends React.Component {
                       height: 40,
                       width: 100,
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                     onPress={() => {
                       this.alertFillBlank(!this.state.Alert_Visibility);
@@ -726,7 +726,7 @@ class FormBooking extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.nik}
-                onChangeText={val => this.setState({ nik: val })}
+                onChangeText={(val) => this.setState({ nik: val })}
                 // onChangeText={val => this.getNik({ val })}
                 style={Styles.positionTextInput}
                 ref="nik"
@@ -743,7 +743,7 @@ class FormBooking extends React.Component {
                 bottom: 20,
                 fontSize: 25,
                 position: "absolute",
-                right: 20
+                right: 20,
               }}
               name="search"
               onPress={() => this.cariNIK({ carinik: this.state.nik })}
@@ -785,7 +785,7 @@ class FormBooking extends React.Component {
                 placeholderTextColor={Colors.greyUrban}
                 // placeholderStyle={{ paddingLeft: 20 }}
                 value={this.state.fullname}
-                onChangeText={val => this.setState({ fullname: val })}
+                onChangeText={(val) => this.setState({ fullname: val })}
                 style={Styles.positionTextInput}
                 ref="fullname"
                 // textAlign={"right"}
@@ -804,7 +804,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -834,7 +834,7 @@ class FormBooking extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.mobilephone}
-                onChangeText={val => this.setState({ mobilephone: val })}
+                onChangeText={(val) => this.setState({ mobilephone: val })}
                 style={Styles.positionTextInput}
                 ref="mobilephone"
               />
@@ -850,7 +850,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -877,7 +877,7 @@ class FormBooking extends React.Component {
                 autoCapitalize="words"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.email}
-                onChangeText={val => this.setState({ email: val })}
+                onChangeText={(val) => this.setState({ email: val })}
                 style={Styles.positionTextInput}
                 ref="email"
               />
@@ -893,7 +893,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -909,7 +909,7 @@ class FormBooking extends React.Component {
                             </View> */}
             <Item floatingLabel style={Styles.marginround}>
               <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
-                Correspondence
+                Address
               </Label>
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
@@ -920,7 +920,7 @@ class FormBooking extends React.Component {
                 autoCapitalize="words"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.cor}
-                onChangeText={val => this.setState({ cor: val })}
+                onChangeText={(val) => this.setState({ cor: val })}
                 style={Styles.positionTextInput}
                 ref="email"
               />
@@ -936,7 +936,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -952,13 +952,13 @@ class FormBooking extends React.Component {
                 flexDirection: "row",
                 alignItems: "flex-start",
 
-                left: 10
+                left: 10,
               }}
             >
               <Text
                 style={{
                   color: this.state.bank_name ? "#bfbfbf" : Colors.greyUrban,
-                  fontSize: 14
+                  fontSize: 14,
                 }}
               >
                 Bank Name
@@ -976,7 +976,7 @@ class FormBooking extends React.Component {
                 placeholder="Choose Bank"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.bank_name}
-                onChangeText={val => this.setState({ bank_name: val })}
+                onChangeText={(val) => this.setState({ bank_name: val })}
                 style={Styles.positionTextInput}
                 ref="nik"
                 editable={false}
@@ -1010,7 +1010,7 @@ class FormBooking extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.account_no}
-                onChangeText={val => this.setState({ account_no: val })}
+                onChangeText={(val) => this.setState({ account_no: val })}
                 style={Styles.positionTextInput}
                 ref="account_no"
               />
@@ -1027,7 +1027,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -1054,7 +1054,7 @@ class FormBooking extends React.Component {
                 // keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.account_name}
-                onChangeText={val => this.setState({ account_name: val })}
+                onChangeText={(val) => this.setState({ account_name: val })}
                 style={Styles.positionTextInput}
                 ref="account_name"
               />
@@ -1070,7 +1070,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -1098,7 +1098,7 @@ class FormBooking extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.npwp}
-                onChangeText={val => this.setState({ npwp: val })}
+                onChangeText={(val) => this.setState({ npwp: val })}
                 style={Styles.positionTextInput}
                 ref="npwp"
               />
@@ -1114,7 +1114,7 @@ class FormBooking extends React.Component {
                   bottom: 25,
                   position: "absolute",
                   right: 10,
-                  fontSize: 12
+                  fontSize: 12,
                 }}
               >
                 (customer)
@@ -1140,7 +1140,7 @@ class FormBooking extends React.Component {
                     width: 25,
                     height: 25,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                   source={require("@Asset/images/icon/image_blue.png")}
                 ></Image>
@@ -1158,7 +1158,7 @@ class FormBooking extends React.Component {
                     style={{
                       width: 200,
                       height: 130,
-                      alignContent: "center"
+                      alignContent: "center",
                     }}
                     source={this.state.pictUrlKtp}
                   />
@@ -1169,7 +1169,7 @@ class FormBooking extends React.Component {
                     width: 25,
                     height: 25,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                   source={require("@Asset/images/icon/image.png")}
                 ></Image>
@@ -1191,7 +1191,7 @@ class FormBooking extends React.Component {
                     width: 25,
                     height: 25,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                   source={require("@Asset/images/icon/image_blue.png")}
                 ></Image>
@@ -1209,7 +1209,7 @@ class FormBooking extends React.Component {
                     style={{
                       width: 200,
                       height: 130,
-                      alignContent: "center"
+                      alignContent: "center",
                     }}
                     source={this.state.pictUrlNPWP}
                   />
@@ -1220,7 +1220,7 @@ class FormBooking extends React.Component {
                     width: 25,
                     height: 25,
                     position: "absolute",
-                    right: 10
+                    right: 10,
                   }}
                   source={require("@Asset/images/icon/image.png")}
                 ></Image>
@@ -1244,7 +1244,7 @@ class FormBooking extends React.Component {
                       alignItems: "center",
                       textAlign: "center",
                       fontFamily: Fonts.type.proximaNovaBold,
-                      letterSpacing: 1
+                      letterSpacing: 1,
                     }}
                   >
                     Next

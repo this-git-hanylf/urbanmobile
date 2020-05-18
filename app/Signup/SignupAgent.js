@@ -125,6 +125,7 @@ class SignupGuest extends React.Component {
   }
 
   componentDidMount() {
+    console.disableYellowBox = true;
     const data = {
       fullname: this.props.datas_dari_regist.fullname,
       email: this.props.datas_dari_regist.email,
@@ -777,6 +778,9 @@ class SignupGuest extends React.Component {
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
+                        this.generateCaptcha();
+                        this.setState({ capt: !this.state.capt });
+                        this.textInputHolder.clear();
                       }}
                       // activeOpacity={0.7}
                     >
@@ -1353,6 +1357,9 @@ class SignupGuest extends React.Component {
                       }
                       style={styles.textInputStyle}
                       underlineColorAndroid="transparent"
+                      ref={(data) => {
+                        this.textInputHolder = data;
+                      }}
                     />
                   </View>
 
