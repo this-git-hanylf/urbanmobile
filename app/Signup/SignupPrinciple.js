@@ -560,9 +560,11 @@ class SignupPrinciple extends React.Component {
           { name: "data", data: JSON.stringify(frmData) },
         ]
       ).then((resp) => {
+        // console.log("res_if", resp);
         const res = JSON.parse(resp.data);
         // let res = JSON.stringify(resp.data);
         console.log("res", resp);
+        console.log("res", res);
         if (!res.Error) {
           // Actions.pop()
           this.setState({ isLogin: true }, () => {

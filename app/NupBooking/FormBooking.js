@@ -84,6 +84,7 @@ class FormBooking extends React.Component {
       projectdesc: "",
       Alert_Visibility: false,
       pesan: "",
+      capt: false,
       //data data dari nik
       //   full_name: ""
     };
@@ -698,6 +699,7 @@ class FormBooking extends React.Component {
                     }}
                     onPress={() => {
                       this.alertFillBlank(!this.state.Alert_Visibility);
+                      this.setState({ isLoaded: !this.state.isLoaded });
                     }}
                     // activeOpacity={0.7}
                   >
@@ -1233,7 +1235,11 @@ class FormBooking extends React.Component {
               style={{ paddingTop: 50 }}
               pointerEvents={this.state.isLoaded ? "auto" : "none"}
             >
-              <Button style={Styles.btnMedium} onPress={() => this.submit()}>
+              <Button
+                style={Styles.btnMedium}
+                onPress={() => this.submit()}
+                // disabled={!this.state.capt}
+              >
                 {!this.state.isLoaded ? (
                   <ActivityIndicator color="#fff" />
                 ) : (

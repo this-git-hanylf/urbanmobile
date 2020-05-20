@@ -67,7 +67,7 @@ class NupBooking extends React.Component {
       // title: '',
       // project_no:''
       tower: [],
-      unit: [],
+      unit: {},
       harga: [],
       descs_project: "",
       lot_type: "",
@@ -154,7 +154,7 @@ class NupBooking extends React.Component {
 
     this.setState(data, () => {
       this.getTower();
-      this.getUnit();
+      // this.getUnit();
       this.getHarga();
       this.getTowerDescs();
       this.getUnitDescs();
@@ -231,8 +231,13 @@ class NupBooking extends React.Component {
             .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
-                this.setState({ unit: resData });
-                console.log("unit", resData);
+                // this.setState({ unit: resData });
+
+                this.setState({
+                  unit: { ...this.state.unit, [prop_cd]: resData },
+                });
+
+                console.log("unit ==>", resData);
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
                   // alert(res.Pesan);
@@ -367,7 +372,7 @@ class NupBooking extends React.Component {
       //     this.getUnit(prop_cd);
 
       // })
-
+      console.log("TEST==>", chooseTo.descNamaTower[0]);
       if (chooseTo.descNamaTower[0]) {
         const data = {
           property_cd: prop_cd,
@@ -375,7 +380,7 @@ class NupBooking extends React.Component {
           lot_type: "",
           harga: [],
           qty: 0,
-          unitDes: "",
+          unitDes: "", //ini unitDes buat nama unit type
         };
 
         const arrayTower = this.state.arrayTower;
@@ -845,53 +850,103 @@ class NupBooking extends React.Component {
                   </Item>
                 </View>
 
-                <View style={Styles.viewRowUnit}>
-                  <Text style={[Styles.textLeft, { paddingTop: 10 }]}>
-                    UNIT TYPE
-                  </Text>
-                  {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
-                   */}
-                  <Item
-                    style={{
-                      height: 35,
-                      marginBottom: 10,
-                      borderBottomColor: "#fff",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Picker
-                      placeholder="-"
-                      selectedValue={item.lot_type}
-                      style={{ textAlign: "right", width: 170, right: 0 }}
-                      textStyle={{
-                        fontFamily: "Montserrat-Regular",
-                        fontSize: 12,
-                        // color: "red",
-                        textAlign: "right",
-                      }}
-                      onValueChange={(chooseUn) => {
-                        const namaUnit = this.state.unit.filter(
-                          (item) => item.value == chooseUn
-                        );
-                        this.chooseUnit({
-                          index,
-                          lot_type: chooseUn,
-                          descNama: namaUnit,
-                        });
+                {this.state.unit[item.property_cd] ? (
+                  <View style={Styles.viewRowUnit}>
+                    <Text style={[Styles.textLeft, { paddingTop: 10 }]}>
+                      UNIT TYPE
+                    </Text>
+                    {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
+                     */}
+                    <Item
+                      style={{
+                        height: 35,
+                        marginBottom: 10,
+                        borderBottomColor: "#fff",
+                        alignItems: "center",
                       }}
                     >
-                      <Picker.Item label="-Choose here-" value="" />
-                      {this.state.unit.map((data, key) => (
-                        <Picker.Item
-                          key={key}
-                          label={data.label}
-                          value={data.value}
-                          right="10"
-                        />
-                      ))}
-                    </Picker>
-                  </Item>
-                </View>
+                      <Picker
+                        placeholder="-"
+                        selectedValue={item.lot_type}
+                        style={{ textAlign: "right", width: 170, right: 0 }}
+                        textStyle={{
+                          fontFamily: "Montserrat-Regular",
+                          fontSize: 12,
+                          // color: "red",
+                          textAlign: "right",
+                        }}
+                        onValueChange={(chooseUn) => {
+                          const namaUnit = this.state.unit[
+                            item.property_cd
+                          ].filter((item) => item.value == chooseUn);
+                          this.chooseUnit({
+                            index,
+                            lot_type: chooseUn,
+                            descNama: namaUnit,
+                          });
+                        }}
+                      >
+                        <Picker.Item label="-Choose here-" value="" />
+                        {this.state.unit[item.property_cd].map((data, key) => (
+                          <Picker.Item
+                            key={key}
+                            label={data.label}
+                            value={data.value}
+                            right="10"
+                          />
+                        ))}
+                      </Picker>
+                    </Item>
+                  </View>
+                ) : (
+                  <View style={Styles.viewRowUnit}>
+                    <Text style={[Styles.textLeft, { paddingTop: 10 }]}>
+                      UNIT TYPE
+                    </Text>
+                    {/* <Text style={Styles.textRight}>{this.state.projectdesc}</Text>
+                     */}
+                    <Item
+                      style={{
+                        height: 35,
+                        marginBottom: 10,
+                        borderBottomColor: "#fff",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Picker
+                        placeholder="-"
+                        // selectedValue={item.lot_type}
+                        style={{ textAlign: "right", width: 170, right: 0 }}
+                        textStyle={{
+                          fontFamily: "Montserrat-Regular",
+                          fontSize: 12,
+                          // color: "red",
+                          textAlign: "right",
+                        }}
+                        // onValueChange={(chooseUn) => {
+                        //   const namaUnit = this.state.unit[
+                        //     item.property_cd
+                        //   ].filter((item) => item.value == chooseUn);
+                        //   this.chooseUnit({
+                        //     index,
+                        //     lot_type: chooseUn,
+                        //     descNama: namaUnit,
+                        //   });
+                        // }}
+                      >
+                        <Picker.Item label="-Choose here-" value="" />
+                        {/* {this.state.unit[item.property_cd].map((data, key) => (
+                          <Picker.Item
+                            key={key}
+                            label={data.label}
+                            value={data.value}
+                            right="10"
+                          />
+                        ))} */}
+                      </Picker>
+                    </Item>
+                  </View>
+                )}
 
                 {item.harga.length == 0
                   ? null
