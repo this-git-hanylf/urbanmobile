@@ -69,7 +69,12 @@ export default class Profile extends React.Component {
     this.state = {
       Alert_Visibility: false,
       pesan: "",
+      Alert_Visibility_picture: false,
+      pesan_picture: "",
+      Alert_Visibility_form: false,
+      pesan_form: "",
       isLoaded: true,
+      isLoaded_changepass: true,
       gender: null,
       email: "",
       name: "",
@@ -182,20 +187,27 @@ export default class Profile extends React.Component {
     })
       .then((response) => response.json())
       .then((res) => {
+        console.log("res", res);
         if (!res.Error) {
           this.setState({ isLogin: true }, () => {
-            this.changePass();
-            alert(res.Pesan);
+            // this.changePass();
+            // alert(res.Pesan);
+            const pesan_form = res.Pesan;
+            this.alertForm(true, pesan_form);
             _storeData("@Name", name);
             _storeData("@Handphone", hp);
             _storeData("@ProfileUpdate", true);
             // this.changePass();
           });
+          this.setState({ isLoaded: !this.state.isLoaded });
         } else {
-          // this.setState({ isLoaded: this.state.isLoaded }, () => {
-          alert(res.Pesan);
-          // console.log('url',this.state.pickUrlKtp.uri)
-          // });
+          console.log(res.Error);
+          this.setState({ isLoaded: this.state.isLoaded }, () => {
+            // alert(res.Pesan);
+            const pesan_form = res.Pesan;
+            this.alertForm(true, pesan_form);
+            // console.log('url',this.state.pickUrlKtp.uri)
+          });
         }
 
         console.log("save profile", res);
@@ -220,7 +232,7 @@ export default class Profile extends React.Component {
   };
 
   changePass = () => {
-    this.setState({ isLoaded: !this.state.isLoaded });
+    this.setState({ isLoaded_changepass: !this.state.isLoaded_changepass });
     const { email, newPass, curPass } = this.state;
 
     const formData = {
@@ -241,8 +253,31 @@ export default class Profile extends React.Component {
     })
       .then((response) => response.json())
       .then((res) => {
-        alert(res.Pesan);
-        console.log("save profile", res);
+        if (!res.Error) {
+          // this.setState({ isLogin: true }, () => {
+          // this.changePass();
+          // alert(res.Pesan);
+          const pesan_picture = res.Pesan;
+          this.alertPicture(true, pesan_picture);
+          console.log("change pass", res);
+          // this.changePass();
+          // });
+          this.setState({
+            isLoaded_changepass: !this.state.isLoaded_changepass,
+          });
+        } else {
+          console.log(res.Error);
+          this.setState(
+            { isLoaded_changepass: this.state.isLoaded_changepass },
+            () => {
+              // alert(res.Pesan);
+              const pesan_form = res.Pesan;
+              this.alertForm(true, pesan_form);
+              // console.log('url',this.state.pickUrlKtp.uri)
+            }
+          );
+        }
+        // alert(res.Pesan);
       })
       .catch((error) => {
         console.log(error);
@@ -347,37 +382,132 @@ export default class Profile extends React.Component {
   renderAccordionContentSocial() {
     return (
       <View>
-        <TextInput
-          style={Styles.textInput}
-          placeholder={"Current Password"}
-          onChangeText={(val) => this.setState({ curPass: val })}
-          value={this.state.curPass}
-        />
-        <TextInput
-          style={Styles.textInput}
-          placeholder={"New Password"}
-          onChangeText={(val) => this.setState({ newPass: val })}
-          value={this.state.newPass}
-        />
-        <TextInput
-          style={Styles.textInput}
-          placeholder={"Confirm Password"}
-          onChangeText={(val) => this.setState({ conPass: val })}
-          value={this.state.conPass}
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 25,
+            alignItems: "flex-end",
+            marginBottom: 10,
+            // width: "100%"
+          }}
+        >
+          <View
+            style={{
+              alignItems: "flex-start",
+              width: "40%",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.white,
+                fontFamily: "Montserrat-Regular",
+                fontSize: 12,
+              }}
+            >
+              Current Password
+            </Text>
+          </View>
+          <View style={{ alignItems: "flex-end", width: "60%" }}>
+            <TextInput
+              style={Styles.textInput}
+              placeholder={"Current Password"}
+              placeholderTextColor={Colors.greyUrban}
+              value={this.state.curPass}
+              onChangeText={(val) => this.setState({ curPass: val })}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 25,
+            alignItems: "flex-end",
+            marginBottom: 10,
+            // width: "100%"
+          }}
+        >
+          <View
+            style={{
+              alignItems: "flex-start",
+              width: "40%",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.white,
+                fontFamily: "Montserrat-Regular",
+                fontSize: 12,
+              }}
+            >
+              New Password
+            </Text>
+          </View>
+          <View style={{ alignItems: "flex-end", width: "60%" }}>
+            <TextInput
+              style={Styles.textInput}
+              placeholder={"New Password"}
+              placeholderTextColor={Colors.greyUrban}
+              value={this.state.newPass}
+              onChangeText={(val) => this.setState({ newPass: val })}
+            />
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 25,
+            alignItems: "flex-end",
+            marginBottom: 10,
+            // width: "100%"
+          }}
+        >
+          <View
+            style={{
+              alignItems: "flex-start",
+              width: "40%",
+            }}
+          >
+            <Text
+              style={{
+                color: Colors.white,
+                fontFamily: "Montserrat-Regular",
+                fontSize: 12,
+              }}
+            >
+              Confirm Password
+            </Text>
+          </View>
+          <View style={{ alignItems: "flex-end", width: "60%" }}>
+            <TextInput
+              style={Styles.textInput}
+              placeholder={"Confirm Password"}
+              placeholderTextColor={Colors.greyUrban}
+              value={this.state.conPass}
+              onChangeText={(val) => this.setState({ conPass: val })}
+            />
+          </View>
+        </View>
         <Button
           style={Styles.btn}
           onPress={() => {
             this.changePassPress();
           }}
         >
-          <Text style={Styles.formBtnText}>{"Save".toUpperCase()}</Text>
-          <Icon
+          {!this.state.isLoaded_changepass ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={Styles.formBtnText}>
+              {"Change Password".toUpperCase()}
+            </Text>
+          )}
+          {/* <Icon
             active
             name="arrow-right"
             type="FontAwesome5"
             style={Styles.formBtnIcon}
-          />
+          /> */}
         </Button>
       </View>
     );
@@ -404,7 +534,7 @@ export default class Profile extends React.Component {
         // alert(res.Pesan);
         // const pesan = res.Pesan;
         // this.alertFillBlank(true, pesan);
-        console.log("save profile", res);
+        console.log("sign out", res);
       })
       .catch((error) => {
         console.log(error);
@@ -423,6 +553,19 @@ export default class Profile extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
+  alertPicture(visible, pesan_picture) {
+    this.setState({
+      Alert_Visibility_picture: visible,
+      pesan_picture: pesan_picture,
+    });
+  }
+
+  alertForm(visible, pesan_form) {
+    this.setState({
+      Alert_Visibility_form: visible,
+      pesan_form: pesan_form,
+    });
+  }
   showAlert = () => {
     Alert.alert(
       "Select a Photo",
@@ -487,8 +630,11 @@ export default class Profile extends React.Component {
       },
       [{ name: "photo", filename: fileName, data: fileImg }]
     ).then((resp) => {
-      let res = JSON.stringify(resp.data);
-      console.log("res", resp);
+      let res = JSON.parse(resp.data);
+      console.log("res foto", resp);
+      // alert(res.Pesan);
+      const pesan_picture = res.Pesan;
+      this.alertPicture(true, pesan_picture);
       _storeData("@ProfileUpdate", true);
     });
   };
@@ -665,6 +811,130 @@ export default class Profile extends React.Component {
               </View>
             </Modal>
 
+            {/* ALERT UPLOAD Picture */}
+            <Modal
+              visible={this.state.Alert_Visibility_picture}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertPicture(
+                  !this.state.Alert_Visibility_picture,
+                  pesan_picture
+                );
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "80%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan_picture}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        this.alertPicture(!this.state.Alert_Visibility_picture);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/* TUTUP ALERT Picture */}
+
+            {/* ALERT SAVE form */}
+            <Modal
+              visible={this.state.Alert_Visibility_form}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertForm(!this.state.Alert_Visibility_form, pesan_form);
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "80%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan_form}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        this.alertForm(!this.state.Alert_Visibility_form);
+
+                        Actions.pop();
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/* TUTUP ALERT form */}
             {/* <View style={[Styles.back, Style.actionBarIn]}>
               <Button
                 transparent
@@ -875,7 +1145,7 @@ export default class Profile extends React.Component {
               </View>
             </View>
 
-            <View
+            {/* <View
               style={{
                 flexDirection: "row",
                 marginHorizontal: 40,
@@ -910,11 +1180,31 @@ export default class Profile extends React.Component {
                   value={this.state.curPass}
                 />
               </View>
+            </View> */}
+
+            <View style={Styles.formBg}>
+              <Accordion
+                style={Styles.accordion}
+                dataArray={[
+                  // {
+                  //   type: "basic",
+                  //   title: "Personal Information",
+                  // },
+
+                  {
+                    type: "social",
+                    title: "Change Password",
+                  },
+                ]}
+                expanded={-1}
+                renderHeader={this.renderAccordionHeader}
+                renderContent={this.renderAccordionContent}
+              />
             </View>
 
             <View>
               <View
-                style={{ paddingTop: 50 }}
+                style={{ paddingTop: 50, paddingBottom: 20 }}
                 pointerEvents={this.state.isLoaded ? "auto" : "none"}
               >
                 <Button style={Styles.btnMedium} onPress={() => this.save()}>

@@ -16,7 +16,7 @@ import {
   FlatList,
   Modal,
   NativeModules,
-  PermissionsAndroid
+  PermissionsAndroid,
 } from "react-native";
 import {
   Container,
@@ -37,7 +37,7 @@ import {
   Card,
   Textarea,
   Picker,
-  Col
+  Col,
 } from "native-base";
 import RNFetchBlob from "rn-fetch-blob";
 import { Actions } from "react-native-router-flux";
@@ -68,8 +68,9 @@ class PageTerm extends Component {
       name: "",
       project: [],
       selected: "",
-      file_url: ""
-      // uri: '',
+      file_url: "",
+      files: [],
+      uri: "",
       // uri: require('@Asset/images/pdf/T&C.pdf')
     };
 
@@ -77,11 +78,13 @@ class PageTerm extends Component {
   }
 
   async componentDidMount() {
-    const data = {
-      // uri : this.props.datas.file_url
-    };
-    // const uri = this.props.item.file_url;
-    console.log("uri", data);
+    console.log("files", this.props.files);
+    // const data = {
+    //   uri: this.props.files[0].file_url,
+    // };
+    const uri_pdf = this.props.files[0].file_url;
+    this.setState({ uri: uri_pdf });
+    console.log("uri", uri_pdf);
   }
 
   // downloadFile = () =>{
@@ -111,15 +114,15 @@ class PageTerm extends Component {
 
   onValueChange(value) {
     this.setState({
-      selected: value
+      selected: value,
     });
   }
   render() {
-    // const source = {uri:require('@Asset/images/pdf/T&C.pdf'),cache:true};
-    // console.log('uri', this.state.uri);
+    const source = { uri: this.state.uri, cache: true };
+    console.log("uri bawah", this.state.uri);
     return (
       <Container style={Style.bgMain}>
-        <Header style={[Style.navigation, { backgroundColor: "#fff" }]}>
+        <Header style={[Style.navigation, { backgroundColor: "#12173f" }]}>
           <StatusBar
             backgroundColor={Colors.statusBarNavy}
             animated
@@ -135,58 +138,66 @@ class PageTerm extends Component {
               <Icon
                 active
                 name="arrow-left"
-                style={{ color: Colors.blueUrban }}
+                style={{ color: "#fff" }}
                 type="MaterialCommunityIcons"
               />
             </Button>
           </View>
           <View style={Style.actionBarMiddle}>
-            <Text style={Style.actionBarText}>tes</Text>
+            <Text
+              style={{
+                color: "#fff",
+                // fontFamily: "Montserrat-Regular",
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              Terms & Conditions
+            </Text>
           </View>
           <View style={Style.actionBarRight} />
         </Header>
 
-        {/* <Pdf
-                        
-                        // source={source}
-                        source={require('@Asset/images/pdf/T&C.pdf')}
-                        onLoadComplete={(numberOfPages,filePath)=>{
-                            console.log(`number of pages: ${numberOfPages}`);
-                        }}
-                        onPageChanged={(page,pageCount)=>{
-                            console.log('ok');
-                        }}
-                        onError={(error)=>{
-                            console.log(error);
-                        }}
-                        style={Styles.pdf}/> */}
+        <Pdf
+          source={source}
+          // source={require('@Asset/images/pdf/T&C.pdf')}
+          onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`number of pages: ${numberOfPages}`);
+          }}
+          onPageChanged={(page, pageCount) => {
+            console.log("ok");
+          }}
+          onError={(error) => {
+            console.log(error);
+          }}
+          style={Styles.pdf}
+        />
       </Container>
     );
   }
 }
 
 // define your styles
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         backgroundColor: '#2c3e50',
-//     },
-//     buttonUpload: {
-//         alignItems: 'center',
-//         backgroundColor: 'white',
-//         padding: 10,
-//         borderRadius: 10,
-//         height: 80,
-//     },
-//     pdf: {
-//         flex:1,
-//         width:Dimensions.get('window').width,
-//         backgroundColor : '#333'
-//     }
-
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#2c3e50",
+  },
+  buttonUpload: {
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10,
+    height: 80,
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get("window").width,
+    backgroundColor: "#333",
+  },
+});
 
 //make this component available to the app
 export default PageTerm;

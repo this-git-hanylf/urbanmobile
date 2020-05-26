@@ -16,40 +16,40 @@ export default {
     // shadowColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5
+    borderRadius: 5,
   },
   layoutContent: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   shadow: {
     flex: 1,
-    height: 20
+    height: 20,
   },
 
   coverImg: {
     flex: 1,
-    height: 200
+    height: 200,
   },
 
   section: {
     flex: 1,
     paddingVertical: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   profile: {
     flex: 1,
     height: 200,
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : null
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : null,
   },
   bgBlue: {
     width: "100%",
     flex: 1,
     height: 200,
     backgroundColor: "transparent",
-    position: "absolute"
+    position: "absolute",
   },
   back: {
     flex: 1,
@@ -59,7 +59,7 @@ export default {
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    position: "absolute"
+    position: "absolute",
   },
 
   owner: {
@@ -70,107 +70,107 @@ export default {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute"
+    position: "absolute",
   },
   ownerTitle: {
     flex: 1,
     fontFamily: "Montserrat-SemiBold",
     marginBottom: 20,
-    color: "#333"
+    color: "#333",
   },
   ownerAvatar: {
     borderRadius: 40,
     borderWidth: 5,
     borderColor: "#DDD",
     padding: 5,
-    alignItems: "center"
+    alignItems: "center",
   },
   ownerAvatarImg: {
     borderRadius: 40,
     width: 80,
-    height: 80
+    height: 80,
   },
   ownerInfo: {
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   ownerName: {
     fontFamily: "Montserrat-Regular",
     fontSize: 18,
     color: "#FFF",
     marginTop: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
   ownerLocation: {
     fontFamily: "Montserrat-Regular",
     fontSize: 12,
     color: "#FFF",
     opacity: 0.7,
-    marginBottom: 20
+    marginBottom: 20,
   },
   ownerBg: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   profleEdit: {
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
     width: 100,
-    bottom: 0
+    bottom: 0,
   },
 
   tabBorder: {
-    backgroundColor: "#FCC300"
+    backgroundColor: "#FCC300",
   },
   tabGrey: {
     backgroundColor: "#FFF",
-    fontFamily: "Montserrat-Regular"
+    fontFamily: "Montserrat-Regular",
   },
   tabText: {
     fontFamily: "Montserrat-Regular",
     fontSize: 12,
-    color: "#999"
+    color: "#999",
   },
   tabTextActive: {
     fontFamily: "Montserrat-Regular",
     fontSize: 12,
-    color: "#333"
+    color: "#333",
   },
   infoTab: {
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   infoItem: {
     alignItems: "flex-start",
-    paddingVertical: 30
+    paddingVertical: 30,
   },
   infoItemLast: {
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   infoIcon: {
-    marginRight: 10
+    marginRight: 10,
   },
   infoHeader: {
     fontFamily: "Montserrat-Regular",
     color: "#333",
     marginBottom: 5,
-    fontSize: 12
+    fontSize: 12,
   },
   infoDesc: {
     fontFamily: "Montserrat-Regular",
     color: "#999",
-    fontSize: 12
+    fontSize: 12,
   },
 
   formBg: {
     width: "100%",
-    paddingHorizontal: 15,
-    paddingTop: 30,
-    paddingBottom: 10
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    // paddingBottom: 10,
   },
   col: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   textInput: {
     fontFamily: "Montserrat-Regular",
@@ -183,7 +183,7 @@ export default {
     paddingVertical: 0,
     paddingHorizontal: 20,
     // color: "#666"
-    color: Colors.white
+    color: Colors.white,
   },
   textInputMulti: {
     fontFamily: "Montserrat-Regular",
@@ -198,12 +198,12 @@ export default {
     ...Platform.select({
       ios: {
         height: 100,
-        paddingTop: 20
+        paddingTop: 20,
       },
       android: {
-        textAlignVertical: "top"
-      }
-    })
+        textAlignVertical: "top",
+      },
+    }),
   },
   textInputHalf: {
     fontFamily: "Montserrat-Regular",
@@ -215,93 +215,104 @@ export default {
     width: "48.5%",
     marginBottom: 10,
     borderRadius: 5,
-    color: "#666"
+    color: "#666",
   },
   btn: {
-    width: "100%",
+    // width: "100%",
     borderRadius: 5,
-    backgroundColor: "#FCC300",
-    paddingVertical: 20,
-    paddingHorizontal: 5,
+    height: 30,
+    width: 200,
+    // height: 50,
+    backgroundColor: Colors.goldUrban,
+    // paddingVertical: 10,
+    // textAlign:'right',
+    alignSelf: "flex-end",
+    // paddingHorizontal: 5,
     marginTop: 10,
-    marginBottom: 20,
-    fontSize: 12
+    // marginBottom: 20,
+    fontSize: 9,
   },
   btnText: {
     fontFamily: "Montserrat-SemiBold",
     color: "#333",
     fontSize: 14,
-    alignSelf: "center"
+    alignSelf: "center",
   },
 
   formBtnText: {
     fontFamily: "Montserrat-SemiBold",
-    color: "#333",
-    fontSize: 12
+    color: "#fff",
+    fontSize: 10,
+    textAlign: "center",
+
+    width: "100%",
+    // fontSize: 12,
+    alignItems: "center",
+    // textAlign: "center",
   },
   formBtnIcon: {
     color: "#333",
-    fontSize: 20
+    fontSize: 20,
   },
 
   overview: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   overviewTitle: {
     flex: 1,
     fontFamily: "Montserrat-SemiBold",
-    marginBottom: 10
+    marginBottom: 10,
   },
   overviewDesc: {
     flex: 1,
     color: "#666",
     lineHeight: 20,
     fontFamily: "Montserrat-Regular",
-    fontSize: 13
+    fontSize: 13,
   },
 
   formPicker: {
     flex: 1,
     borderBottomWidth: 1,
     borderColor: "#CCC",
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   pickerText: {
     fontFamily: "Montserrat-Regular",
     fontSize: 12,
-    color: "#333"
+    color: "#333",
   },
 
   accordion: {
-    width: "100%"
+    width: "100%",
   },
   accordionTab: {
     flexDirection: "row",
-    padding: 15,
+    padding: 8,
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
     borderRadius: 8,
-    marginBottom: 1
+    marginBottom: 1,
   },
   accordionTabText: {
     color: "#333",
     fontSize: 12,
-    fontFamily: "Montserrat-SemiBold"
+    fontFamily: "Montserrat-SemiBold",
   },
   accordionTabIcon: {
     fontSize: 14,
-    color: "#666"
+    color: "#666",
   },
   accordionContent: {
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   sLink: {
     color: "#fff",
     fontSize: 12,
-    fontFamily: Fonts.type.sfuiDisplaySemibold
+    fontFamily: Fonts.type.sfuiDisplaySemibold,
   },
   sBtn: {
     width: 150,
@@ -311,7 +322,7 @@ export default {
     borderRadius: 18,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   editBtn: {},
   iconEdit: {
@@ -323,13 +334,13 @@ export default {
     backgroundColor: "#f3f3f3",
     padding: 7,
     borderRadius: 18,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   backgroundImage: {
     flex: 1,
     width: Metrics.WIDTH,
     height: Metrics.HEIGHT,
-    resizeMode: "contain"
+    resizeMode: "contain",
     // backgroundColor: "#febe29"
-  }
+  },
 };

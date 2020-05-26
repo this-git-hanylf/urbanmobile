@@ -75,6 +75,7 @@ export default class extends React.Component {
       datasysspec: "",
       Alert_Visibility: false,
       pesan: "",
+      files: [],
     };
     // this.logout = this.logout.bind(this);
   }
@@ -97,6 +98,7 @@ export default class extends React.Component {
       if (data.isLogin) {
         this.getProfile();
         this.getDatasysspec();
+        this.getFile();
       }
     });
 
@@ -116,6 +118,28 @@ export default class extends React.Component {
       this.getProfile();
       this.getDatasysspec();
     }
+  };
+
+  getFile = () => {
+    fetch(urlApi + "c_termcondition/getTermCondition/IFCAMOBILE", {
+      method: "GET",
+      // headers : this.state.hd,
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data;
+          this.setState({ files: resData });
+        } else {
+          this.setState({ isLoaded: !this.state.isLoaded }, () => {
+            alert(res.Pesan);
+          });
+        }
+        console.log("getFiles", res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   getProfile = () => {
@@ -277,7 +301,9 @@ export default class extends React.Component {
   }
 
   term() {
-    Actions.PageTerm();
+    console.log("files", this.state.files);
+    var files = this.state.files;
+    Actions.PageTerm({ files: files });
   }
   signin() {
     Actions.Login();
