@@ -149,6 +149,9 @@ export default class extends React.Component {
       stylehtml:
         "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
       pict_hardcode: require("@Asset/images/project_suite_urban.png"),
+      statusdataaktif: "",
+      location: [],
+      // project_status: "",
     };
 
     console.log("props", props);
@@ -174,6 +177,7 @@ export default class extends React.Component {
       handphone: await _getData("@Handphone"),
       isLogin: await _getData("@isLogin"),
       title: this.props.items.project_descs,
+      status_active: this.props.status_aktif,
       group: await _getData("@Group"),
       // descs : this.props.items.project_descs,
       descs:
@@ -194,8 +198,11 @@ export default class extends React.Component {
       this.getTower();
       this.getDataAminities(this.props.items);
       this.getUnit();
+      this.getLocation();
       // this.goTo()
     });
+    this.setState({ statusdataaktif: this.props.status_aktif });
+    console.log("data aktif", this.state.statusdataaktif);
   }
 
   componentWillUnmount() {
@@ -251,7 +258,8 @@ export default class extends React.Component {
                 this.setState(data);
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  // alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("getDAtaDetails", res);
@@ -295,7 +303,8 @@ export default class extends React.Component {
                 });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  // alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("getData Galerry", res);
@@ -340,7 +349,7 @@ export default class extends React.Component {
                 });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("getData Plans", res);
@@ -528,7 +537,8 @@ export default class extends React.Component {
                 this.setState({ tower: resData });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  // alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("getTower", res);
@@ -565,7 +575,8 @@ export default class extends React.Component {
                 this.setState({ amen: resData });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  // alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("amenitis", res);
@@ -602,7 +613,8 @@ export default class extends React.Component {
                 this.setState({ unit: resData });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
+                  // alert(res.Pesan);
+                  console.log("error", res.Pesan);
                 });
               }
               console.log("unit", res);
@@ -654,6 +666,45 @@ export default class extends React.Component {
       }
     );
   }
+
+  getLocation = () => {
+    const item = this.props.items;
+    {
+      isMount
+        ? fetch(
+            // urlApi + "c_location/getLocationAll/ifca3/",
+            urlApi +
+              "c_location/getLocationAll/IFCAMOBILE/" +
+              item.entity_cd +
+              "/" +
+              item.project_no,
+            {
+              method: "GET",
+              headers: this.state.hd,
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data[0];
+                this.setState({ location: resData });
+                this.setState({ project_status: resData.project_status });
+                console.log("projec status", resData.project_status);
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  // alert(res.Pesan);
+                  console.log("eror location", res.Pesan);
+                });
+              }
+              // this.setState({ arrayholder: res.Data });
+              console.log("getLocation", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  };
 
   // renderItemNews(item){
   //   return (
@@ -888,250 +939,252 @@ export default class extends React.Component {
             
         </Header> */}
 
-          <ScrollView style={Styles.scroll}>
-            <Modal
-              visible={this.state.Alert_Visibility}
-              transparent={true}
-              animationType={"slide"}
-              onRequestClose={() => {
-                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
-              }}
-              // activeOpacity={1}
-            >
-              <View
-                style={{
-                  // backgroundColor: "red",
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    width: "70%",
-                    height: "20%",
-                    alignItems: "center",
-                    justifyContent: "center",
+          {this.state.project_status != null ? (
+            this.state.project_status == 1 ? (
+              <ScrollView style={Styles.scroll}>
+                <Modal
+                  visible={this.state.Alert_Visibility}
+                  transparent={true}
+                  animationType={"slide"}
+                  onRequestClose={() => {
+                    this.alertFillBlank(!this.state.Alert_Visibility, pesan);
                   }}
+                  // activeOpacity={1}
                 >
-                  <Text
-                    style={{
-                      fontFamily: Fonts.type.proximaNovaReg,
-                      fontSize: 17,
-                      paddingBottom: 15,
-                      color: Colors.black,
-                      textAlign: "center",
-                    }}
-                  >
-                    {this.state.pesan}
-                  </Text>
-
                   <View
                     style={{
-                      flexDirection: "row",
-                      alignContent: "space-around",
+                      // backgroundColor: "red",
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    <TouchableOpacity
+                    <View
                       style={{
-                        backgroundColor: Colors.goldUrban,
-                        height: 40,
-                        width: 100,
-                        alignContent: "space-around",
+                        backgroundColor: "white",
+                        width: "70%",
+                        height: "20%",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10,
                       }}
-                      onPress={() => {
-                        this.alertFillBlank(!this.state.Alert_Visibility);
-                      }}
-                      // activeOpacity={0.7}
                     >
-                      <Text style={{ color: Colors.white }}>No</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: Colors.goldUrban,
-                        height: 40,
-                        width: 100,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        alignContent: "space-around",
-                        marginHorizontal: 10,
-                      }}
-                      onPress={() => {
-                        // Actions.Login();
-                        this.alertFillBlank(!this.state.Alert_Visibility);
-                        Actions.Login();
-                      }}
-                      // activeOpacity={0.7}
-                    >
-                      <Text style={{ color: Colors.white }}>Yes</Text>
-                    </TouchableOpacity>
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          fontSize: 17,
+                          paddingBottom: 15,
+                          color: Colors.black,
+                          textAlign: "center",
+                        }}
+                      >
+                        {this.state.pesan}
+                      </Text>
+
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignContent: "space-around",
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: Colors.goldUrban,
+                            height: 40,
+                            width: 100,
+                            alignContent: "space-around",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginHorizontal: 10,
+                          }}
+                          onPress={() => {
+                            this.alertFillBlank(!this.state.Alert_Visibility);
+                          }}
+                          // activeOpacity={0.7}
+                        >
+                          <Text style={{ color: Colors.white }}>No</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: Colors.goldUrban,
+                            height: 40,
+                            width: 100,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignContent: "space-around",
+                            marginHorizontal: 10,
+                          }}
+                          onPress={() => {
+                            // Actions.Login();
+                            this.alertFillBlank(!this.state.Alert_Visibility);
+                            Actions.Login();
+                          }}
+                          // activeOpacity={0.7}
+                        >
+                          <Text style={{ color: Colors.white }}>Yes</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
-                </View>
-              </View>
-            </Modal>
+                </Modal>
 
-            <Modal
-              visible={this.state.Alert_Visibility2}
-              transparent={true}
-              animationType={"slide"}
-              onRequestClose={() => {
-                this.alertFillBlank2(!this.state.Alert_Visibility2, pesan2);
-              }}
-              // activeOpacity={1}
-            >
-              <View
-                style={{
-                  // backgroundColor: "red",
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    width: "70%",
-                    height: "20%",
-                    alignItems: "center",
-                    justifyContent: "center",
+                <Modal
+                  visible={this.state.Alert_Visibility2}
+                  transparent={true}
+                  animationType={"slide"}
+                  onRequestClose={() => {
+                    this.alertFillBlank2(!this.state.Alert_Visibility2, pesan2);
                   }}
+                  // activeOpacity={1}
                 >
-                  <Text
-                    style={{
-                      fontFamily: Fonts.type.proximaNovaReg,
-                      fontSize: 17,
-                      paddingBottom: 15,
-                      color: Colors.black,
-                      textAlign: "center",
-                    }}
-                  >
-                    {this.state.pesan2}
-                  </Text>
-
                   <View
                     style={{
-                      flexDirection: "row",
-                      alignContent: "space-around",
+                      // backgroundColor: "red",
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    <TouchableOpacity
+                    <View
                       style={{
-                        backgroundColor: Colors.goldUrban,
-                        height: 40,
-                        width: 100,
-                        alignContent: "space-around",
+                        backgroundColor: "white",
+                        width: "70%",
+                        height: "20%",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10,
                       }}
-                      onPress={() => {
-                        this.alertFillBlank2(!this.state.Alert_Visibility2);
-                      }}
-                      // activeOpacity={0.7}
                     >
-                      <Text style={{ color: Colors.white }}>OK</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            </Modal>
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          fontSize: 17,
+                          paddingBottom: 15,
+                          color: Colors.black,
+                          textAlign: "center",
+                        }}
+                      >
+                        {this.state.pesan2}
+                      </Text>
 
-            <View style={{ top: 25 }}>
-              {this.state.project ? (
-                <ImageBackground
-                  // source={this.state.picture_url}
-                  // source={this.state.pict_hardcode}
-                  source={{ uri: this.state.project[0].hidden_picture_url }}
-                  imageStyle={"cover"}
-                  // source={require("@Asset/images/project_suite_urban.png")}
-                  // style={[Style.coverImg,{flex:1}]}
-                  // style={Styles.coverImg}
-                  style={{ flex: 1, height: 700 }}
-                >
-                  <View style={{ paddingLeft: 15, paddingTop: 15 }}>
-                    <Button
-                      transparent
-                      style={Style.actionBarBtn}
-                      onPress={Actions.pop}
-                    >
-                      <Icon
-                        active
-                        name="arrow-left"
-                        style={[Style.textWhite, { fontSize: 28 }]}
-                        type="MaterialCommunityIcons"
-                      />
-                    </Button>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignContent: "space-around",
+                        }}
+                      >
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: Colors.goldUrban,
+                            height: 40,
+                            width: 100,
+                            alignContent: "space-around",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginHorizontal: 10,
+                          }}
+                          onPress={() => {
+                            this.alertFillBlank2(!this.state.Alert_Visibility2);
+                          }}
+                          // activeOpacity={0.7}
+                        >
+                          <Text style={{ color: Colors.white }}>OK</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
+                </Modal>
 
-                  <View>
-                    <Text
-                      style={{
-                        fontWeight: "900",
-                        color: "#FFFFFF",
-                        fontSize: 14,
-                        textAlign: "center",
-                      }}
-                      // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                <View style={{ top: 25 }}>
+                  {this.state.project ? (
+                    <ImageBackground
+                      // source={this.state.picture_url}
+                      // source={this.state.pict_hardcode}
+                      source={{ uri: this.state.project[0].hidden_picture_url }}
+                      imageStyle={"cover"}
+                      // source={require("@Asset/images/project_suite_urban.png")}
+                      // style={[Style.coverImg,{flex:1}]}
+                      // style={Styles.coverImg}
+                      style={{ flex: 1, height: 700 }}
                     >
-                      {this.state.title.toUpperCase()}
-                    </Text>
-                    {/* <Text style={Style.actionBarText}>
+                      <View style={{ paddingLeft: 15, paddingTop: 15 }}>
+                        <Button
+                          transparent
+                          style={Style.actionBarBtn}
+                          onPress={Actions.pop}
+                        >
+                          <Icon
+                            active
+                            name="arrow-left"
+                            style={[Style.textWhite, { fontSize: 28 }]}
+                            type="MaterialCommunityIcons"
+                          />
+                        </Button>
+                      </View>
+
+                      <View>
+                        <Text
+                          style={{
+                            fontWeight: "900",
+                            color: "#FFFFFF",
+                            fontSize: 14,
+                            textAlign: "center",
+                          }}
+                          // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                        >
+                          {this.state.title.toUpperCase()}
+                        </Text>
+                        {/* <Text style={Style.actionBarText}>
                   
                       {this.state.towerDescs}
                       
                   </Text> */}
-                  </View>
-                  <AlertCustom />
-                  {this.state.group !== "AGENT" ? (
-                    <View style={{ paddingTop: "130%" }}>
-                      <Button
-                        style={Style.signInBtnMedium}
-                        onPress={() => this.alertNUP()}
-                        // onPress={() => this.nupBooking()}
-                      >
-                        <Text
-                          style={{
-                            width: "100%",
-                            fontSize: 16,
-                            alignItems: "center",
-                            textAlign: "center",
-                            fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1,
-                          }}
-                        >
-                          Booking Priority Pass
-                        </Text>
-                      </Button>
-                    </View>
-                  ) : (
-                    <View style={{ paddingTop: "130%" }}>
-                      <Button
-                        style={Style.signInBtnMedium}
-                        onPress={() => this.nupBooking()}
-                      >
-                        <Text
-                          style={{
-                            width: "100%",
-                            fontSize: 16,
-                            alignItems: "center",
-                            textAlign: "center",
-                            fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1,
-                          }}
-                        >
-                          Booking Priority Pass
-                        </Text>
-                      </Button>
-                    </View>
-                  )}
-                </ImageBackground>
-              ) : null}
-            </View>
-            {/* <Button
+                      </View>
+                      <AlertCustom />
+                      {this.state.group !== "AGENT" ? (
+                        <View style={{ paddingTop: "130%" }}>
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.alertNUP()}
+                            // onPress={() => this.nupBooking()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              Booking Priority Pass
+                            </Text>
+                          </Button>
+                        </View>
+                      ) : (
+                        <View style={{ paddingTop: "130%" }}>
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.nupBooking()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              Booking Priority Pass
+                            </Text>
+                          </Button>
+                        </View>
+                      )}
+                    </ImageBackground>
+                  ) : null}
+                </View>
+                {/* <Button
               style={{
                 width: "100%",
                 fontSize: 16,
@@ -1147,32 +1200,32 @@ export default class extends React.Component {
             >
               <Text>Click Here To Show Custom Alert Dialog</Text>
             </Button> */}
-            <View style={{ paddingTop: 30 }}>
-              {this.state.overview ? (
-                <Text
-                  style={{
-                    color: Colors.white,
-                    textAlign: "center",
-                    // alignContent:'center',
-                    fontSize: 18,
-                    paddingVertical: 10,
+                <View style={{ paddingTop: 30 }}>
+                  {this.state.overview ? (
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        textAlign: "center",
+                        // alignContent:'center',
+                        fontSize: 18,
+                        paddingVertical: 10,
 
-                    paddingHorizontal: 25,
-                    fontFamily: Fonts.type.proximaNovaReg,
-                    letterSpacing: 2,
-                    lineHeight: 25,
-                  }}
-                >
-                  {this.state.overview[0].overview_info.replace(
-                    /<\/?[^>]+(>|$)/g,
-                    ""
+                        paddingHorizontal: 25,
+                        fontFamily: Fonts.type.proximaNovaReg,
+                        letterSpacing: 2,
+                        lineHeight: 25,
+                      }}
+                    >
+                      {this.state.overview[0].overview_info.replace(
+                        /<\/?[^>]+(>|$)/g,
+                        ""
+                      )}
+                    </Text>
+                  ) : (
+                    <ActivityIndicator />
                   )}
-                </Text>
-              ) : (
-                <ActivityIndicator />
-              )}
 
-              {/* {this.state.overview ? 
+                  {/* {this.state.overview ? 
                 
                 // tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }
                 // <Text style={{color: Colors.white}}>
@@ -1200,34 +1253,36 @@ export default class extends React.Component {
               // />
                 // </Text>
                  :<ActivityIndicator /> } */}
-            </View>
+                </View>
 
-            <View style={{ paddingBottom: 20 }}>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={[Styles.titleGold, { fontSize: 18 }]}>TOWERS</Text>
-              </View>
-              {/* <View style={styles.corContainerStyle}> */}
-              <Carousel
-                autoplay={false}
-                autoplayDelay={1000}
-                autoplayInterval={3000}
-                // sliderWidth={width}
-                // sliderHeight={width}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth_tower}
-                // itemWidth={width - 60}
-                data={this.state.tower}
-                renderItem={this._renderItemTower}
-                hasParallaxImages={true}
-                containerCustomStyle={styles.slider}
+                <View style={{ paddingBottom: 20 }}>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                      TOWERS
+                    </Text>
+                  </View>
+                  {/* <View style={styles.corContainerStyle}> */}
+                  <Carousel
+                    autoplay={false}
+                    autoplayDelay={1000}
+                    autoplayInterval={3000}
+                    // sliderWidth={width}
+                    // sliderHeight={width}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth_tower}
+                    // itemWidth={width - 60}
+                    data={this.state.tower}
+                    renderItem={this._renderItemTower}
+                    hasParallaxImages={true}
+                    containerCustomStyle={styles.slider}
 
-                // contentContainerCustomStyle={styles.sliderContentContainer}
-                // resizeMode={ImageResizeMode.contain}
-              />
+                    // contentContainerCustomStyle={styles.sliderContentContainer}
+                    // resizeMode={ImageResizeMode.contain}
+                  />
 
-              {/* </View> */}
+                  {/* </View> */}
 
-              {/* <View style={{ paddingVertical: 10 }}>
+                  {/* <View style={{ paddingVertical: 10 }}>
                 <TouchableOpacity
                   onPress={() => {
                     _navigate("ProductProjectPage", {
@@ -1238,9 +1293,9 @@ export default class extends React.Component {
                   <Text style={Styles.titleWhiteSmall}>See all tower</Text>
                 </TouchableOpacity>
               </View> */}
-            </View>
+                </View>
 
-            {/* <View style={styles.sectionTransparent}>
+                {/* <View style={styles.sectionTransparent}>
                   <View style={{paddingVertical: 10}}>
                     <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
                   </View> 
@@ -1254,152 +1309,152 @@ export default class extends React.Component {
                   />
             </View> */}
 
-            <View style={styles.sectionTransparent}>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
-                  AMENITIES
-                </Text>
-              </View>
+                <View style={styles.sectionTransparent}>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                      AMENITIES
+                    </Text>
+                  </View>
 
-              <Grid>
-                <Row>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenDining()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/dining.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                  <Grid>
+                    <Row>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenDining()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/dining.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenGym()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/gym.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                      </Col>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenGym()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/gym.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                </Row>
+                      </Col>
+                    </Row>
 
-                <Row>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenLrt()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/LRT.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                    <Row>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenLrt()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/LRT.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenMall()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/mall.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                      </Col>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenMall()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/mall.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                </Row>
+                      </Col>
+                    </Row>
 
-                <Row>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenPool()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/pool.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                    <Row>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenPool()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/pool.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                  <Col
-                    style={{ textAlign: "center", alignItems: "center" }}
-                    onPress={() => this.selectAmenPlay()}
-                  >
-                    <View
-                      style={Styles.itemBoxAmen_not_gold}
-                      underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
-                    >
-                      <View>
-                        <View>
-                          <Image
-                            source={require("@Asset/images/amenitis/playground.png")}
-                            style={Styles.itemAmen_not_gold}
-                          />
+                      </Col>
+                      <Col
+                        style={{ textAlign: "center", alignItems: "center" }}
+                        onPress={() => this.selectAmenPlay()}
+                      >
+                        <View
+                          style={Styles.itemBoxAmen_not_gold}
+                          underlayColor="transparent"
+                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        >
+                          <View>
+                            <View>
+                              <Image
+                                source={require("@Asset/images/amenitis/playground.png")}
+                                style={Styles.itemAmen_not_gold}
+                              />
+                            </View>
+                            {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
+                            {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
+                          </View>
                         </View>
-                        {/* <Text style={Styles.itemTextAmenities}>{item.amenities_title}</Text> */}
-                        {/* <Text style={Styles.itemLocation}>{item.subject}</Text> */}
-                      </View>
-                    </View>
-                  </Col>
-                </Row>
-              </Grid>
-            </View>
+                      </Col>
+                    </Row>
+                  </Grid>
+                </View>
 
-            {/* <View style={styles.sectionTransparent}>
+                {/* <View style={styles.sectionTransparent}>
                   <View style={{paddingVertical: 10}}>
                     <Text style={[Styles.titleGold,{fontSize: 18}]}>AMENITIES</Text>
                   </View> 
@@ -1413,142 +1468,148 @@ export default class extends React.Component {
                   />
             </View> */}
 
-            <View style={{ paddingBottom: 20 }}>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={[Styles.titleGold, { fontSize: 18 }]}>UNIT</Text>
-              </View>
-              {/* <View style={styles.corContainerStyle}> */}
-              <Carousel
-                autoplay={false}
-                autoplayDelay={1000}
-                autoplayInterval={3000}
-                // sliderWidth={width}
-                // sliderHeight={width}
-                sliderWidth={sliderWidth}
-                itemWidth={itemWidth}
-                // itemWidth={width - 60}
-                data={this.state.unit}
-                renderItem={this._renderItemUnit}
-                hasParallaxImages={true}
-                containerCustomStyle={styles.slider}
-                // contentContainerCustomStyle={styles.sliderContentContainer}
-                // resizeMode={ImageResizeMode.contain}
-              />
+                <View style={{ paddingBottom: 20 }}>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                      UNIT
+                    </Text>
+                  </View>
+                  {/* <View style={styles.corContainerStyle}> */}
+                  <Carousel
+                    autoplay={false}
+                    autoplayDelay={1000}
+                    autoplayInterval={3000}
+                    // sliderWidth={width}
+                    // sliderHeight={width}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    // itemWidth={width - 60}
+                    data={this.state.unit}
+                    renderItem={this._renderItemUnit}
+                    hasParallaxImages={true}
+                    containerCustomStyle={styles.slider}
+                    // contentContainerCustomStyle={styles.sliderContentContainer}
+                    // resizeMode={ImageResizeMode.contain}
+                  />
 
-              {/* </View> */}
+                  {/* </View> */}
 
-              {/* <View style={{paddingVertical: 10}}>
+                  {/* <View style={{paddingVertical: 10}}>
                     <Text style={Styles.titleWhiteSmall}>See all unit</Text>
                   </View> */}
-            </View>
-
-            <View style={Styles.overview}>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
-                  GALLERY
-                </Text>
-              </View>
-              {this.state.gallery ? (
-                <FlatList
-                  data={this.state.gallery}
-                  horizontal
-                  style={[Styles.slider, { paddingTop: 10 }]}
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item) => item.line_no}
-                  renderItem={({ item, index }) => (
-                    <TouchableOpacity
-                      underlayColor="transparent"
-                      onPress={() => {
-                        this.setState({ isView: true, index: index });
-                      }}
-                    >
-                      <View>
-                        <Image
-                          source={{ uri: item.gallery_url }}
-                          style={Styles.sliderImg}
-                        />
-                        {/* <Text>{item.gallery_title}</Text> */}
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                />
-              ) : (
-                <ActivityIndicator />
-              )}
-            </View>
-            <Modal
-              visible={this.state.isView}
-              transparent={true}
-              onRequestClose={() => {
-                this.setState({ isView: !this.state.isView });
-              }}
-            >
-              <Header style={Style.navigationModal}>
-                <StatusBar
-                  backgroundColor={Colors.statusBarNavy}
-                  animated
-                  barStyle="light-content"
-                />
-                <View style={Style.actionBarRight}>
-                  <Button
-                    transparent
-                    style={Style.actionBtnRight}
-                    onPress={() => {
-                      this.setState({ isView: !this.state.isView });
-                    }}
-                  >
-                    <Icon
-                      active
-                      name="close"
-                      style={Style.actionIcon}
-                      type="FontAwesome"
-                    />
-                  </Button>
                 </View>
-              </Header>
-              {this.state.imagesPreview ? (
-                <ImageViewer
-                  enableImageZoom={true}
-                  enableSwipeDown={true}
-                  onSwipeDown={() =>
-                    this.setState({ isView: !this.state.isView })
-                  }
-                  index={this.state.index}
-                  imageUrls={this.state.imagesPreview}
-                  // style={{ width: 200 }}
-                />
-              ) : null}
-            </Modal>
 
-            <View>
-              <View style={{ paddingVertical: 10 }}>
-                <Text
-                  style={[
-                    Styles.titleGold,
-                    { fontSize: 18, paddingBottom: 10 },
-                  ]}
+                <View style={Styles.overview}>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                      GALLERY
+                    </Text>
+                  </View>
+                  {this.state.gallery ? (
+                    <FlatList
+                      data={this.state.gallery}
+                      horizontal
+                      style={[Styles.slider, { paddingTop: 10 }]}
+                      showsHorizontalScrollIndicator={false}
+                      keyExtractor={(item) => item.line_no}
+                      renderItem={({ item, index }) => (
+                        <TouchableOpacity
+                          underlayColor="transparent"
+                          onPress={() => {
+                            this.setState({ isView: true, index: index });
+                          }}
+                        >
+                          <View>
+                            <Image
+                              source={{ uri: item.gallery_url }}
+                              style={Styles.sliderImg}
+                            />
+                            {/* <Text>{item.gallery_title}</Text> */}
+                          </View>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  ) : (
+                    <ActivityIndicator />
+                  )}
+                </View>
+                <Modal
+                  visible={this.state.isView}
+                  transparent={true}
+                  onRequestClose={() => {
+                    this.setState({ isView: !this.state.isView });
+                  }}
                 >
-                  LOCATION
-                </Text>
-              </View>
+                  <Header style={Style.navigationModal}>
+                    <StatusBar
+                      backgroundColor={Colors.statusBarNavy}
+                      animated
+                      barStyle="light-content"
+                    />
+                    <View style={Style.actionBarRight}>
+                      <Button
+                        transparent
+                        style={Style.actionBtnRight}
+                        onPress={() => {
+                          this.setState({ isView: !this.state.isView });
+                        }}
+                      >
+                        <Icon
+                          active
+                          name="close"
+                          style={Style.actionIcon}
+                          type="FontAwesome"
+                        />
+                      </Button>
+                    </View>
+                  </Header>
+                  {this.state.imagesPreview ? (
+                    <ImageViewer
+                      enableImageZoom={true}
+                      enableSwipeDown={true}
+                      onSwipeDown={() =>
+                        this.setState({ isView: !this.state.isView })
+                      }
+                      index={this.state.index}
+                      imageUrls={this.state.imagesPreview}
+                      // style={{ width: 200 }}
+                    />
+                  ) : null}
+                </Modal>
 
-              {this.state.project ? (
-                //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+                <View>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text
+                      style={[
+                        Styles.titleGold,
+                        { fontSize: 18, paddingBottom: 10 },
+                      ]}
+                    >
+                      LOCATION
+                    </Text>
+                  </View>
 
-                //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-                //  <HTML html={this.state.project[0].coordinat_project} />
-                // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
-                // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
-                // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
-                // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>
-                <View style={{ marginTop: 10 }}>
-                  <WebView
-                    scalesPageToFit={false}
-                    bounces={false}
-                    javaScriptEnabled
-                    style={{ height: 240, width: null, marginHorizontal: 20 }}
-                    source={{
-                      html: `
+                  {this.state.project ? (
+                    //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+
+                    //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
+                    //  <HTML html={this.state.project[0].coordinat_project} />
+                    // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
+                    // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
+                    // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
+                    // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>
+                    <View style={{ marginTop: 10 }}>
+                      <WebView
+                        scalesPageToFit={false}
+                        bounces={false}
+                        javaScriptEnabled
+                        style={{
+                          height: 240,
+                          width: null,
+                          marginHorizontal: 20,
+                        }}
+                        source={{
+                          html: `
                         <!DOCTYPE html>
                         <html>
                           <head></head>
@@ -1557,469 +1618,516 @@ export default class extends React.Component {
                           </body>
                         </html>
                   `,
-                    }}
-                    automaticallyAdjustContentInsets={false}
-                  />
-                  <Button
-                    style={{
-                      backgroundColor: Colors.goldUrban,
-
-                      height: 30,
-                      width: 120,
-
-                      alignItems: "center",
-                      justifyContent: "center",
-
-                      marginTop: 10,
-
-                      alignSelf: "center",
-
-                      borderRadius: 5,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() =>
-                        // console.log(
-                        //   "cordinat",
-                        //   this.state.project[0].direction_map
-                        // )
-                        // this.openMap(
-                        //   this.state.project[0].direction_map
-                        // )
-                        Linking.openURL(this.state.project[0].direction_map)
-                      }
-                    >
-                      <View
+                        }}
+                        automaticallyAdjustContentInsets={false}
+                      />
+                      <Button
                         style={{
-                          flexDirection: "row",
-                          paddingLeft: 10,
-                          paddingRight: 10,
+                          backgroundColor: Colors.goldUrban,
+
+                          height: 30,
+                          width: 120,
+
                           alignItems: "center",
                           justifyContent: "center",
+
+                          marginTop: 10,
+
+                          alignSelf: "center",
+
+                          borderRadius: 5,
                         }}
                       >
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            color: Colors.white,
-                          }}
+                        <TouchableOpacity
+                          onPress={() =>
+                            // console.log(
+                            //   "cordinat",
+                            //   this.state.project[0].direction_map
+                            // )
+                            // this.openMap(
+                            //   this.state.project[0].direction_map
+                            // )
+                            Linking.openURL(this.state.project[0].direction_map)
+                          }
                         >
-                          Go to Direction
-                        </Text>
-                        <Icon
-                          name="md-navigate"
-                          style={{
-                            fontSize: 13,
-                            marginLeft: 10,
-                            color: Colors.white,
-                          }}
-                        />
-                      </View>
-                    </TouchableOpacity>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              paddingLeft: 10,
+                              paddingRight: 10,
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                color: Colors.white,
+                              }}
+                            >
+                              Go to Direction
+                            </Text>
+                            <Icon
+                              name="md-navigate"
+                              style={{
+                                fontSize: 13,
+                                marginLeft: 10,
+                                color: Colors.white,
+                              }}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </Button>
+                    </View>
+                  ) : (
+                    <ActivityIndicator />
+                  )}
+                </View>
+                <View>
+                  {this.state.project ? (
+                    <View style={Styles.overview}>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 14,
+                          fontFamily: Fonts.type.proximaNovaReg,
+                        }}
+                      >
+                        {this.state.project[0].project_descs}
+                      </Text>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 14,
+                          fontFamily: Fonts.type.proximaNovaReg,
+                        }}
+                      >
+                        {this.state.project[0].coordinat_name}
+                      </Text>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 14,
+                          fontFamily: Fonts.type.proximaNovaReg,
+                        }}
+                      >
+                        {this.state.project[0].coordinat_address}
+                      </Text>
+                    </View>
+                  ) : (
+                    <ActivityIndicator />
+                  )}
+                </View>
+                <View style={{ paddingBottom: 20, paddingTop: 20 }}>
+                  <Button
+                    style={Style.signInBtnMedium}
+                    onPress={() => this.downloadBrosur()}
+                    // onPress={() =>
+                    //   Actions.ProjectDownloadPage({ items: this.props.items })
+                    // }
+                  >
+                    <Text
+                      style={{
+                        width: "100%",
+                        fontSize: 14,
+                        alignItems: "center",
+                        textAlign: "center",
+                        fontFamily: Fonts.type.proximaNovaBold,
+                        letterSpacing: 1,
+                      }}
+                    >
+                      Download File/Brochure
+                    </Text>
                   </Button>
                 </View>
-              ) : (
-                <ActivityIndicator />
-              )}
-            </View>
-            <View>
-              {this.state.project ? (
-                <View style={Styles.overview}>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg,
-                    }}
-                  >
-                    {this.state.project[0].project_descs}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg,
-                    }}
-                  >
-                    {this.state.project[0].coordinat_name}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 14,
-                      fontFamily: Fonts.type.proximaNovaReg,
-                    }}
-                  >
-                    {this.state.project[0].coordinat_address}
-                  </Text>
+                <View>
+                  <View style={{ paddingVertical: 10 }}>
+                    <Text style={[Styles.titleGold, { fontSize: 18 }]}>
+                      CONTACT
+                    </Text>
+                  </View>
+                  {this.state.project ? (
+                    <Grid>
+                      <Row>
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
+                            Linking.openURL(
+                              "tel:" + this.state.project[0].office_no
+                            )
+                          }
+                        >
+                          <Icon
+                            raised
+                            name="phone"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Call
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
+                            Linking.openURL(this.state.project[0].web_url)
+                          }
+                        >
+                          <Icon
+                            reverse
+                            name="ios-globe"
+                            type="Ionicons"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Website
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() => this.sendEmail()}
+                        >
+                          <Icon
+                            raised
+                            name="envelope"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Email
+                          </Text>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
+                            Linking.openURL(this.state.project[0].facebook_url)
+                          }
+                        >
+                          <Icon
+                            raised
+                            name="facebook-square"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Facebook
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
+                            Linking.openURL(this.state.project[0].instagram_url)
+                          }
+                        >
+                          <Icon
+                            raised
+                            name="instagram"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Instagram
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
+                            Linking.openURL(this.state.project[0].youtube_url)
+                          }
+                        >
+                          <Icon
+                            raised
+                            name="youtube"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Youtube
+                          </Text>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  ) : (
+                    <Grid>
+                      <Row>
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Icon
+                            raised
+                            name="phone"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Call
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Icon
+                            reverse
+                            name="ios-globe"
+                            type="Ionicons"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Website
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Icon
+                            raised
+                            name="envelope"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Email
+                          </Text>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Icon
+                            raised
+                            name="facebook-square"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Facebook
+                          </Text>
+                        </Col>
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() => Linking.openURL("http://google.com")}
+                        >
+                          <Icon
+                            raised
+                            name="instagram"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          {/* <Text>{this.state.project[0].instagram_url}</Text> */}
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Instagram
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Icon
+                            raised
+                            name="youtube"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Youtube
+                          </Text>
+                        </Col>
+                      </Row>
+                    </Grid>
+                  )}
                 </View>
-              ) : (
-                <ActivityIndicator />
-              )}
-            </View>
-            <View style={{ paddingBottom: 20, paddingTop: 20 }}>
-              <Button
-                style={Style.signInBtnMedium}
-                onPress={() => this.downloadBrosur()}
-                // onPress={() =>
-                //   Actions.ProjectDownloadPage({ items: this.props.items })
-                // }
-              >
-                <Text
+              </ScrollView>
+            ) : (
+              <View style={{ height: "100%", top: 25 }}>
+                <View style={{ paddingLeft: 15, paddingTop: 15 }}>
+                  <Button
+                    transparent
+                    style={Style.actionBarBtn}
+                    onPress={Actions.pop}
+                  >
+                    <Icon
+                      active
+                      name="arrow-left"
+                      style={[Style.textWhite, { fontSize: 28 }]}
+                      type="MaterialCommunityIcons"
+                    />
+                  </Button>
+                </View>
+                <View
                   style={{
-                    width: "100%",
-                    fontSize: 14,
+                    flex: 1,
+                    justifyContent: "center",
                     alignItems: "center",
-                    textAlign: "center",
-                    fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1,
+                    alignContent: "center",
                   }}
                 >
-                  Download File/Brochure
-                </Text>
-              </Button>
-            </View>
-            <View>
-              <View style={{ paddingVertical: 10 }}>
-                <Text style={[Styles.titleGold, { fontSize: 18 }]}>
-                  CONTACT
-                </Text>
+                  <Text
+                    style={{
+                      color: Colors.white,
+                      fontFamily: Fonts.type.proximaNovaBoldWeb,
+                      fontSize: 20,
+                    }}
+                  >
+                    Coming Soon
+                  </Text>
+                </View>
               </View>
-              {this.state.project ? (
-                <Grid>
-                  <Row>
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() =>
-                        Linking.openURL(
-                          "tel:" + this.state.project[0].office_no
-                        )
-                      }
-                    >
-                      <Icon
-                        raised
-                        name="phone"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Call
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() =>
-                        Linking.openURL(this.state.project[0].web_url)
-                      }
-                    >
-                      <Icon
-                        reverse
-                        name="ios-globe"
-                        type="Ionicons"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Website
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() => this.sendEmail()}
-                    >
-                      <Icon
-                        raised
-                        name="envelope"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Email
-                      </Text>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() =>
-                        Linking.openURL(this.state.project[0].facebook_url)
-                      }
-                    >
-                      <Icon
-                        raised
-                        name="facebook-square"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Facebook
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() =>
-                        Linking.openURL(this.state.project[0].instagram_url)
-                      }
-                    >
-                      <Icon
-                        raised
-                        name="instagram"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      {/* <Text>{this.state.project[0].instagram_url}</Text> */}
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Instagram
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() =>
-                        Linking.openURL(this.state.project[0].youtube_url)
-                      }
-                    >
-                      <Icon
-                        raised
-                        name="youtube"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Youtube
-                      </Text>
-                    </Col>
-                  </Row>
-                </Grid>
-              ) : (
-                <Grid>
-                  <Row>
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Icon
-                        raised
-                        name="phone"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Call
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Icon
-                        reverse
-                        name="ios-globe"
-                        type="Ionicons"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Website
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Icon
-                        raised
-                        name="envelope"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Email
-                      </Text>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Icon
-                        raised
-                        name="facebook-square"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Facebook
-                      </Text>
-                    </Col>
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                      onPress={() => Linking.openURL("http://google.com")}
-                    >
-                      <Icon
-                        raised
-                        name="instagram"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      {/* <Text>{this.state.project[0].instagram_url}</Text> */}
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Instagram
-                      </Text>
-                    </Col>
-
-                    <Col
-                      style={{
-                        height: 90,
-                        textAlign: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Icon
-                        raised
-                        name="youtube"
-                        type="FontAwesome"
-                        style={{ color: "#fff" }}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: Fonts.type.proximaNovaReg,
-                          color: Colors.white,
-                          fontSize: 14,
-                          paddingTop: 5,
-                        }}
-                      >
-                        Youtube
-                      </Text>
-                    </Col>
-                  </Row>
-                </Grid>
-              )}
-            </View>
-          </ScrollView>
+            )
+          ) : (
+            <ActivityIndicator
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center",
+              }}
+              color="#fff"
+            />
+          )}
 
           {/* <BottomBarDua /> */}
           {/* <Button full style={{ backgroundColor: "#12173F" }}  onPress={() =>{

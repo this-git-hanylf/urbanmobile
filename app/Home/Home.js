@@ -9,7 +9,7 @@ import {
   ImageBackground,
   Image,
   ActivityIndicator,
-  FlatList
+  FlatList,
 } from "react-native";
 import {
   Container,
@@ -34,12 +34,12 @@ import {
   Tabs,
   Fab,
   Form,
-  Label
+  Label,
 } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import Carousel, {
   Pagination,
-  ParallaxImage
+  ParallaxImage,
 } from "react-native-snap-carousel";
 import { sliderWidth, itemWidth } from "./styles/SliderEntry";
 import SliderEntry from "../components/SlideEntry";
@@ -70,7 +70,7 @@ export default class Home extends Component {
       dataNews: [],
       tes: "",
 
-      isCorLoaded: false
+      isCorLoaded: false,
     };
   }
 
@@ -87,7 +87,7 @@ export default class Home extends Component {
       email: await _getData("@User"),
       name: await _getData("@Name"),
       dataTower: await _getData("@UserProject"),
-      isCorLoaded: true
+      isCorLoaded: true,
     };
 
     this.setState(data, () => {
@@ -98,10 +98,10 @@ export default class Home extends Component {
 
   getPromo = () => {
     fetch(urlApi + "c_newsandpromo/getDatapromo2/IFCAMOBILE", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -109,17 +109,17 @@ export default class Home extends Component {
           console.log("dataPRopmo", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
   getNews = () => {
     fetch(urlApi + "c_newsandpromo/getDatanews2/IFCAMOBILE", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -127,7 +127,7 @@ export default class Home extends Component {
           console.log("dataNews", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -212,7 +212,20 @@ export default class Home extends Component {
           <ImageBackground
             style={styles.backgroundImage2}
             source={require("../Images/tes3copy.png")}
-          ></ImageBackground>
+          >
+            <Text
+              style={{
+                color: "#fff",
+                top: "15%",
+                alignItems: "center",
+                alignContent: "center",
+                alignSelf: "center",
+              }}
+            >
+              Hello {this.state.name}
+            </Text>
+          </ImageBackground>
+
           <View style={{ marginLeft: 20, marginRight: 20 }}>
             {/* <Item style={styles.marginround}  > */}
             <Item
@@ -229,7 +242,7 @@ export default class Home extends Component {
                     : Fonts.type.proximaNovaThin,
                   fontWeight: this.state.tes ? "100" : "400",
                   marginLeft: 20,
-                  fontSize: 16
+                  fontSize: 16,
                 }}
               ></Input>
               <Icon
@@ -238,7 +251,7 @@ export default class Home extends Component {
                   bottom: 4,
                   position: "absolute",
                   right: 10,
-                  fontSize: 26
+                  fontSize: 26,
                 }}
                 name="search"
               />
@@ -255,7 +268,7 @@ export default class Home extends Component {
               alignItems: "center",
               textAlign: "center",
               paddingTop: 10,
-              fontSize: 15
+              fontSize: 15,
             }}
           >
             DISCOVER
@@ -293,7 +306,7 @@ export default class Home extends Component {
             <ActivityIndicator size="large" color="#fff" />
           ) : (
             <Carousel
-              ref={c => (this._slider1Ref = c)}
+              ref={(c) => (this._slider1Ref = c)}
               data={this.state.dataTower}
               renderItem={this._renderItemWithParallax}
               sliderWidth={sliderWidth}

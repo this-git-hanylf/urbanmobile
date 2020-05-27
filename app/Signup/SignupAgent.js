@@ -72,9 +72,12 @@ class SignupGuest extends React.Component {
     this.state = {
       Alert_Visibility: false,
       pesan: "",
+      Alert_Visibility_captcha: false,
+      pesan_captcha: "",
       dataProject: [],
       dataProject2: [],
       isLoaded: true,
+      checked_imnot: false,
 
       email: "",
       fullname: "",
@@ -500,6 +503,13 @@ class SignupGuest extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
+  alertFillBlank_captcha(visible, pesan_captcha) {
+    this.setState({
+      Alert_Visibility_captcha: visible,
+      pesan_captcha: pesan_captcha,
+    });
+  }
+
   handleCheck = (data) => {
     const { dataProject } = this.state;
 
@@ -638,12 +648,18 @@ class SignupGuest extends React.Component {
     var temp = this.state.randomNumberOne;
     if (this.state.textInputHolder == temp) {
       //Captcha match
-      this.setState({ capt: this.state.textInputHolder });
+      this.setState({
+        capt: this.state.textInputHolder,
+        checked_imnot: !this.state.checked_imnot,
+      });
+
       //   Alert.alert("Captcha Matched");
     } else {
       //Captcha not match
-      Alert.alert("Captcha not matched");
-      this.generateCaptcha();
+      // Alert.alert("Captcha not matched");
+      // this.generateCaptcha();
+      const pesan_captcha = "Captcha not matched";
+      this.alertFillBlank_captcha(true, pesan_captcha);
     }
     // Calling captcha function, to generate captcha code
     // this.generateCaptcha();
@@ -781,6 +797,9 @@ class SignupGuest extends React.Component {
                         this.generateCaptcha();
                         this.setState({ capt: !this.state.capt });
                         this.textInputHolder.clear();
+                        this.setState({
+                          checked_imnot: !this.state.checked_imnot,
+                        });
                       }}
                       // activeOpacity={0.7}
                     >
@@ -790,6 +809,75 @@ class SignupGuest extends React.Component {
                 </View>
               </View>
             </Modal>
+
+            {/* MODAL ALERT CAPTCHA NOT Matched */}
+            <Modal
+              visible={this.state.Alert_Visibility_captcha}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank_captcha(
+                  !this.state.Alert_Visibility_captcha,
+                  pesan_captcha
+                );
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "80%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan_captcha}
+                  </Text>
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank_captcha(
+                          !this.state.Alert_Visibility_captcha
+                        );
+                        this.generateCaptcha();
+                        // this.setState({ capt: !this.state.capt });
+                        // this.textInputHolder.clear();
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/* TUTUP MODAL */}
+
             <View style={{ paddingBottom: 20 }}>
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Text style={styles.overviewTitles}>Full Name</Text>
@@ -1363,7 +1451,7 @@ class SignupGuest extends React.Component {
                     />
                   </View>
 
-                  <View style={styles.captchaChildContainerButton}>
+                  {/* <View style={styles.captchaChildContainerButton}>
                     <TouchableOpacity
                       style={{
                         width: 100,
@@ -1377,6 +1465,47 @@ class SignupGuest extends React.Component {
                     >
                       <Text style={styles.text}>Im not robot</Text>
                     </TouchableOpacity>
+                  </View> */}
+                  <View style={styles.captchaChildContainerButton}>
+                    <View
+                      style={
+                        // pickerSelectStyles.checkBoxWrap,
+                        {
+                          flexDirection: "row",
+                          backgroundColor: "#fff",
+                          height: 30,
+                          marginTop: 8,
+                          marginBottom: 8,
+                          borderRadius: 10,
+                          width: 140,
+                        }
+                      }
+                    >
+                      <CheckBox
+                        checked={this.state.checked_imnot}
+                        onPress={this.validateCaptchaCode}
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 0,
+                          margin: 0,
+                        }}
+                        // title={`Im not robot`}
+                      />
+
+                      <View
+                        style={{
+                          // flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          position: "absolute",
+                          left: 50,
+                          top: 5,
+                        }}
+                      >
+                        <Text>I'm not robot </Text>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </View>

@@ -55,6 +55,7 @@ import ImagePicker from "react-native-image-crop-picker";
 import RNFetchBlob from "rn-fetch-blob";
 import numFormat from "@Component/numFormat";
 let isMount = false;
+// window.location.reload(false);
 // create a component
 class DetailBooking extends Component {
   constructor(props) {
@@ -83,13 +84,17 @@ class DetailBooking extends Component {
       status: false,
       Alert_Visibility: false,
       pesan: "",
+      dataAttach: [],
+      // uri: "",
     };
 
     this.showAlert = this.showAlert.bind(this);
     console.log("props cf", props);
+    // console.log("data ataact", this.state.dataAttach[0].payment_attachment);
   }
 
   async componentDidMount() {
+    // this.forceUpdate();
     console.disableYellowBox = true;
     isMount = true;
     const dataProps = this.props.data;
@@ -110,12 +115,14 @@ class DetailBooking extends Component {
       pictUrlAttach: dataProps.payment_attachment,
       order_id: dataProps.order_id,
       total_amt: dataProps.total_amt,
+      // uri: dataProps.payment_attachment,
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
-
+    // console.log("picturl", dataProps.payment_attachment);
     console.log("data", data);
     this.setState(data, () => {
       this.getDetail();
+      this.getAttach();
     });
   }
 
@@ -155,6 +162,63 @@ class DetailBooking extends Component {
         console.log(error);
       });
   };
+
+  getAttach = () => {
+    const order_id = this.props.order_id;
+    const db_profile = this.props.db_profile;
+    // const entity_cd = this.props.entity_cd;
+    // const project_no = this.props.project_no;
+    console.log("order", order_id);
+    // console.log("db", db_profile);
+
+    fetch(
+      urlApi +
+        "c_nup/getDataFotoAttach/" +
+        db_profile +
+        "/" +
+        // entity_cd +
+        // "/" +
+        // project_no +
+        // "/" +
+        order_id,
+
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          // const resData = res.Data;
+
+          const resData = res.Data[0];
+
+          // ? Agar Gambar Tidak ter cache
+          let url =
+            resData.payment_attachment +
+            "?random_number=" +
+            new Date().getTime();
+          // let urlHeader =
+          //   resData.pict_header + "?random_number=" + new Date().getTime();
+          console.log("url pict", url);
+          this.setState({
+            dataAttach: resData,
+            pictUrlAttach: { uri: url },
+            // pass_nih: resData.password,
+            // fotoHeader:{uri:urlHeader},
+            // gender: resData.gender,
+          });
+          // console.log("res Profil", res);
+
+          // this.setState({ dataAttach: resData });
+          // console.log("dataAttach", resData);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   showAlert = (key) => {
     Alert.alert(
       "Select a Photo",
@@ -181,7 +245,7 @@ class DetailBooking extends Component {
       .then((image) => {
         console.log("received image", image);
 
-        this.setState({ [key]: { uri: image.path, status: true } });
+        this.setState({ [key]: { uri: image.path }, status: true });
       })
       .catch((e) => console.log("tag", e));
   }
@@ -271,7 +335,7 @@ class DetailBooking extends Component {
             this.alertFillBlank(true, pesan);
             // if (res.Data) {
             // Actions.pop();
-
+            console.log("res data foto", res.Data);
             console.log("uploadfoto", !this.state.uploadfoto);
             setTimeout(() => {
               Actions.refresh({ uploadfoto: !this.state.uploadfoto });
@@ -313,7 +377,12 @@ class DetailBooking extends Component {
     const numbers = [0];
     const listItems = numbers.map((number) => number + 1);
     console.log("nomor", listItems);
-
+    // const dataat = this.state.dataAttach;
+    // console.log("dataat", dataat);
+    // const det = dataat.payment_attachment;
+    // console.log("det", det);
+    // const ur = this.state.dataAttach[0].payment_attachment;
+    // console.log("ur", ur);
     return (
       <Container style={Style.bgMain}>
         {/* <Header style={Style.navigation}>
@@ -397,6 +466,7 @@ class DetailBooking extends Component {
                     setTimeout(() => {
                       Actions.refresh({ uploadfoto: !this.state.uploadfoto });
                     }, 0);
+                    console.log("uploadfoto status", !this.state.uploadfoto);
                   }}
                   // activeOpacity={0.7}
                 >
@@ -607,6 +677,33 @@ class DetailBooking extends Component {
           /> */}
 
           {/* UPLOAD */}
+          {/* {this.state.dataAttach == 0 ? (
+            <Text>nul</Text>
+          ) : (
+            <View style={[Styles.containImageTop_no]}>
+              <Image
+                // resizeMode="cover"
+                style={{
+                  width: 200,
+                  height: 130,
+                  alignContent: "center",
+                }}
+                source={{
+                  uri:
+                    this.state.dataAttach[0].payment_attachment +
+                    "?time=" +
+                    new Date(),
+                }}
+                // source={{ uri: this.state.pictUrlAttach }}
+              />
+              <Text>
+                {this.state.dataAttach[0].payment_attachment +
+                  "?time=" +
+                  new Date()}
+              </Text>
+            </View>
+         
+          )} */}
           <View
             style={{ paddingTop: 50, paddingBottom: 10, paddingHorizontal: 20 }}
           >
@@ -636,7 +733,7 @@ class DetailBooking extends Component {
                     width: 35,
                     height: 35,
                     position: "absolute",
-                    right: 10,
+                    right: 0,
                   }}
                 >
                   {/* <Text>klik</Text> */}
@@ -677,7 +774,7 @@ class DetailBooking extends Component {
                     width: 35,
                     height: 35,
                     position: "absolute",
-                    right: 10,
+                    right: 0,
                   }}
                 >
                   {/* <Text>klik</Text> */}
@@ -691,20 +788,6 @@ class DetailBooking extends Component {
                     source={require("@Asset/images/icon/image_blue.png")}
                   ></Image>
                 </TouchableOpacity>
-
-                {/* <TouchableOpacity
-                  onPress={() => alert("tes")}
-                  style={
-                    {
-                      // width: 35,
-                      // height: 35,
-                      // position: "absolute"
-                      // right: 10
-                    }
-                  }
-                >
-                  <Text>tes</Text>
-                </TouchableOpacity> */}
                 <View style={[Styles.containImageTop_no]}>
                   <Image
                     // resizeMode="cover"
@@ -713,13 +796,27 @@ class DetailBooking extends Component {
                       height: 130,
                       alignContent: "center",
                     }}
-                    // source={this.state.pictUrlAttach}
-                    source={{ uri: this.state.pictUrlAttach }}
+                    source={this.state.pictUrlAttach}
+                    // source={{
+                    //   uri: this.state.pictUrlAttach + "?time=" + new Date(),
+                    // }}
                   />
                 </View>
               </Item>
             )}
           </View>
+          {/* <View style={[Styles.containImageTop_no]}>
+            <Image
+              // resizeMode="cover"
+              style={{
+                width: 200,
+                height: 130,
+                alignContent: "center",
+              }}
+              // source={this.state.pictUrlAttach}
+              source={{ uri: this.state.pictUrlAttach }}
+            />
+          </View> */}
           <View style={{ paddingTop: 50 }}>
             <Button style={Styles.btnMedium} onPress={() => this.submit()}>
               <Text

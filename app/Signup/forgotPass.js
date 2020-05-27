@@ -94,7 +94,6 @@ class forgotPass extends React.Component {
                 //   alert(res.Pesan);
                 const pesan = res.Pesan;
                 this.alertFillBlank(true, pesan);
-                Actions.pop();
               });
             } else if (res.Error) {
               this.setState({ isLoaded: true }, () => {
@@ -251,6 +250,7 @@ class forgotPass extends React.Component {
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
+                        Actions.pop();
                       }}
                       // activeOpacity={0.7}
                     >

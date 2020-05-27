@@ -15,7 +15,7 @@ import {
   View,
   FlatList,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import {
   Container,
@@ -35,7 +35,7 @@ import {
   Badge,
   Card,
   Segment,
-  ListItem
+  ListItem,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -44,7 +44,7 @@ import {
   Row,
   Rows,
   TableWrapper,
-  Cell
+  Cell,
 } from "react-native-table-component";
 import { Style, Colors, Fonts } from "../Themes";
 import Styles from "./Style";
@@ -73,7 +73,8 @@ class MyBooking extends Component {
       db_profile: "",
       agent_cd: "",
       payment_attachment: "",
-      tesfoto: []
+      tesfoto: [],
+      uploadfoto: false,
 
       // dataPending: []
     };
@@ -90,14 +91,14 @@ class MyBooking extends Component {
 
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
+        Token: await _getData("@Token"),
       }),
       entity_cd: items.entity_cd,
       project_no: items.project_no,
       db_profile: items.db_profile,
       agent_cd: await _getData("@AgentCd"),
       // user: await _getData("@User"),
-      name: await _getData("@Name")
+      name: await _getData("@Name"),
     };
     console.log("data", data);
     this.setState(data, () => {
@@ -128,23 +129,23 @@ class MyBooking extends Component {
         agent_cd,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
           this.setState({
-            dataPending: resData
+            dataPending: resData,
             // tesfoto: resData.payment_attachment
           });
           console.log("datapending", resData);
           // console.log("tesfoto", resData.payment_attachment);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -170,11 +171,11 @@ class MyBooking extends Component {
         agent_cd,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -182,7 +183,7 @@ class MyBooking extends Component {
           console.log("dataReject", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -208,11 +209,11 @@ class MyBooking extends Component {
         agent_cd,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -220,7 +221,7 @@ class MyBooking extends Component {
           console.log("dataApprove", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -239,7 +240,7 @@ class MyBooking extends Component {
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
-      project_no: project_no
+      project_no: project_no,
     });
   }
 
@@ -257,7 +258,7 @@ class MyBooking extends Component {
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
-      project_no: project_no
+      project_no: project_no,
     });
   }
 
@@ -275,7 +276,7 @@ class MyBooking extends Component {
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
-      project_no: project_no
+      project_no: project_no,
     });
   }
 
@@ -288,7 +289,9 @@ class MyBooking extends Component {
       this.setState({ uploadfoto: uploadfoto });
       if (uploadfoto == true) {
         this.getBookingPending();
+        this.setState({ uploadfoto: uploadfoto });
       }
+      console.log("uploadfoto state", this.state.uploadfoto);
     }
   }
 
@@ -297,13 +300,13 @@ class MyBooking extends Component {
     isMount = false;
   }
 
-  selectComponent = activePage => () => this.setState({ activePage });
+  selectComponent = (activePage) => () => this.setState({ activePage });
 
   _renderComponent = () => {
     if (this.state.activePage === 1)
       return (
         <Content>
-          {this.state.dataPending == "null" ? (
+          {this.state.dataPending == null ? (
             <View
               style={{
                 flex: 1,
@@ -311,7 +314,7 @@ class MyBooking extends Component {
                 justifyContent: "center",
                 alignItems: "center",
                 height: 300,
-                top: 200
+                top: 200,
               }}
             >
               <Text
@@ -320,7 +323,7 @@ class MyBooking extends Component {
                   fontFamily: Fonts.type.proximaNovaBoldWeb,
                   color: Colors.navyUrban,
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 No Data Available
@@ -338,7 +341,7 @@ class MyBooking extends Component {
                         // width: "100%",
                         right: 20,
                         // left:
-                        paddingLeft: 10
+                        paddingLeft: 10,
                       }}
                     >
                       <View style={{ width: "100%", paddingBottom: 20 }}>
@@ -349,7 +352,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-start",
                               color: Colors.navyUrban,
                               marginBottom: 5,
-                              fontSize: 16
+                              fontSize: 16,
                             }}
                           >
                             #{data.order_id}
@@ -364,7 +367,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-start",
                               color: Colors.navyUrban,
                               marginBottom: 5,
-                              fontSize: 16
+                              fontSize: 16,
                             }}
                           >
                             {data.full_name}
@@ -379,7 +382,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-start",
                               color: Colors.navyUrban,
                               marginBottom: 5,
-                              fontSize: 16
+                              fontSize: 16,
                             }}
                           >
                             Rp. {numFormat(parseInt(data.total_amt))},-
@@ -390,7 +393,7 @@ class MyBooking extends Component {
                         style={{
                           width: "100%",
                           paddingBottom: 20,
-                          flexDirection: "row"
+                          flexDirection: "row",
                         }}
                       >
                         <Left style={{ position: "absolute", left: 20 }}>
@@ -400,7 +403,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-start",
                               color: Colors.goldUrban,
                               marginBottom: 5,
-                              fontSize: 13
+                              fontSize: 13,
                             }}
                           >
                             {moment(data.order_date).format("DD MMM YYYY")}
@@ -424,14 +427,15 @@ class MyBooking extends Component {
                               alignSelf: "flex-end",
                               color: Colors.redWine,
                               marginBottom: 5,
-                              fontSize: 13
+                              fontSize: 13,
                               // right: 0
                             }}
                           >
                             Time Out
                           </Text>
                         </Right>
-                      ) : data.payment_attachment == null ? (
+                      ) : data.payment_attachment == null &&
+                        this.state.uploadfoto != true ? (
                         <Right
                           style={{ position: "absolute", right: 20, top: 25 }}
                         >
@@ -441,7 +445,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-end",
                               color: Colors.yellow,
                               marginBottom: 5,
-                              fontSize: 13
+                              fontSize: 13,
                               // right: 0
                             }}
                           >
@@ -458,7 +462,7 @@ class MyBooking extends Component {
                               alignSelf: "flex-end",
                               color: Colors.yellow,
                               marginBottom: 5,
-                              fontSize: 13
+                              fontSize: 13,
                               // right: 0
                             }}
                           >
@@ -493,7 +497,7 @@ class MyBooking extends Component {
                 justifyContent: "center",
                 alignItems: "center",
                 height: 300,
-                top: 200
+                top: 200,
               }}
             >
               <Text
@@ -502,7 +506,7 @@ class MyBooking extends Component {
                   fontFamily: Fonts.type.proximaNovaBoldWeb,
                   color: Colors.navyUrban,
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 No Data Available
@@ -519,7 +523,7 @@ class MyBooking extends Component {
                     style={{
                       flexDirection: "column",
                       height: 30,
-                      width: "100%"
+                      width: "100%",
                     }}
                   >
                     <View style={{ width: "100%", paddingBottom: 20 }}>
@@ -530,7 +534,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.navyUrban,
                             marginBottom: 5,
-                            fontSize: 16
+                            fontSize: 16,
                           }}
                         >
                           #{data.order_id}
@@ -546,7 +550,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.goldUrban,
                             marginBottom: 5,
-                            fontSize: 13
+                            fontSize: 13,
                           }}
                         >
                           {moment(data.order_date).format("DD MMM YYYY")}
@@ -574,7 +578,7 @@ class MyBooking extends Component {
                 justifyContent: "center",
                 alignItems: "center",
                 height: 300,
-                top: 200
+                top: 200,
               }}
             >
               <Text
@@ -583,7 +587,7 @@ class MyBooking extends Component {
                   fontFamily: Fonts.type.proximaNovaBoldWeb,
                   color: Colors.navyUrban,
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 No Data Available
@@ -600,7 +604,7 @@ class MyBooking extends Component {
                     style={{
                       flexDirection: "column",
                       height: 70,
-                      width: "100%"
+                      width: "100%",
                     }}
                   >
                     <View style={{ width: "100%", paddingBottom: 20 }}>
@@ -611,7 +615,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.navyUrban,
                             marginBottom: 5,
-                            fontSize: 16
+                            fontSize: 16,
                           }}
                         >
                           #{data.order_id}
@@ -626,7 +630,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.navyUrban,
                             marginBottom: 5,
-                            fontSize: 16
+                            fontSize: 16,
                           }}
                         >
                           {data.full_name}
@@ -641,7 +645,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.navyUrban,
                             marginBottom: 5,
-                            fontSize: 16
+                            fontSize: 16,
                           }}
                         >
                           Rp. {numFormat(parseInt(data.total_amt))},-
@@ -656,7 +660,7 @@ class MyBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.goldUrban,
                             marginBottom: 5,
-                            fontSize: 13
+                            fontSize: 13,
                           }}
                         >
                           {moment(data.order_date).format("DD MMM YYYY")}
@@ -700,7 +704,7 @@ class MyBooking extends Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -714,7 +718,7 @@ class MyBooking extends Component {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -735,7 +739,7 @@ class MyBooking extends Component {
                       backgroundColor: "#fff",
                       borderBottomWidth: 2,
                       borderBottomColor: Colors.goldUrban,
-                      width: "33%"
+                      width: "33%",
                     }
                   : { backgroundColor: "#fff", width: "33%" }
               }
@@ -746,12 +750,12 @@ class MyBooking extends Component {
                     ? {
                         color: Colors.navyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                     : {
                         color: Colors.greyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                 }
               >
@@ -768,7 +772,7 @@ class MyBooking extends Component {
                       borderBottomWidth: 2,
                       borderBottomColor: Colors.goldUrban,
                       //   width: 30
-                      width: "33%"
+                      width: "33%",
                     }
                   : { backgroundColor: "#fff", width: "33%" }
               }
@@ -779,12 +783,12 @@ class MyBooking extends Component {
                     ? {
                         color: Colors.navyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                     : {
                         color: Colors.greyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                 }
               >
@@ -802,7 +806,7 @@ class MyBooking extends Component {
                       borderBottomWidth: 2,
                       borderBottomColor: Colors.goldUrban,
                       //   width: 30
-                      width: "33%"
+                      width: "33%",
                     }
                   : { backgroundColor: "#fff", width: "33%" }
               }
@@ -813,12 +817,12 @@ class MyBooking extends Component {
                     ? {
                         color: Colors.navyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                     : {
                         color: Colors.greyUrban,
                         textAlign: "center",
-                        width: "100%"
+                        width: "100%",
                       }
                 }
               >
@@ -839,12 +843,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2c3e50"
+    backgroundColor: "#2c3e50",
   },
   text: {
     textAlign: "center",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 //make this component available to the app

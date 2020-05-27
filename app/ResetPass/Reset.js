@@ -51,6 +51,7 @@ class Reset extends React.Component {
   }
 
   ResetPress = () => {
+    this.setState({ isLoaded: !this.state.isLoaded });
     const { conpass, newpass } = this.state;
     if (conpass != newpass) {
       alert("Password does not match");
@@ -77,9 +78,15 @@ class Reset extends React.Component {
           console.log("res", res.Data);
 
           if (!res.Error) {
+            this.setState({ isLoaded: true }, () => {
+              //   alert(res.Pesan);
+              const pesan = res.Pesan;
+              this.alertFillBlank(true, pesan);
+              // Actions.pop();
+            });
             // alert(res.Pesan)
-            const pesan = res.Pesan;
-            this.alertFillBlank(true, pesan);
+            // const pesan = res.Pesan;
+            // this.alertFillBlank(true, pesan);
 
             // setTimeout(() => {
             //   Actions.refresh({
@@ -128,60 +135,51 @@ class Reset extends React.Component {
             <Body style={styles.body}></Body>
             <Right style={styles.right}></Right>
           </Header>
-          <View style={styles.inputFieldStyles}>
-            {/* <Image  style={styles.images} source={ require("../Images/logo.jpg")}/> */}
-            {/* <View style={{width: 200,height: 100, marginBottom: 65}}>
-                                <Image
-                                    // style={styles.images}
-                                    style={styles.styleLogo}
-                                    source={require("../Images/logo.png")}
-                                />
-                            </View> */}
-            <Modal
-              visible={this.state.Alert_Visibility}
-              transparent={true}
-              animationType={"slide"}
-              onRequestClose={() => {
-                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+          <Modal
+            visible={this.state.Alert_Visibility}
+            transparent={true}
+            animationType={"slide"}
+            onRequestClose={() => {
+              this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+            }}
+            // activeOpacity={1}
+          >
+            <View
+              style={{
+                // backgroundColor: "red",
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              // activeOpacity={1}
             >
               <View
                 style={{
-                  // backgroundColor: "red",
-                  flex: 1,
+                  backgroundColor: "white",
+                  width: "70%",
+                  height: "20%",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <View
+                <Text
                   style={{
-                    backgroundColor: "white",
-                    width: "70%",
-                    height: "20%",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    fontSize: 17,
+                    paddingBottom: 15,
+                    color: Colors.black,
+                    textAlign: "center",
                   }}
                 >
-                  <Text
-                    style={{
-                      fontFamily: Fonts.type.proximaNovaReg,
-                      fontSize: 17,
-                      paddingBottom: 15,
-                      color: Colors.black,
-                      textAlign: "center",
-                    }}
-                  >
-                    {this.state.pesan}
-                  </Text>
+                  {this.state.pesan}
+                </Text>
 
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignContent: "space-around",
-                    }}
-                  >
-                    <TouchableOpacity
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignContent: "space-around",
+                  }}
+                >
+                  {/* <TouchableOpacity
                       style={{
                         backgroundColor: Colors.goldUrban,
                         height: 40,
@@ -198,29 +196,40 @@ class Reset extends React.Component {
                       // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>No</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: Colors.goldUrban,
-                        height: 40,
-                        width: 100,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        alignContent: "space-around",
-                        marginHorizontal: 10,
-                      }}
-                      onPress={() => {
-                        this.alertFillBlank(!this.state.Alert_Visibility);
-                        Actions.Login();
-                      }}
-                      // activeOpacity={0.7}
-                    >
-                      <Text style={{ color: Colors.white }}>Yes</Text>
-                    </TouchableOpacity>
-                  </View>
+                    </TouchableOpacity> */}
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: Colors.goldUrban,
+                      height: 40,
+                      width: 100,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      alignContent: "space-around",
+                      marginHorizontal: 10,
+                    }}
+                    onPress={() => {
+                      this.alertFillBlank(!this.state.Alert_Visibility);
+                      Actions.Login();
+                    }}
+                    // activeOpacity={0.7}
+                  >
+                    <Text style={{ color: Colors.white }}>Done</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            </Modal>
+            </View>
+          </Modal>
+
+          <View style={styles.inputFieldStyles}>
+            {/* <Image  style={styles.images} source={ require("../Images/logo.jpg")}/> */}
+            {/* <View style={{width: 200,height: 100, marginBottom: 65}}>
+                                <Image
+                                    // style={styles.images}
+                                    style={styles.styleLogo}
+                                    source={require("../Images/logo.png")}
+                                />
+                            </View> */}
+
             <View style={styles.containEmail}>
               <Input
                 ref="newpass"
