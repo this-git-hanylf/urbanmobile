@@ -324,9 +324,9 @@ class FormBooking extends React.Component {
       email: { require: true },
       nik: { require: true },
       fullname: { require: true },
-      account_name: { require: true },
-      account_no: { require: true },
-      bank_name: { require: true },
+      // account_name: { require: true },
+      // account_no: { require: true },
+      // bank_name: { require: true },
       cor: { require: true },
       mobilephone: { require: true },
       npwp: { require: true },
@@ -421,14 +421,28 @@ class FormBooking extends React.Component {
             _navigate("FormPayment", { prevItems: frmData });
           });
         } else {
-          this.setState({ isLoaded: this.state.isLoaded }, () => {
+          // const pesan = res.Pesan;
+          // this.alertFillBlank(true, pesan);
+          this.setState({ isLoaded: true }, () => {
             // alert(res.Pesan);
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
+            console.log("error 3mb");
             // console.log('url',this.state.pickUrlKtp.uri)
           });
+
+          // this.setState({ isLoaded: this.state.isLoaded }, () => {
+          //   const pesan = "3mb image";
+          //   this.alertFillBlank(true, pesan);
+          //   console.log("error 3mb");
+          //   // alert("Please input field");
+          //   // alert(res.Pesan);
+          //   // console.log('url',this.state.pickUrlKtp.uri)
+          // });
         }
-        this.setState({ isLoaded: this.state.isLoaded }, () => {
+
+        // this.setState({ isLoaded: true });
+        this.setState({ isLoaded: true }, () => {
           // alert(res.Pesan);
           const pesan = res.Pesan;
           this.alertFillBlank(true, pesan);
@@ -438,7 +452,9 @@ class FormBooking extends React.Component {
       });
     } else {
       // alert("Please input field");
-      this.setState({ isLoaded: this.state.isLoaded }, () => {
+      // const pesan = "Please input field";
+      // this.alertFillBlank(true, pesan);
+      this.setState({ isLoaded: true }, () => {
         const pesan = "Please input field";
         this.alertFillBlank(true, pesan);
         // alert("Please input field");
@@ -529,7 +545,14 @@ class FormBooking extends React.Component {
 
   cekNIK(dataFromNik) {
     console.log("cekNIK", dataFromNik);
-
+    let url_ktp =
+      dataFromNik.dataFromNik[0].ktp_attachment +
+      "?random_number=" +
+      new Date().getTime();
+    let url_npwp =
+      dataFromNik.dataFromNik[0].npwp_attachment +
+      "?random_number=" +
+      new Date().getTime();
     if (dataFromNik) {
       this.setState({
         fullname: dataFromNik.dataFromNik[0].full_name,
@@ -546,6 +569,9 @@ class FormBooking extends React.Component {
         bank_name: dataFromNik.dataFromNik[0].bank_name,
         account_name: dataFromNik.dataFromNik[0].account_name,
         account_no: dataFromNik.dataFromNik[0].account_no,
+        cor: dataFromNik.dataFromNik[0].address1,
+        pictUrlKtp: { uri: url_ktp },
+        pictUrlNPWP: { uri: url_npwp },
       });
       // fullname = dataFromNik.dataFromNik[0].full_name;
       // console.log("fullname", fullname);
@@ -699,7 +725,8 @@ class FormBooking extends React.Component {
                     }}
                     onPress={() => {
                       this.alertFillBlank(!this.state.Alert_Visibility);
-                      this.setState({ isLoaded: !this.state.isLoaded });
+                      this.setState({ isLoaded: this.state.isLoaded });
+                      console.log("isloading ok", this.state.isLoaded);
                     }}
                     // activeOpacity={0.7}
                   >
@@ -948,7 +975,7 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>Corespondence Required</Text>
             ) : null}
           </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+          {/* <View style={{ paddingBottom: 15, marginTop: 4 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -967,14 +994,14 @@ class FormBooking extends React.Component {
               </Text>
             </View>
             <Item
-              //   floatingLabel
+
               style={Styles.marginround}
               onPress={() => this.modalBankMaster()}
             >
               <Input
-                // placeholder='Full Name'
+
                 autoCapitalize="words"
-                // keyboardType="numeric"
+
                 placeholder="Choose Bank"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.bank_name}
@@ -990,25 +1017,20 @@ class FormBooking extends React.Component {
               {this.state.errorbank_name ? (
                 <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
-              {/* <Icon name='close-circle' /> */}
+
             </Item>
 
             {this.state.errorbank_name ? (
               <Text style={Styles.text_error}>Bank Name Required</Text>
             ) : null}
-          </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
+          </View> */}
+          {/* <View style={{ paddingBottom: 15, marginTop: 4 }}>
             <Item floatingLabel style={Styles.marginround}>
               <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
                 Bank Account Number
               </Label>
 
               <Input
-                // placeholder='Full Name'
-                // autoCapitalize="numeric"
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.account_no}
@@ -1020,7 +1042,6 @@ class FormBooking extends React.Component {
               {this.state.erroraccount_no ? (
                 <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
-              {/* <Icon name='close-circle' /> */}
             </Item>
             {this.state.account_no ? null : (
               <Text
@@ -1040,20 +1061,18 @@ class FormBooking extends React.Component {
                 Bank Account Number Required
               </Text>
             ) : null}
-          </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
+          </View> */}
+          {/* <View style={{ paddingBottom: 15, marginTop: 4 }}>
+
             <Item floatingLabel style={Styles.marginround}>
               <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
                 Bank Account Name
               </Label>
 
               <Input
-                // placeholder='Full Name'
+
                 autoCapitalize="words"
-                // keyboardType="numeric"
+
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.account_name}
                 onChangeText={(val) => this.setState({ account_name: val })}
@@ -1063,7 +1082,7 @@ class FormBooking extends React.Component {
               {this.state.erroraccount_name ? (
                 <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
-              {/* <Icon name='close-circle' /> */}
+
             </Item>
             {this.state.account_name ? null : (
               <Text
@@ -1081,22 +1100,14 @@ class FormBooking extends React.Component {
             {this.state.erroraccount_name ? (
               <Text style={Styles.text_error}>Bank Account Name Required</Text>
             ) : null}
-          </View>
+          </View> */}
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
             <Item floatingLabel style={Styles.marginround}>
               <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
                 NPWP
               </Label>
-              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
-                                </View> */}
+
               <Input
-                // placeholder='Full Name'
-                // autoCapitalize="numeric"
                 keyboardType="numeric"
                 placeholderTextColor={Colors.greyUrban}
                 value={this.state.npwp}
@@ -1107,7 +1118,6 @@ class FormBooking extends React.Component {
               {this.state.errornpwp ? (
                 <Icon style={Styles.icon_error} name="close-circle" />
               ) : null}
-              {/* <Icon name='close-circle' /> */}
             </Item>
             {this.state.npwp ? null : (
               <Text

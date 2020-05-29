@@ -5,7 +5,7 @@ import {
   Router,
   Actions,
   Stack,
-  ActionConst
+  ActionConst,
 } from "react-native-router-flux";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -156,6 +156,7 @@ import EventDetail from "./Event/EventDetail";
 import Subordinate from "./Subordinate/Subordinate";
 import SubOfficeAgents from "./Subordinate/SubOfficeAgents";
 import SubAgents from "./Subordinate/SubAgents";
+import SubWebView from "./Subordinate/SubWebView";
 
 // import ComingSoon from "./"
 
@@ -179,7 +180,7 @@ class Routes extends Component {
 
     this.state = {
       hasLogin: false,
-      isLoaded: false
+      isLoaded: false,
     };
   }
 
@@ -853,6 +854,14 @@ class Routes extends Component {
             <Scene
               key="SubAgents"
               component={SubAgents}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="SubWebView"
+              component={SubWebView}
               title=""
               hideNavBar
               translucent={true}

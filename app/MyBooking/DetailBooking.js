@@ -35,6 +35,7 @@ import {
   FooterTab,
   Badge,
   Card,
+  Label,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -85,6 +86,7 @@ class DetailBooking extends Component {
       Alert_Visibility: false,
       pesan: "",
       dataAttach: [],
+      account_name: "",
       // uri: "",
     };
 
@@ -198,12 +200,14 @@ class DetailBooking extends Component {
             resData.payment_attachment +
             "?random_number=" +
             new Date().getTime();
+          let account_name = resData.account_name;
           // let urlHeader =
           //   resData.pict_header + "?random_number=" + new Date().getTime();
           console.log("url pict", url);
           this.setState({
             dataAttach: resData,
             pictUrlAttach: { uri: url },
+            account_name: account_name,
             // pass_nih: resData.password,
             // fotoHeader:{uri:urlHeader},
             // gender: resData.gender,
@@ -268,9 +272,34 @@ class DetailBooking extends Component {
   tes() {
     alert("sdsd");
   }
+  validating = (validationData) => {
+    const keys = Object.keys(validationData);
+    const errorKey = [];
+    let isValid = false;
+
+    keys.map((data, key) => {
+      if (validationData[data].require) {
+        let isError =
+          !this.state[data] || this.state[data].length == 0 ? true : false;
+        let error = "error" + data;
+        errorKey.push(isError);
+        this.setState({ [error]: isError });
+      }
+    });
+
+    for (var i = 0; i < errorKey.length; i++) {
+      if (errorKey[i]) {
+        isValid = false;
+        break;
+      }
+      isValid = true;
+    }
+
+    return isValid;
+  };
   submit() {
     // this.setState({ uploadfoto: !this.state.uploadfoto });
-    const order_id = this.state.order_id;
+    // const order_id = this.state.order_id;
     let fileattach = "";
     // console.log("pic nul", this.state.pictUrlAttach);
     if (this.state.pictUrlAttach == null) {
@@ -284,12 +313,19 @@ class DetailBooking extends Component {
       console.log("pic not nul", this.state.pictUrlAttach);
     }
 
+    const { account_name, order_id } = this.state;
+
     const frmData = {
       //---------foto attachment
       order_id: order_id,
       pictUrlAttach: fileattach,
+      account_name: account_name,
       //---------end foto attachment
     };
+
+    // const isValid = this.validating({
+    //   account_name: { require: true },
+    // });
 
     let fileNameAttach = "";
     if (this.state.pictUrlAttach == null) {
@@ -351,7 +387,7 @@ class DetailBooking extends Component {
         }
         const pesan = res.Pesan;
         this.alertFillBlank(true, pesan);
-        // alert(res.Pesan);
+        console.log("error gabisa sumit", res.Pesan);
       });
     } else {
       this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -817,6 +853,43 @@ class DetailBooking extends Component {
               source={{ uri: this.state.pictUrlAttach }}
             />
           </View> */}
+          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+            <Item floatingLabel style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Bank Account Name
+              </Label> */}
+
+              <Input
+                autoCapitalize="words"
+                placeholderTextColor={Colors.greyUrban}
+                value={this.state.account_name}
+                onChangeText={(val) => this.setState({ account_name: val })}
+                style={Styles.positionTextInput}
+                ref="account_name"
+                placeholder="Nama Pengirim Uang"
+              />
+              {/* {this.state.erroraccount_name ? (
+                <Icon style={Styles.icon_error} name="close-circle" />
+              ) : null} */}
+            </Item>
+            {this.state.account_name ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12,
+                }}
+              >
+                (customer)
+              </Text>
+            )}
+            {/* {this.state.erroraccount_name ? (
+              <Text style={Styles.text_error}>Bank Account Name Required</Text>
+            ) : null} */}
+          </View>
+
           <View style={{ paddingTop: 50 }}>
             <Button style={Styles.btnMedium} onPress={() => this.submit()}>
               <Text

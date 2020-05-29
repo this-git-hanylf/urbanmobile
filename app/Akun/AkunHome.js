@@ -336,8 +336,8 @@ export default class extends React.Component {
 
   subordinat() {
     // Actions.MyBooking();
-    Actions.project({ goTo: "Subordinate" });
-
+    // Actions.project({ goTo: "Subordinate" }); yg lama
+    Actions.SubWebView();
     // if (val.isProject == 1) {
     //   Actions.project({ goTo: val.URL_angular });
     // } else {

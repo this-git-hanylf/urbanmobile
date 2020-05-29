@@ -434,8 +434,7 @@ class MyBooking extends Component {
                             Time Out
                           </Text>
                         </Right>
-                      ) : data.payment_attachment == null &&
-                        this.state.uploadfoto != true ? (
+                      ) : data.payment_attachment == null ? (
                         <Right
                           style={{ position: "absolute", right: 20, top: 25 }}
                         >
