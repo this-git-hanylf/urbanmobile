@@ -18,7 +18,7 @@ import {
   Modal,
   ListView,
   Alert,
-  Clipboard
+  Clipboard,
   // Picker
 } from "react-native";
 import {
@@ -40,7 +40,7 @@ import {
   Picker,
   Col,
   ListItem,
-  Label
+  Label,
 } from "native-base";
 
 // import NavigationService from "@Service/Navigation";
@@ -75,7 +75,7 @@ class FormPayment extends React.Component {
       // markedTanggal : moment(new Date().format("H:m:s")),
       jam: new Date().getHours(), //Current Hours
       menit: new Date().getMinutes(), //Current Minutes
-      detik: new Date().getSeconds()
+      detik: new Date().getSeconds(),
       // rekening: 'tes'
       // day:'',
       // date:''
@@ -104,7 +104,7 @@ class FormPayment extends React.Component {
     const data = {
       fullname: this.props.prevItems.fullname,
       total: this.props.prevItems.total,
-      rekening: "2740001414"
+      rekening: "2740001414",
     };
     console.log("data", data);
 
@@ -133,7 +133,7 @@ class FormPayment extends React.Component {
     let obj = {
       h: hours,
       m: minutes,
-      s: seconds
+      s: seconds,
     };
     return obj;
   }
@@ -149,7 +149,7 @@ class FormPayment extends React.Component {
     let seconds = this.state.seconds - 1;
     this.setState({
       time: this.secondsToTime(seconds),
-      seconds: seconds
+      seconds: seconds,
     });
 
     // Check if we're at zero.
@@ -256,7 +256,7 @@ class FormPayment extends React.Component {
                   fontSize: 16,
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
+                  letterSpacing: 1,
                 }}
                 // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
               >
@@ -268,7 +268,7 @@ class FormPayment extends React.Component {
                   fontFamily: Fonts.type.proximaNovaBold,
                   fontSize: 11,
                   letterSpacing: 1,
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
               >
                 {/* SUNDAY, 13 JANUARY 2020 */}
@@ -287,7 +287,7 @@ class FormPayment extends React.Component {
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
                 letterSpacing: 1,
-                textTransform: "uppercase"
+                textTransform: "uppercase",
               }}
             >
               {/* {this.state.fullname} */}
@@ -301,7 +301,7 @@ class FormPayment extends React.Component {
                 fontSize: 15,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaReg,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
             >
               PROCESS YOUR PAYMENT SOON
@@ -322,7 +322,7 @@ class FormPayment extends React.Component {
                     fontFamily: Fonts.type.proximaNovaBold,
                     fontSize: 26,
                     color: Colors.redWine,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   {this.addLeadingZeros(this.state.time.h)}
@@ -334,7 +334,7 @@ class FormPayment extends React.Component {
                     color: Colors.redWine,
                     textAlign: "center",
                     width: 60,
-                    paddingTop: 10
+                    paddingTop: 10,
                   }}
                 >
                   HOUR
@@ -346,7 +346,7 @@ class FormPayment extends React.Component {
                     fontFamily: Fonts.type.proximaNovaBold,
                     fontSize: 26,
                     color: Colors.redWine,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   :
@@ -359,7 +359,7 @@ class FormPayment extends React.Component {
                     fontSize: 26,
                     color: Colors.redWine,
                     textAlign: "center",
-                    paddingLeft: 14
+                    paddingLeft: 14,
                   }}
                 >
                   {this.addLeadingZeros(this.state.time.m)} :
@@ -371,7 +371,7 @@ class FormPayment extends React.Component {
                     color: Colors.redWine,
                     textAlign: "center",
                     width: 57,
-                    paddingTop: 10
+                    paddingTop: 10,
                   }}
                 >
                   MINUTES
@@ -383,7 +383,7 @@ class FormPayment extends React.Component {
                     fontFamily: Fonts.type.proximaNovaBold,
                     fontSize: 26,
                     color: Colors.redWine,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   {this.addLeadingZeros(this.state.time.s)}
@@ -395,7 +395,7 @@ class FormPayment extends React.Component {
                     color: Colors.redWine,
                     textAlign: "center",
                     width: 60,
-                    paddingTop: 10
+                    paddingTop: 10,
                   }}
                 >
                   SECONDS
@@ -413,14 +413,14 @@ class FormPayment extends React.Component {
             style={{
               alignSelf: "center",
               flexDirection: "column",
-              paddingVertical: 10
+              paddingVertical: 10,
             }}
           >
             <Text
               style={{
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                fontSize: 15
+                fontSize: 15,
               }}
             >
               MAYBANK ACCOUNT
@@ -429,7 +429,7 @@ class FormPayment extends React.Component {
               style={{
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaReg,
-                fontSize: 15
+                fontSize: 15,
               }}
             >
               {this.state.rekening}
@@ -443,10 +443,10 @@ class FormPayment extends React.Component {
                   color: Colors.twitter,
                   borderBottomColor: Colors.twitter,
                   borderBottomWidth: 1,
-                  width: 30
+                  width: 30,
                 }}
               >
-                copy
+                Copy
               </Text>
             </TouchableOpacity>
           </View>
@@ -455,14 +455,14 @@ class FormPayment extends React.Component {
             style={{
               alignSelf: "center",
               flexDirection: "column",
-              paddingVertical: 10
+              paddingVertical: 10,
             }}
           >
             <Text
               style={{
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                fontSize: 15
+                fontSize: 15,
               }}
             >
               ACCOUNT NAME
@@ -471,7 +471,7 @@ class FormPayment extends React.Component {
               style={{
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaReg,
-                fontSize: 15
+                fontSize: 15,
               }}
             >
               PT. URBAN JAKARTA PROPERTINDO TBK
@@ -483,7 +483,7 @@ class FormPayment extends React.Component {
               alignSelf: "center",
               flexDirection: "column",
               paddingVertical: 10,
-              paddingTop: 30
+              paddingTop: 30,
             }}
           >
             <Text
@@ -491,7 +491,7 @@ class FormPayment extends React.Component {
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
                 fontSize: 12,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
             >
               AMOUNT OF BILL TO BE PAID
@@ -501,7 +501,7 @@ class FormPayment extends React.Component {
                 fontFamily: Fonts.type.proximaNovaBold,
                 fontSize: 20,
                 color: Colors.redWine,
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               Rp. {numFormat(this.state.total)},-
@@ -518,7 +518,7 @@ class FormPayment extends React.Component {
                     alignItems: "center",
                     textAlign: "center",
                     fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1
+                    letterSpacing: 1,
                   }}
                 >
                   Confirm

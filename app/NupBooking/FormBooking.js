@@ -86,6 +86,8 @@ class FormBooking extends React.Component {
       Alert_Visibility: false,
       pesan: "",
       capt: false,
+      filektp__: "",
+      filektp_testing: "",
       //data data dari nik
       //   full_name: ""
     };
@@ -254,6 +256,9 @@ class FormBooking extends React.Component {
 
     let filektp = "";
     let filenpwp = "";
+    let tes_filektp = "";
+    let tes_filenpwp = "";
+    // const filektp_testing = "";
     // RNFetchBlob.wrap(
     //     this.state.pictUrlKtp.uri.replace("file://", "")
     // );
@@ -277,18 +282,24 @@ class FormBooking extends React.Component {
       // );
       // console.log("filektp_awal", filektp_awal);
 
+      console.log("this.state.pictUrlKtp.uri", this.state.pictUrlKtp.uri);
       ImageResizer.createResizedImage(
         this.state.pictUrlKtp.uri,
         100,
         80,
         "PNG",
-        200
+        100
       )
         .then(({ uri }) => {
           console.log("urii", uri);
+          // let tes_filektp = "";
+
           tes_filektp = RNFetchBlob.wrap(uri.replace("file://", ""));
           console.log("tes_filektp", tes_filektp);
-          // this.setState({ filektp_tes: tes_filektp });
+          // let filektp_testing = tes_filektp;
+          this.setState({ filektp_testing: tes_filektp });
+          console.log("tes nihhhhh", this.state.filektp_testing); //ini muncul di console, dan ada isinya
+          // let filektp = this.state.filektp__;
           // this.setState({
           //   pictUrlKtp: { uri: uri },
           // });
@@ -302,8 +313,14 @@ class FormBooking extends React.Component {
           );
         });
       // this.resize();
-      filektp = tes_filektp;
-      console.log("filektp", filektp);
+      // console.log("tes lagi", tes_filektp);
+      // console.log("tes yoi", this.state.filektp__);
+      console.log("tes yoi", this.state.filektp_testing); //ini kosong
+      // const tes_halo = filektp_testing;
+      // console.log("tes hak", tes_halo);
+      filektp = this.state.filektp_testing; //ini gak kebaca, undefined
+
+      // console.log("filektp", filektp);
       console.log("pic not nul", this.state.pictUrlKtp);
       // this.setState({ isLoaded: true });
       // this.state.pictUrlKtp.uri.replace("file://", "")
@@ -314,40 +331,40 @@ class FormBooking extends React.Component {
       filenpwp = "./img/noimage.png";
       console.log("pic nul", this.state.pictUrlKtp);
     } else {
-      // filenpwp = RNFetchBlob.wrap(
-      //   this.state.pictUrlNPWP.uri.replace("file://", "")
-      // );
+      filenpwp = RNFetchBlob.wrap(
+        this.state.pictUrlNPWP.uri.replace("file://", "")
+      );
 
-      ImageResizer.createResizedImage(
-        this.state.pictUrlKtp.uri,
-        100,
-        80,
-        "PNG",
-        200
-      )
-        .then(({ uri }) => {
-          console.log("urii", uri);
-          tes_filenpwp = RNFetchBlob.wrap(
-            this.state.pictUrlNPWP.uri.replace("file://", "")
-          );
-          console.log("tes_filenpwp", tes_filenpwp);
+      // ImageResizer.createResizedImage(
+      //   this.state.pictUrlKtp.uri,
+      //   100,
+      //   80,
+      //   "PNG",
+      //   100
+      // )
+      //   .then(({ uri }) => {
+      //     console.log("urii", uri);
+      //     tes_filenpwp = RNFetchBlob.wrap(
+      //       this.state.pictUrlNPWP.uri.replace("file://", "")
+      //     );
+      //     console.log("tes_filenpwp", tes_filenpwp);
 
-          // this.setState({
-          //   pictUrlKtp: { uri: uri },
-          // });
-          // console.log("size", uri);
-        })
-        .catch((err) => {
-          console.log(err);
-          return Alert.alert(
-            "Unable to resize the photo",
-            "Check the console for full the error message"
-          );
-        });
+      //     // this.setState({
+      //     //   pictUrlKtp: { uri: uri },
+      //     // });
+      //     // console.log("size", uri);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     return Alert.alert(
+      //       "Unable to resize the photo",
+      //       "Check the console for full the error message"
+      //     );
+      //   });
       // this.resize();
-      filenpwp = tes_filenpwp;
-      console.log("filektp", filektp);
-      console.log("pic not nul", this.state.pictUrlKtp);
+      // filenpwp = tes_filenpwp;
+      // console.log("filektp", filektp);
+      // console.log("pic not nul", this.state.pictUrlKtp);
       // this.setState({ isLoaded: true });
       // this.state.pictUrlKtp.uri.replace("file://", "")
 
