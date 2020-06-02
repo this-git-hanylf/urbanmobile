@@ -54,6 +54,7 @@ import numFormat from "@Component/numFormat";
 import ImagePicker from "react-native-image-crop-picker";
 import RNFetchBlob from "rn-fetch-blob";
 // import ImageViewer from 'react-native-image-zoom-viewer';
+import ImageResizer from "react-native-image-resizer";
 
 //const {width, height} = Dimensions.get('window')
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
@@ -224,6 +225,30 @@ class FormBooking extends React.Component {
     }
   }
 
+  // resize() {
+  //   console.log("this.state.pictUrlKtp.uri", this.state.pictUrlKtp.uri);
+  //   ImageResizer.createResizedImage(
+  //     this.state.pictUrlKtp.uri,
+  //     80,
+  //     60,
+  //     "JPEG",
+  //     100
+  //   )
+  //     .then(({ uri }) => {
+  //       this.setState({
+  //         pictUrlKtp: { uri: uri },
+  //       });
+  //       // console.log("size", this.state.pictUrlKtp);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return Alert.alert(
+  //         "Unable to resize the photo",
+  //         "Check the console for full the error message"
+  //       );
+  //     });
+  // }
+
   submit = () => {
     this.setState({ isLoaded: !this.state.isLoaded });
 
@@ -247,10 +272,40 @@ class FormBooking extends React.Component {
       // this.state.replaceFoto.uri.replace("file://", "")
     } else {
       // alert('not null')
-      filektp = RNFetchBlob.wrap(
-        this.state.pictUrlKtp.uri.replace("file://", "")
-      );
+      // filektp_awal = RNFetchBlob.wrap(
+      //   this.state.pictUrlKtp.uri.replace("file://", "")
+      // );
+      // console.log("filektp_awal", filektp_awal);
+
+      ImageResizer.createResizedImage(
+        this.state.pictUrlKtp.uri,
+        100,
+        80,
+        "PNG",
+        200
+      )
+        .then(({ uri }) => {
+          console.log("urii", uri);
+          tes_filektp = RNFetchBlob.wrap(uri.replace("file://", ""));
+          console.log("tes_filektp", tes_filektp);
+          // this.setState({ filektp_tes: tes_filektp });
+          // this.setState({
+          //   pictUrlKtp: { uri: uri },
+          // });
+          // console.log("size", uri);
+        })
+        .catch((err) => {
+          console.log(err);
+          return Alert.alert(
+            "Unable to resize the photo",
+            "Check the console for full the error message"
+          );
+        });
+      // this.resize();
+      filektp = tes_filektp;
+      console.log("filektp", filektp);
       console.log("pic not nul", this.state.pictUrlKtp);
+      // this.setState({ isLoaded: true });
       // this.state.pictUrlKtp.uri.replace("file://", "")
     }
 
@@ -259,12 +314,45 @@ class FormBooking extends React.Component {
       filenpwp = "./img/noimage.png";
       console.log("pic nul", this.state.pictUrlKtp);
     } else {
-      filenpwp = RNFetchBlob.wrap(
-        this.state.pictUrlNPWP.uri.replace("file://", "")
-      );
-      console.log("pic not nul", this.state.pictUrlNPWP);
+      // filenpwp = RNFetchBlob.wrap(
+      //   this.state.pictUrlNPWP.uri.replace("file://", "")
+      // );
+
+      ImageResizer.createResizedImage(
+        this.state.pictUrlKtp.uri,
+        100,
+        80,
+        "PNG",
+        200
+      )
+        .then(({ uri }) => {
+          console.log("urii", uri);
+          tes_filenpwp = RNFetchBlob.wrap(this.state.pictUrlNPWP.uri.replace("file://", ""));
+          console.log("tes_filenpwp", tes_filenpwp);
+          
+          // this.setState({
+          //   pictUrlKtp: { uri: uri },
+          // });
+          // console.log("size", uri);
+        })
+        .catch((err) => {
+          console.log(err);
+          return Alert.alert(
+            "Unable to resize the photo",
+            "Check the console for full the error message"
+          );
+        });
+      // this.resize();
+      filenpwp = tes_filenpwp;
+      console.log("filektp", filektp);
+      console.log("pic not nul", this.state.pictUrlKtp);
+      // this.setState({ isLoaded: true });
+      // this.state.pictUrlKtp.uri.replace("file://", "")
     }
 
+      console.log("pic not nul", this.state.pictUrlNPWP);
+    }
+   
     // Do something
 
     // let filenpwp = RNFetchBlob.wrap(

@@ -3,6 +3,7 @@ package com.ifcasoftware.urban;
 import android.app.Application;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.facebook.react.ReactApplication;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.chirag.RNMail.RNMail;
@@ -42,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ImageResizerPackage(),
             new RNCameraPackage(),
             new RNPermissionsPackage(),
             new RNMail(),

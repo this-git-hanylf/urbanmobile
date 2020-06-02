@@ -82,6 +82,14 @@ PODS:
   - QBImagePickerController (3.4.0)
   - React (0.59.0):
     - React/Core (= 0.59.0)
+  - react-native-camera (3.19.0):
+    - React
+    - react-native-camera/RCT (= 3.19.0)
+    - react-native-camera/RN (= 3.19.0)
+  - react-native-camera/RCT (3.19.0):
+    - React
+  - react-native-camera/RN (3.19.0):
+    - React
   - react-native-mail (4.0.0):
     - React
   - react-native-maps (0.25.0):
@@ -141,6 +149,8 @@ PODS:
     - QBImagePickerController
     - React/Core
     - RSKImageCropper
+  - RNPermissions (2.0.9):
+    - React
   - RSKImageCropper (2.2.3)
   - yoga (0.59.0.React)
 
@@ -149,6 +159,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core (~> 6.3.0)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mail (from `../node_modules/react-native-mail`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -170,6 +181,7 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -196,6 +208,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-linear-gradient"
   React:
     :path: "../node_modules/react-native"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-mail:
     :path: "../node_modules/react-native-mail"
   react-native-maps:
@@ -214,6 +228,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-google-signin"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -235,6 +251,7 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 0d6c719d9549bea0bd5676f8170b0e5c56e2c3c7
+  react-native-camera: 1f4c5be75a037b5573716a01d84ca0390c162954
   react-native-mail: 7e37dfbe93ff0d4c7df346b738854dbed533e86f
   react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-webview: 8b2761a9bf84bbbbe7f90f49743b9b74c7cb11e7
@@ -244,9 +261,10 @@ SPEC CHECKSUMS:
   RNFirebase: ac0de8b24c6f91ae9459575491ed6a77327619c6
   RNGoogleSignin: d030c6c6591db24c3cee649f64c7babf0a1699a0
   RNImageCropPicker: 6134b66a3d5bc13e2895a97c630a4254006902b4
+  RNPermissions: 2f74237e97b08beda01e914301e12524ddddf5b8
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   yoga: 26673abd38bbdf0c33e134ad9e690c5fbf16e8fc
 
-PODFILE CHECKSUM: 41d13f13ff35381ae57501e1c90658356892c9df
+PODFILE CHECKSUM: 0016c8b35971fe7874f3bd4f6c361a55af4068cf
 
 COCOAPODS: 1.8.4

@@ -53,6 +53,8 @@ pod 'Firebase/Core', '~> 6.3.0'
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer'
+
   target 'UrbanTests' do
     inherit! :search_paths
     # Pods for testing
