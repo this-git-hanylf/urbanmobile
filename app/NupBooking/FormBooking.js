@@ -327,9 +327,11 @@ class FormBooking extends React.Component {
       )
         .then(({ uri }) => {
           console.log("urii", uri);
-          tes_filenpwp = RNFetchBlob.wrap(this.state.pictUrlNPWP.uri.replace("file://", ""));
+          tes_filenpwp = RNFetchBlob.wrap(
+            this.state.pictUrlNPWP.uri.replace("file://", "")
+          );
           console.log("tes_filenpwp", tes_filenpwp);
-          
+
           // this.setState({
           //   pictUrlKtp: { uri: uri },
           // });
@@ -348,11 +350,10 @@ class FormBooking extends React.Component {
       console.log("pic not nul", this.state.pictUrlKtp);
       // this.setState({ isLoaded: true });
       // this.state.pictUrlKtp.uri.replace("file://", "")
-    }
 
       console.log("pic not nul", this.state.pictUrlNPWP);
     }
-   
+
     // Do something
 
     // let filenpwp = RNFetchBlob.wrap(
