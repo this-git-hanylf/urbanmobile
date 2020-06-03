@@ -64,7 +64,7 @@ class DetailBooking extends Component {
 
     this.state = {
       hd: null,
-
+      isLoaded: true,
       units: [],
       user: "",
       name: "",
@@ -87,6 +87,9 @@ class DetailBooking extends Component {
       pesan: "",
       dataAttach: [],
       account_name: "",
+      nama_agent: "",
+      dataProjectName: [],
+      // current_date: new Date(),
       // uri: "",
     };
 
@@ -117,6 +120,8 @@ class DetailBooking extends Component {
       pictUrlAttach: dataProps.payment_attachment,
       order_id: dataProps.order_id,
       total_amt: dataProps.total_amt,
+      nama_agent: await _getData("@Name"),
+      email_add: this.props.email_add_project,
       // uri: dataProps.payment_attachment,
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
@@ -125,6 +130,7 @@ class DetailBooking extends Component {
     this.setState(data, () => {
       this.getDetail();
       this.getAttach();
+      // this.getProjectName();
     });
   }
 
@@ -245,6 +251,9 @@ class DetailBooking extends Component {
       cropping: true,
       width: 600,
       height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -259,6 +268,9 @@ class DetailBooking extends Component {
       multiple: false,
       width: 600,
       height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -298,6 +310,9 @@ class DetailBooking extends Component {
     return isValid;
   };
   submit() {
+    // this.setState({ isLoaded: !this.state.isLoaded });
+    // const order_id = this.props.order_id;
+
     // this.setState({ uploadfoto: !this.state.uploadfoto });
     // const order_id = this.state.order_id;
     let fileattach = "";
@@ -313,13 +328,30 @@ class DetailBooking extends Component {
       console.log("pic not nul", this.state.pictUrlAttach);
     }
 
-    const { account_name, order_id } = this.state;
+    const { account_name, order_id, nama_agent, current_date } = this.state;
+    const db_profile = this.props.db_profile;
+    const entity_cd = this.props.entity_cd;
+    const project_no = this.props.project_no;
+    const email_add = this.props.email_add_project;
+    const principal_name = this.props.principal_name;
+    // console.log("order id", order_id);
+    console.log("db_profile", db_profile);
+    console.log("entity_cd", entity_cd);
+    console.log("project_no", project_no);
+    console.log("email_add", email_add);
 
     const frmData = {
       //---------foto attachment
+      name_agent: nama_agent,
       order_id: order_id,
       pictUrlAttach: fileattach,
       account_name: account_name,
+      email_add: email_add,
+      principal_name: principal_name,
+      entity_cd: entity_cd,
+      project_no: project_no,
+
+      // submit_payment_date: current_date,
       //---------end foto attachment
     };
 

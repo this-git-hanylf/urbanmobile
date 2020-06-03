@@ -220,7 +220,7 @@ export default class Home extends Component {
                 alignItems: "center",
                 alignContent: "center",
                 alignSelf: "center",
-                fontSize: 15,
+                fontSize: 20,
               }}
             >
               Hello {this.state.name}

@@ -191,6 +191,9 @@ class FormBooking extends React.Component {
       cropping: true,
       width: 600,
       height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -205,6 +208,9 @@ class FormBooking extends React.Component {
       multiple: false,
       width: 600,
       height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -277,48 +283,48 @@ class FormBooking extends React.Component {
       // this.state.replaceFoto.uri.replace("file://", "")
     } else {
       // alert('not null')
-      // filektp_awal = RNFetchBlob.wrap(
-      //   this.state.pictUrlKtp.uri.replace("file://", "")
-      // );
+      filektp = RNFetchBlob.wrap(
+        this.state.pictUrlKtp.uri.replace("file://", "")
+      );
       // console.log("filektp_awal", filektp_awal);
 
-      console.log("this.state.pictUrlKtp.uri", this.state.pictUrlKtp.uri);
-      ImageResizer.createResizedImage(
-        this.state.pictUrlKtp.uri,
-        100,
-        80,
-        "PNG",
-        100
-      )
-        .then(({ uri }) => {
-          console.log("urii", uri);
-          // let tes_filektp = "";
+      // console.log("this.state.pictUrlKtp.uri", this.state.pictUrlKtp.uri);
+      // ImageResizer.createResizedImage(
+      //   this.state.pictUrlKtp.uri,
+      //   100,
+      //   80,
+      //   "PNG",
+      //   100
+      // )
+      //   .then(({ uri }) => {
+      //     console.log("urii", uri);
+      //     // let tes_filektp = "";
 
-          tes_filektp = RNFetchBlob.wrap(uri.replace("file://", ""));
-          console.log("tes_filektp", tes_filektp);
-          // let filektp_testing = tes_filektp;
-          this.setState({ filektp_testing: tes_filektp });
-          console.log("tes nihhhhh", this.state.filektp_testing); //ini muncul di console, dan ada isinya
-          // let filektp = this.state.filektp__;
-          // this.setState({
-          //   pictUrlKtp: { uri: uri },
-          // });
-          // console.log("size", uri);
-        })
-        .catch((err) => {
-          console.log(err);
-          return Alert.alert(
-            "Unable to resize the photo",
-            "Check the console for full the error message"
-          );
-        });
+      //     tes_filektp = RNFetchBlob.wrap(uri.replace("file://", ""));
+      //     console.log("tes_filektp", tes_filektp);
+      //     // let filektp_testing = tes_filektp;
+      //     this.setState({ filektp_testing: tes_filektp });
+      //     console.log("tes nihhhhh", this.state.filektp_testing); //ini muncul di console, dan ada isinya
+      //     // let filektp = this.state.filektp__;
+      //     // this.setState({
+      //     //   pictUrlKtp: { uri: uri },
+      //     // });
+      //     // console.log("size", uri);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     return Alert.alert(
+      //       "Unable to resize the photo",
+      //       "Check the console for full the error message"
+      //     );
+      //   });
       // this.resize();
       // console.log("tes lagi", tes_filektp);
       // console.log("tes yoi", this.state.filektp__);
-      console.log("tes yoi", this.state.filektp_testing); //ini kosong
+      // console.log("tes yoi", this.state.filektp_testing); //ini kosong
       // const tes_halo = filektp_testing;
       // console.log("tes hak", tes_halo);
-      filektp = this.state.filektp_testing; //ini gak kebaca, undefined
+      // filektp = this.state.filektp_testing; //ini gak kebaca, undefined
 
       // console.log("filektp", filektp);
       console.log("pic not nul", this.state.pictUrlKtp);

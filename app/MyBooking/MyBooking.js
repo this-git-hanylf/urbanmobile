@@ -75,6 +75,8 @@ class MyBooking extends Component {
       payment_attachment: "",
       tesfoto: [],
       uploadfoto: false,
+      dataProjectName: [],
+      dataPrincipalName: [],
 
       // dataPending: []
     };
@@ -105,6 +107,8 @@ class MyBooking extends Component {
       this.getBookingPending();
       this.getBookingReject();
       this.getBookingApprove();
+      this.getProjectName();
+      this.getPrincipalName();
     });
   }
 
@@ -234,13 +238,19 @@ class MyBooking extends Component {
     const entity_cd = this.state.entity_cd;
     console.log("en pending", entity_cd);
     const project_no = this.state.project_no;
+    const email_add_project = this.state.dataProjectName[0].email_add;
     console.log("pro pending", project_no);
+    console.log("email_add_project", email_add_project);
+    const principal_name = this.state.dataPrincipalName[0].principle_name;
+    console.log("principal_name", principal_name);
     Actions.DetailBooking({
       order_id: data.order_id,
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
       project_no: project_no,
+      email_add_project: email_add_project,
+      principal_name: principal_name,
     });
   }
 
@@ -253,12 +263,18 @@ class MyBooking extends Component {
     console.log("en", entity_cd);
     const project_no = this.state.project_no;
     console.log("en", project_no);
+    const email_add_project = this.state.dataProjectName[0].email_add;
+    console.log("email_add_project", email_add_project);
+    const principal_name = this.state.dataPrincipalName[0].principal_name;
+    console.log("principal_name", principal_name);
     Actions.DetailRejectBooking({
       order_id: data.order_id,
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
       project_no: project_no,
+      email_add_project: email_add_project,
+      principal_name: principal_name,
     });
   }
 
@@ -271,12 +287,18 @@ class MyBooking extends Component {
     console.log("en", entity_cd);
     const project_no = this.state.project_no;
     console.log("en", project_no);
+    const email_add_project = this.state.dataProjectName[0].email_add;
+    console.log("email_add_project", email_add_project);
+    const principal_name = this.state.dataPrincipalName[0].principal_name;
+    console.log("principal_name", principal_name);
     Actions.DetailApproveBooking({
       order_id: data.order_id,
       data: data,
       db_profile: db_profile,
       entity_cd: entity_cd,
       project_no: project_no,
+      email_add_project: email_add_project,
+      principal_name: principal_name,
     });
   }
 
@@ -299,6 +321,73 @@ class MyBooking extends Component {
     // this.setState({isMount:false})
     isMount = false;
   }
+
+  getProjectName = () => {
+    const db_profile = this.state.db_profile;
+    const entity_cd = this.state.entity_cd;
+    const project_no = this.state.project_no;
+
+    console.log("dbbbb", db_profile);
+
+    fetch(
+      urlApi +
+        "c_nup/getProjectName/" +
+        db_profile +
+        "/" +
+        entity_cd +
+        "/" +
+        project_no,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data;
+
+          this.setState({ dataProjectName: resData });
+          console.log("dataProjectName", resData);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  getPrincipalName = () => {
+    const db_profile = this.state.db_profile;
+    const entity_cd = this.state.entity_cd;
+    const agent_cd = this.state.agent_cd;
+
+    // console.log()
+    console.log("dbbbb", db_profile);
+
+    fetch(
+      urlApi +
+        "c_nup/getPrincipalName/" +
+        db_profile +
+        "/" +
+        entity_cd +
+        "/" +
+        agent_cd,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data;
+
+          this.setState({ dataPrincipalName: resData });
+          console.log("dataPrincipalName", resData);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   selectComponent = (activePage) => () => this.setState({ activePage });
 
