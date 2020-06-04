@@ -14,7 +14,7 @@ const Styles = StyleSheet.create({
     resizeMode: "contain",
     alignSelf: "center",
     justifyContent: "center",
-    marginTop: 10
+    marginTop: 10,
   },
   textContact: {
     paddingLeft: 30,
@@ -22,14 +22,14 @@ const Styles = StyleSheet.create({
     textAlign: "justify",
     fontFamily: Fonts.type.proximaNovaReg,
     color: Colors.navyUrban,
-    fontSize: 15
+    fontSize: 15,
   },
   textContactBold: {
     textAlign: "center",
     fontFamily: Fonts.type.proximaNovaBold,
     color: Colors.navyUrban,
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
 
 export default Styles;

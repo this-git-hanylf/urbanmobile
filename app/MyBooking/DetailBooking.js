@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  ActivityIndicator,
   Dimensions,
   ScrollView,
   Platform,
@@ -83,6 +84,8 @@ class DetailBooking extends Component {
       replaceFoto: "file:///urbanAPI/images/noimage-min.png",
       uploadfoto: false,
       status: false,
+      Alert_Visibility_input: false,
+      pesan_input: "",
       Alert_Visibility: false,
       pesan: "",
       dataAttach: [],
@@ -310,7 +313,7 @@ class DetailBooking extends Component {
     return isValid;
   };
   submit() {
-    // this.setState({ isLoaded: !this.state.isLoaded });
+    this.setState({ isLoaded: !this.state.isLoaded });
     // const order_id = this.props.order_id;
 
     // this.setState({ uploadfoto: !this.state.uploadfoto });
@@ -325,6 +328,7 @@ class DetailBooking extends Component {
       fileattach = RNFetchBlob.wrap(
         this.state.pictUrlAttach.uri.replace("file://", "")
       );
+      this.setState({ isLoaded: !this.state.isLoaded });
       console.log("pic not nul", this.state.pictUrlAttach);
     }
 
@@ -355,9 +359,10 @@ class DetailBooking extends Component {
       //---------end foto attachment
     };
 
-    // const isValid = this.validating({
-    //   account_name: { require: true },
-    // });
+    const isValid = this.validating({
+      account_name: { require: true },
+      pictUrlAttach: { require: true },
+    });
 
     let fileNameAttach = "";
     if (this.state.pictUrlAttach == null) {
@@ -372,8 +377,12 @@ class DetailBooking extends Component {
     // //   console.log("attach", fileNameAttach);
     console.log("formsubmmit", frmData);
     // // console.log("leng foto ktp", this.state.pictUrlAttach.length);
-
-    if (frmData) {
+    // if (frmData) {
+    //   this.setState({ isLoaded: this.state.isLoaded });
+    // }
+    if (isValid) {
+      console.log("tes is valid");
+      // this.setState({ isLoaded: this.state.isLoaded });
       RNFetchBlob.fetch(
         "POST",
         // urlApi + "c_auth/SignUpAgent",
@@ -397,20 +406,24 @@ class DetailBooking extends Component {
 
         if (!res.Error) {
           // Actions.pop()
-          this.setState({ isLogin: true }, () => {
-            // alert(res.Pesan);
-            const pesan = res.Pesan;
-            this.alertFillBlank(true, pesan);
-            // if (res.Data) {
-            // Actions.pop();
-            console.log("res data foto", res.Data);
-            console.log("uploadfoto", !this.state.uploadfoto);
-            setTimeout(() => {
-              Actions.refresh({ uploadfoto: !this.state.uploadfoto });
-            }, 0);
-          });
+          this.setState(
+            { isLogin: true, isLoaded: this.state.isLoaded },
+            () => {
+              // alert(res.Pesan);
+              const pesan = res.Pesan;
+              this.alertFillBlank(true, pesan);
+              // if (res.Data) {
+              // Actions.pop();
+              console.log("res data foto", res.Data);
+              console.log("uploadfoto", !this.state.uploadfoto);
+              setTimeout(() => {
+                Actions.refresh({ uploadfoto: !this.state.uploadfoto });
+              }, 0);
+            }
+          );
+          // this.setState({ isLoaded: this.state.isLoaded });
         } else {
-          this.setState({ isLoaded: !this.state.isLoaded }, () => {
+          this.setState({ isLoaded: false }, () => {
             // alert(res.Pesan);
             const pesan = res.Pesan;
             this.alertFillBlank(true, pesan);
@@ -422,10 +435,10 @@ class DetailBooking extends Component {
         console.log("error gabisa sumit", res.Pesan);
       });
     } else {
-      this.setState({ isLoaded: !this.state.isLoaded }, () => {
+      this.setState({ isLoaded: false }, () => {
         // alert("Please upload attachment");
-        const pesan = "Please upload attachment";
-        this.alertFillBlank(true, pesan);
+        const pesan_input = "Please upload attachment and input sending name";
+        this.alertFillBlank_input(true, pesan_input);
         // alert(res.Pesan);
         // console.log('url',this.state.pickUrlKtp.uri)
       });
@@ -436,6 +449,12 @@ class DetailBooking extends Component {
 
   alertFillBlank(visible, pesan) {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
+  alertFillBlank_input(visible, pesan_input) {
+    this.setState({
+      Alert_Visibility_input: visible,
+      pesan_input: pesan_input,
+    });
   }
 
   render() {
@@ -535,6 +554,75 @@ class DetailBooking extends Component {
                       Actions.refresh({ uploadfoto: !this.state.uploadfoto });
                     }, 0);
                     console.log("uploadfoto status", !this.state.uploadfoto);
+                  }}
+                  // activeOpacity={0.7}
+                >
+                  <Text style={{ color: Colors.white }}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        {/* alert custom  input kosong */}
+        <Modal
+          visible={this.state.Alert_Visibility_input}
+          transparent={true}
+          animationType={"slide"}
+          onRequestClose={() => {
+            this.alertFillBlank_input(
+              !this.state.Alert_Visibility_input,
+              pesan_input
+            );
+          }}
+          // activeOpacity={1}
+        >
+          <View
+            style={{
+              // backgroundColor: "red",
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "70%",
+                height: "20%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: Fonts.type.proximaNovaReg,
+                  fontSize: 17,
+                  paddingBottom: 15,
+                  color: Colors.black,
+                  textAlign: "center",
+                }}
+              >
+                {this.state.pesan_input}
+              </Text>
+              <View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: Colors.goldUrban,
+                    height: 40,
+                    width: 100,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => {
+                    this.alertFillBlank_input(
+                      !this.state.Alert_Visibility_input
+                    );
+                    this.setState({ isLoaded: !this.state.isLoaded });
+                    // Actions.pop();
+                    // setTimeout(() => {
+                    //   Actions.refresh({ uploadfoto: !this.state.uploadfoto });
+                    // }, 0);
+                    // console.log("uploadfoto status", !this.state.uploadfoto);
                   }}
                   // activeOpacity={0.7}
                 >
@@ -886,7 +974,7 @@ class DetailBooking extends Component {
             />
           </View> */}
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            <Item floatingLabel style={Styles.marginround}>
+            <Item style={Styles.marginround}>
               {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
                 Bank Account Name
               </Label> */}
@@ -900,11 +988,20 @@ class DetailBooking extends Component {
                 ref="account_name"
                 placeholder="Nama Pengirim Uang"
               />
-              {/* {this.state.erroraccount_name ? (
-                <Icon style={Styles.icon_error} name="close-circle" />
-              ) : null} */}
+              {this.state.erroraccount_name ? (
+                <Icon
+                  style={{
+                    color: "red",
+                    bottom: 3,
+                    position: "absolute",
+                    right: 0,
+                  }}
+                  name="close-circle"
+                  name="close-circle"
+                />
+              ) : null}
             </Item>
-            {this.state.account_name ? null : (
+            {/* {this.state.account_name ? null : (
               <Text
                 style={{
                   color: Colors.greyUrban,
@@ -916,13 +1013,23 @@ class DetailBooking extends Component {
               >
                 (customer)
               </Text>
-            )}
-            {/* {this.state.erroraccount_name ? (
-              <Text style={Styles.text_error}>Bank Account Name Required</Text>
-            ) : null} */}
+            )} */}
+            {this.state.erroraccount_name ? (
+              <Text
+                style={{
+                  position: "absolute",
+                  bottom: 5,
+                  left: 15,
+                  color: "red",
+                  fontSize: 12,
+                }}
+              >
+                Nama Pengirim Uang Required
+              </Text>
+            ) : null}
           </View>
 
-          <View style={{ paddingTop: 50 }}>
+          {/* <View style={{ paddingTop: 50 }}>
             <Button style={Styles.btnMedium} onPress={() => this.submit()}>
               <Text
                 style={{
@@ -936,6 +1043,29 @@ class DetailBooking extends Component {
               >
                 Submit
               </Text>
+            </Button>
+          </View> */}
+          <View
+            style={[styles.signbtnSec, { paddingTop: 15 }]}
+            pointerEvents={this.state.isLoaded ? "auto" : "none"}
+          >
+            <Button style={Styles.btnMedium} onPress={() => this.submit()}>
+              {!this.state.isLoaded ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text
+                  style={{
+                    width: "100%",
+                    fontSize: 14,
+                    alignItems: "center",
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    letterSpacing: 1,
+                  }}
+                >
+                  Submit
+                </Text>
+              )}
             </Button>
           </View>
         </Content>

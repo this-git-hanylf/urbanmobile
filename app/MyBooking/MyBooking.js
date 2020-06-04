@@ -63,7 +63,7 @@ class MyBooking extends Component {
 
     this.state = {
       hd: null,
-
+      isLoaded: true,
       activePage: 1,
       dataReject: [],
       dataPending: [],
@@ -113,6 +113,7 @@ class MyBooking extends Component {
   }
 
   getBookingPending = () => {
+    this.setState({ isLoaded: !this.state.isLoaded });
     const entity_cd = this.state.entity_cd;
     console.log("en", entity_cd);
     const project_no = this.state.project_no;
@@ -561,9 +562,7 @@ class MyBooking extends Component {
                     </View>
                   </ListItem>
                 ) : (
-                  <View style={{ paddingTop: "50%" }}>
-                    <ActivityIndicator style={{ color: Colors.navyUrban }} />
-                  </View>
+                  <ActivityIndicator style={{ color: Colors.navyUrban }} />
                 )
               )}
             </ScrollView>

@@ -16,7 +16,7 @@ import {
   FlatList,
   Modal,
   Alert,
-  ListView
+  ListView,
 } from "react-native";
 import {
   Container,
@@ -34,7 +34,8 @@ import {
   Footer,
   FooterTab,
   Badge,
-  Card
+  Card,
+  Label,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -43,7 +44,7 @@ import {
   Row,
   Rows,
   TableWrapper,
-  Cell
+  Cell,
 } from "react-native-table-component";
 import { Style, Colors, Fonts } from "../Themes";
 import Styles from "./Style";
@@ -80,10 +81,11 @@ class DetailRejectBooking extends Component {
       pictUrlAttach: "",
       replaceFoto: "file:///urbanAPI/images/noimage-min.png",
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
+      getDetailReject: [],
+      reason_desc: "",
     };
 
-    this.showAlert = this.showAlert.bind(this);
     console.log("props cf", props);
   }
 
@@ -95,7 +97,7 @@ class DetailRejectBooking extends Component {
     console.log("datapr", dataProps);
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
+        Token: await _getData("@Token"),
       }),
       user: await _getData("@User"),
       name: await _getData("@UserId"),
@@ -106,13 +108,14 @@ class DetailRejectBooking extends Component {
       dateBook: dataProps.order_date,
       pictUrlAttach: dataProps.payment_attachment,
       order_id: dataProps.order_id,
-      total_amt: dataProps.total_amt
+      total_amt: dataProps.total_amt,
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
 
     console.log("data", data);
     this.setState(data, () => {
       this.getDetail();
+      this.getDetailReject();
     });
   }
 
@@ -136,11 +139,11 @@ class DetailRejectBooking extends Component {
         order_id,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -148,54 +151,50 @@ class DetailRejectBooking extends Component {
           console.log("dataDetail", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
-  showAlert = key => {
-    Alert.alert(
-      "Select a Photo",
-      "Choose the place where you want to get a photo",
-      [
-        { text: "Gallery", onPress: () => this.fromGallery(key) },
-        { text: "Camera", onPress: () => this.fromCamera(key) },
-        {
-          text: "Cancel",
-          onPress: () => console.log("User Cancel"),
-          style: "cancel"
+
+  getDetailReject = () => {
+    const order_id = this.props.order_id;
+    const db_profile = this.props.db_profile;
+    const entity_cd = this.props.entity_cd;
+    const project_no = this.props.project_no;
+    console.log("order", order_id);
+    console.log("db", db_profile);
+
+    fetch(
+      urlApi +
+        "c_nup/getDetailReject/" +
+        db_profile +
+        "/" +
+        entity_cd +
+        "/" +
+        project_no +
+        "/" +
+        order_id,
+
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data[0];
+
+          this.setState({
+            getDetailReject: resData,
+            reason_desc: resData.reason,
+          });
+          console.log("getDetailReject", resData);
         }
-      ],
-      { cancelable: false }
-    );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
-  fromCamera(key) {
-    ImagePicker.openCamera({
-      cropping: true,
-      width: 600,
-      height: 500
-    })
-      .then(image => {
-        console.log("received image", image);
-
-        this.setState({ [key]: { uri: image.path } });
-      })
-      .catch(e => console.log("tag", e));
-  }
-
-  fromGallery(key) {
-    ImagePicker.openPicker({
-      multiple: false,
-      width: 600,
-      height: 500
-    })
-      .then(image => {
-        console.log("received image", image);
-
-        this.setState({ [key]: { uri: image.path } });
-      })
-      .catch(e => console.log("tag", e));
-  }
 
   tes() {
     alert("sdsd");
@@ -218,7 +217,7 @@ class DetailRejectBooking extends Component {
     const frmData = {
       //---------foto attachment
       order_id: order_id,
-      pictUrlAttach: fileattach
+      pictUrlAttach: fileattach,
       //---------end foto attachment
     };
 
@@ -242,7 +241,7 @@ class DetailRejectBooking extends Component {
         // urlApi + "c_auth/SignUpAgent",
         urlApi + "c_nup/saveAttachment/IFCAPB/",
         {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
         },
         [
           // { name: "photo", filename: fileName, data: fileImg },
@@ -250,9 +249,9 @@ class DetailRejectBooking extends Component {
           { name: "photoattach", filename: fileNameAttach, data: fileattach },
           // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
           // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) }
+          { name: "data", data: JSON.stringify(frmData) },
         ]
-      ).then(resp => {
+      ).then((resp) => {
         console.log("res_if", resp);
         const res = JSON.parse(resp.data);
         console.log("res", res);
@@ -313,7 +312,7 @@ class DetailRejectBooking extends Component {
     //   tableHead: ["Date", "Description", "Amount", "Status"]
     // };
     const numbers = [0];
-    const listItems = numbers.map(number => number + 1);
+    const listItems = numbers.map((number) => number + 1);
     console.log("nomor", listItems);
 
     return (
@@ -361,7 +360,7 @@ class DetailRejectBooking extends Component {
               // backgroundColor: "red",
               flex: 1,
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <View
@@ -370,7 +369,7 @@ class DetailRejectBooking extends Component {
                 width: "70%",
                 height: "20%",
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               <Text
@@ -379,7 +378,7 @@ class DetailRejectBooking extends Component {
                   fontSize: 17,
                   paddingBottom: 15,
                   color: Colors.black,
-                  textAlign: "center"
+                  textAlign: "center",
                 }}
               >
                 {this.state.pesan}
@@ -391,7 +390,7 @@ class DetailRejectBooking extends Component {
                     height: 40,
                     width: 100,
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                   onPress={() => {
                     this.alertFillBlank(!this.state.Alert_Visibility);
@@ -429,7 +428,7 @@ class DetailRejectBooking extends Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -443,7 +442,7 @@ class DetailRejectBooking extends Component {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -462,7 +461,7 @@ class DetailRejectBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Order Id : {this.state.order_id}
@@ -476,7 +475,7 @@ class DetailRejectBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.goldUrban,
                     marginBottom: 5,
-                    fontSize: 13
+                    fontSize: 13,
                   }}
                 >
                   {moment(this.state.order_date).format("DD MMM YYYY")}
@@ -492,7 +491,7 @@ class DetailRejectBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Name : {this.state.full_name}
@@ -510,7 +509,7 @@ class DetailRejectBooking extends Component {
                         alignSelf: "flex-start",
                         color: Colors.navyUrban,
                         marginBottom: 5,
-                        fontSize: 16
+                        fontSize: 16,
                       }}
                     >
                       {data.property_descs}
@@ -522,7 +521,7 @@ class DetailRejectBooking extends Component {
                           alignSelf: "flex-start",
                           color: Colors.navyUrban,
                           marginBottom: 5,
-                          fontSize: 16
+                          fontSize: 16,
                         }}
                       >
                         {data.lot_descs} - ({data.qty} Items)
@@ -535,7 +534,7 @@ class DetailRejectBooking extends Component {
                           marginBottom: 5,
                           fontSize: 16,
                           right: 130,
-                          position: "absolute"
+                          position: "absolute",
                         }}
                       >
                         Rp.
@@ -548,7 +547,7 @@ class DetailRejectBooking extends Component {
                           marginBottom: 5,
                           fontSize: 16,
                           right: 20,
-                          position: "absolute"
+                          position: "absolute",
                         }}
                       >
                         {/* {data.total_amt} */}
@@ -568,7 +567,7 @@ class DetailRejectBooking extends Component {
                   right: 130,
                   position: "absolute",
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 Rp.
@@ -585,7 +584,7 @@ class DetailRejectBooking extends Component {
                   borderTopWidth: 2,
                   borderTopColor: Colors.navyUrban,
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 {/* {this.state.total_amt} */}
@@ -594,85 +593,102 @@ class DetailRejectBooking extends Component {
             </View>
           </View>
 
-          {/* UPLOAD */}
-          <View
-            style={{ paddingTop: 50, paddingBottom: 10, paddingHorizontal: 20 }}
-          >
-            <Text
+          {this.state.getDetailReject != 0 ||
+          this.state.getDetailReject != null ? (
+            // <Text>{this.state.reason_desc}</Text>
+            <View
               style={{
-                fontFamily: Fonts.type.proximaNovaReg,
-                alignSelf: "flex-start",
-                color: Colors.navyUrban,
-                marginBottom: 5,
-                fontSize: 14
+                width: "100%",
+                paddingBottom: 40,
+                marginTop: 60,
+                height: 120,
               }}
             >
-              Upload Payment Attachment
-            </Text>
-            {this.state.pictUrlAttach == null ||
-            this.state.pictUrlAttach == "" ? (
-              <Item
-                regular
-                style={[{ borderRadius: 5 }, Styles.inputAttach]}
-                onPress={() => this.showAlert("pictUrlAttach")}
-                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              <Left style={{ position: "absolute", left: 20 }}>
+                <Text
+                  style={{
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    alignSelf: "flex-start",
+                    color: Colors.navyUrban,
+                    marginBottom: 5,
+                    fontSize: 16,
+                  }}
+                >
+                  Reason:
+                </Text>
+              </Left>
+              <Left
+                style={{
+                  position: "absolute",
+                  left: 20,
+                  top: 20,
+                  right: 20,
+                  textAlign: "justify",
+                }}
               >
-                <Text style={Styles.textAttach}>Payment Attachment</Text>
-                <Image
+                <Text
                   style={{
-                    width: 25,
-                    height: 25,
-                    position: "absolute",
-                    right: 10
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    // alignSelf: "flex-start",
+                    color: Colors.navyUrban,
+                    marginBottom: 5,
+                    fontSize: 16,
+                    textAlign: "justify",
                   }}
-                  source={require("@Asset/images/icon/image_blue.png")}
-                ></Image>
-              </Item>
-            ) : (
-              <Item
-                regular
-                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
-                onPress={() => this.showAlert("pictUrlAttach")}
-                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+                >
+                  {this.state.reason_desc}
+                </Text>
+              </Left>
+            </View>
+          ) : (
+            <View
+              style={{
+                width: "100%",
+                paddingBottom: 40,
+                marginTop: 60,
+                height: 120,
+              }}
+            >
+              <Left style={{ position: "absolute", left: 20 }}>
+                <Text
+                  style={{
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    alignSelf: "flex-start",
+                    color: Colors.navyUrban,
+                    marginBottom: 5,
+                    fontSize: 16,
+                  }}
+                >
+                  Reason:
+                </Text>
+              </Left>
+              <Left
+                style={{
+                  position: "absolute",
+                  left: 20,
+                  top: 20,
+                  right: 20,
+                  textAlign: "justify",
+                }}
               >
-                <View style={[Styles.containImageTop_no]}>
-                  <Image
-                    // resizeMode="cover"
-                    style={{
-                      width: 200,
-                      height: 130,
-                      alignContent: "center"
-                    }}
-                    source={this.state.pictUrlAttach}
-                    // source={{ uri: this.state.pictUrlAttach }}
-                  />
-                </View>
-
-                {/* <Image
+                <Text
                   style={{
-                    width: 25,
-                    height: 25,
-                    position: "absolute",
-                    right: 10
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    // alignSelf: "flex-start",
+                    color: Colors.navyUrban,
+                    marginBottom: 5,
+                    fontSize: 16,
+                    textAlign: "justify",
                   }}
-                  source={require("@Asset/images/icon/image.png")}
-                ></Image> */}
-                {/* <Image
-                  // resizeMode="cover"
-                  style={{
-                    width: 200,
-                    height: 130,
-                    alignContent: "center"
-                  }}
-                  source={{ uri: this.state.pictUrlAttach }}
-                  // source={{ uri: this.state.pictUrlAttach }}
-                /> */}
-              </Item>
-            )}
-          </View>
+                >
+                  Time Out
+                </Text>
+              </Left>
+            </View>
+          )}
 
           <View style={{ paddingTop: 50 }}>
-            <Button style={Styles.btnMedium} onPress={() => this.submit()}>
+            <Button style={Styles.btnMedium} onPress={() => Actions.pop()}>
               <Text
                 style={{
                   width: "100%",
@@ -680,10 +696,10 @@ class DetailRejectBooking extends Component {
                   alignItems: "center",
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
+                  letterSpacing: 1,
                 }}
               >
-                Submit
+                Close
               </Text>
             </Button>
           </View>
@@ -699,12 +715,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2c3e50"
+    backgroundColor: "#2c3e50",
   },
   text: {
     textAlign: "center",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 //make this component available to the app

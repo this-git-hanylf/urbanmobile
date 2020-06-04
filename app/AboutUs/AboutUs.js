@@ -18,7 +18,7 @@ import {
   Modal,
   ListView,
   Alert,
-  Clipboard
+  Clipboard,
   // Picker
 } from "react-native";
 import {
@@ -40,7 +40,7 @@ import {
   Picker,
   Col,
   ListItem,
-  Label
+  Label,
 } from "native-base";
 
 // import NavigationService from "@Service/Navigation";
@@ -151,67 +151,75 @@ class AboutUs extends React.Component {
           </View>
         </View>
 
-        <ScrollView>
-          <View>
-            <Text
+        <View style={{ flex: 1, textAlign: "justify" }}>
+          <ScrollView style={{ height: "100%", textAlign: "justify" }}>
+            <View>
+              <Text
+                style={{
+                  fontWeight: "900",
+                  color: Colors.goldUrban,
+                  fontSize: 16,
+                  textAlign: "center",
+                  fontFamily: Fonts.type.proximaNovaBold,
+                  letterSpacing: 1,
+                }}
+                // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+              >
+                ABOUT US
+                {/* {this.state.projectdesc} */}
+              </Text>
+
+              {/* <Text>{jam}:{menit}</Text> */}
+            </View>
+            <View>
+              <Image
+                source={require("../Images/logo4.png")}
+                style={Styles.styleLogo}
+              >
+                {/* <Image source={require("../Images/logo.png")} style={Styles.styleLogo} > */}
+              </Image>
+              {/* <Text>tes</Text> */}
+            </View>
+
+            <View
               style={{
-                fontWeight: "900",
-                color: Colors.goldUrban,
-                fontSize: 16,
-                textAlign: "center",
-                fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                alignSelf: "center",
+                marginTop: 20,
+                marginBottom: 20,
+                height: "100%",
+                textAlign: "justify",
+                width: "100%",
               }}
-              // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
-              ABOUT US
-              {/* {this.state.projectdesc} */}
-            </Text>
-
-            {/* <Text>{jam}:{menit}</Text> */}
-          </View>
-          <View>
-            <Image
-              source={require("../Images/logo4.png")}
-              style={Styles.styleLogo}
-            >
-              {/* <Image source={require("../Images/logo.png")} style={Styles.styleLogo} > */}
-            </Image>
-            {/* <Text>tes</Text> */}
-          </View>
-
-          <View
-            style={{ alignSelf: "center", marginTop: 20, marginBottom: 20 }}
-          >
-            <Text style={Styles.textContact}>
-              The Company was originally established under the name of PT
-              Samsung Development on May 9, 1995 as stated in the Deed of
-              Establishment made in the presence of Notary Sinta Susikto, S.H.
-              based on Deed No. 62 dated May 9th, 1995 and Decree of the
-              Minister of Justice with Decree No. C2-15301.HT.01.01.TH.95 dated
-              November 24th, 1995. On December 23rd, 2016, PT Samsung
-              Development changed its name to PT Urban Jakarta Propertindo based
-              on Deed No. 32 dated December 23rd, 2016 made in the presence of
-              Notary Silvy Solivan, S.H, M.Kn. and Decree of the Ministry of Law
-              and Human Rights with Decree No. AHU-0025502.AH.01.02 in 2016. The
-              main business activities of the Company are both owned and leased
-              real estate assets which focus on developing residential areas
-              under TOD Concept.
-            </Text>
-            <Text style={Styles.textContact}>
-              In its business activities, the Company develops and/or manages
-              office areas, shopping centers and apartments that are integrated
-              directly with mass transportation. In addition to the TOD concept,
-              the Company will also develop one-stop-living concept on each of
-              its project. This concept makes it easier for residents to meet
-              their residential needs and no longer need to commute long
-              distance to fulfill their household needs or to use sports and
-              entertainment facilities. These two main concepts will be carried
-              out by the Company to distinguish itself from other property
-              developer and provide highly attractive value added to the
-              community.
-            </Text>
-            {/* <Text style={Styles.textContact}>Jakarta Selatan, 12190</Text>
+              <Text style={Styles.textContact}>
+                The Company was originally established under the name of PT
+                Samsung Development on May 9, 1995 as stated in the Deed of
+                Establishment made in the presence of Notary Sinta Susikto, S.H.
+                based on Deed No. 62 dated May 9th, 1995 and Decree of the
+                Minister of Justice with Decree No. C2-15301.HT.01.01.TH.95
+                dated November 24th, 1995. On December 23rd, 2016, PT Samsung
+                Development changed its name to PT Urban Jakarta Propertindo
+                based on Deed No. 32 dated December 23rd, 2016 made in the
+                presence of Notary Silvy Solivan, S.H, M.Kn. and Decree of the
+                Ministry of Law and Human Rights with Decree No.
+                AHU-0025502.AH.01.02 in 2016. The main business activities of
+                the Company are both owned and leased real estate assets which
+                focus on developing residential areas under TOD Concept.
+              </Text>
+              <Text style={Styles.textContact}>
+                In its business activities, the Company develops and/or manages
+                office areas, shopping centers and apartments that are
+                integrated directly with mass transportation. In addition to the
+                TOD concept, the Company will also develop one-stop-living
+                concept on each of its project. This concept makes it easier for
+                residents to meet their residential needs and no longer need to
+                commute long distance to fulfill their household needs or to use
+                sports and entertainment facilities. These two main concepts
+                will be carried out by the Company to distinguish itself from
+                other property developer and provide highly attractive value
+                added to the community.
+              </Text>
+              {/* <Text style={Styles.textContact}>Jakarta Selatan, 12190</Text>
             <View
               style={{
                 flexDirection: "row",
@@ -231,8 +239,9 @@ class AboutUs extends React.Component {
               </Text>
               <Text style={Styles.textContact}>sales@ujp.co.id</Text>
             </View> */}
-          </View>
-        </ScrollView>
+            </View>
+          </ScrollView>
+        </View>
       </Container>
     );
   }

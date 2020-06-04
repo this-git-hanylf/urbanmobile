@@ -438,12 +438,13 @@ class FormPayment extends React.Component {
               <Text
                 style={{
                   alignSelf: "center",
+                  textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
                   fontSize: 14,
                   color: Colors.twitter,
                   borderBottomColor: Colors.twitter,
                   borderBottomWidth: 1,
-                  width: 30,
+                  width: 45,
                 }}
               >
                 Copy
