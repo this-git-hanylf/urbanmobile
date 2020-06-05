@@ -92,6 +92,9 @@ class DetailBooking extends Component {
       account_name: "",
       nama_agent: "",
       dataProjectName: [],
+      qty_total: "",
+      total_amt: "",
+      status: "",
       // current_date: new Date(),
       // uri: "",
     };
@@ -125,6 +128,9 @@ class DetailBooking extends Component {
       total_amt: dataProps.total_amt,
       nama_agent: await _getData("@Name"),
       email_add: this.props.email_add_project,
+      qty_total: dataProps.qty,
+      total_amt: dataProps.total_amt,
+      status: dataProps.status,
       // uri: dataProps.payment_attachment,
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
@@ -319,7 +325,8 @@ class DetailBooking extends Component {
     // this.setState({ uploadfoto: !this.state.uploadfoto });
     // const order_id = this.state.order_id;
     let fileattach = "";
-    // console.log("pic nul", this.state.pictUrlAttach);
+
+    // console.log("pic uriii", this.state.pictUrlAttach.uri);
     if (this.state.pictUrlAttach == null) {
       console.log("replace", this.state.replaceFoto);
       fileattach = "./img/noimage.png";
@@ -332,12 +339,23 @@ class DetailBooking extends Component {
       console.log("pic not nul", this.state.pictUrlAttach);
     }
 
-    const { account_name, order_id, nama_agent, current_date } = this.state;
+    const {
+      account_name,
+      order_id,
+      nama_agent,
+      current_date,
+      qty_total,
+      total_amt,
+    } = this.state;
     const db_profile = this.props.db_profile;
     const entity_cd = this.props.entity_cd;
     const project_no = this.props.project_no;
     const email_add = this.props.email_add_project;
     const principal_name = this.props.principal_name;
+    const dataDetail = this.state.dataDetail;
+    const lead_name = this.props.lead_name;
+    // const qty_total = this.state
+    console.log("data detail nih", dataDetail);
     // console.log("order id", order_id);
     console.log("db_profile", db_profile);
     console.log("entity_cd", entity_cd);
@@ -354,6 +372,10 @@ class DetailBooking extends Component {
       principal_name: principal_name,
       entity_cd: entity_cd,
       project_no: project_no,
+      qty_total: qty_total,
+      total_amt: total_amt,
+      lead_name: lead_name,
+      // dataDetail,
 
       // submit_payment_date: current_date,
       //---------end foto attachment
@@ -423,12 +445,16 @@ class DetailBooking extends Component {
           );
           // this.setState({ isLoaded: this.state.isLoaded });
         } else {
-          this.setState({ isLoaded: false }, () => {
-            // alert(res.Pesan);
-            const pesan = res.Pesan;
-            this.alertFillBlank(true, pesan);
-            // console.log('url',this.state.pickUrlKtp.uri)
-          });
+          this.setState({ isLoaded: this.state.isLoaded });
+          const pesan = res.Pesan;
+          this.alertFillBlank(true, pesan);
+          console.log("rror false");
+          // this.setState({ isLoaded: false }, () => {
+          //   // alert(res.Pesan);
+          //   const pesan = res.Pesan;
+          //   this.alertFillBlank(true, pesan);
+          //   // console.log('url',this.state.pickUrlKtp.uri)
+          // });
         }
         const pesan = res.Pesan;
         this.alertFillBlank(true, pesan);
@@ -1045,11 +1071,18 @@ class DetailBooking extends Component {
               </Text>
             </Button>
           </View> */}
+
           <View
             style={[styles.signbtnSec, { paddingTop: 15 }]}
-            pointerEvents={this.state.isLoaded ? "auto" : "none"}
+            pointerEvents={
+              this.state.isLoaded || this.state.status == "P" ? "auto" : "none"
+            }
           >
-            <Button style={Styles.btnMedium} onPress={() => this.submit()}>
+            <Button
+              style={Styles.btnMedium}
+              onPress={() => this.submit()}
+              disabled={this.state.status == "P" ? true : false}
+            >
               {!this.state.isLoaded ? (
                 <ActivityIndicator color="#fff" />
               ) : (

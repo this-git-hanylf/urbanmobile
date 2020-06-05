@@ -14,7 +14,7 @@ import {
   BackHandler,
   I18nManager,
   Dimensions,
-  Modal
+  Modal,
 } from "react-native";
 import {
   Container,
@@ -26,7 +26,7 @@ import {
   Header,
   Left,
   Body,
-  Title
+  Title,
 } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 //import all the required component
@@ -57,7 +57,7 @@ export default class Intro extends React.Component {
       userDetails: "",
       GoogleLogin: false,
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
     };
   }
   async componentWillMount() {
@@ -75,7 +75,7 @@ export default class Intro extends React.Component {
           message: "Please be careful with agreement permissions ",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",
-          buttonPositive: "OK"
+          buttonPositive: "OK",
         }
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -112,7 +112,7 @@ export default class Intro extends React.Component {
   };
 
   btnLoginClick = async () => {
-    const mac = await DeviceInfo.getMACAddress().then(mac => {
+    const mac = await DeviceInfo.getMACAddress().then((mac) => {
       return mac;
     });
     const formData = {
@@ -121,7 +121,7 @@ export default class Intro extends React.Component {
       token: "",
       token_firebase: "",
       device: Platform.OS,
-      mac: mac
+      mac: mac,
     };
     var lengthPass = this.state.password.length;
     if (lengthPass < 4) {
@@ -141,12 +141,12 @@ export default class Intro extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: data
+      body: data,
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           if (res.Data.isResetPass != 1) {
             this.getTower(res);
@@ -164,7 +164,7 @@ export default class Intro extends React.Component {
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState({ isLoaded: !this.state.isLoaded }, () => {
           alert(error);
@@ -180,8 +180,8 @@ export default class Intro extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
-  doLoginSosMed = async data => {
-    data.ipAddress = await DeviceInfo.getIPAddress().then(mac => mac);
+  doLoginSosMed = async (data) => {
+    data.ipAddress = await DeviceInfo.getIPAddress().then((mac) => mac);
 
     console.log("data", data);
 
@@ -189,13 +189,13 @@ export default class Intro extends React.Component {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
       // body: data
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         // try {
         if (res.Error && res.olduser) {
           // this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -225,7 +225,7 @@ export default class Intro extends React.Component {
         //   console.log("error", error);
         // }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState({ isLoaded: !this.state.isLoaded }, () => {
           alert(error);
@@ -233,24 +233,24 @@ export default class Intro extends React.Component {
       });
   };
 
-  getTower = res => {
+  getTower = (res) => {
     let result = res.Data;
     const email = result.user;
     fetch(urlApi + "c_product_info/getData/IFCAMOBILE/" + email + "/S", {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         console.log("res", res);
         if (res.Error === false) {
           let resData = res.Data;
           let data = [];
-          resData.map(item => {
+          resData.map((item) => {
             let items = {
               ...item,
               illustration: item.picture_url,
               title: item.project_descs,
-              subtitle: item.db_profile + item.project_no
+              subtitle: item.db_profile + item.project_no,
             };
             data.push(items);
           });
@@ -259,12 +259,12 @@ export default class Intro extends React.Component {
           this.signIn(result);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  signIn = async res => {
+  signIn = async (res) => {
     try {
       _storeData("@DashMenu", res.DashMenu);
       _storeData("@UserId", res.UserId);
@@ -290,7 +290,7 @@ export default class Intro extends React.Component {
   };
 
   skipLogin = async () => {
-    const mac = await DeviceInfo.getMACAddress().then(mac => {
+    const mac = await DeviceInfo.getMACAddress().then((mac) => {
       return mac;
     });
 
@@ -300,7 +300,7 @@ export default class Intro extends React.Component {
       token: "",
       token_firebase: "",
       device: Platform.OS,
-      mac: mac
+      mac: mac,
     };
     this.setState({ isLogin: false }, () => {
       this.doLogin(formData);
@@ -311,11 +311,11 @@ export default class Intro extends React.Component {
     Actions.SkipLoginBlank();
   };
 
-  signInGoogle = data => {
+  signInGoogle = (data) => {
     this.doLoginSosMed(data);
   };
 
-  signInFacebook = async data => {
+  signInFacebook = async (data) => {
     this.doLoginSosMed(data);
   };
   _renderNextButton = () => {
@@ -393,7 +393,7 @@ export default class Intro extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -402,7 +402,7 @@ export default class Intro extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -411,7 +411,7 @@ export default class Intro extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -423,7 +423,7 @@ export default class Intro extends React.Component {
                         height: 40,
                         width: 100,
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -451,7 +451,7 @@ export default class Intro extends React.Component {
                   ref="email"
                   style={styles.inputEmail}
                   editable={true}
-                  onChangeText={val => this.setState({ email: val })}
+                  onChangeText={(val) => this.setState({ email: val })}
                   keyboardType="email-address"
                   returnKeyType="next"
                   autoCapitalize="none"
@@ -468,7 +468,7 @@ export default class Intro extends React.Component {
                   ref="password"
                   style={styles.inputEmail}
                   editable={true}
-                  onChangeText={val => this.setState({ password: val })}
+                  onChangeText={(val) => this.setState({ password: val })}
                   keyboardType="default"
                   returnKeyType="next"
                   autoCapitalize="none"
@@ -485,7 +485,7 @@ export default class Intro extends React.Component {
                   style={styles.eye}
                   onPress={() =>
                     this.setState({
-                      isHide: !this.state.isHide
+                      isHide: !this.state.isHide,
                     })
                   }
                 />
@@ -519,7 +519,7 @@ export default class Intro extends React.Component {
                             OR
                         </Text> */}
             <View style={styles.signInGoogle}>
-              <GoogleLoginButton onPress={this.signInGoogle} />
+              {/* <GoogleLoginButton onPress={this.signInGoogle} /> */}
               {/* <FBLoginButton onPress={this.signInFacebook} /> */}
             </View>
             <View style={styles.socialSec}>
@@ -589,7 +589,7 @@ const slides = [
     height: 200,
     // bottomSpacer:
     //
-    bottomSpacer: styles.bottom_Spacer
+    bottomSpacer: styles.bottom_Spacer,
     // topSpacer: styles.top_Spacer
     // buttonStyle: styles.bottom_Button,
     // buttonTextStyle: styles.text_urban
@@ -609,7 +609,7 @@ const slides = [
     // },
     imageStyle: styles.images_urban,
     // backgroundColor: "#febe29"
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   {
     key: "s3",
@@ -625,6 +625,6 @@ const slides = [
     // },
     imageStyle: styles.images_urban,
     // backgroundColor: "#22bcb5"
-    backgroundColor: Colors.white
-  }
+    backgroundColor: Colors.white,
+  },
 ];

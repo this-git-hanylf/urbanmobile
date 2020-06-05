@@ -16,7 +16,7 @@ import {
   FlatList,
   Modal,
   Alert,
-  ListView
+  ListView,
 } from "react-native";
 import {
   Container,
@@ -34,7 +34,7 @@ import {
   Footer,
   FooterTab,
   Badge,
-  Card
+  Card,
 } from "native-base";
 
 import { Actions } from "react-native-router-flux";
@@ -43,7 +43,7 @@ import {
   Row,
   Rows,
   TableWrapper,
-  Cell
+  Cell,
 } from "react-native-table-component";
 import { Style, Colors, Fonts } from "../Themes";
 import Styles from "./Style";
@@ -81,7 +81,7 @@ class DetailApproveBooking extends Component {
       //   pictUrlAttach: "",
       replaceFoto: "file:///urbanAPI/images/noimage-min.png",
       isView: false,
-      nup_no: ""
+      nup_no: "",
     };
 
     // this.showAlert = this.showAlert.bind(this);
@@ -96,7 +96,7 @@ class DetailApproveBooking extends Component {
     console.log("datapr", dataProps);
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
+        Token: await _getData("@Token"),
       }),
       user: await _getData("@User"),
       name: await _getData("@UserId"),
@@ -107,7 +107,7 @@ class DetailApproveBooking extends Component {
       dateBook: dataProps.order_date,
       pictUrlAttach: dataProps.payment_attachment,
       order_id: dataProps.order_id,
-      total_amt: dataProps.total_amt
+      total_amt: dataProps.total_amt,
       //   nup_no: dataProps.nup_no
       //   pictUrlAttach: { uri: dataProps.payment_attachment }
     };
@@ -138,11 +138,11 @@ class DetailApproveBooking extends Component {
         order_id,
 
       {
-        method: "GET"
+        method: "GET",
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         if (!res.Error) {
           const resData = res.Data;
 
@@ -150,7 +150,7 @@ class DetailApproveBooking extends Component {
           console.log("dataDetail", resData);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -168,7 +168,7 @@ class DetailApproveBooking extends Component {
     //   tableHead: ["Date", "Description", "Amount", "Status"]
     // };
     const numbers = [0];
-    const listItems = numbers.map(number => number + 1);
+    const listItems = numbers.map((number) => number + 1);
     console.log("nomor", listItems);
 
     return (
@@ -226,7 +226,7 @@ class DetailApproveBooking extends Component {
                 fontSize: 16,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -240,7 +240,7 @@ class DetailApproveBooking extends Component {
                 fontSize: 14,
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaBold,
-                letterSpacing: 1
+                letterSpacing: 1,
               }}
               // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
@@ -259,7 +259,7 @@ class DetailApproveBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Order Id : {this.state.order_id}
@@ -273,7 +273,7 @@ class DetailApproveBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.goldUrban,
                     marginBottom: 5,
-                    fontSize: 13
+                    fontSize: 13,
                   }}
                 >
                   {moment(this.state.order_date).format("DD MMM YYYY")}
@@ -289,7 +289,7 @@ class DetailApproveBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.navyUrban,
                     marginBottom: 5,
-                    fontSize: 16
+                    fontSize: 16,
                   }}
                 >
                   Name : {this.state.full_name}
@@ -302,7 +302,7 @@ class DetailApproveBooking extends Component {
                     alignSelf: "flex-start",
                     color: Colors.goldUrban,
                     marginBottom: 5,
-                    fontSize: 13
+                    fontSize: 13,
                   }}
                 >
                   {this.state.nup_no}
@@ -319,14 +319,14 @@ class DetailApproveBooking extends Component {
                         paddingBottom: 10,
 
                         borderTopWidth: 0.8,
-                        borderColor: Colors.navyUrban
+                        borderColor: Colors.navyUrban,
                       }}
                     >
                       <Right
                         style={{
                           position: "absolute",
                           right: 20,
-                          paddingTop: 10
+                          paddingTop: 10,
                         }}
                       >
                         <Text
@@ -335,7 +335,7 @@ class DetailApproveBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.goldUrban,
                             marginBottom: 5,
-                            fontSize: 14
+                            fontSize: 14,
                           }}
                         >
                           {data.nup_no}
@@ -350,7 +350,7 @@ class DetailApproveBooking extends Component {
                           alignSelf: "flex-start",
                           color: Colors.navyUrban,
                           marginBottom: 5,
-                          fontSize: 16
+                          fontSize: 16,
                         }}
                       >
                         {data.property_descs}
@@ -362,7 +362,7 @@ class DetailApproveBooking extends Component {
                             alignSelf: "flex-start",
                             color: Colors.navyUrban,
                             marginBottom: 5,
-                            fontSize: 16
+                            fontSize: 16,
                           }}
                         >
                           {data.lot_descs} - ({data.qty} Items)
@@ -375,7 +375,7 @@ class DetailApproveBooking extends Component {
                             marginBottom: 5,
                             fontSize: 16,
                             right: 130,
-                            position: "absolute"
+                            position: "absolute",
                           }}
                         >
                           Rp.
@@ -388,7 +388,7 @@ class DetailApproveBooking extends Component {
                             marginBottom: 5,
                             fontSize: 16,
                             right: 20,
-                            position: "absolute"
+                            position: "absolute",
                           }}
                         >
                           {/* {data.total_amt} */}
@@ -409,7 +409,7 @@ class DetailApproveBooking extends Component {
                   right: 130,
                   position: "absolute",
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 Rp.
@@ -426,7 +426,7 @@ class DetailApproveBooking extends Component {
                   borderTopWidth: 2,
                   borderTopColor: Colors.navyUrban,
 
-                  paddingTop: 10
+                  paddingTop: 10,
                 }}
               >
                 {/* {this.state.total_amt} */}
@@ -453,7 +453,7 @@ class DetailApproveBooking extends Component {
                 alignSelf: "flex-start",
                 color: Colors.navyUrban,
                 marginBottom: 5,
-                fontSize: 14
+                fontSize: 14,
               }}
             >
               Payment Attachment
@@ -474,7 +474,7 @@ class DetailApproveBooking extends Component {
                   style={{
                     width: 200,
                     height: 130,
-                    alignContent: "center"
+                    alignContent: "center",
                   }}
                   // source={this.state.pictUrlAttach}
                   source={{ uri: this.state.pictUrlAttach }}
@@ -516,16 +516,16 @@ class DetailApproveBooking extends Component {
             <View
               style={{
                 paddingVertical: 20,
-                paddingHorizontal: 20
+                paddingHorizontal: 20,
                 // paddingBottom: 20
               }}
             >
               <Image
                 style={{
-                  width: "90%",
-                  height: "90%",
+                  width: "100%",
+                  height: "100%",
                   alignContent: "center",
-                  alignSelf: "center"
+                  alignSelf: "center",
                 }}
                 enableImageZoom={true}
                 // enableSwipeDown={true}
@@ -542,7 +542,7 @@ class DetailApproveBooking extends Component {
                   alignItems: "center",
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaBold,
-                  letterSpacing: 1
+                  letterSpacing: 1,
                 }}
               >
                 Close
@@ -561,12 +561,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2c3e50"
+    backgroundColor: "#2c3e50",
   },
   text: {
     textAlign: "center",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 //make this component available to the app

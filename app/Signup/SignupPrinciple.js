@@ -213,7 +213,10 @@ class SignupPrinciple extends React.Component {
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
-      height: 600,
+      height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -227,7 +230,10 @@ class SignupPrinciple extends React.Component {
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
-      height: 600,
+      height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
     })
       .then((image) => {
         console.log("received image", image);
@@ -1013,7 +1019,9 @@ class SignupPrinciple extends React.Component {
                                         <Text style={styles.overviewTitles}>Full Name</Text>
                                     </View> */}
                 <Item floatingLabel style={styles.marginround}>
-                  <Label style={{ color: "#fff", fontSize: 14 }}>NPWP</Label>
+                  <Label style={{ color: "#fff", fontSize: 14 }}>
+                    Company NPWP
+                  </Label>
                   {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                             <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                             <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
@@ -1050,7 +1058,7 @@ class SignupPrinciple extends React.Component {
                       fontSize: 12,
                     }}
                   >
-                    NPWP Required
+                    Company NPWP Required
                   </Text>
                 ) : null}
               </View>
@@ -1449,7 +1457,7 @@ class SignupPrinciple extends React.Component {
                     onPress={() => this.showAlert("pictUrlNPWP")}
                     pointerEvents={this.state.isLoaded ? "auto" : "none"}
                   >
-                    <Text style={styles.textAttach}>Attach NPWP</Text>
+                    <Text style={styles.textAttach}>Attach Company NPWP</Text>
                     <Image
                       style={{
                         width: 25,

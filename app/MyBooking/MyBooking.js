@@ -77,6 +77,7 @@ class MyBooking extends Component {
       uploadfoto: false,
       dataProjectName: [],
       dataPrincipalName: [],
+      dataLeadName: [],
 
       // dataPending: []
     };
@@ -109,11 +110,12 @@ class MyBooking extends Component {
       this.getBookingApprove();
       this.getProjectName();
       this.getPrincipalName();
+      this.getLeadName();
     });
   }
 
   getBookingPending = () => {
-    this.setState({ isLoaded: !this.state.isLoaded });
+    // this.setState({ isLoaded: !this.state.isLoaded });
     const entity_cd = this.state.entity_cd;
     console.log("en", entity_cd);
     const project_no = this.state.project_no;
@@ -244,6 +246,8 @@ class MyBooking extends Component {
     console.log("email_add_project", email_add_project);
     const principal_name = this.state.dataPrincipalName[0].principle_name;
     console.log("principal_name", principal_name);
+    const lead_name = this.state.dataLeadName[0].group_name;
+    console.log("lead name", lead_name);
     Actions.DetailBooking({
       order_id: data.order_id,
       data: data,
@@ -252,6 +256,7 @@ class MyBooking extends Component {
       project_no: project_no,
       email_add_project: email_add_project,
       principal_name: principal_name,
+      lead_name: lead_name,
     });
   }
 
@@ -390,6 +395,40 @@ class MyBooking extends Component {
       });
   };
 
+  getLeadName = () => {
+    const db_profile = this.state.db_profile;
+    const entity_cd = this.state.entity_cd;
+    const agent_cd = this.state.agent_cd;
+
+    // console.log()
+    console.log("dbbbb", db_profile);
+
+    fetch(
+      urlApi +
+        "c_nup/getLeadName/" +
+        db_profile +
+        "/" +
+        entity_cd +
+        "/" +
+        agent_cd,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        if (!res.Error) {
+          const resData = res.Data;
+
+          this.setState({ dataLeadName: resData });
+          console.log("dataLeadName", resData);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   selectComponent = (activePage) => () => this.setState({ activePage });
 
   _renderComponent = () => {
@@ -507,24 +546,7 @@ class MyBooking extends Component {
                       </View>
                     </View>
                     <View style={{ width: "100%", paddingBottom: 0 }}>
-                      {data.hour_diff > 24 ? (
-                        <Right
-                          style={{ position: "absolute", right: 20, top: 25 }}
-                        >
-                          <Text
-                            style={{
-                              fontFamily: Fonts.type.proximaNovaBold,
-                              alignSelf: "flex-end",
-                              color: Colors.redWine,
-                              marginBottom: 5,
-                              fontSize: 13,
-                              // right: 0
-                            }}
-                          >
-                            Time Out
-                          </Text>
-                        </Right>
-                      ) : data.payment_attachment == null ? (
+                      {data.payment_attachment == null ? (
                         <Right
                           style={{ position: "absolute", right: 20, top: 25 }}
                         >
