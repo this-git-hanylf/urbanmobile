@@ -600,6 +600,7 @@ class FormBooking extends React.Component {
   };
 
   cariNIK(carinik) {
+    this.setState({ loadingnik: true });
     console.log("carinik", carinik);
     if (carinik) {
       let nik_no = carinik.carinik;
@@ -638,14 +639,20 @@ class FormBooking extends React.Component {
                 const resData = res.Data;
                 // this.setState({ dataFromNik: resData });
                 this.cekNIK({ dataFromNik: resData });
+                this.setState({ loadingnik: false });
               } else {
-                this.setState({ isLoaded: this.state.isLoaded }, () => {
-                  const pesan = res.Pesan;
-                  this.alertFillBlank(true, pesan);
-                  // alert(res.Pesan);
-                  console.log(res.Pesan);
-                });
+                this.setState(
+                  { isLoaded: this.state.isLoaded, loadingnik: false },
+                  () => {
+                    const pesan = res.Pesan;
+                    this.alertFillBlank(true, pesan);
+                    // alert(res.Pesan);
+                    console.log(res.Pesan);
+                    // this.setState({ loadingnik: false });
+                  }
+                );
               }
+              this.setState({ loadingnik: false });
               console.log("dataFromNik", res);
             })
             .catch((error) => {
@@ -849,23 +856,39 @@ class FormBooking extends React.Component {
             </View>
           </Modal>
 
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 NIK
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                NIK
+              </Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                     <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                 </View> */}
               <Input
-                // placeholder='Full Name'
+                placeholder="NIK"
                 // autoCapitalize="numeric"
                 keyboardType="numeric"
-                placeholderTextColor={Colors.greyUrban}
+                placeholderTextColor={"#c2c2c2"}
+                // placeholderFontSize={10}
                 value={this.state.nik}
                 onChangeText={(val) => this.setState({ nik: val })}
                 // onChangeText={val => this.getNik({ val })}
@@ -878,17 +901,29 @@ class FormBooking extends React.Component {
               ) : null}
               {/* <Icon name='close-circle' /> */}
             </Item>
-            <Icon
-              style={{
-                color: Colors.greyUrban,
-                bottom: 20,
-                fontSize: 25,
-                position: "absolute",
-                right: 20,
-              }}
-              name="search"
-              onPress={() => this.cariNIK({ carinik: this.state.nik })}
-            />
+            {this.state.loadingnik == true ? (
+              <ActivityIndicator
+                style={{
+                  bottom: 20,
+                  fontSize: 25,
+                  position: "absolute",
+                  right: 20,
+                }}
+              />
+            ) : (
+              <Icon
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 20,
+                  fontSize: 25,
+                  position: "absolute",
+                  right: 20,
+                }}
+                name="search"
+                onPress={() => this.cariNIK({ carinik: this.state.nik })}
+              />
+            )}
+
             {/* <Text
               style={{
                 position: "absolute",
@@ -904,26 +939,39 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>NIK Required</Text>
             ) : null}
           </View>
-          <View style={{ paddingBottom: 15, marginTop: 8 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Text style={styles.overviewTitles}>Full Name</Text>
-                                </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+          <View style={{ paddingBottom: 10, marginTop: 8 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 Full Name
-                {/* <Text>Full Name</Text>
-                <Text>(customer)</Text> */}
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Full Name
+              </Label> */}
               {/* <Label>customer</Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                         <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                     </View> */}
               <Input
-                // placeholder="Full Name"
+                placeholder="Full Name"
                 // editable={true}
                 autoCapitalize="words"
-                placeholderTextColor={Colors.greyUrban}
+                placeholderTextColor={"#c2c2c2"}
                 // placeholderStyle={{ paddingLeft: 20 }}
                 value={this.state.fullname}
                 onChangeText={(val) => this.setState({ fullname: val })}
@@ -957,23 +1005,38 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>Full Name Required</Text>
             ) : null}
           </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                    <Text style={styles.overviewTitles}>Full Name</Text>
-                                </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 Mobile Phone
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Mobile Phone
+              </Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                         <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                         <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                     </View> */}
               <Input
-                // placeholder='Full Name'
+                placeholder="Mobile Phone"
                 // autoCapitalize="numeric"
                 keyboardType="numeric"
-                placeholderTextColor={Colors.greyUrban}
+                placeholderTextColor={"#c2c2c2"}
                 value={this.state.mobilephone}
                 onChangeText={(val) => this.setState({ mobilephone: val })}
                 style={Styles.positionTextInput}
@@ -1002,21 +1065,36 @@ class FormBooking extends React.Component {
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 Email
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Email
+              </Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                     <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                 </View> */}
               <Input
-                // placeholder='Full Name'
+                placeholder="Email"
                 autoCapitalize="words"
-                placeholderTextColor={Colors.greyUrban}
+                placeholderTextColor={"#c2c2c2"}
                 value={this.state.email}
                 onChangeText={(val) => this.setState({ email: val })}
                 style={Styles.positionTextInput}
@@ -1045,21 +1123,36 @@ class FormBooking extends React.Component {
             ) : null}
           </View>
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                                <Text style={styles.overviewTitles}>Full Name</Text>
-                            </View> */}
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 Address
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Address
+              </Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
                                     <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                 </View> */}
               <Input
-                // placeholder='Full Name'
+                placeholder="Address"
                 autoCapitalize="words"
-                placeholderTextColor={Colors.greyUrban}
+                placeholderTextColor={"#c2c2c2"}
                 value={this.state.cor}
                 onChangeText={(val) => this.setState({ cor: val })}
                 style={Styles.positionTextInput}
@@ -1084,7 +1177,7 @@ class FormBooking extends React.Component {
               </Text>
             )}
             {this.state.errorcor ? (
-              <Text style={Styles.text_error}>Corespondence Required</Text>
+              <Text style={Styles.text_error}>Address Required</Text>
             ) : null}
           </View>
           {/* <View style={{ paddingBottom: 15, marginTop: 4 }}>
@@ -1214,14 +1307,35 @@ class FormBooking extends React.Component {
             ) : null}
           </View> */}
           <View style={{ paddingBottom: 15, marginTop: 4 }}>
-            <Item floatingLabel style={Styles.marginround}>
-              <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
                 NPWP
-              </Label>
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                NPWP
+              </Label> */}
 
               <Input
+                placeholder="NPWP"
+                // autoCapitalize="words"
+                placeholderTextColor={"#c2c2c2"}
                 keyboardType="numeric"
-                placeholderTextColor={Colors.greyUrban}
+                // placeholderTextColor={Colors.greyUrban}
                 value={this.state.npwp}
                 onChangeText={(val) => this.setState({ npwp: val })}
                 style={Styles.positionTextInput}

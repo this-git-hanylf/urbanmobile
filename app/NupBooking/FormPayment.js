@@ -104,7 +104,8 @@ class FormPayment extends React.Component {
     const data = {
       fullname: this.props.prevItems.fullname,
       total: this.props.prevItems.total,
-      rekening: "2740001414",
+      // rekening: "2740001414", //maybank
+      rekening: "0064981818",
     };
     console.log("data", data);
 
@@ -403,9 +404,14 @@ class FormPayment extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{ paddingVertical: 10, paddingTop: 60 }}>
+          <View
+            style={{
+              paddingVertical: 10,
+              paddingTop: 60,
+            }}
+          >
             <Image
-              source={require("@Asset/images/icon/Maybank.png")}
+              source={require("@Asset/images/icon/bca-min.png")}
               style={{ alignSelf: "center" }}
             />
           </View>
@@ -423,7 +429,7 @@ class FormPayment extends React.Component {
                 fontSize: 15,
               }}
             >
-              MAYBANK ACCOUNT
+              BCA ACCOUNT
             </Text>
             <Text
               style={{
@@ -473,9 +479,10 @@ class FormPayment extends React.Component {
                 textAlign: "center",
                 fontFamily: Fonts.type.proximaNovaReg,
                 fontSize: 15,
+                width: "100%",
               }}
             >
-              PT. URBAN JAKARTA PROPERTINDO TBK
+              PT URBAN JAKARTA PROPERTINDO
             </Text>
           </View>
 

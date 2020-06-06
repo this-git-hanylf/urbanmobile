@@ -20,20 +20,20 @@ export default {
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#000",
-    marginBottom: 15
+    marginBottom: 15,
   },
   viewRowUnit: {
     flexDirection: "row",
     // borderBottomWidth:1,
     // borderBottomColor:'#000',
-    marginBottom: 1
+    marginBottom: 1,
     // textAlign: 'center'
   },
   viewRowHarga: {
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#000",
-    marginBottom: 5
+    marginBottom: 5,
   },
   viewAddmore: {
     // flexDirection: 'row',
@@ -42,7 +42,7 @@ export default {
     marginBottom: 15,
     // color:
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   viewRowQty: {
     flexDirection: "row",
@@ -51,7 +51,7 @@ export default {
     marginBottom: 15,
     alignSelf: "center",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   textLeft: {
     justifyContent: "flex-start",
@@ -59,7 +59,7 @@ export default {
     paddingBottom: 10,
     fontFamily: Fonts.type.proximaNovaBold,
     letterSpacing: 2,
-    color: Colors.darkblueUrban
+    color: Colors.darkblueUrban,
   },
   textLeftQty: {
     justifyContent: "flex-start",
@@ -69,7 +69,7 @@ export default {
     letterSpacing: 2,
     color: Colors.darkblueUrban,
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   textLeftAmt: {
     justifyContent: "flex-start",
@@ -79,11 +79,11 @@ export default {
     letterSpacing: 2,
     fontSize: 13,
     color: Colors.darkblueUrban,
-    margin: 0
+    margin: 0,
   },
   textRight: {
     justifyContent: "flex-end",
-    fontSize: 14
+    fontSize: 14,
   },
   btnMedium: {
     backgroundColor: Colors.goldUrban,
@@ -98,31 +98,31 @@ export default {
     // shadowColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5
+    borderRadius: 5,
   },
   icon_error: {
     color: Colors.redUrban,
     top: 15,
     position: "absolute",
     right: -35,
-    fontSize: 16
+    fontSize: 16,
   },
   text_error: {
     position: "absolute",
     bottom: 3,
     left: 15,
     color: Colors.redUrban,
-    fontSize: 12
+    fontSize: 12,
   },
   marginround: {
-    height: 45,
+    height: 40,
     marginBottom: 4,
     marginLeft: 12,
     marginRight: 12,
     // backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: Colors.greyUrban,
-    textAlignVertical: "bottom"
+    textAlignVertical: "bottom",
   },
   positionTextInput: {
     fontSize: 15,
@@ -130,7 +130,7 @@ export default {
     // paddingBottom: 3,
     // backgroundColor: '#fff'
     color: Colors.greyUrban,
-    fontFamily: Fonts.type.proximaNovaReg
+    fontFamily: Fonts.type.proximaNovaReg,
   },
   inputAttach: {
     height: 40,
@@ -140,7 +140,7 @@ export default {
     marginRight: 12,
     // backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderColor: Colors.greyUrban
+    borderColor: Colors.greyUrban,
     // textAlignVertical: 'bottom',
   },
   textAttach: {
@@ -148,7 +148,7 @@ export default {
     fontFamily: Fonts.type.proximaNovaBoldWeb,
     position: "absolute",
     left: 10,
-    fontSize: 13
+    fontSize: 13,
   },
   inputAttachLarge: {
     height: "auto",
@@ -160,7 +160,7 @@ export default {
     // backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderColor: Colors.greyUrban,
-    textAlignVertical: "bottom"
+    textAlignVertical: "bottom",
   },
   containImageTop_no: {
     // backgroundColor: "#fff",
@@ -171,6 +171,6 @@ export default {
     justifyContent: "space-between",
     alignItems: "center",
     alignSelf: "center",
-    elevation: 3
-  }
+    elevation: 3,
+  },
 };

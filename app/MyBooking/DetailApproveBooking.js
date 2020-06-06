@@ -518,12 +518,17 @@ class DetailApproveBooking extends Component {
                 paddingVertical: 20,
                 paddingHorizontal: 20,
                 // paddingBottom: 20
+                // paddingLeft: 10,
+                // width: "100%",
+                // alignContent: "center",
+                // alignSelf: "center",
               }}
             >
               <Image
                 style={{
                   width: "100%",
                   height: "100%",
+                  resizeMode: "contain",
                   alignContent: "center",
                   alignSelf: "center",
                 }}
