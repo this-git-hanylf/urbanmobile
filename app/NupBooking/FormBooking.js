@@ -1064,7 +1064,7 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>Mobile Phone Required</Text>
             ) : null}
           </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -1122,7 +1122,7 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>Email Required</Text>
             ) : null}
           </View>
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -1306,7 +1306,7 @@ class FormBooking extends React.Component {
               <Text style={Styles.text_error}>Bank Account Name Required</Text>
             ) : null}
           </View> */}
-          <View style={{ paddingBottom: 15, marginTop: 4 }}>
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
             <View
               style={{
                 flexDirection: "row",
