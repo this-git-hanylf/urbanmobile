@@ -69,6 +69,7 @@ export default class Notif extends React.Component {
       notiff: "",
       dataTower: [],
       getPro: [],
+      cntNotif: "",
       // isRead: this.props.item.IsRead,
       // isRead: 1,
       // notifID: "",
@@ -155,7 +156,7 @@ export default class Notif extends React.Component {
             project_no: resData.project_no,
             db_profile: resData.db_profile,
           };
-          Actions.MyBooking({ items: item });
+          // Actions.MyBooking({ items: item });
         }
       })
       .catch((error) => {
@@ -203,20 +204,12 @@ export default class Notif extends React.Component {
             this.getDataNotif();
             this.getCountNotif();
             this.getProject({ entity_cd: entity_cd, project_no: project_no });
-            // Actions.MyBooking();
-            // console.log("actoin mybooking");
-            // const tes =
-            // Actions.refresh({ "tabbar", tes: _storeData("@CountNotif", data) });
-            // this.setState({ backgroundColor: "#333" });
           });
           this.setState({ isLoaded: !this.state.isLoaded });
         } else {
           console.log(res.Error);
           this.setState({ isLoaded: this.state.isLoaded }, () => {
             alert(res.Pesan);
-            // const pesan_form = res.Pesan;
-            // this.alertForm(true, pesan_form);
-            // console.log('url',this.state.pickUrlKtp.uri)
           });
         }
 
@@ -252,45 +245,31 @@ export default class Notif extends React.Component {
           });
 
           if (data) {
-            // const tesd = data[0].jumlahnotif;
-            // console.log("tesd", tesd);
             this.setState({ cntNotif: data });
-            // _storeData("@CountNotif", data[0].jumlahnotif);
+
             console.log("data update", this.state.cntNotif);
-            // Actions.popTo("Notif", data);
-            // const lempardata = this.state.cntNotif;
-            // const klikTrue = true;
-            // _navigate("tabbar", { klik: klikTrue, lempardata: lempardata });
-            // Actions.refresh(
-            //   "tabbar",
-            //   // console.log("this.state.cntNotif", this.state.cntNotif),
-            //   // _storeData("@CountNotif", this.state.cntNotif)
-            //   { klik: klikTrue }
-            // );
-            Actions.refresh(
-              "tabbar",
-              _storeData("@CountNotif", this.state.cntNotif)
-            );
-
-            // console.log("map datatower");
-            // const
-            // Actions.project({ goTo: "MyBooking" });
-            // Actions.Router();
-            // Actions.reset("tabbar");
-
-            // Actions.currentScene == "notif";
-            // _storeData("@CountNotif", data);
           }
-          // this.setState({ cntNotif: data });
-          _storeData("@CountNotif", this.state.cntNotif);
-          // console.log("data update", data[0].jumlahnotif);
-          // this.props.datasudahberubah(data[0].jumlahnotif);
+
+          // _storeData("@CountNotif", this.state.cntNotif);
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  async back() {
+    // this.getCountNotif();
+    const cntno = this.state.cntNotif;
+    console.log("cntno", cntno);
+    // const hitungnotif = await _getData("@CountNotif");
+    Actions.pop();
+    setTimeout(() => {
+      Actions.refresh("tabbar", { dataCount: cntno });
+    }, 0);
+    // const tes123 = "abc";
+    // Actions.refresh("tabbar", tes123);
+  }
 
   render() {
     if (this.state.isLogin) {
@@ -306,7 +285,7 @@ export default class Notif extends React.Component {
               <Button
                 transparent
                 style={Styles.actionBarBtn}
-                onPress={Actions.pop}
+                onPress={() => this.back()}
               >
                 <Icon
                   active
