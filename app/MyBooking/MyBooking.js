@@ -89,8 +89,10 @@ class MyBooking extends Component {
   async componentDidMount() {
     isMount = true;
     const items = this.props.items;
+    // const enti = this.props.entity_cd;
     // _storeData("@dataItems", items);
     console.log("itemsnih", items);
+    // console.log("entiy", enti);
 
     const data = {
       hd: new Headers({

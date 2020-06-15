@@ -88,6 +88,7 @@ class FormBooking extends React.Component {
       capt: false,
       filektp__: "",
       filektp_testing: "",
+      darinik: false,
       //data data dari nik
       //   full_name: ""
     };
@@ -264,6 +265,7 @@ class FormBooking extends React.Component {
     let filenpwp = "";
     let tes_filektp = "";
     let tes_filenpwp = "";
+    console.log("dari nik", this.state.darinik);
     // const filektp_testing = "";
     // RNFetchBlob.wrap(
     //     this.state.pictUrlKtp.uri.replace("file://", "")
@@ -282,52 +284,23 @@ class FormBooking extends React.Component {
       console.log("pic nul", this.state.pictUrlKtp);
       // this.state.replaceFoto.uri.replace("file://", "")
     } else {
-      // alert('not null')
       filektp = RNFetchBlob.wrap(
         this.state.pictUrlKtp.uri.replace("file://", "")
       );
-      // console.log("filektp_awal", filektp_awal);
-
-      // console.log("this.state.pictUrlKtp.uri", this.state.pictUrlKtp.uri);
-      // ImageResizer.createResizedImage(
-      //   this.state.pictUrlKtp.uri,
-      //   100,
-      //   80,
-      //   "PNG",
-      //   100
-      // )
-      //   .then(({ uri }) => {
-      //     console.log("urii", uri);
-      //     // let tes_filektp = "";
-
-      //     tes_filektp = RNFetchBlob.wrap(uri.replace("file://", ""));
-      //     console.log("tes_filektp", tes_filektp);
-      //     // let filektp_testing = tes_filektp;
-      //     this.setState({ filektp_testing: tes_filektp });
-      //     console.log("tes nihhhhh", this.state.filektp_testing); //ini muncul di console, dan ada isinya
-      //     // let filektp = this.state.filektp__;
-      //     // this.setState({
-      //     //   pictUrlKtp: { uri: uri },
-      //     // });
-      //     // console.log("size", uri);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     return Alert.alert(
-      //       "Unable to resize the photo",
-      //       "Check the console for full the error message"
-      //     );
-      //   });
-      // this.resize();
-      // console.log("tes lagi", tes_filektp);
-      // console.log("tes yoi", this.state.filektp__);
-      // console.log("tes yoi", this.state.filektp_testing); //ini kosong
-      // const tes_halo = filektp_testing;
-      // console.log("tes hak", tes_halo);
-      // filektp = this.state.filektp_testing; //ini gak kebaca, undefined
-
-      // console.log("filektp", filektp);
+      // this.state.pictUrlKtp.uri.replace("file://", "");
+      // if (this.state.darinik == true) {
+      //   // filektp = this.state.pictUrlKtp.uri;
+      //   filektp = RNFetchBlob.wrap(
+      //     this.state.pictUrlKtp.uri.replace("http://", "")
+      //   );
+      //   console.log("filektp dari nik", filektp);
+      // } else {
+      //   filektp = RNFetchBlob.wrap(
+      //     this.state.pictUrlKtp.uri.replace("file://", "")
+      //   );
+      // }
       console.log("pic not nul", this.state.pictUrlKtp);
+
       // this.setState({ isLoaded: true });
       // this.state.pictUrlKtp.uri.replace("file://", "")
     }
@@ -335,44 +308,21 @@ class FormBooking extends React.Component {
     if (this.state.pictUrlNPWP == 0) {
       console.log("replace", this.state.replaceFoto);
       filenpwp = "./img/noimage.png";
-      console.log("pic nul", this.state.pictUrlKtp);
+      console.log("pic nul", this.state.pictUrlNPWP);
     } else {
       filenpwp = RNFetchBlob.wrap(
         this.state.pictUrlNPWP.uri.replace("file://", "")
       );
-
-      // ImageResizer.createResizedImage(
-      //   this.state.pictUrlKtp.uri,
-      //   100,
-      //   80,
-      //   "PNG",
-      //   100
-      // )
-      //   .then(({ uri }) => {
-      //     console.log("urii", uri);
-      //     tes_filenpwp = RNFetchBlob.wrap(
-      //       this.state.pictUrlNPWP.uri.replace("file://", "")
-      //     );
-      //     console.log("tes_filenpwp", tes_filenpwp);
-
-      //     // this.setState({
-      //     //   pictUrlKtp: { uri: uri },
-      //     // });
-      //     // console.log("size", uri);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     return Alert.alert(
-      //       "Unable to resize the photo",
-      //       "Check the console for full the error message"
-      //     );
-      //   });
-      // this.resize();
-      // filenpwp = tes_filenpwp;
-      // console.log("filektp", filektp);
-      // console.log("pic not nul", this.state.pictUrlKtp);
-      // this.setState({ isLoaded: true });
-      // this.state.pictUrlKtp.uri.replace("file://", "")
+      // this.state.pictUrlNPWP.uri.replace("file://", "");
+      // if (this.state.darinik == true) {
+      //   filenpwp = RNFetchBlob.wrap(
+      //     this.state.pictUrlNPWP.uri.replace("http://", "")
+      //   );
+      // } else {
+      //   filenpwp = RNFetchBlob.wrap(
+      //     this.state.pictUrlNPWP.uri.replace("file://", "")
+      //   );
+      // }
 
       console.log("pic not nul", this.state.pictUrlNPWP);
     }
@@ -640,9 +590,14 @@ class FormBooking extends React.Component {
                 // this.setState({ dataFromNik: resData });
                 this.cekNIK({ dataFromNik: resData });
                 this.setState({ loadingnik: false });
+                this.setState({ darinik: true });
               } else {
                 this.setState(
-                  { isLoaded: this.state.isLoaded, loadingnik: false },
+                  {
+                    isLoaded: this.state.isLoaded,
+                    loadingnik: false,
+                    darinik: true,
+                  },
                   () => {
                     const pesan = res.Pesan;
                     this.alertFillBlank(true, pesan);
@@ -689,8 +644,8 @@ class FormBooking extends React.Component {
         account_name: dataFromNik.dataFromNik[0].account_name,
         account_no: dataFromNik.dataFromNik[0].account_no,
         cor: dataFromNik.dataFromNik[0].address1,
-        pictUrlKtp: { uri: url_ktp },
-        pictUrlNPWP: { uri: url_npwp },
+        // pictUrlKtp: { uri: url_ktp },
+        // pictUrlNPWP: { uri: url_npwp },
       });
       // fullname = dataFromNik.dataFromNik[0].full_name;
       // console.log("fullname", fullname);

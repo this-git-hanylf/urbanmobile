@@ -8,6 +8,9 @@ import {
   ActionConst,
 } from "react-native-router-flux";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Container, Content, Badge, View, Text } from "native-base";
+
+// import Routes from "Router";
 
 import Home from "./Home/Home";
 import Login from "./Intro/Intro";
@@ -24,7 +27,11 @@ import pagePDF from "./Signup/pagePDF";
 import Reset from "./ResetPass/Reset";
 import Search from "./Find/Search";
 import Calcu from "./Calcu/Calcu";
+//notif
 import Notif from "./Notif/Notif";
+import ScreenNotif from "./Notif/ScreenNotif";
+// import ListNotification from "./Notif/ListNotification";
+// import ListView from "./Notif/ListView";
 import Akun from "./Akun/Akun";
 import AkunHome from "./Akun/AkunHome";
 import PageTerm from "./Akun/PageTerm";
@@ -174,6 +181,82 @@ const TabIcon = ({ focused, iconName }) => {
   );
 };
 
+const TabIconBadge = ({ focused, iconName, tes, halo, cntNo }) => {
+  // state = '';
+  // super();
+  // var get_name_string = async function () {
+  //   var name_string = await _getData("@CountNotif");
+
+  //   return name_string;
+  //   // this.tes({ cntr: cnt });
+  //   // console.log("jmlll tabiconbadge", cnt);
+
+  //   // the rest of your renderItem function should be in this block
+  // };
+
+  // get_name_string("some_key").then((name) => {
+  //   console.log("get", name);
+  //   // cnt = "";
+  //   var cnt = name[0].jumlahnotif;
+
+  //   // var name_array = name_string.split(",");
+  //   // console.log("namear", name_array);
+  // });
+
+  // get = get_name_string(name);
+  // console.log("uhu", get_name_string("some_key"));
+  var cnt = cntNo;
+  console.log("cnt", cnt);
+  var color = focused ? "#AB9E84" : "#b7b7b7";
+  var tintColor = focused ? "#AB9E84" : "#b7b7b7";
+
+  return (
+    <View style={{ flexDirection: "row" }}>
+      <Icon
+        name={iconName}
+        color={color}
+        size={24}
+        style={{ marginTop: 5, color: tintColor, flex: -1 }}
+        textStyle={color}
+      />
+      <Badge
+        style={{
+          backgroundColor: "red",
+          height: 22,
+          position: "absolute",
+          top: -2,
+          right: -18,
+          // flex: 2,
+        }}
+      >
+        {cnt == 0 || cnt == "undefined" || cnt < 0 ? (
+          <Text
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            0
+          </Text>
+        ) : (
+          <Text
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            {cnt}
+          </Text>
+        )}
+      </Badge>
+    </View>
+  );
+};
+
 class Routes extends Component {
   constructor() {
     super();
@@ -181,22 +264,90 @@ class Routes extends Component {
     this.state = {
       hasLogin: false,
       isLoaded: false,
+      halo: [],
+      // tes: this.props.lempardata,
+      // cntNotif: "",
     };
   }
 
   async componentDidMount() {
     try {
+      // const tes = this.props.data;
+      // console.log("tes dari notif ke rout", tes);
       const isLogin = await _getData("@isLogin");
       console.log("isLogin: ", isLogin);
       if (isLogin) {
         this.setState({ hasLogin: true, isLoaded: true });
+        // const jumlahnotif = await _getData("@CountNotif");
+
+        // let cntNotif = "";
+        // let cn
+        const jumlahnotif = await _getData("@CountNotif");
+
+        console.log("jumlah notif did mountt", jumlahnotif);
+        if (jumlahnotif) {
+          // cntNotif = jumlahnotif[0].jumlahnotif;
+          this.setState({ cntNotif: jumlahnotif[0].jumlahnotif });
+          // TabIconBadge({ cntNotif: jumlahnotif[0].jumlahnotif });
+        }
+
+        console.log("state cntnotif", this.state.cntNotif);
+        // const data = {};
+        // this.setState(data, () => {
+        //   this.tes();
+        // });
       } else {
         this.setState({ hasLogin: null, isLoaded: true });
+        const jumlahnotif = await _getData("@CountNotif");
+
+        console.log("jumlah notif did mountt", jumlahnotif);
+        if (jumlahnotif) {
+          // cntNotif = jumlahnotif[0].jumlahnotif;
+          this.setState({ cntNotif: jumlahnotif[0].jumlahnotif });
+          // TabIconBadge({ cntNotif: jumlahnotif[0].jumlahnotif });
+        }
+
+        console.log("state cntnotif", this.state.cntNotif);
       }
     } catch (err) {
       console.log("error: ", err);
     }
   }
+
+  // tes() {
+  //   try {
+  //     var get_name_string = async function () {
+  //       var name_string = await _getData("@CountNotif");
+  //       // console.log("tes", tes);
+
+  //       return name_string;
+  //       //  this.tes({ cntr: cnt });
+  //       //   // console.log("jmlll tabiconbadge", cnt);
+
+  //       //   // the rest of your renderItem function should be in this block
+  //     };
+
+  //     get_name_string("some_key").then((name) => {
+  //       console.log("get", name);
+  //       //   // cnt = "";
+  //       // cnt = name[0].jumlahnotif;
+  //       // let data = [];
+  //       const data = name;
+  //       this.state({ halo: data });
+  //       // this.setState({ halo: cnt });
+
+  //       //   // var name_array = name_string.split(",");
+  //       //   // console.log("namear", name_array);
+  //     });
+  //     console.log("this halo", this.state.halo);
+  //   } catch (err) {
+  //     console.log("error: ", err);
+  //   }
+
+  //   // cnt = cnt;
+  //   // const jumlahnotif = await _getData("@CountNotif");
+  //   // console.log("jumlah notif did mountt", jumlahnotif);
+  // }
 
   render() {
     if (!this.state.isLoaded) {
@@ -264,15 +415,22 @@ class Routes extends Component {
               />
               <Scene
                 key="notif"
+                // key="IndexNotif"
                 // component={SkipLoginBlank2}
                 // key="notif"
                 component={Notif}
+                // component={ScreenNotif}
                 navTransparent={true}
                 hideNavBar={true}
                 title=""
                 tabBarLabel="Notification"
                 iconName="bell"
-                icon={TabIcon}
+                icon={TabIconBadge}
+                // icon={TabIcon}
+                cntNo={this.state.cntNotif}
+                // kliktru={this.props.klik}
+                // tes={this.tes}
+                // halo={this.state.halo}
               />
               <Scene
                 key="akun"

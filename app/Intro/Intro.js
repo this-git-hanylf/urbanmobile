@@ -150,6 +150,7 @@ export default class Intro extends React.Component {
         if (!res.Error) {
           if (res.Data.isResetPass != 1) {
             this.getTower(res);
+            this.getCountNotif(res);
             this.setState({ isLoaded: !this.state.isLoaded });
             // this.skipLoginBlank();
           } else {
@@ -264,6 +265,38 @@ export default class Intro extends React.Component {
       });
   };
 
+  getCountNotif = (res) => {
+    let result = res.Data;
+    const email = result.user;
+    console.log("email buat count", email);
+    fetch(urlApi + "c_notification/getNotificationBadge/IFCAMOBILE/" + email, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res notif di intro", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          let data = [];
+          // console.log("resdata", resData);
+          resData.map((item) => {
+            let items = {
+              // ...item,
+              jumlahnotif: item.cnt,
+            };
+            data.push(items);
+          });
+
+          result["CountNotif"] = data;
+          console.log("count notif di intro", data);
+          this.signIn(result);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   signIn = async (res) => {
     try {
       _storeData("@DashMenu", res.DashMenu);
@@ -280,6 +313,7 @@ export default class Intro extends React.Component {
       _storeData("@rowID", res.rowID);
       _storeData("@RefreshProfile", false);
       _storeData("@UserProject", res.UserProject);
+      _storeData("@CountNotif", res.CountNotif);
     } catch (err) {
       console.log("error:", err);
     } finally {

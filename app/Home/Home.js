@@ -69,6 +69,7 @@ export default class Home extends Component {
       dataPromo: [],
       dataNews: [],
       tes: "",
+      klikt: true,
 
       isCorLoaded: false,
     };
@@ -83,12 +84,20 @@ export default class Home extends Component {
 
   async componentDidMount() {
     console.log("Data Project", await _getData("@UserProject"));
+    console.log("Data Notif", await _getData("@CountNotif"));
     const data = {
       email: await _getData("@User"),
       name: await _getData("@Name"),
       dataTower: await _getData("@UserProject"),
       isCorLoaded: true,
     };
+    // const CountnotifdiHome = await _getData("@CountNotif");
+    // console.log("count notif di home", CountnotifdiHome);
+    // Actions.refresh("tabbar", {
+    //   klik: _storeData("@CountNotif", CountnotifdiHome),
+    // });
+    // _storeData("@CountNotif", CountnotifdiHome);
+    // _storeData("@CountNotif", CountnotifdiHome);
 
     this.setState(data, () => {
       this.getPromo();
