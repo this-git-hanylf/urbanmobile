@@ -39,8 +39,83 @@ import { urlApi } from "@Config/services";
 // import FBLoginButton from "../components/LoginFB";
 import GoogleLoginButton from "../components/LoginGoogle";
 import { Colors, Fonts } from "../Themes";
+import { Overlay } from "react-native-elements";
 
 let isMount = false;
+
+import firebase from "react-native-firebase";
+import AsyncStorage from "@react-native-community/async-storage";
+
+var PushNotification = require("react-native-push-notification");
+
+import { Linking } from "react-native";
+import VersionCheck from "react-native-version-check";
+
+// VersionCheck.getCountry().then((country) => console.log(country)); // KR
+// console.log("package name", VersionCheck.getPackageName()); // com.reactnative.app
+// console.log("build number", VersionCheck.getCurrentBuildNumber()); // 10
+// console.log("current version", VersionCheck.getCurrentVersion()); // 0.1.1
+
+// VersionCheck.getLatestVersion().then((latestVersion) => {
+//   console.log("lates version", latestVersion); // 0.1.2
+// });
+
+// VersionCheck.getLatestVersion({
+//   provider: "appStore", // for iOS
+// }).then((latestVersion) => {
+//   console.log(latestVersion); // 0.1.2
+// });
+
+// VersionCheck.getLatestVersion({
+//   provider: "playStore", // for Android
+// }).then((latestVersion) => {
+//   console.log("lates version playstore", latestVersion); // 0.1.2
+// });
+
+// VersionCheck.getLatestVersion() // Automatically choose profer provider using `Platform.select` by device platform.
+//   .then((latestVersion) => {
+//     console.log(latestVersion); // 0.1.2
+//   });
+
+// VersionCheck.getLatestVersion({
+//   forceUpdate: true,
+//   provider: () =>
+//     fetch("http://your.own/api")
+//       .then((r) => r.json())
+//       .then(({ version }) => version), // You can get latest version from your own api.
+// }).then((latestVersion) => {
+//   console.log(latestVersion);
+// });
+
+// VersionCheck.needUpdate().then(async (res) => {
+//   console.log(res.isNeeded); // true
+//   console.log("store url", res.storeUrl);
+//   if (res.isNeeded) {
+//     Linking.openURL(res.storeUrl); // open store if update is needed.
+//   }
+// });
+
+// VersionCheck.needUpdate({
+//   depth: 2,
+// }).then((res) => {
+//   console.log(res.isNeeded);
+//   // false; because first two fields of current and the latest versions are the same as "0.1".
+// });
+
+// VersionCheck.needUpdate({
+//   currentVersion: "1.0",
+//   latestVersion: "2.0",
+// }).then((res) => {
+//   console.log(res.isNeeded); // true
+// });
+
+// VersionCheck.needUpdate({
+//   depth: 1,
+//   currentVersion: "2.1",
+//   latestVersion: "2.0",
+// }).then((res) => {
+//   console.log(res.isNeeded); // false
+// });
 
 //import AppIntroSlider to use it
 export default class Intro extends React.Component {
@@ -58,12 +133,25 @@ export default class Intro extends React.Component {
       GoogleLogin: false,
       Alert_Visibility: false,
       pesan: "",
+      Alert_CheckVersion: false,
+      pesan_ver: "",
+      Alert_CheckOSVersion: false,
+      pesan_OSver: "",
+      msg: "",
+      token: "",
+      current_version: "1.0.37", // harus di isi samain kayak di package.json
+      currentVersion: null,
+      latestVersion: null,
+      isNeeded: false,
+      storeUrl: "",
     };
   }
   async componentWillMount() {
     isMount = true;
 
     this.requestStorage();
+    this.tes();
+    // this.getVersion();
   }
 
   requestStorage = async () => {
@@ -88,6 +176,54 @@ export default class Intro extends React.Component {
   async componentDidMount() {
     const isIntro = await _getData("@isIntro");
     this.setState({ showRealApp: isIntro });
+
+    //cek versi app
+    VersionCheck.getLatestVersion() // Automatically choose profer provider using `Platform.select` by device platform.
+      .then((latestVersion) => {
+        this.setState({ latestVersion: latestVersion });
+        console.log(latestVersion); // 0.1.2
+      });
+    // dan cek update app
+    VersionCheck.needUpdate({
+      latestVersion: this.state.latestVersion,
+    }).then((res) => {
+      this.setState(res);
+      console.log("res need updaate", res);
+      console.log("res store url", res.storeUrl);
+      if (this.state.isNeeded == true) {
+        this.setState({ storeUrl: res.storeUrl });
+        const pesan_ver = "Updates ready to install";
+        const msg = "Some apps could not be updated automatically.";
+        this.alertCheckVersion(true, pesan_ver, msg);
+      }
+    });
+    //tutup cek versi app
+
+    //cek versi device / android version
+    let systemVersion = DeviceInfo.getSystemVersion();
+    console.log("systemVersion", systemVersion);
+    if (systemVersion < "8") {
+      // alert("This Available Version Android 8 or Later");
+      const pesan_OSver = "Information";
+      const msg_os = "This Available Version Android 8 or Later";
+      this.alertCheckOSVersion(true, pesan_OSver, msg_os);
+    }
+  }
+
+  alertCheckVersion(visible, pesan_ver, msg) {
+    this.setState({
+      Alert_CheckVersion: visible,
+      pesan_ver: pesan_ver,
+      msg: msg,
+    });
+  }
+
+  alertCheckOSVersion(visible, pesan_OSver, msg_os) {
+    this.setState({
+      Alert_CheckOSVersion: visible,
+      pesan_OSver: pesan_OSver,
+      msg_os: msg_os,
+    });
   }
 
   componentWillUnmount() {
@@ -115,11 +251,13 @@ export default class Intro extends React.Component {
     const mac = await DeviceInfo.getMACAddress().then((mac) => {
       return mac;
     });
+    console.log("token_fire", this.state.token_fire);
     const formData = {
       email: this.state.email,
       password: this.state.password,
       token: "",
-      token_firebase: "",
+      // token_firebase: "",
+      token_firebase: this.state.token_fire, //nottif
       device: Platform.OS,
       mac: mac,
     };
@@ -133,7 +271,131 @@ export default class Intro extends React.Component {
     }
   };
 
+  getVersion() {
+    fetch(urlApi + "c_auth/getVersion/IFCAMOBILE/", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          console.log("res version", resData);
+          const db_version = resData[0].version;
+          const link_update = resData[0].link_update;
+          this.setState({ db_version: db_version, link_update: link_update });
+          if (this.state.current_version != db_version) {
+            alert("you must update");
+          } else {
+            console.log("you are updated");
+          }
+          // let data = [];
+          // resData.map((item) => {
+          //   let items = {
+          //     ...item,
+          //     illustration: item.picture_url,
+          //     title: item.project_descs,
+          //     subtitle: item.db_profile + item.project_no,
+          //   };
+          //   data.push(items);
+          // });
+
+          // result["UserProject"] = data;
+          // this.signIn(result);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  tes() {
+    const messaging = firebase.messaging();
+
+    messaging
+      .hasPermission()
+      .then((enabled) => {
+        if (enabled) {
+          messaging
+            .getToken()
+            .then((token) => {
+              console.log(token);
+              this.setState({
+                token_fire: token,
+              });
+            })
+            .catch((error) => {
+              /* handle error */
+            });
+        } else {
+          messaging
+            .requestPermission()
+            .then(() => {
+              /* got permission */
+            })
+            .catch((error) => {
+              /* handle error */
+            });
+        }
+      })
+      .catch((error) => {
+        /* handle error */
+      });
+
+    firebase.notifications().onNotification((notification) => {
+      const { title, body } = notification;
+      PushNotification.localNotification({
+        title: title,
+        message: body, // (required)
+      });
+    });
+
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+        // this.setState({
+        //   token_fire: token,
+        // });
+      },
+
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function (notification) {
+        console.log("NOTIFICATION:", notification);
+
+        // process the notification
+
+        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+        //notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+
+      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+      // senderID: '945884059945',
+      // popInitialNotification: true,
+      // requestPermissions: true,
+
+      // IOS ONLY (optional): default: all - Permissions to register.
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      // Should the initial notification be popped automatically
+      // default: true
+      popInitialNotification: true,
+
+      /**
+       * (optional) default: true
+       * - Specified if permissions (ios) and token (android and ios) will requested or not,
+       * - if not, you must call PushNotificationsHandler.requestPermissions() later
+       */
+      requestPermissions: true,
+    });
+  }
+
   doLogin(value) {
+    console.log("formdata ada tokennya", value);
     this.setState({ isLoaded: !this.state.isLoaded });
     data = JSON.stringify(value);
 
@@ -434,7 +696,7 @@ export default class Intro extends React.Component {
                   style={{
                     backgroundColor: "white",
                     width: "70%",
-                    height: "20%",
+                    height: "30%",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
@@ -465,6 +727,208 @@ export default class Intro extends React.Component {
                       // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/* alert check version */}
+            <Modal
+              visible={this.state.Alert_CheckVersion}
+              transparent={true}
+              animationType={"slide"}
+              // style={{ width: 100 }}
+              onRequestClose={() => {
+                this.alertCheckVersion(
+                  !this.state.Alert_CheckVersion,
+                  pesan_ver
+                );
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "75%",
+                    height: "25%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 15,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan_ver}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.msg}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        Linking.openURL(this.state.storeUrl);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Update</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "space-around",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        // Actions.Login();
+                        this.alertCheckVersion(!this.state.Alert_CheckVersion);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Later</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+            {/* alert check os version */}
+            <Modal
+              visible={this.state.Alert_CheckOSVersion}
+              transparent={true}
+              animationType={"slide"}
+              // style={{ width: 100 }}
+              onRequestClose={() => {
+                this.alertCheckOSVersion(
+                  !this.state.Alert_CheckOSVersion,
+                  pesan_OSver
+                );
+              }}
+              // activeOpacity={1}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "75%",
+                    height: "25%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 15,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan_OSver}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.msg_os}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around",
+                    }}
+                  >
+                    {/* <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        Linking.openURL(this.state.storeUrl);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Update</Text>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "space-around",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        // Actions.Login();
+                        this.alertCheckOSVersion(
+                          !this.state.Alert_CheckOSVersion
+                        );
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Ok</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -546,7 +1010,6 @@ export default class Intro extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-
             {/* <Text
                             style={styles.forgotPassword}
                         >
@@ -605,6 +1068,28 @@ export default class Intro extends React.Component {
     }
   }
 }
+
+const RemotePushController = () => {
+  useEffect(() => {
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+        // this.setState({ token_fire: token });
+      },
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function (notification) {
+        console.log("REMOTE NOTIFICATION ==>", notification);
+        // process the notification here
+      },
+      // Android only: GCM or FCM Sender ID
+      senderID: "945884059945",
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+  }, []);
+  return null;
+};
 
 const slides = [
   {

@@ -2,4 +2,5 @@
     <string name="app_name">Urban Jakarta</string>
     <string name="facebook_app_id">2421637338051404</string>
     <string name="fb_login_protocol_scheme">fb2421637338051404</string>
+    <color name="white">#FFF</color>
 </resources>

@@ -10,6 +10,7 @@ import {
   Image,
   ActivityIndicator,
   FlatList,
+  Alert,
 } from "react-native";
 import {
   Container,
@@ -44,7 +45,7 @@ import Carousel, {
 import { sliderWidth, itemWidth } from "./styles/SliderEntry";
 import SliderEntry from "../components/SlideEntry";
 import styles, { colors } from "./styles/index";
-import { Fonts } from "../Themes/";
+import { Fonts } from "../Themes";
 import { ENTRIES1, ENTRIES2 } from "./static/entries";
 import { scrollInterpolators, animatedStyles } from "./utils/animations";
 import CardSlide from "../components/CardSlide";
@@ -57,6 +58,33 @@ const IS_ANDROID = Platform.OS === "android";
 const SLIDER_1_FIRST_ITEM = 0;
 import SIMILAR from "../Property/Similar";
 import ImageResizeMode from "react-native/Libraries/Image/ImageResizeMode";
+import firebase from "react-native-firebase";
+import AsyncStorage from "@react-native-community/async-storage";
+import Siren from "react-native-siren";
+var PushNotification = require("react-native-push-notification");
+
+const versionSpecificRules = [
+  {
+    localVersion: "3.1.1",
+    forceUpgrade: true,
+    title: "Update your app now",
+    message:
+      "This version contains a bug that might corrupt your data. You must update to be able to use our app.",
+  },
+];
+const defaultOptions = {
+  title: "Urban Jakarta has a new update!",
+};
+Siren.promptUser(defaultOptions, versionSpecificRules);
+
+// or
+
+Siren.performCheck().then(({ updateIsAvailable }) => {
+  if (updateIsAvailable) {
+    showCustomUpdateModal();
+  }
+  console.log("siren");
+});
 
 export default class Home extends Component {
   constructor(props) {
@@ -72,9 +100,16 @@ export default class Home extends Component {
       klikt: true,
 
       isCorLoaded: false,
+      token: "",
     };
   }
-
+  onPress = () => {
+    PushNotification.localNotification({
+      /* iOS and Android properties */
+      title: "My Notification Title", // (optional)
+      message: "My Notification Message", // (required)
+    });
+  };
   componentWillMount() {
     this.startHeaderHeight = 80;
     if (Platform.OS == "android") {
@@ -102,8 +137,97 @@ export default class Home extends Component {
     this.setState(data, () => {
       this.getPromo();
       this.getNews();
+      // this.checkPermission();
+      // this.createNotificationListeners();
     });
   }
+
+  // async checkPermission() {
+  //   const enabled = await firebase.messaging().hasPermission();
+  //   console.log("checkpermision", await firebase.messaging().hasPermission());
+  //   if (enabled) {
+  //     this.getToken();
+  //   } else {
+  //     // this.requestPermission();
+  //     console.log("else");
+  //   }
+  // }
+
+  // async getToken() {
+  //   let fcmToken = await firebase.messaging().getToken();
+  //   console.log("fcm token kalo null", fcmToken);
+  //   // let fcmToken = await AsyncStorage.getItem("fcmToken");
+  //   // console.log("fcmToken", await AsyncStorage.getItem("fcmToken"));
+  //   // if (fcmToken == null || fcmToken == 0) {
+  //   //   fcmToken = await firebase.messaging().getToken();
+  //   //   console.log("fcm token kalo null", await firebase.messaging().getToken());
+  //   //   if (fcmToken) {
+  //   //     // user has a device token
+  //   //     await AsyncStorage.setItem("token", fcmToken);
+  //   //     console.log("fcmToken", fcmToken);
+  //   //     // this.setState({
+  //   //     //   token: fcmToken,
+  //   //     // });
+  //   //   }
+  //   // }
+  // }
+
+  // async requestPermission() {
+  //   try {
+  //     await firebase.messaging().requestPermission();
+  //     // User has authorised
+  //     this.getToken();
+  //   } catch (error) {
+  //     // User has rejected permissions
+  //     console.log("permission rejected");
+  //   }
+  // }
+
+  // async createNotificationListeners() {
+  //   firebase.notifications().setBadge(0);
+  //   this.notificationListener = firebase
+  //     .notifications()
+  //     .onNotification((notification) => {
+  //       const { title, body } = notification;
+  //       this.showAlert(title, body);
+  //     });
+
+  //   this.notificationOpenedListener = firebase
+  //     .notifications()
+  //     .onNotificationOpened((notificationOpen) => {
+  //       const { title, body } = notificationOpen.notification;
+  //       this.showAlert(title, body);
+  //     });
+
+  //   const notificationOpen = await firebase
+  //     .notifications()
+  //     .getInitialNotification();
+  //   if (notificationOpen) {
+  //     const { title, body } = notificationOpen.notification;
+  //     this.showAlert(title, body);
+  //   }
+
+  //   this.messageListener = firebase.messaging().onMessage((message) => {
+  //     console.log(JSON.stringify(message));
+  //   });
+  // }
+
+  // showAlert = (title, message) => {
+  //   Alert.alert(
+  //     title,
+  //     message,
+  //     [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+  //     { cancelable: false }
+  //   );
+  // };
+  showAlert = (title, message) => {
+    Alert.alert(
+      title,
+      message,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
+  };
 
   getPromo = () => {
     fetch(urlApi + "c_newsandpromo/getDatapromo2/IFCAMOBILE", {
@@ -485,3 +609,101 @@ export default class Home extends Component {
     );
   }
 }
+
+const RemotePushController = () => {
+  useEffect(() => {
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+      },
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function (notification) {
+        console.log("REMOTE NOTIFICATION ==>", notification);
+        // process the notification here
+      },
+      // Android only: GCM or FCM Sender ID
+      senderID: "945884059945",
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+  }, []);
+  return null;
+};
+
+const messaging = firebase.messaging();
+
+messaging
+  .hasPermission()
+  .then((enabled) => {
+    if (enabled) {
+      messaging
+        .getToken()
+        .then((token) => {
+          console.log(token);
+        })
+        .catch((error) => {
+          /* handle error */
+        });
+    } else {
+      messaging
+        .requestPermission()
+        .then(() => {
+          /* got permission */
+        })
+        .catch((error) => {
+          /* handle error */
+        });
+    }
+  })
+  .catch((error) => {
+    /* handle error */
+  });
+
+firebase.notifications().onNotification((notification) => {
+  const { title, body } = notification;
+  PushNotification.localNotification({
+    title: title,
+    message: body, // (required)
+  });
+});
+
+PushNotification.configure({
+  // (optional) Called when Token is generated (iOS and Android)
+  onRegister: function (token) {
+    console.log("TOKEN:", token);
+  },
+
+  // (required) Called when a remote or local notification is opened or received
+  onNotification: function (notification) {
+    console.log("NOTIFICATION:", notification);
+
+    // process the notification
+
+    // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+    //notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+  // senderID: '945884059945',
+  // popInitialNotification: true,
+  // requestPermissions: true,
+
+  // IOS ONLY (optional): default: all - Permissions to register.
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true,
+  },
+
+  // Should the initial notification be popped automatically
+  // default: true
+  popInitialNotification: true,
+
+  /**
+   * (optional) default: true
+   * - Specified if permissions (ios) and token (android and ios) will requested or not,
+   * - if not, you must call PushNotificationsHandler.requestPermissions() later
+   */
+  requestPermissions: true,
+});

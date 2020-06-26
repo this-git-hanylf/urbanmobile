@@ -7,9 +7,13 @@ import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.chirag.RNMail.RNMail;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -31,6 +35,9 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import java.util.Arrays;
 import java.util.List;
 
+//check version
+import io.xogus.reactnative.versioncheck.RNVersionCheckPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -43,11 +50,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ImageResizerPackage(),
-            new RNCameraPackage(),
-            new RNPermissionsPackage(),
-            new RNMail(),
+          new RNVersionCheckPackage(),
+          new ImageResizerPackage(),
+          new RNCameraPackage(),
+          new RNPermissionsPackage(),
+          new RNMail(),
           new RNFirebasePackage(),
+          new RNFirebaseMessagingPackage(),
           new RNFirebaseAuthPackage(),
           new RNGoogleSigninPackage(),
           new PickerPackage(),
@@ -62,7 +71,9 @@ public class MainApplication extends Application implements ReactApplication {
           new LinearGradientPackage(),
           new SvgPackage(),
           new LinearGradientPackage(),
-          new RNCWebViewPackage()
+          new RNCWebViewPackage(),
+           new ReactNativePushNotificationPackage(),
+           new RNFirebaseNotificationsPackage()
       );
     }
 

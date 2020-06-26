@@ -165,6 +165,9 @@ import SubOfficeAgents from "./Subordinate/SubOfficeAgents";
 import SubAgents from "./Subordinate/SubAgents";
 import SubWebView from "./Subordinate/SubWebView";
 
+//edit agent
+import EditAgent from "./EditAgent/index";
+
 // import ComingSoon from "./"
 
 const TabIcon = ({ focused, iconName }) => {
@@ -1020,6 +1023,14 @@ class Routes extends Component {
             <Scene
               key="SubWebView"
               component={SubWebView}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="EditAgent"
+              component={EditAgent}
               title=""
               hideNavBar
               translucent={true}
