@@ -201,13 +201,21 @@ export default class Intro extends React.Component {
 
     //cek versi device / android version
     let systemVersion = DeviceInfo.getSystemVersion();
+    const int_systemversion = parseInt(systemVersion);
+    console.log("int_systemversion", int_systemversion);
     console.log("systemVersion", systemVersion);
-    if (systemVersion < "8") {
+    if (int_systemversion <= 8) {
       // alert("This Available Version Android 8 or Later");
       const pesan_OSver = "Information";
       const msg_os = "This Available Version Android 8 or Later";
       this.alertCheckOSVersion(true, pesan_OSver, msg_os);
     }
+    // else
+    // if (int_systemversion == 7) {
+    //   const pesan_OSver = "Information";
+    //   const msg_os = "This Available Version Android 7";
+    //   this.alertCheckOSVersion(true, pesan_OSver, msg_os);
+    // }
   }
 
   alertCheckVersion(visible, pesan_ver, msg) {

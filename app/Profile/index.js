@@ -123,6 +123,30 @@ export default class Profile extends React.Component {
     this.props.onBack();
   }
 
+  componentWillReceiveProps(props) {
+    // props dari B
+    const itemBank = props.name; // props dari B
+    console.log("props getback", itemBank);
+    // if (itemBank) {
+    //   this.setState({ bank_name: itemBank.value });
+    //   // console.log('principle_cd', principle_cd);
+
+    //   // this.CallFunction();
+    //   // console.log("TEST 111");
+    // }
+
+    // props dari C
+    // const itemCode = props.itemCode; // props dari C
+    // console.log('props getback',itemCode);
+    // if(itemCode){
+    //     this.setState({code: itemCode.value});
+    //     // console.log('principle_cd', principle_cd);
+
+    //     // this.CallFunction();
+    //     // console.log("TEST 111");
+    // }
+  }
+
   getProfile = () => {
     fetch(
       urlApi +
@@ -672,6 +696,17 @@ export default class Profile extends React.Component {
     );
   }
 
+  toEditAgent() {
+    const dataProps = {
+      agent_cd: this.state.userId,
+      agent_name: this.state.name,
+      agent_email: this.state.email,
+      agent_phone: this.state.hp,
+    };
+    console.log("dataProps lempar ke edit", dataProps);
+    Actions.EditAgent({ dataPropsEdit: dataProps });
+  }
+
   render() {
     let { fotoProfil, fotoHeader } = this.state;
 
@@ -1016,7 +1051,7 @@ export default class Profile extends React.Component {
               </View>
               <View style={{ alignItems: "flex-end", width: "70%" }}>
                 <TextInput
-                  editable={false}
+                  editable={true}
                   style={Styles.textInput}
                   placeholder={"First Name"}
                   placeholderTextColor={Colors.greyUrban}
@@ -1145,6 +1180,18 @@ export default class Profile extends React.Component {
               </View>
             </View>
 
+            <View
+              style={{
+                paddingVertical: 10,
+              }}
+            >
+              <Button
+                style={Styles.btnSmall}
+                onPress={() => this.toEditAgent()}
+              >
+                <Text style={Styles.textBtnSmall}>Detail Profile Agent</Text>
+              </Button>
+            </View>
             {/* <View
               style={{
                 flexDirection: "row",

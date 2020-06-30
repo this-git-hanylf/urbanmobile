@@ -18,6 +18,27 @@ export default {
     justifyContent: "center",
     borderRadius: 5,
   },
+  btnSmall: {
+    backgroundColor: Colors.goldUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 30,
+    // width: 100,
+    paddingLeft: 8,
+    paddingRight: 8,
+    right: 40,
+    // width: '100%',
+    alignSelf: "flex-end",
+    elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "flex-end",
+    // justifyContent: "flex-end",
+    borderRadius: 5,
+  },
+  textBtnSmall: {
+    textTransform: "capitalize",
+    fontFamily: Fonts.type.proximaNovaReg,
+    fontWeight: "400",
+  },
   layoutContent: {
     flex: 1,
     alignItems: "center",
@@ -41,7 +62,7 @@ export default {
   },
   profile: {
     flex: 1,
-    height: 200,
+    height: 130,
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : null,
   },
   bgBlue: {

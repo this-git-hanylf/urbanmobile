@@ -673,7 +673,7 @@ class EditAgent extends React.Component {
                 this.alertFillBlank(true, pesan);
                 // Actions.pop()
                 //   Actions.Login();
-                Actions.pop();
+
                 //   setTimeout(() => {
                 //     Actions.refresh();
                 //   }, 0);
@@ -733,7 +733,7 @@ class EditAgent extends React.Component {
                   this.alertFillBlank(true, pesan);
                   // Actions.pop()
                   //   Actions.Login();
-                  Actions.pop();
+                  // Actions.pop();
                   //   setTimeout(() => {
                   //     Actions.refresh();
                   //   }, 0);
@@ -792,7 +792,7 @@ class EditAgent extends React.Component {
                   this.alertFillBlank(true, pesan);
                   // Actions.pop()
                   //   Actions.Login();
-                  Actions.pop();
+                  // Actions.pop();
                   //   setTimeout(() => {
                   //     Actions.refresh();
                   //   }, 0);
@@ -849,7 +849,7 @@ class EditAgent extends React.Component {
               this.alertFillBlank(true, pesan);
               // Actions.pop()
               //   Actions.Login();
-              Actions.pop();
+              // Actions.pop();
               //   setTimeout(() => {
               //     Actions.refresh();
               //   }, 0);
@@ -1194,6 +1194,7 @@ class EditAgent extends React.Component {
                         this.setState({
                           checked_imnot: !this.state.checked_imnot,
                         });
+                        Actions.pop();
                       }}
                       // activeOpacity={0.7}
                     >
@@ -2009,7 +2010,7 @@ class EditAgent extends React.Component {
                   backgroundColor: !this.state.capt ? "#cccccc" : "#0691ce",
                 },
               ]}
-              onPress={() => this.cekupload()}
+              onPress={() => this.submit()}
               disabled={!this.state.capt}
               // disabled={!this.state.capt}
             >
