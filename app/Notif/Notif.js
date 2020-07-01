@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Navigator } from "react";
 import {
   StatusBar,
   ActivityIndicator,
@@ -46,6 +46,7 @@ import { Actions } from "react-native-router-flux";
 import { Fonts, Metrics, Colors } from "../Themes/";
 import { urlApi } from "@Config/services";
 import moment from "moment";
+import { Router } from "../Router";
 import { ENTRIES1 } from "../Home/static/entries";
 // import Router from "../Router";
 //const {width, height} = Dimensions.get('window')
@@ -98,9 +99,50 @@ export default class Notif extends React.Component {
       this.setState({ isLoaded: true });
     }, 2000);
   }
+
   signin() {
     Actions.Login();
   }
+
+  // async componentDidAppear() {
+  //   const datas = {
+  //     email: await _getData("@User"),
+  //     name: await _getData("@Name"),
+  //     group: await _getData("@Group"),
+  //     dashmenu: await _getData("@DashMenu"),
+  //     isLogin: await _getData("@isLogin"),
+  //     dataTower: await _getData("@UserProject"),
+  //   };
+  //   console.log("email did apear");
+
+  //   this.setState(datas, () => {
+  //     this.getDataNotif();
+  //     // this.getCountNotif();
+  //     // this.updateisRead();
+  //   });
+  //   // this.setState(
+  //   //   {
+  //   //     email: datas.email,
+  //   //   },
+  //   //   () => {
+  //   //     this.getDataNotif();
+  //   //   }
+  //   // );
+  //   // this.getBadge(datas)
+
+  //   // this.setState({
+  //   //     time: new Date(),
+  //   //     timer:
+  //   // })
+
+  //   // // ? RealTime
+  //   // setInterval(() => {
+  //   //     this.getBadge(datas)
+  //   // }, 1000)
+
+  //   // ? Tidak RealTime
+  //   // this.getBadge(datas);
+  // }
 
   getDataNotif = () => {
     console.log(this.state.email);
@@ -250,7 +292,8 @@ export default class Notif extends React.Component {
             console.log("data update", this.state.cntNotif);
           }
 
-          // _storeData("@CountNotif", this.state.cntNotif);
+          _storeData("@CountNotif", this.state.cntNotif);
+          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
         }
       })
       .catch((error) => {
@@ -262,13 +305,26 @@ export default class Notif extends React.Component {
     // this.getCountNotif();
     const cntno = this.state.cntNotif;
     console.log("cntno", cntno);
-    // const hitungnotif = await _getData("@CountNotif");
     Actions.pop();
+    // Actions.refresh("home", cntno);
+    // Actions.Home({ lemparDataCnt: cntno });
+    // Actions.pop();
     setTimeout(() => {
-      Actions.refresh("tabbar", { dataCount: cntno });
+      Actions.refresh({ lemparDataCnt: cntno });
+      Actions.push("tabbar", _storeData("@CountNotif", this.state.cntNotif));
+      // _storeData("@CountNotif", cntno);
     }, 0);
-    // const tes123 = "abc";
-    // Actions.refresh("tabbar", tes123);
+    // try {
+    //   _storeData("@CountNotif", cntno);
+    // } catch (err) {
+    //   console.log("error:", err);
+    // } finally {
+    //   this.setState({ isLoaded: true }, () => {
+    //     Actions.pop();
+    //     // Actions.refresh("home", cntno);
+    //     Actions.Home({ lemparDataCnt: cntno });
+    //   });
+    // }
   }
 
   render() {

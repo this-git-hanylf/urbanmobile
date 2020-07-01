@@ -115,6 +115,16 @@ export default class Home extends Component {
     if (Platform.OS == "android") {
       this.startHeaderHeight = 100 + StatusBar.currentHeight;
     }
+    // this.props.onBack();
+  }
+  componentWillReceiveProps(props) {
+    // props dari B
+    console.log("props back", props.lemparDataCnt);
+    // const count = props.lemparDataCnt;
+    const count_notif_dari_home = props.lemparDataCnt;
+    console.log("count_notif_dari_home", count_notif_dari_home);
+
+    Actions.push("notif", count_notif_dari_home);
   }
 
   async componentDidMount() {
