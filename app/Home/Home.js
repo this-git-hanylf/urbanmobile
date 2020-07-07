@@ -61,7 +61,10 @@ import ImageResizeMode from "react-native/Libraries/Image/ImageResizeMode";
 import firebase from "react-native-firebase";
 import AsyncStorage from "@react-native-community/async-storage";
 import Siren from "react-native-siren";
+import NotifService from "../components/NotifService";
 var PushNotification = require("react-native-push-notification");
+
+//manggil notifservice yang ditaro di componen.
 
 const versionSpecificRules = [
   {

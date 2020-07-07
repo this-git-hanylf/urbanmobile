@@ -203,32 +203,33 @@ const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
   //   console.log("pecah datta", pecahdata);
   //   return pecahdata;
   // };
-  var cnt = async function () {
-    var a = await _getData("@CountNotif");
-    var pecah_a = a[0].jumlahnotif;
-    console.log("a", a);
-    console.log("pecah_a", pecah_a);
-    return pecah_a;
-  };
-  // console.log(cnt("a"));
-  cnt("pecah_a").then(function (value) {
-    console.log("result", value);
-    // var tes = value;
+  // var cnt = async function () {
+  //   var a = await _getData("@CountNotif");
+  //   var pecah_a = a[0].jumlahnotif;
+  //   console.log("a", a);
+  //   console.log("pecah_a", pecah_a);
+  //   return pecah_a;
+  // };
+  // // console.log(cnt("a"));
+  // cnt("pecah_a").then(function (value) {
+  //   console.log("result", value);
+  //   // var tes = value;
 
-    // var pecah_value = value[0].jumlahnotif;
-    // var pecah_value = value;
-    // console.log("pecah_value", pecah_value);
-    return value;
-    // const cntnih = result;
-  });
+  //   // var pecah_value = value[0].jumlahnotif;
+  //   // var pecah_value = value;
+  //   // console.log("pecah_value", pecah_value);
+  //   return value;
+  //   // const cntnih = result;
+  // });
 
   var cntnih = 0;
-  console.log("cntnih", cntnih);
+  var cnt = 0;
+  // console.log("cntnih", cntnih);
 
-  // cnt("pecah_value")
-  console.log("get value", cnt("a"));
-  var myPromise = Promise.resolve(cnt("a"));
-  console.log("get value", myPromise);
+  // // cnt("pecah_value")
+  // console.log("get value", cnt("a"));
+  // var myPromise = Promise.resolve(cnt("a"));
+  // console.log("get value", myPromise);
 
   // myPromise.then((value) => {
   //   console.log("get value._55", value._55);

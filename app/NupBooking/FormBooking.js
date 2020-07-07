@@ -1112,6 +1112,7 @@ class FormBooking extends React.Component {
                 onChangeText={(val) => this.setState({ cor: val })}
                 style={Styles.positionTextInput}
                 ref="email"
+                maxLength={60}
               />
               {this.state.errorcor ? (
                 <Icon style={Styles.icon_error} name="close-circle" />

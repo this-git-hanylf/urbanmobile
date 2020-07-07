@@ -50,6 +50,7 @@ var PushNotification = require("react-native-push-notification");
 
 import { Linking } from "react-native";
 import VersionCheck from "react-native-version-check";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 // VersionCheck.getCountry().then((country) => console.log(country)); // KR
 // console.log("package name", VersionCheck.getPackageName()); // com.reactnative.app
@@ -675,7 +676,7 @@ export default class Intro extends React.Component {
         <Container>
           <ImageBackground
             style={[styles.backgroundImage, styles.fixedBackground]}
-            source={require("../Images/urban-home-min.jpg")}
+            source={require("../Images/POIN-1.png")}
           >
             <Header style={styles.header}>
               <Left style={styles.left}></Left>
@@ -944,11 +945,11 @@ export default class Intro extends React.Component {
             </Modal>
 
             <View style={styles.inputFieldStyles}>
-              <View style={{ width: 300, height: 100, marginBottom: 65 }}>
+              <View style={{ width: 300, height: 93, marginBottom: 55 }}>
                 <Image
                   // style={styles.images}
                   style={styles.styleLogo}
-                  source={require("../Images/logo4.png")}
+                  source={require("../Images/logo-urban-white.png")}
                 />
               </View>
 
@@ -965,7 +966,7 @@ export default class Intro extends React.Component {
                   underlineColorAndroid="transparent"
                   textAlign={I18nManager.isRTL ? "right" : "left"}
                   placeholder="Your username or email"
-                  placeholderTextColor="#7d7d7d"
+                  placeholderTextColor={Colors.navyUrban}
                 />
               </View>
               {/* <View style={styles.divider} /> */}
@@ -982,7 +983,7 @@ export default class Intro extends React.Component {
                   underlineColorAndroid="transparent"
                   textAlign={I18nManager.isRTL ? "right" : "left"}
                   placeholder="Your password"
-                  placeholderTextColor="#7d7d7d"
+                  placeholderTextColor={Colors.navyUrban}
                   secureTextEntry={!this.state.isHide}
                   value={this.state.password}
                 />
@@ -1012,12 +1013,47 @@ export default class Intro extends React.Component {
                 )}
               </Button>
 
-              <View style={{ paddingTop: 20, paddingBottom: 15 }}>
-                <TouchableOpacity onPress={() => Actions.forgotPass()}>
-                  <Text style={styles.forgotPassword}>Forgot Password</Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  paddingTop: 20,
+                  paddingBottom: 15,
+                }}
+              >
+                <TouchableHighlight
+                  onPress={() => Actions.forgotPass()}
+                  style={{
+                    // backgroundColor: Colors.blueUrban,
+                    backgroundColor: "#fff",
+                    opacity: 0.6,
+                    // height: Metrics.HEIGHT * 0.06,
+                    // width: Metrics.WIDTH * 0.75,
+                    height: 25,
+                    width: 150,
+                    borderRadius: 15,
+                    alignSelf: "center",
+                    elevation: 3,
+                    // shadowColor: "#000",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.forgotPassword,
+                      {
+                        // backgroundColor: "#fff",
+                        // opacity: 0.6,
+                        height: 19,
+                        color: Colors.navyUrban,
+                      },
+                    ]}
+                  >
+                    Forgot Password
+                  </Text>
+                </TouchableHighlight>
               </View>
             </View>
+
             {/* <Text
                             style={styles.forgotPassword}
                         >

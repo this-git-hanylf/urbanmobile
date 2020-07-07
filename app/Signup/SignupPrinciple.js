@@ -942,6 +942,7 @@ class SignupPrinciple extends React.Component {
                   textAlign={I18nManager.isRTL ? "right" : "left"}
                   style={styles.inputAddress}
                   // style={styles.positionTextInput}
+                  maxLength={60}
                   value={this.state.address}
                   onChangeText={(val) => this.setState({ address: val })}
                   placeholder="Company Address"

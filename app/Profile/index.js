@@ -1173,6 +1173,7 @@ export default class Profile extends React.Component {
                   placeholder={"Number Phone"}
                   placeholderTextColor={Colors.greyUrban}
                   value={this.state.hp}
+                  // maxLength={10}
                   onChangeText={(val) => {
                     this.setState({ hp: val });
                   }}
@@ -1186,7 +1187,8 @@ export default class Profile extends React.Component {
               }}
             >
               <Button
-                style={Styles.btnSmall}
+                // style={Styles.btnSmall}
+                style={Styles.btnMedium}
                 onPress={() => this.toEditAgent()}
               >
                 <Text style={Styles.textBtnSmall}>Detail Profile Agent</Text>

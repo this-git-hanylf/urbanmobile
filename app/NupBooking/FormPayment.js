@@ -55,6 +55,7 @@ import numFormat from "@Component/numFormat";
 import ImagePicker from "react-native-image-crop-picker";
 import RNFetchBlob from "rn-fetch-blob";
 import moment from "moment";
+import NotifService from "../components/NotifService";
 // import ImageViewer from 'react-native-image-zoom-viewer';
 
 //const {width, height} = Dimensions.get('window')
@@ -92,6 +93,12 @@ class FormPayment extends React.Component {
     isMount = true;
 
     // this.showAlert = this.showAlert.bind(this);
+
+    //buat di notif
+    this.notif = new NotifService(
+      this.onRegister.bind(this),
+      this.onNotif.bind(this)
+    );
   }
 
   async componentDidMount() {
@@ -117,10 +124,27 @@ class FormPayment extends React.Component {
     this.setState({ time: timeLeftVar });
   }
 
+  onPress = () => {
+    PushNotification.localNotification({
+      /* iOS and Android properties */
+      title: "My Notification Title", // (optional)
+      message: "My Notification Message", // (required)
+    });
+  };
+
   componentWillUnmount() {
     // this.setState({isMount:false})
     isMount = false;
   }
+
+  showAlert = (title, message) => {
+    Alert.alert(
+      title,
+      message,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
+  };
 
   secondsToTime(secs) {
     let hours = Math.floor(secs / (60 * 60));
@@ -173,7 +197,7 @@ class FormPayment extends React.Component {
 
   confirm = () => {
     // alert('next')
-    Actions.home();
+    // Actions.home();
     // _navigate("UploadBukti", { prevItems: frmData });
   };
 
@@ -518,7 +542,13 @@ class FormPayment extends React.Component {
 
           <View>
             <View style={{ paddingTop: 50 }}>
-              <Button style={Styles.btnMedium} onPress={() => this.confirm()}>
+              <Button
+                style={Styles.btnMedium}
+                onPress={() => {
+                  this.confirm();
+                  this.notif.scheduleNotif({ fullname: this.state.fullname });
+                }}
+              >
                 <Text
                   style={{
                     width: "100%",
@@ -540,6 +570,17 @@ class FormPayment extends React.Component {
                 </ScrollView> */}
       </Container>
     );
+  }
+  onRegister(token) {
+    this.setState({ registerToken: token.token, fcmRegistered: true });
+  }
+
+  onNotif(notif) {
+    Alert.alert(notif.title, notif.message);
+  }
+
+  handlePerm(perms) {
+    Alert.alert("Permissions", JSON.stringify(perms));
   }
 }
 

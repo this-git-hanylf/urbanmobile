@@ -107,7 +107,7 @@ class DetailAmenitiesPool extends React.Component {
       amenitis_info: "",
       amenitis_url: "",
       stat: "P",
-      gallery_1: require("@Asset/images/amenitis/pool/gallery1.jpg"),
+      gallery_1: require("@Asset/images/amenitis/pool/gallery1.png"),
       gallery_2: require("@Asset/images/amenitis/pool/gallery2.jpg"),
       // require("@Asset/images/project_suite_urban.jpg")
     };
