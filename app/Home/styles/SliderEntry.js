@@ -27,7 +27,7 @@ export default StyleSheet.create({
     width: itemWidth,
     height: slideHeight,
     paddingHorizontal: itemHorizontalMargin,
-    paddingBottom: 18 // needed for shadow
+    paddingBottom: 18, // needed for shadow
   },
   shadow: {
     position: "absolute",
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 10 },
     shadowRadius: 10,
-    borderRadius: entryBorderRadius
+    borderRadius: entryBorderRadius,
   },
   imageContainer: {
     flex: 1,
@@ -47,17 +47,20 @@ export default StyleSheet.create({
     // backgroundColor: colors.gold,
     // backgroundColor: colors.gold,
     borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
+    borderTopRightRadius: entryBorderRadius,
+    borderBottomRightRadius: entryBorderRadius,
+    borderBottomLeftRadius: entryBorderRadius,
   },
   imageContainerEven: {
-    backgroundColor: colors.gold
+    backgroundColor: colors.gold,
   },
   image: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "contain",
     borderRadius: IS_IOS ? entryBorderRadius : 0,
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
+    // borderTopLeftRadius: entryBorderRadius,
+    // borderTopRightRadius: entryBorderRadius
+    borderRadius: entryBorderRadius,
   },
   // image's border radius is buggy on iOS; let's hack it!
   radiusMask: {
@@ -65,7 +68,7 @@ export default StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: entryBorderRadius
+    height: entryBorderRadius,
     // backgroundColor: colors.gold
   },
   radiusMaskEven: {
@@ -79,7 +82,7 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
     // backgroundColor: colors.gold,
     borderBottomLeftRadius: entryBorderRadius,
-    borderBottomRightRadius: entryBorderRadius
+    borderBottomRightRadius: entryBorderRadius,
   },
   textContainerEven: {
     // backgroundColor: colors.gold
@@ -90,10 +93,10 @@ export default StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.5,
     alignItems: "center",
-    textAlign: "center"
+    textAlign: "center",
   },
   titleEven: {
-    color: "white"
+    color: "white",
   },
   subtitle: {
     marginTop: 6,
@@ -101,9 +104,9 @@ export default StyleSheet.create({
     fontSize: 14,
     // fontStyle: 'italic',
     alignItems: "center",
-    textAlign: "center"
+    textAlign: "center",
   },
   subtitleEven: {
-    color: "rgba(255, 255, 255, 0.7)"
-  }
+    color: "rgba(255, 255, 255, 0.7)",
+  },
 });

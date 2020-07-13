@@ -103,7 +103,7 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const itemWidth_tower =
-  slideWidth_tower + itemHorizontalMargin_tower * 3;
+  slideWidth_tower + itemHorizontalMargin_tower * 4;
 
 export default class extends React.Component {
   constructor(props) {
