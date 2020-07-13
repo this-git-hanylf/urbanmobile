@@ -305,15 +305,18 @@ export default class Notif extends React.Component {
     // this.getCountNotif();
     const cntno = this.state.cntNotif;
     console.log("cntno", cntno);
-    Actions.pop();
+    // Actions.pop({ lemparDataCnt: cntno });
     // Actions.refresh("home", cntno);
-    // Actions.Home({ lemparDataCnt: cntno });
+    Actions.home({ lemparDataCnt: cntno });
     // Actions.pop();
-    setTimeout(() => {
-      Actions.refresh({ lemparDataCnt: cntno });
-      Actions.push("tabbar", _storeData("@CountNotif", this.state.cntNotif));
-      // _storeData("@CountNotif", cntno);
-    }, 0);
+    // setTimeout(() => {
+    //   Actions.refresh("tabbar", { lemparDataCnt: cntno });
+    //   Actions.push("tabbar", _storeData("@CountNotif", this.state.cntNotif));
+
+    //   // _storeData("@CountNotif", cntno);
+    // }, 0);
+    Actions.tabbar();
+
     // try {
     //   _storeData("@CountNotif", cntno);
     // } catch (err) {
@@ -330,188 +333,188 @@ export default class Notif extends React.Component {
   render() {
     if (this.state.isLogin) {
       return (
-        <Container style={Style.bgMain}>
-          <StatusBar
-            backgroundColor={"rgba(0, 0, 0, 0)"}
-            animated
-            barStyle="dark-content"
-          />
-          <Header style={Styles.header}>
-            <Left style={Styles.left}>
-              <Button
-                transparent
-                style={Styles.actionBarBtn}
-                onPress={() => this.back()}
-              >
-                <Icon
-                  active
-                  name="arrow-left"
-                  style={Styles.textWhite}
-                  type="MaterialCommunityIcons"
-                />
-              </Button>
-            </Left>
-            <Body style={Styles.body}>
-              <Text style={[Styles.textWhite, Styles.textMedium]}>
-                {"Notification"}
-              </Text>
-            </Body>
-            <Right style={Styles.right}></Right>
-          </Header>
-          <Content
-            style={Style.layoutInner}
-            contentContainerStyle={Style.layoutContent}
-          >
-            <ScrollView>
-              <View style={Styles.section}>
-                <View style={Styles.message}>
-                  {/* <Text>tesss</Text> */}
-
-                  {this.state.dataNotif.map((data, key) => (
-                    // <Text>{data.Complain_no}</Text>
-
-                    <List
-                      containerStyle={{
-                        borderTopWidth: 0,
-                        borderBottomWidth: 0,
-                      }}
-                      key={key}
-                      style={[
-                        Styles.item,
-                        {
-                          backgroundColor:
-                            data.IsRead == 1 ? "#fff" : "#97aecf",
-                        },
-                      ]}
-                    >
-                      <ListItem
-                        onPress={() => {
-                          this.updateisRead({ data });
-                          // this.setState({ isRead: 1 }, () => {
-                          //   this.props.onPress(item.NotificationID);
-                          // });
-                          // Actions.refresh({ key: Math.random() });
-
-                          // this.setState({ isRead: 0 });
-                          // this.setState({ isRead: data.IsRead });
-                          // console.log("id notif", this.state.notifID);
-                        }}
-                        style={{
-                          backgroundColor:
-                            data.IsRead == 1 ? "#fff" : "#97aecf",
-                        }}
-                      >
-                        {/* <Image
-                        source={{ uri: item.image }}
-                        style={Styles.itemImg}
-                      /> */}
-                        <View>
-                          <View style={{ flexDirection: "row" }}>
-                            <Left>
-                              {
-                                data.NotificationCd == "PAYDUE" ? (
-                                  <Text style={Styles.itemDesc}>
-                                    Please complete your payment
-                                  </Text>
-                                ) : null
-                                // <Text style={Styles.itemDesc}>tes</Text>
-                              }
-                            </Left>
-                            {/* <Right>
-                            <Text style={Styles.itemDate}>
-
-                              {moment(data.NotificationDate).format(
-                                "D MMMM YYYY"
-                              )}
-                            </Text>
-                          </Right> */}
-                          </View>
-                          <Text style={Styles.itemTitle}>
-                            {data.Complain_no}
-                          </Text>
-                          <Text style={Styles.itemDesc}>
-                            {data.Remarks}{" "}
-                            <Text style={Styles.itemDesc_bold}>
-                              #{data.NotificationID}
-                            </Text>
-                          </Text>
-                          <Text
-                            style={[
-                              Styles.itemDate,
-                              { color: data.IsRead == 1 ? "#999" : "#333" },
-                            ]}
-                          >
-                            {/* {data.NotificationDate} */}
-                            {moment(data.NotificationDate).format(
-                              "D MMMM YYYY HH:mm"
-                            )}
-                          </Text>
-                        </View>
-                      </ListItem>
-                    </List>
-                  ))}
-                </View>
-              </View>
-            </ScrollView>
-          </Content>
-        </Container>
-        // <Container>
-        //   <ImageBackground
-        //     style={Styles.backgroundImage_2}
-        //     source={require("../Images/background-blue.png")}
-        //   >
-        //     <Header style={Styles.header}>
-        //       <StatusBar
-        //         backgroundColor={"rgba(0, 0, 0, 0)"}
-        //         animated
-        //         barStyle="dark-content"
-        //       />
-        //       <Left style={Styles.left}>
-        //         <Button
-        //           transparent
-        //           style={Style.actionBarBtn}
-        //           onPress={Actions.pop}
-        //         >
-        //           <Icon
-        //             active
-        //             name="arrow-left"
-        //             style={Style.textWhite}
-        //             type="MaterialCommunityIcons"
-        //           />
-        //         </Button>
-        //       </Left>
-        //       <Body style={Styles.body}>
-        //         <Text
-        //           style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
-        //         >
-        //           {/* {"Registration"} */}
-        //           {/* {this.Capitalize("Registration")} */}
-        //         </Text>
-        //       </Body>
-        //       <Right style={Styles.right}></Right>
-        //     </Header>
-        //     {/* <ScrollView> */}
-        //     <View
-        //       style={{
-        //         flex: 1,
-        //         justifyContent: "center",
-        //         alignItems: "center",
-        //         alignContent: "center",
-        //       }}
-        //     >
-        //       <Text
-        //         style={{
-        //           color: Colors.white,
-        //           fontFamily: Fonts.type.proximaNovaBoldWeb,
-        //           fontSize: 20,
-        //         }}
+        // <Container style={Style.bgMain}>
+        //   <StatusBar
+        //     backgroundColor={"rgba(0, 0, 0, 0)"}
+        //     animated
+        //     barStyle="dark-content"
+        //   />
+        //   <Header style={Styles.header}>
+        //     <Left style={Styles.left}>
+        //       <Button
+        //         transparent
+        //         style={Styles.actionBarBtn}
+        //         onPress={() => this.back()}
         //       >
-        //         Coming Soon
+        //         <Icon
+        //           active
+        //           name="arrow-left"
+        //           style={Styles.textWhite}
+        //           type="MaterialCommunityIcons"
+        //         />
+        //       </Button>
+        //     </Left>
+        //     <Body style={Styles.body}>
+        //       <Text style={[Styles.textWhite, Styles.textMedium]}>
+        //         {"Notification"}
         //       </Text>
-        //     </View>
-        //     {/* </ScrollView> */}
-        //   </ImageBackground>
+        //     </Body>
+        //     <Right style={Styles.right}></Right>
+        //   </Header>
+        //   <Content
+        //     style={Style.layoutInner}
+        //     contentContainerStyle={Style.layoutContent}
+        //   >
+        //     <ScrollView>
+        //       <View style={Styles.section}>
+        //         <View style={Styles.message}>
+        //           {/* <Text>tesss</Text> */}
+
+        //           {this.state.dataNotif.map((data, key) => (
+        //             // <Text>{data.Complain_no}</Text>
+
+        //             <List
+        //               containerStyle={{
+        //                 borderTopWidth: 0,
+        //                 borderBottomWidth: 0,
+        //               }}
+        //               key={key}
+        //               style={[
+        //                 Styles.item,
+        //                 {
+        //                   backgroundColor:
+        //                     data.IsRead == 1 ? "#fff" : "#97aecf",
+        //                 },
+        //               ]}
+        //             >
+        //               <ListItem
+        //                 onPress={() => {
+        //                   this.updateisRead({ data });
+        //                   // this.setState({ isRead: 1 }, () => {
+        //                   //   this.props.onPress(item.NotificationID);
+        //                   // });
+        //                   // Actions.refresh({ key: Math.random() });
+
+        //                   // this.setState({ isRead: 0 });
+        //                   // this.setState({ isRead: data.IsRead });
+        //                   // console.log("id notif", this.state.notifID);
+        //                 }}
+        //                 style={{
+        //                   backgroundColor:
+        //                     data.IsRead == 1 ? "#fff" : "#97aecf",
+        //                 }}
+        //               >
+        //                 {/* <Image
+        //                 source={{ uri: item.image }}
+        //                 style={Styles.itemImg}
+        //               /> */}
+        //                 <View>
+        //                   <View style={{ flexDirection: "row" }}>
+        //                     <Left>
+        //                       {
+        //                         data.NotificationCd == "PAYDUE" ? (
+        //                           <Text style={Styles.itemDesc}>
+        //                             Please complete your payment
+        //                           </Text>
+        //                         ) : null
+        //                         // <Text style={Styles.itemDesc}>tes</Text>
+        //                       }
+        //                     </Left>
+        //                     {/* <Right>
+        //                     <Text style={Styles.itemDate}>
+
+        //                       {moment(data.NotificationDate).format(
+        //                         "D MMMM YYYY"
+        //                       )}
+        //                     </Text>
+        //                   </Right> */}
+        //                   </View>
+        //                   <Text style={Styles.itemTitle}>
+        //                     {data.Complain_no}
+        //                   </Text>
+        //                   <Text style={Styles.itemDesc}>
+        //                     {data.Remarks}{" "}
+        //                     <Text style={Styles.itemDesc_bold}>
+        //                       #{data.NotificationID}
+        //                     </Text>
+        //                   </Text>
+        //                   <Text
+        //                     style={[
+        //                       Styles.itemDate,
+        //                       { color: data.IsRead == 1 ? "#999" : "#333" },
+        //                     ]}
+        //                   >
+        //                     {/* {data.NotificationDate} */}
+        //                     {moment(data.NotificationDate).format(
+        //                       "D MMMM YYYY HH:mm"
+        //                     )}
+        //                   </Text>
+        //                 </View>
+        //               </ListItem>
+        //             </List>
+        //           ))}
+        //         </View>
+        //       </View>
+        //     </ScrollView>
+        //   </Content>
         // </Container>
+        <Container>
+          <ImageBackground
+            style={Styles.backgroundImage_2}
+            source={require("../Images/background-blue.png")}
+          >
+            <Header style={Styles.header}>
+              <StatusBar
+                backgroundColor={"rgba(0, 0, 0, 0)"}
+                animated
+                barStyle="dark-content"
+              />
+              <Left style={Styles.left}>
+                <Button
+                  transparent
+                  style={Style.actionBarBtn}
+                  onPress={Actions.pop}
+                >
+                  <Icon
+                    active
+                    name="arrow-left"
+                    style={Style.textWhite}
+                    type="MaterialCommunityIcons"
+                  />
+                </Button>
+              </Left>
+              <Body style={Styles.body}>
+                <Text
+                  style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
+                >
+                  {/* {"Registration"} */}
+                  {/* {this.Capitalize("Registration")} */}
+                </Text>
+              </Body>
+              <Right style={Styles.right}></Right>
+            </Header>
+            {/* <ScrollView> */}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: Fonts.type.proximaNovaBoldWeb,
+                  fontSize: 20,
+                }}
+              >
+                Coming Soon
+              </Text>
+            </View>
+            {/* </ScrollView> */}
+          </ImageBackground>
+        </Container>
       );
     } else {
       return (

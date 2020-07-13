@@ -186,9 +186,9 @@ const TabIcon = ({ focused, iconName }) => {
 };
 
 const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
-  // var cnt = cntNo;
+  var cnt = cntNo;
 
-  // console.log(await _getData('@CountNotif'));
+  console.log("cnt", cnt);
   // console.log(await _getData("@CountNotif"));
   // const jumlahnotif = await _getData("@CountNotif");
   // console.log("cnt", cnt);
@@ -223,7 +223,7 @@ const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
   // });
 
   var cntnih = 0;
-  var cnt = 0;
+  // var cnt = 0;
   // console.log("cntnih", cntnih);
 
   // // cnt("pecah_value")
@@ -297,7 +297,7 @@ const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
               textAlign: "center",
             }}
           >
-            {cntnih}
+            {cnt}
           </Text>
         )}
       </Badge>
@@ -466,8 +466,8 @@ class Routes extends Component {
                 title=""
                 tabBarLabel="Notification"
                 iconName="bell"
-                icon={TabIconBadge}
-                // icon={TabIcon}
+                // icon={TabIconBadge}
+                icon={TabIcon}
                 // cntNo={this.state.cntNotif}
                 // cntNo={this.props.count_notif_dari_home}
                 // tes={this.tes}

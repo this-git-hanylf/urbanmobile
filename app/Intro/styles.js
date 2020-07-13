@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Metrics.WIDTH,
     height: Metrics.HEIGHT,
-    resizeMode: "contain"
+    resizeMode: "contain",
     // backgroundColor: "#f7f0d7"
   },
   header: {
@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {},
       android: {
-        marginTop: Fonts.moderateScale(25)
-      }
+        marginTop: Fonts.moderateScale(25),
+      },
     }),
-    elevation: 0
+    elevation: 0,
   },
   images: {
     marginBottom: 15,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     width: 330,
     height: 120,
-    borderRadius: 15
+    borderRadius: 15,
   },
   images2: {
     marginBottom: 20,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 0.1,
     width: 500,
-    height: 500
+    height: 500,
   },
   images_urban: {
     // marginBottom: 20,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginBottom: -100,
     width: 450,
-    height: 450
+    height: 450,
     // paddingBottom: -10,
     // borderRadius: 50,
     // overflow: 'hidden'
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 0.5,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   backArrow: {
     justifyContent: "center",
     alignItems: "center",
-    width: 30
+    width: 30,
   },
   styleLogo: {
     marginBottom: 15,
@@ -88,28 +88,28 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   textRight: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
     // width: "100%"
   },
   body: {
     flex: 3,
     alignItems: "center",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   textTitle: {
     color: Colors.redWine,
     fontSize: Fonts.moderateScale(16),
     alignSelf: "center",
-    fontFamily: Fonts.type.sfuiDisplayMedium
+    fontFamily: Fonts.type.sfuiDisplayMedium,
     // fontFamily: Fonts.type.robotoRegular,
   },
   text_urban: {
     fontFamily: Fonts.type.proximaNovaReg,
-    color: Colors.navyUrban
+    color: Colors.navyUrban,
     // marginHorizontal: 8
     // fontSize: 14
   },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "flex-end",
     fontSize: 23,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   title_next: {
     fontFamily: Fonts.type.proximaNovaReg,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: Colors.navyUrban,
-    color: Colors.navyUrban
+    color: Colors.navyUrban,
   },
   bottom_next: {
     // flex: 1,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 140,
     alignItems: "center",
     textAlign: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   title_skip: {
@@ -152,24 +152,24 @@ const styles = StyleSheet.create({
     color: Colors.navyUrban,
     fontSize: 16,
     fontWeight: "bold",
-    left: 10
+    left: 10,
   },
   title_done: {
     fontFamily: Fonts.type.sfuiDisplayMedium,
     color: Colors.navyUrban,
     fontSize: 16,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 
   right: {
-    flex: 0.5
+    flex: 0.5,
   },
 
   inputFieldStyles: {
     height: Metrics.HEIGHT * 0.35,
     // flex : 3,
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   containEmail: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     alignSelf: "center",
-    elevation: 3
+    elevation: 3,
   },
   inputEmail: {
     height: Metrics.HEIGHT * 0.08,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     // paddingTop: Fonts.moderateScale(15),
     fontFamily: Fonts.type.sfuiDisplayRegular,
     // fontFamily: Fonts.type.proximaNovaXBoldIt,
-    fontSize: 15
+    fontSize: 15,
   },
   containPassword: {
     backgroundColor: "#fff",
@@ -212,23 +212,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     elevation: 3,
-    marginTop: 5
+    marginTop: 5,
   },
   divider: {
     width: Metrics.WIDTH * 0.92,
     height: 0.6,
     backgroundColor: "rgba(0,0,0,0.1)",
     left: 15,
-    right: 15
+    right: 15,
   },
   signbtnSec: {
     marginTop: Fonts.moderateScale(15),
     height: Metrics.HEIGHT * 0.1,
-    marginBottom: 65
+    marginBottom: 65,
     // flex :1
   },
   signInGoogle: {
-    alignItems: "center"
+    alignItems: "center",
   },
   signInBtn: {
     // backgroundColor: Colors.loginBlue,
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     shadowColor: "#000",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   signInBtnSmall: {
     // backgroundColor: Colors.loginBlue,
@@ -252,14 +252,14 @@ const styles = StyleSheet.create({
     elevation: 3,
     shadowColor: "#000",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   signInBtnText: {
     color: "#fff",
     fontSize: Fonts.moderateScale(17),
     width: Metrics.WIDTH * 0.92,
     textAlign: "center",
-    fontFamily: Fonts.type.proximaNovaBold
+    fontFamily: Fonts.type.proximaNovaBold,
     // fontFamily: Fonts.type.proximaNovaXBoldIt
   },
   forgotPassword: {
@@ -271,21 +271,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     backgroundColor: Colors.transparent,
-    fontFamily: Fonts.type.proximaNovaBoldWeb
+    fontFamily: Fonts.type.proximaNovaBoldWeb,
   },
   socialSec: {
     // height: Metrics.HEIGHT * 0.07,
     paddingTop: Fonts.moderateScale(30),
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingBottom: Fonts.moderateScale(5)
+    paddingBottom: Fonts.moderateScale(5),
   },
   skiplog: {
     // height: Metrics.HEIGHT * 0.07,
     paddingTop: Fonts.moderateScale(1),
     justifyContent: "flex-end",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
     // paddingBottom: Fonts.moderateScale(20)
   },
   fbButton: {
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    elevation: 3
+    elevation: 3,
   },
   fbButtonText: {
     color: Colors.white,
@@ -308,12 +308,12 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.white,
     borderBottomWidth: 1,
 
-    width: "100%"
+    width: "100%",
   },
   eye: {
     position: "absolute",
     right: 10,
-    top: 7
+    top: 7,
   },
   // bottom_Button: {
   //     flex: 1,
@@ -334,19 +334,20 @@ const styles = StyleSheet.create({
   fixedBackground: {
     // width: Dimensions.get("window").width, //for full screen
     height: Dimensions.get("window").height,
+    // height: "100%",
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    zIndex: -1
+    zIndex: -1,
   },
 
   bottom_Spacer: {
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   top_Spacer: {
-    marginTop: 10
+    marginTop: 10,
   },
   btnLarge: {
     backgroundColor: Colors.goldUrban,
@@ -361,7 +362,7 @@ const styles = StyleSheet.create({
     // shadowColor: "#000",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });
 export default styles;

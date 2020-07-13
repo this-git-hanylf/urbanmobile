@@ -197,7 +197,7 @@ class FormPayment extends React.Component {
 
   confirm = () => {
     // alert('next')
-    // Actions.home();
+    Actions.home();
     // _navigate("UploadBukti", { prevItems: frmData });
   };
 
@@ -546,7 +546,9 @@ class FormPayment extends React.Component {
                 style={Styles.btnMedium}
                 onPress={() => {
                   this.confirm();
-                  this.notif.scheduleNotif({ fullname: this.state.fullname });
+                  // this.notif.scheduleNotif("my_sound.mp3", {
+                  //   fullName: this.state.fullname,
+                  // });
                 }}
               >
                 <Text

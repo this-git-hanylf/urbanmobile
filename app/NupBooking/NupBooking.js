@@ -95,6 +95,8 @@ class NupBooking extends React.Component {
       type: false,
       Alert_Visibility: false,
       pesan: "",
+      Alert_Visibility_remove: false,
+      pesan_remove: "",
 
       arrayTower: [
         {
@@ -118,6 +120,7 @@ class NupBooking extends React.Component {
     this.handleBuyNow = this.handleBuyNow.bind(this);
     // this.onAdd = this.onAdd.bind(this);
     this.checkout = this.checkout.bind(this);
+    this.checkout_bisa_remove = this.checkout_bisa_remove.bind(this);
 
     // this.addItem = this.addItem.bind(this);
     // this._handleDeleteButtonPress = this._handleDeleteButtonPress.bind(this);
@@ -499,6 +502,8 @@ class NupBooking extends React.Component {
         console.log("berkurng qty", arrayTower[index].qty);
         if (arrayTower[index].qty == 0) {
           arrayTower[index].type = false;
+          // arrayTower[index].qty = 0;
+          // this.setState({ arrayTower });
           // console.log("hasil nol");
         }
         // if ((qty = 0)) {
@@ -537,20 +542,31 @@ class NupBooking extends React.Component {
   checkout = () => {
     let subTotal = 0;
     let total_qty = 0;
+    console.log("arraytower", this.state.arrayTower);
 
     this.state.arrayTower.map((data) => {
       if (data.harga.length != 0) {
         let price = parseFloat(data.harga[0].nup_amount);
         console.log("price", price);
         let qty_tot = data.qty;
+        console.log("data..", data.type);
+        let type = data.type;
 
         if (qty_tot != 0) {
           subTotal = subTotal + price * qty_tot;
           total_qty = total_qty + qty_tot;
-          // this.setState({subTotal: subTotal});
+          type_ = type;
+          qty_ = qty_tot;
+
+          // this.setState( {subTotal: subTotal});
           // price = price;
           console.log("subtit", subTotal);
           console.log("total_qty", total_qty);
+        } else {
+          qty_ = 0;
+          subTotal = 0;
+          total_qty = 0;
+          type_ = false;
         }
       }
     });
@@ -558,11 +574,17 @@ class NupBooking extends React.Component {
     // const total = this.state.harga[0].nup_amount * this.state.qty;
     // console.log('tot',total);
     // const price =
+    // console.log("qty_tot", qty_tot);
     const arr = this.state.arrayTower;
     const valid_qty = this.state.arrayTower[0].qty;
     console.log("valid qty", valid_qty);
     const harga = this.state.arrayTower.harga;
-    console.log("arr", harga);
+    const type = type_;
+    const qty_tot_ = qty_;
+    // const tower_des = tower_;
+    console.log("qty_tot_", qty_tot_);
+    // console.log("tower_des", tower_des);
+    console.log("arr harga", harga);
     console.log("arr", arr);
     const items = this.props.items;
     const subtot = this.state.subTotal;
@@ -575,7 +597,9 @@ class NupBooking extends React.Component {
       array_tower: arr,
     };
     console.log("formdata", frmData);
-    if (frmData && valid_qty != 0) {
+    console.log("typee", type);
+    if (frmData && valid_qty != 0 && qty_tot_ != 0) {
+      console.log("typees", type);
       _navigate("FormBooking", {
         prevItems: frmData,
         items: items,
@@ -585,6 +609,94 @@ class NupBooking extends React.Component {
     } else {
       const pesan = "Please input field";
       this.alertFillBlank(true, pesan);
+
+      // alert("please input");
+    }
+    // else {
+    //   // _navigate("chooseZone", { items: this.props.items });
+    //   _navigate("ChooseZoneModif", { items: this.props.items, prevItems: data});
+    // }
+
+    console.log("save", frmData);
+  };
+
+  checkout_bisa_remove = (index) => {
+    let subTotal = 0;
+    let total_qty = 0;
+    console.log("arraytower", this.state.arrayTower);
+
+    this.state.arrayTower.map((data) => {
+      if (data.harga.length != 0) {
+        let price = parseFloat(data.harga[0].nup_amount);
+        console.log("price", price);
+        let qty_tot = data.qty;
+        console.log("data..", data.type);
+        let type = data.type;
+
+        if (qty_tot != 0) {
+          subTotal = subTotal + price * qty_tot;
+          total_qty = total_qty + qty_tot;
+          type_ = type;
+          qty_ = qty_tot;
+
+          // this.setState( {subTotal: subTotal});
+          // price = price;
+          console.log("subtit", subTotal);
+          console.log("total_qty", total_qty);
+        } else {
+          qty_ = 0;
+          subTotal = 0;
+          total_qty = 0;
+          type_ = false;
+        }
+      } else {
+        var checked = this.state.arrayTower;
+        var values = checked.indexOf(index);
+        checked.splice(values, 1);
+        this.setState({ arrayTower: checked });
+        console.log(this.state.arrayTower);
+      }
+    });
+
+    // const total = this.state.harga[0].nup_amount * this.state.qty;
+    // console.log('tot',total);
+    // const price =
+    // console.log("qty_tot", qty_tot);
+    const arr = this.state.arrayTower;
+    const valid_qty = this.state.arrayTower[0].qty;
+    console.log("valid qty", valid_qty);
+    const harga = this.state.arrayTower.harga;
+    const type = type_;
+    const qty_tot_ = qty_;
+    // const tower_des = tower_;
+    console.log("qty_tot_", qty_tot_);
+    // console.log("tower_des", tower_des);
+    console.log("arr harga", harga);
+    console.log("arr", arr);
+    const items = this.props.items;
+    const subtot = this.state.subTotal;
+    // const total_qty = this.state.total_qty;
+    console.log("subtot", subtot);
+    const {} = this.state;
+
+    const frmData = {
+      // project_descs: projectdesc,
+      array_tower: arr,
+    };
+    console.log("formdata", frmData);
+    console.log("typee", type);
+    if (frmData && valid_qty != 0 && qty_tot_ != 0) {
+      console.log("typees", type);
+      _navigate("FormBooking", {
+        prevItems: frmData,
+        items: items,
+        subtot: subTotal,
+        totalqty: total_qty,
+      });
+    } else {
+      const pesan_remove = "Please input field or remove item";
+      this.alertFillBlank_remove(true, pesan_remove);
+
       // alert("please input");
     }
     // else {
@@ -599,6 +711,13 @@ class NupBooking extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
+  alertFillBlank_remove(visible, pesan_remove) {
+    this.setState({
+      Alert_Visibility_remove: visible,
+      pesan_remove: pesan_remove,
+    });
+  }
+
   addItem = () => {
     const data = {
       // property_cd: this.state.property_cd, //munculin nama tower
@@ -611,6 +730,14 @@ class NupBooking extends React.Component {
     };
     this.setState({ arrayTower: [...this.state.arrayTower, data] });
   };
+
+  removeItem(index) {
+    var checked = this.state.arrayTower;
+    var values = checked.indexOf(index);
+    checked.splice(values, 1);
+    this.setState({ arrayTower: checked });
+    console.log(this.state.arrayTower);
+  }
 
   add() {
     this.setState({ add: true });
@@ -713,63 +840,157 @@ class NupBooking extends React.Component {
           </View>
         </View>
         <ScrollView contentContainerStyle={{ paddingHorizontal: 50 }}>
-          <Modal
-            visible={this.state.Alert_Visibility}
-            transparent={true}
-            animationType={"slide"}
-            onRequestClose={() => {
-              this.alertFillBlank(!this.state.Alert_Visibility, pesan);
-            }}
-            // activeOpacity={1}
-          >
-            <View
-              style={{
-                // backgroundColor: "red",
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
+          {this.state.arrayTower.length > 1 ? (
+            <Modal
+              visible={this.state.Alert_Visibility_remove}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank_remove(
+                  !this.state.Alert_Visibility_remove,
+                  pesan_remove
+                );
               }}
+              activeOpacity={0.5}
             >
               <View
                 style={{
-                  backgroundColor: "white",
-                  width: "70%",
-                  height: "20%",
+                  // backgroundColor: "red",
+                  flex: 1,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Text
+                <View
                   style={{
-                    fontFamily: Fonts.type.proximaNovaReg,
-                    fontSize: 17,
-                    paddingBottom: 15,
-                    color: Colors.black,
-                    textAlign: "center",
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {this.state.pesan}
-                </Text>
-                <View>
-                  <TouchableOpacity
+                  <Text
                     style={{
-                      backgroundColor: Colors.goldUrban,
-                      height: 40,
-                      width: 100,
-                      alignItems: "center",
-                      justifyContent: "center",
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
                     }}
-                    onPress={() => {
-                      this.alertFillBlank(!this.state.Alert_Visibility);
-                    }}
-                    // activeOpacity={0.7}
                   >
-                    <Text style={{ color: Colors.white }}>OK</Text>
-                  </TouchableOpacity>
+                    {this.state.pesan_remove}
+                  </Text>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignContent: "space-around",
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank_remove(
+                          !this.state.Alert_Visibility_remove
+                        );
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                      onPress={() => {
+                        this.removeItem();
+                        this.alertFillBlank_remove(
+                          !this.state.Alert_Visibility_remove
+                        );
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>Remove</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-            </View>
-          </Modal>
+            </Modal>
+          ) : (
+            <Modal
+              visible={this.state.Alert_Visibility}
+              transparent={true}
+              animationType={"slide"}
+              onRequestClose={() => {
+                this.alertFillBlank(!this.state.Alert_Visibility, pesan);
+              }}
+              activeOpacity={0.5}
+            >
+              <View
+                style={{
+                  // backgroundColor: "red",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    width: "70%",
+                    height: "20%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 17,
+                      paddingBottom: 15,
+                      color: Colors.black,
+                      textAlign: "center",
+                    }}
+                  >
+                    {this.state.pesan}
+                  </Text>
+
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: Colors.goldUrban,
+                        height: 40,
+                        width: 100,
+                        alignContent: "space-around",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginHorizontal: 10,
+                      }}
+                      onPress={() => {
+                        this.alertFillBlank(!this.state.Alert_Visibility);
+                      }}
+                      // activeOpacity={0.7}
+                    >
+                      <Text style={{ color: Colors.white }}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          )}
 
           <View>
             <View style={Styles.viewRow}>
@@ -1064,6 +1285,27 @@ class NupBooking extends React.Component {
               </TouchableOpacity>
               {/* <Text style={{color: Colors.twitter}} onnP>add more +</Text> */}
             </View>
+            {/* {this.state.arrayTower.length > 1 ? (
+              <View style={Styles.viewAddmore}>
+                <TouchableOpacity onPress={() => this.removeItem()}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      width: 75,
+                      alignItems: "center",
+                      fontSize: 14,
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      color: Colors.redWine,
+                      borderBottomWidth: 1,
+                      borderColor: Colors.redWine,
+                    }}
+                  >
+                    remove item
+                  </Text>
+                </TouchableOpacity>
+                
+              </View>
+            ) : null} */}
 
             {/* space buat harga */}
 
@@ -1127,22 +1369,47 @@ class NupBooking extends React.Component {
               {/* <Text>res{this.state.harga[0].nup_amount}</Text> */}
             </View>
 
-            <View style={{ paddingTop: 50, paddingBottom: 50 }}>
-              <Button style={Styles.btnMedium} onPress={() => this.checkout()}>
-                <Text
-                  style={{
-                    width: "100%",
-                    fontSize: 14,
-                    alignItems: "center",
-                    textAlign: "center",
-                    fontFamily: Fonts.type.proximaNovaBold,
-                    letterSpacing: 1,
-                  }}
+            {this.state.arrayTower.length > 1 ? (
+              <View style={{ paddingTop: 50, paddingBottom: 50 }}>
+                <Button
+                  style={Styles.btnMedium}
+                  onPress={() => this.checkout_bisa_remove()}
                 >
-                  Checkout
-                </Text>
-              </Button>
-            </View>
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontSize: 14,
+                      alignItems: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    Checkout
+                  </Text>
+                </Button>
+              </View>
+            ) : (
+              <View style={{ paddingTop: 50, paddingBottom: 50 }}>
+                <Button
+                  style={Styles.btnMedium}
+                  onPress={() => this.checkout()}
+                >
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontSize: 14,
+                      alignItems: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaBold,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    Checkout
+                  </Text>
+                </Button>
+              </View>
+            )}
           </View>
         </ScrollView>
         {/* <ScrollView style={{height: '100%'}}>

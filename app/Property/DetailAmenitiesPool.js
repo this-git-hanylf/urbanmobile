@@ -401,7 +401,7 @@ class DetailAmenitiesPool extends React.Component {
             <View style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 5 }}>
               <Image
                 source={this.state.gallery_1}
-                style={{ width: "100%", height: 160, resizeMode: "contain" }}
+                style={{ width: "100%", height: 170, resizeMode: "contain" }}
               ></Image>
             </View>
             <View

@@ -51,7 +51,7 @@ import { scrollInterpolators, animatedStyles } from "./utils/animations";
 import CardSlide from "../components/CardSlide";
 const { height, width } = Dimensions.get("window");
 import { urlApi } from "@Config/services";
-import { _storeData, _getData } from "@Component/StoreAsync";
+import { _storeData, _getData, _navigate } from "@Component/StoreAsync";
 import { Actions } from "react-native-router-flux";
 import Styles from "./Style";
 const IS_ANDROID = Platform.OS === "android";
@@ -127,7 +127,11 @@ export default class Home extends Component {
     const count_notif_dari_home = props.lemparDataCnt;
     console.log("count_notif_dari_home", count_notif_dari_home);
 
-    Actions.push("notif", count_notif_dari_home);
+    // this.setState({ isLoaded: true }, () => {
+    //   Actions.reset("tabbar");
+    // });
+
+    // Actions.push("notif", count_notif_dari_home);
   }
 
   async componentDidMount() {
@@ -690,11 +694,18 @@ PushNotification.configure({
   // (required) Called when a remote or local notification is opened or received
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
-
     // process the notification
-
+    // _navigate("home");
     // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
     //notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+
+    // process the action
   },
 
   // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)

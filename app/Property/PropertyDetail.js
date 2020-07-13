@@ -103,7 +103,7 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export const itemWidth_tower =
-  slideWidth_tower + itemHorizontalMargin_tower * 2;
+  slideWidth_tower + itemHorizontalMargin_tower * 3;
 
 export default class extends React.Component {
   constructor(props) {
@@ -495,7 +495,7 @@ export default class extends React.Component {
         <ParallaxImage
           source={{ uri: item.picture_url }}
           containerStyle={styles.imageContainer}
-          style={styles.image}
+          style={styles.imageUnit}
           parallaxFactor={0.1}
           {...parallaxProps}
         />
@@ -1123,10 +1123,11 @@ export default class extends React.Component {
                       <View>
                         <Text
                           style={{
-                            fontWeight: "900",
+                            // fontWeight: "900",
                             color: "#FFFFFF",
-                            fontSize: 14,
+                            fontSize: 15,
                             textAlign: "center",
+                            fontFamily: Fonts.type.sfuiDisplayBold,
                           }}
                           // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                         >
