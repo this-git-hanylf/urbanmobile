@@ -66,28 +66,28 @@ var PushNotification = require("react-native-push-notification");
 
 //manggil notifservice yang ditaro di componen.
 
-const versionSpecificRules = [
-  {
-    localVersion: "3.1.1",
-    forceUpgrade: true,
-    title: "Update your app now",
-    message:
-      "This version contains a bug that might corrupt your data. You must update to be able to use our app.",
-  },
-];
-const defaultOptions = {
-  title: "Urban Jakarta has a new update!",
-};
-Siren.promptUser(defaultOptions, versionSpecificRules);
+// const versionSpecificRules = [
+//   {
+//     localVersion: "3.1.1",
+//     forceUpgrade: true,
+//     title: "Update your app now",
+//     message:
+//       "This version contains a bug that might corrupt your data. You must update to be able to use our app.",
+//   },
+// ];
+// const defaultOptions = {
+//   title: "Urban Jakarta has a new update!",
+// };
+// Siren.promptUser(defaultOptions, versionSpecificRules);
 
-// or
+// // or
 
-Siren.performCheck().then(({ updateIsAvailable }) => {
-  if (updateIsAvailable) {
-    showCustomUpdateModal();
-  }
-  console.log("siren");
-});
+// Siren.performCheck().then(({ updateIsAvailable }) => {
+//   if (updateIsAvailable) {
+//     showCustomUpdateModal();
+//   }
+//   console.log("siren");
+// });
 
 export default class Home extends Component {
   constructor(props) {
@@ -105,6 +105,12 @@ export default class Home extends Component {
       isCorLoaded: false,
       token: "",
     };
+
+    //buat di notif
+    // this.notif = new NotifService(
+    //   this.onRegister.bind(this),
+    //   this.onNotif.bind(this)
+    // );
   }
   onPress = () => {
     PushNotification.localNotification({
@@ -113,6 +119,20 @@ export default class Home extends Component {
       message: "My Notification Message", // (required)
     });
   };
+  // onRegister(token) {
+  //   this.setState({
+  //     registerToken: token.token,
+  //     fcmRegistered: true,
+  //   });
+  // }
+
+  // onNotif(notif) {
+  //   Alert.alert(notif.title, notif.message);
+  // }
+
+  // handlePerm(perms) {
+  //   Alert.alert("Permissions", JSON.stringify(perms));
+  // }
   componentWillMount() {
     this.startHeaderHeight = 80;
     if (Platform.OS == "android") {
@@ -691,13 +711,14 @@ PushNotification.configure({
     console.log("TOKEN:", token);
   },
 
-  // (required) Called when a remote or local notification is opened or received
+  // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
+
     // process the notification
-    // _navigate("home");
-    // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-    //notification.finish(PushNotificationIOS.FetchResult.NoData);
+
+    // (required) Called when a remote is received or opened, or local notification is opened
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
@@ -708,10 +729,10 @@ PushNotification.configure({
     // process the action
   },
 
-  // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
-  // senderID: '945884059945',
-  // popInitialNotification: true,
-  // requestPermissions: true,
+  // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+  onRegistrationError: function (err) {
+    console.error(err.message, err);
+  },
 
   // IOS ONLY (optional): default: all - Permissions to register.
   permissions: {
@@ -728,6 +749,8 @@ PushNotification.configure({
    * (optional) default: true
    * - Specified if permissions (ios) and token (android and ios) will requested or not,
    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+   * - if you are not using remote notification or do not have Firebase installed, use this:
+   *     requestPermissions: Platform.OS === 'ios'
    */
   requestPermissions: true,
 });

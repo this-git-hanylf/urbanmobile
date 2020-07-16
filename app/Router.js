@@ -466,8 +466,8 @@ class Routes extends Component {
                 title=""
                 tabBarLabel="Notification"
                 iconName="bell"
-                // icon={TabIconBadge}
-                icon={TabIcon}
+                icon={TabIconBadge}
+                // icon={TabIcon}
                 // cntNo={this.state.cntNotif}
                 // cntNo={this.props.count_notif_dari_home}
                 // tes={this.tes}

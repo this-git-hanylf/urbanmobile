@@ -205,7 +205,7 @@ export default class Intro extends React.Component {
     const int_systemversion = parseInt(systemVersion);
     console.log("int_systemversion", int_systemversion);
     console.log("systemVersion", systemVersion);
-    if (int_systemversion <= 8) {
+    if (int_systemversion < 8) {
       // alert("This Available Version Android 8 or Later");
       const pesan_OSver = "Information";
       const msg_os = "This Available Version Android 8 or Later";
