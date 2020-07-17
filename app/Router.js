@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { SafeAreaView, ActivityIndicator } from "react-native";
 import {
   Scene,
@@ -171,6 +171,10 @@ import EditAgent from "./EditAgent/index";
 
 // import ComingSoon from "./"
 
+import { urlApi } from "@Config/services";
+
+import PushNotification from "react-native-push-notification";
+
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -185,79 +189,39 @@ const TabIcon = ({ focused, iconName }) => {
   );
 };
 
-const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
-  var cnt = cntNo;
+const TabIconBadge = ({
+  focused,
+  iconName,
+  halo,
+  cntNo,
+  props,
+  get,
+  datacnt,
+  lempar_number,
+}) => {
+  // let cnt = 0;
+  // let lempar_int = 0;
+  // var lempar_int = lempar;
+  var cnt = lempar_number;
+  // PushNotification.getApplicationIconBadgeNumber(function (number) {
+  //   if (number > 0) {
+  //     PushNotification.setApplicationIconBadgeNumber(0);
+  //   }
 
-  console.log("cnt", cnt);
-  // console.log(await _getData("@CountNotif"));
-  // const jumlahnotif = await _getData("@CountNotif");
-  // console.log("cnt", cnt);
-  // console.log("props back di routes", jumlahnotif);
+  //   // console.log("number", number);
+  // });
+  // var number_cnt = numbers;
+  // if (cnt_ == 1) {
+  //   var cnt = cnt_ + lempar;
+  //   console.log("cnt_", cnt);
+  // } else {
+  //   var cnt = lempar;
+  // }
+  // console.log("lempar_int", lempar_int);
+  // console.log("cntt", cnt);
+
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
-
-  // var cnt = async function () {
-  //   var data = await _getData("@CountNotif");
-  //   var pecahdata = data[0].jumlahnotif;
-  //   console.log("data", data);
-  //   console.log("pecah datta", pecahdata);
-  //   return pecahdata;
-  // };
-  // var cnt = async function () {
-  //   var a = await _getData("@CountNotif");
-  //   var pecah_a = a[0].jumlahnotif;
-  //   console.log("a", a);
-  //   console.log("pecah_a", pecah_a);
-  //   return pecah_a;
-  // };
-  // // console.log(cnt("a"));
-  // cnt("pecah_a").then(function (value) {
-  //   console.log("result", value);
-  //   // var tes = value;
-
-  //   // var pecah_value = value[0].jumlahnotif;
-  //   // var pecah_value = value;
-  //   // console.log("pecah_value", pecah_value);
-  //   return value;
-  //   // const cntnih = result;
-  // });
-
-  var cntnih = 0;
-  // var cnt = 0;
-  // console.log("cntnih", cntnih);
-
-  // // cnt("pecah_value")
-  // console.log("get value", cnt("a"));
-  // var myPromise = Promise.resolve(cnt("a"));
-  // console.log("get value", myPromise);
-
-  // myPromise.then((value) => {
-  //   console.log("get value._55", value._55);
-  // });
-  // var cnt_value = cnt("pecah_value")._55;
-
-  // var pecah_cnt_value = cnt_value[0].jumlahnotif;
-  // console.log("get value._55", pecah_cnt_value);
-
-  // getCnt = (name) => {
-  //   var cnt = name;
-  //   console.log("isi cnt", cnt);
-  //   return cnt;
-  // }; 300.295
-  // var tescnt = cnt("data");
-  // // var myPromise = Promise.resolve(tescnt);
-  // tescnt.then((value) => {
-  //   console.log("get value._55", value);
-  //   const ambildata = value;
-  // });
-  // var tescnt = ambildata;
-  // console.log("tes cnt", tescnt);
-  // console.log("get value._55", tescnt._55);
-  // console.log("tes cnt", tescnt);
-
-  //kesini
-
-  // console.log("var", name_string);
   return (
     <View style={{ flexDirection: "row" }}>
       <Icon
@@ -277,29 +241,16 @@ const TabIconBadge = ({ focused, iconName, tes, halo, cntNo, props }) => {
           // flex: 2,
         }}
       >
-        {cnt == 0 || cnt == "undefined" || cnt < 0 || cnt == "" ? (
-          <Text
-            style={{
-              alignItems: "center",
-              alignSelf: "center",
-              fontSize: 12,
-              textAlign: "center",
-            }}
-          >
-            0
-          </Text>
-        ) : (
-          <Text
-            style={{
-              alignItems: "center",
-              alignSelf: "center",
-              fontSize: 12,
-              textAlign: "center",
-            }}
-          >
-            {cnt}
-          </Text>
-        )}
+        <Text
+          style={{
+            alignItems: "center",
+            alignSelf: "center",
+            fontSize: 12,
+            textAlign: "center",
+          }}
+        >
+          {cnt}
+        </Text>
       </Badge>
     </View>
   );
@@ -323,15 +274,15 @@ class Routes extends Component {
       // const tes = this.props.data;
       // console.log("tes dari notif ke rout", tes);
       const isLogin = await _getData("@isLogin");
-      const jumlahnotif = await _getData("@CountNotif");
-      console.log("jumlahnotifroutes", jumlahnotif);
+      // const jumlahnotif = await _getData("@CountNotif");
+      // console.log("jumlahnotifroutes", jumlahnotif);
       console.log("isLogin: ", isLogin);
       if (isLogin) {
         this.setState({ hasLogin: true, isLoaded: true });
         // const jumlahnotif = await _getData("@CountNotif");
-        this.setState({
-          cntNotif: jumlahnotif[0].jumlahnotif,
-        });
+        // this.setState({
+        //   cntNotif: jumlahnotif[0].jumlahnotif,
+        // });
         // let cntNotif = "";
         // let cn
       } else {
@@ -343,10 +294,10 @@ class Routes extends Component {
   }
 
   async componentWillReceiveProps(props) {
-    const jumlahnotif = await _getData("@CountNotif");
-    console.log("jumlahnotifroutes", jumlahnotif);
-    // props dari B
-    console.log("props back di routes", props.count_notif_dari_home);
+    // const jumlahnotif = await _getData("@CountNotif");
+    console.log("halo terima", props.lempar);
+    // // props dari B
+    // console.log("props back di routes", props.count_notif_dari_home);
     // const count_notif_dari_home = props.lemparDataCnt[0].jumlahnotif;
     // console.log("count_notif_dari_home", count_notif_dari_home);
     // // Actions.refresh("tabbar", { lemparDataCnt: cntno });
@@ -354,41 +305,6 @@ class Routes extends Component {
     //   Actions.refresh("tabbar", { lemparDataTabbar: count_notif_dari_home });
     // }, 0);
   }
-
-  // tes() {
-  //   try {
-  //     var get_name_string = async function () {
-  //       var name_string = await _getData("@CountNotif");
-  //       // console.log("tes", tes);
-
-  //       return name_string;
-  //       //  this.tes({ cntr: cnt });
-  //       //   // console.log("jmlll tabiconbadge", cnt);
-
-  //       //   // the rest of your renderItem function should be in this block
-  //     };
-
-  //     get_name_string("some_key").then((name) => {
-  //       console.log("get", name);
-  //       //   // cnt = "";
-  //       // cnt = name[0].jumlahnotif;
-  //       // let data = [];
-  //       const data = name;
-  //       this.state({ halo: data });
-  //       // this.setState({ halo: cnt });
-
-  //       //   // var name_array = name_string.split(",");
-  //       //   // console.log("namear", name_array);
-  //     });
-  //     console.log("this halo", this.state.halo);
-  //   } catch (err) {
-  //     console.log("error: ", err);
-  //   }
-
-  //   // cnt = cnt;
-  //   // const jumlahnotif = await _getData("@CountNotif");
-  //   // console.log("jumlah notif did mountt", jumlahnotif);
-  // }
 
   render() {
     if (!this.state.isLoaded) {
@@ -467,6 +383,7 @@ class Routes extends Component {
                 tabBarLabel="Notification"
                 iconName="bell"
                 icon={TabIconBadge}
+                // get={getdata}
                 // icon={TabIcon}
                 // cntNo={this.state.cntNotif}
                 // cntNo={this.props.count_notif_dari_home}

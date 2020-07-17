@@ -74,7 +74,7 @@ export default class NotifService {
       group: "group", // (optional) add group to message
       ongoing: false, // (optional) set whether this is an "ongoing" notification
       actions: ["Yes", "No"], // (Android only) See the doc for notification actions to know more
-      invokeApp: false, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
+      invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
       /* iOS only properties */
       alertAction: "view", // (optional) default: view

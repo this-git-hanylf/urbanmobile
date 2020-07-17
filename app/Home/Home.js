@@ -107,10 +107,10 @@ export default class Home extends Component {
     };
 
     //buat di notif
-    // this.notif = new NotifService(
-    //   this.onRegister.bind(this),
-    //   this.onNotif.bind(this)
-    // );
+    this.notif = new NotifService(
+      this.onRegister.bind(this),
+      this.onNotif.bind(this)
+    );
   }
   onPress = () => {
     PushNotification.localNotification({
@@ -119,20 +119,20 @@ export default class Home extends Component {
       message: "My Notification Message", // (required)
     });
   };
-  // onRegister(token) {
-  //   this.setState({
-  //     registerToken: token.token,
-  //     fcmRegistered: true,
-  //   });
-  // }
+  onRegister(token) {
+    this.setState({
+      registerToken: token.token,
+      fcmRegistered: true,
+    });
+  }
 
-  // onNotif(notif) {
-  //   Alert.alert(notif.title, notif.message);
-  // }
+  onNotif(notif) {
+    Alert.alert(notif.title, notif.message);
+  }
 
-  // handlePerm(perms) {
-  //   Alert.alert("Permissions", JSON.stringify(perms));
-  // }
+  handlePerm(perms) {
+    Alert.alert("Permissions", JSON.stringify(perms));
+  }
   componentWillMount() {
     this.startHeaderHeight = 80;
     if (Platform.OS == "android") {
@@ -165,9 +165,9 @@ export default class Home extends Component {
     };
     // const CountnotifdiHome = await _getData("@CountNotif");
     // console.log("count notif di home", CountnotifdiHome);
-    // Actions.refresh("tabbar", {
-    //   klik: _storeData("@CountNotif", CountnotifdiHome),
-    // });
+    Actions.refresh("tabbar", {
+      // klik: _storeData("@CountNotif", CountnotifdiHome),
+    });
     // _storeData("@CountNotif", CountnotifdiHome);
     // _storeData("@CountNotif", CountnotifdiHome);
 
@@ -395,6 +395,13 @@ export default class Home extends Component {
             >
               Hello {this.state.name}
             </Text>
+            <Button
+              onPress={this.notif.scheduleNotif("my_sound.mp3", {
+                fullName: this.state.fullname,
+              })}
+            >
+              <Text>tes</Text>
+            </Button>
           </ImageBackground>
 
           <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -713,18 +720,20 @@ PushNotification.configure({
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    console.log("NOTIFICATION:", notification);
+    console.log("NOTIFICATION on:", notification);
 
+    console.log("number notif", notification.number);
+    Actions.reset("tabbar", { lempar_number: notification.number });
     // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    // notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function (notification) {
     console.log("ACTION:", notification.action);
-    console.log("NOTIFICATION:", notification);
+    console.log("NOTIFICATION action:", notification);
 
     // process the action
   },
