@@ -319,88 +319,78 @@ export default class Intro extends React.Component {
   }
 
   tes() {
-    const messaging = firebase.messaging();
-
-    messaging
-      .hasPermission()
-      .then((enabled) => {
-        if (enabled) {
-          messaging
-            .getToken()
-            .then((token) => {
-              console.log(token);
-              this.setState({
-                token_fire: token,
-              });
-            })
-            .catch((error) => {
-              /* handle error */
-            });
-        } else {
-          messaging
-            .requestPermission()
-            .then(() => {
-              /* got permission */
-            })
-            .catch((error) => {
-              /* handle error */
-            });
-        }
-      })
-      .catch((error) => {
-        /* handle error */
-      });
-
-    firebase.notifications().onNotification((notification) => {
-      const { title, body } = notification;
-      PushNotification.localNotification({
-        title: title,
-        message: body, // (required)
-      });
-    });
-
-    PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log("TOKEN:", token);
-        // this.setState({
-        //   token_fire: token,
-        // });
-      },
-
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log("NOTIFICATION:", notification);
-
-        // process the notification
-
-        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-        //notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-
-      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
-      // senderID: '945884059945',
-      // popInitialNotification: true,
-      // requestPermissions: true,
-
-      // IOS ONLY (optional): default: all - Permissions to register.
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-
-      // Should the initial notification be popped automatically
-      // default: true
-      popInitialNotification: true,
-
-      /**
-       * (optional) default: true
-       * - Specified if permissions (ios) and token (android and ios) will requested or not,
-       * - if not, you must call PushNotificationsHandler.requestPermissions() later
-       */
-      requestPermissions: true,
-    });
+    // const messaging = firebase.messaging();
+    // messaging
+    //   .hasPermission()
+    //   .then((enabled) => {
+    //     if (enabled) {
+    //       messaging
+    //         .getToken()
+    //         .then((token) => {
+    //           console.log(token);
+    //           this.setState({
+    //             token_fire: token,
+    //           });
+    //         })
+    //         .catch((error) => {
+    //           /* handle error */
+    //         });
+    //     } else {
+    //       messaging
+    //         .requestPermission()
+    //         .then(() => {
+    //           /* got permission */
+    //         })
+    //         .catch((error) => {
+    //           /* handle error */
+    //         });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     /* handle error */
+    //   });
+    // // firebase.notifications().onNotification((notification) => {
+    //   const { title, body } = notification;
+    //   PushNotification.localNotification({
+    //     title: title,
+    //     message: body, // (required)
+    //   });
+    // });
+    // PushNotification.configure({
+    //   // (optional) Called when Token is generated (iOS and Android)
+    //   onRegister: function (token) {
+    //     console.log("TOKEN:", token);
+    //     // this.setState({
+    //     //   token_fire: token,
+    //     // });
+    //   },
+    //   // (required) Called when a remote or local notification is opened or received
+    //   onNotification: function (notification) {
+    //     console.log("NOTIFICATION:", notification);
+    //     // process the notification
+    //     // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+    //     //notification.finish(PushNotificationIOS.FetchResult.NoData);
+    //   },
+    //   // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+    //   // senderID: '945884059945',
+    //   // popInitialNotification: true,
+    //   // requestPermissions: true,
+    //   // IOS ONLY (optional): default: all - Permissions to register.
+    //   permissions: {
+    //     alert: true,
+    //     badge: true,
+    //     sound: true,
+    //   },
+    //   // Should the initial notification be popped automatically
+    //   // default: true
+    //   popInitialNotification: true,
+    //   /**
+    //    * (optional) default: true
+    //    * - Specified if permissions (ios) and token (android and ios) will requested or not,
+    //    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+    //    */
+    //   requestPermissions: true,
+    // });
   }
 
   doLogin(value) {
@@ -1113,27 +1103,27 @@ export default class Intro extends React.Component {
   }
 }
 
-const RemotePushController = () => {
-  useEffect(() => {
-    PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log("TOKEN:", token);
-        // this.setState({ token_fire: token });
-      },
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log("REMOTE NOTIFICATION ==>", notification);
-        // process the notification here
-      },
-      // Android only: GCM or FCM Sender ID
-      senderID: "945884059945",
-      popInitialNotification: true,
-      requestPermissions: true,
-    });
-  }, []);
-  return null;
-};
+// const RemotePushController = () => {
+//   useEffect(() => {
+//     PushNotification.configure({
+//       // (optional) Called when Token is generated (iOS and Android)
+//       onRegister: function (token) {
+//         console.log("TOKEN:", token);
+//         // this.setState({ token_fire: token });
+//       },
+//       // (required) Called when a remote or local notification is opened or received
+//       onNotification: function (notification) {
+//         console.log("REMOTE NOTIFICATION ==>", notification);
+//         // process the notification here
+//       },
+//       // Android only: GCM or FCM Sender ID
+//       senderID: "945884059945",
+//       popInitialNotification: true,
+//       requestPermissions: true,
+//     });
+//   }, []);
+//   return null;
+// };
 
 const slides = [
   {

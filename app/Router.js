@@ -174,7 +174,15 @@ import EditAgent from "./EditAgent/index";
 import { urlApi } from "@Config/services";
 
 import PushNotification from "react-native-push-notification";
-
+import NotifService from "@Component/NotifService";
+PushNotification.getApplicationIconBadgeNumber(function (number) {
+  console.log("numer", number);
+  if (number > 0) {
+    PushNotification.setApplicationIconBadgeNumber(0);
+    console.log("numer", number);
+  }
+});
+// console.log("number", number);
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -200,22 +208,28 @@ const TabIconBadge = ({
   lempar_number,
 }) => {
   // let cnt = 0;
+
+  // var cnt = Number(
+  //   PushNotification.setApplicationIconBadgeNumber(lempar_number)
+  // );
+
   // let lempar_int = 0;
   // var lempar_int = lempar;
-  var cnt = lempar_number;
-  // PushNotification.getApplicationIconBadgeNumber(function (number) {
-  //   if (number > 0) {
-  //     PushNotification.setApplicationIconBadgeNumber(0);
-  //   }
+  // console.log("lempar number", lempar_number);
+  var cnt_lempar_number = lempar_number;
+  console.log("cnt lempar number", cnt_lempar_number);
+  if (cnt_lempar_number > 0) {
+    var cnt = Number(cnt_lempar_number);
+    console.log("cnt integer", cnt);
+  }
 
-  //   // console.log("number", number);
-  // });
-  // var number_cnt = numbers;
-  // if (cnt_ == 1) {
-  //   var cnt = cnt_ + lempar;
-  //   console.log("cnt_", cnt);
-  // } else {
-  //   var cnt = lempar;
+  // // var number_cnt = numbers;
+  if (cnt == 1) {
+    var cnt_jumlah = cnt + cnt;
+    console.log("cnt_", cnt_jumlah);
+  }
+  // else {
+  //   var cnt_jumlah = cnt_lempar_number;
   // }
   // console.log("lempar_int", lempar_int);
   // console.log("cntt", cnt);
@@ -249,7 +263,7 @@ const TabIconBadge = ({
             textAlign: "center",
           }}
         >
-          {cnt}
+          {cnt_jumlah}
         </Text>
       </Badge>
     </View>
