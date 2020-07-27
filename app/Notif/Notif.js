@@ -85,13 +85,14 @@ export default class Notif extends React.Component {
       dashmenu: await _getData("@DashMenu"),
       isLogin: await _getData("@isLogin"),
       dataTower: await _getData("@UserProject"),
+      token: await _getData("@Token"),
     };
 
     console.log("datra", data);
 
     this.setState(data, () => {
       this.getDataNotif();
-      // this.getCountNotif();
+      this.getCountNotif();
       // this.updateisRead();
     });
 
@@ -146,6 +147,7 @@ export default class Notif extends React.Component {
 
   getDataNotif = () => {
     console.log(this.state.email);
+    console.log(this.state.token);
     fetch(
       urlApi + "c_notification/getNotification/IFCAMOBILE/" + this.state.email,
       {
@@ -159,13 +161,13 @@ export default class Notif extends React.Component {
     )
       .then((response) => response.json())
       .then((res) => {
+        console.log("res notif get data di notif", res);
         const resData = res.Data;
         this.setState({
           dataNotif: resData,
           // isRead: resData.IsRead,
         });
         // console.log("is read datanotif", this.state.isRead);
-        console.log("res notif get data di notif", res);
       })
       .catch((error) => {
         console.log(error);

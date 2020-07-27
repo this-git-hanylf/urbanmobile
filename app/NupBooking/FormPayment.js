@@ -546,9 +546,9 @@ class FormPayment extends React.Component {
                 style={Styles.btnMedium}
                 onPress={() => {
                   this.confirm();
-                  this.notif.scheduleNotif("my_sound.mp3", {
-                    fullName: this.state.fullname,
-                  });
+                  // this.notif.scheduleNotif("my_sound.mp3", {
+                  //   fullName: this.state.fullname,
+                  // });
                 }}
               >
                 <Text

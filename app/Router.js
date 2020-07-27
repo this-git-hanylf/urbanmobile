@@ -207,6 +207,30 @@ const TabIconBadge = ({
   datacnt,
   lempar_number,
 }) => {
+  console.log("cntNp", cntNo);
+  //
+  async function f() {
+    let getdata = await _getData("@CountNotif");
+    console.log("getdata", getdata);
+    let array_getdata = getdata[0].jumlahnotif;
+    console.log("array_getdata", array_getdata);
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(array_getdata), 1000);
+    });
+
+    let result = await promise; // wait until the promise resolves (*)
+    // // console.log("result", result);
+    // // var ambil_result = result;
+    return result;
+    // alert(result); // "done!"
+  }
+
+  // var data = ''
+  // Promise.resolve(your_promise).then(value => {
+  //   console.log('value:', value)
+  //   data = value;
+  // })
+
   // let cnt = 0;
 
   // var cnt = Number(
@@ -215,19 +239,19 @@ const TabIconBadge = ({
 
   // let lempar_int = 0;
   // var lempar_int = lempar;
-  // console.log("lempar number", lempar_number);
+  // console.log("lempar number", value_cnt);
   var cnt_lempar_number = lempar_number;
   console.log("cnt lempar number", cnt_lempar_number);
   if (cnt_lempar_number > 0) {
-    var cnt = Number(cnt_lempar_number);
-    console.log("cnt integer", cnt);
+    var cnt_number = Number(cnt_lempar_number);
+    console.log("cnt integer", cnt_number);
   }
 
   // // var number_cnt = numbers;
-  if (cnt == 1) {
-    var cnt_jumlah = cnt + cnt;
-    console.log("cnt_", cnt_jumlah);
-  }
+  // if (cnt == 1) {
+  //   var cnt_jumlah = cnt + cnt;
+  //   console.log("cnt_", cnt_jumlah);
+  // }
   // else {
   //   var cnt_jumlah = cnt_lempar_number;
   // }
@@ -236,6 +260,30 @@ const TabIconBadge = ({
 
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
+  var cnt = focused ? 0 : cnt_number;
+
+  var myPromise = Promise.resolve(f());
+
+  myPromise.then((value) => {
+    console.log("get value._55", value);
+    // const value_promise = value;
+  });
+  // var data = "";
+  // var data = Promise.resolve(f()).then((value) => {
+  //   console.log("value", value);
+  //   // data = value;
+  //   return value;
+  // });
+
+  console.log(
+    "data_value",
+    myPromise.then((value) => {
+      return value;
+      // console.log("get value._55", value);
+      // const value_promise = value;
+    })
+  );
+
   return (
     <View style={{ flexDirection: "row" }}>
       <Icon
@@ -245,6 +293,7 @@ const TabIconBadge = ({
         style={{ marginTop: 5, color: tintColor, flex: -1 }}
         textStyle={color}
       />
+
       <Badge
         style={{
           backgroundColor: "red",
@@ -255,16 +304,29 @@ const TabIconBadge = ({
           // flex: 2,
         }}
       >
-        <Text
-          style={{
-            alignItems: "center",
-            alignSelf: "center",
-            fontSize: 12,
-            textAlign: "center",
-          }}
-        >
-          {cnt_jumlah}
-        </Text>
+        {cntNo == null || cntNo == "undefined" ? (
+          <Text
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            0
+          </Text>
+        ) : (
+          <Text
+            style={{
+              alignItems: "center",
+              alignSelf: "center",
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            {cntNo}
+          </Text>
+        )}
       </Badge>
     </View>
   );
@@ -288,11 +350,14 @@ class Routes extends Component {
       // const tes = this.props.data;
       // console.log("tes dari notif ke rout", tes);
       const isLogin = await _getData("@isLogin");
+      this.getCountBadge();
       // const jumlahnotif = await _getData("@CountNotif");
       // console.log("jumlahnotifroutes", jumlahnotif);
-      console.log("isLogin: ", isLogin);
+      console.log("isLoginnn: ", isLogin);
+
       if (isLogin) {
         this.setState({ hasLogin: true, isLoaded: true });
+
         // const jumlahnotif = await _getData("@CountNotif");
         // this.setState({
         //   cntNotif: jumlahnotif[0].jumlahnotif,
@@ -306,6 +371,43 @@ class Routes extends Component {
       console.log("error: ", err);
     }
   }
+  getCountBadge = async () => {
+    const email = await _getData("@User");
+    fetch(urlApi + "c_notification/getNotificationBadge/IFCAMOBILE/" + email, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res notif di notif", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          let data = [];
+          console.log("resdata getCountBadge", resData);
+          let resData_map = resData[0].cnt;
+          console.log("resdata_map", resData_map);
+          this.setState({ cnt_badge: resData_map });
+          // resData.map((item) => {
+          //   let items = {
+          //     // ...item,
+          //     jumlahnotif: item.cnt,
+          //   };
+          //   data.push(items);
+          // });
+
+          // if (data) {
+          //   this.setState({ cntNotif: data });
+
+          //   console.log("data update", this.state.cntNotif);
+          // }
+
+          // _storeData("@CountNotif", this.state.cntNotif);
+          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   async componentWillReceiveProps(props) {
     // const jumlahnotif = await _getData("@CountNotif");
@@ -399,7 +501,7 @@ class Routes extends Component {
                 icon={TabIconBadge}
                 // get={getdata}
                 // icon={TabIcon}
-                // cntNo={this.state.cntNotif}
+                cntNo={this.state.cnt_badge}
                 // cntNo={this.props.count_notif_dari_home}
                 // tes={this.tes}
                 // halo={this.state.halo}
