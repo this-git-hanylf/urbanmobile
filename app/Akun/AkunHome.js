@@ -51,6 +51,7 @@ import { Actions } from "react-native-router-flux";
 import { urlApi } from "@Config/services";
 import Mailer from "react-native-mail";
 import DeviceInfo from "react-native-device-info";
+import Icon_ from "react-native-vector-icons/FontAwesome";
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
@@ -573,6 +574,74 @@ export default class extends React.Component {
                 </View>
               </View>
             </Content>
+            {/* footer navigasi */}
+            <Footer>
+              <FooterTab style={{ backgroundColor: "white" }}>
+                <Button vertical onPress={() => Actions.home()}>
+                  <Icon_
+                    name="home"
+                    color="#b7b7b7"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                  >
+                    Home
+                  </Text>
+                </Button>
+                <Button vertical onPress={() => Actions.Menu()}>
+                  <Icon_
+                    name="newspaper-o"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                  >
+                    News
+                  </Text>
+                </Button>
+                {this.state.badge_notif_db > 0 ? (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Badge style={{ top: 8 }}>
+                      <Text>{this.state.badge_notif_db[0].jumlahnotif}</Text>
+                    </Badge>
+
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )}
+                <Button vertical>
+                  <Icon_
+                    name="user"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                  >
+                    Profile
+                  </Text>
+                </Button>
+              </FooterTab>
+            </Footer>
           </ImageBackground>
         </Container>
       );

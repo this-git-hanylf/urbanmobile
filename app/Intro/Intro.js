@@ -266,8 +266,8 @@ export default class Intro extends React.Component {
       email: this.state.email,
       password: this.state.password,
       token: "",
-      token_firebase: "",
-      // token_firebase: this.state.token_fire, //nottif
+      // token_firebase: "",
+      token_firebase: this.state.token_fire, //nottif
       device: Platform.OS,
       mac: mac,
     };
@@ -335,6 +335,7 @@ export default class Intro extends React.Component {
             })
             .catch((error) => {
               /* handle error */
+              console.log("error get token messaging", error);
             });
         } else {
           messaging
@@ -580,7 +581,7 @@ export default class Intro extends React.Component {
       console.log("error:", err);
     } finally {
       this.setState({ isLoaded: true }, () => {
-        Actions.reset("tabbar");
+        Actions.home();
       });
     }
   };

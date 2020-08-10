@@ -143,6 +143,9 @@ import FormBooking from "./NupBooking/FormBooking";
 import FormPayment from "./NupBooking/FormPayment";
 import UploadBukti from "./NupBooking/UploadBukti";
 
+//New_NupBooking
+import New_NupBooking from "./NupBooking/New_NupBooking";
+
 //ContactUs
 import ContactUs from "./ContactUs/ContactUs";
 
@@ -171,18 +174,14 @@ import EditAgent from "./EditAgent/index";
 
 // import ComingSoon from "./"
 
+//footer
+import FooterNav from "./components/FooterNav";
+
 import { urlApi } from "@Config/services";
 
 import PushNotification from "react-native-push-notification";
 import NotifService from "@Component/NotifService";
-PushNotification.getApplicationIconBadgeNumber(function (number) {
-  console.log("numer", number);
-  if (number > 0) {
-    PushNotification.setApplicationIconBadgeNumber(0);
-    console.log("numer", number);
-  }
-});
-// console.log("number", number);
+
 const TabIcon = ({ focused, iconName }) => {
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
@@ -217,7 +216,6 @@ const TabIconBadge = ({
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => resolve(array_getdata), 1000);
     });
-
     let result = await promise; // wait until the promise resolves (*)
     // // console.log("result", result);
     // // var ambil_result = result;
@@ -247,26 +245,23 @@ const TabIconBadge = ({
     console.log("cnt integer", cnt_number);
   }
 
-  // // var number_cnt = numbers;
+  // var number_cnt = numbers;
   // if (cnt == 1) {
   //   var cnt_jumlah = cnt + cnt;
   //   console.log("cnt_", cnt_jumlah);
-  // }
-  // else {
+  // } else {
   //   var cnt_jumlah = cnt_lempar_number;
   // }
-  // console.log("lempar_int", lempar_int);
+  // // console.log("lempar_int", lempar_int);
   // console.log("cntt", cnt);
 
   var color = focused ? "#AB9E84" : "#b7b7b7";
   var tintColor = focused ? "#AB9E84" : "#b7b7b7";
-  var cnt = focused ? 0 : cnt_number;
 
   var myPromise = Promise.resolve(f());
 
   myPromise.then((value) => {
     console.log("get value._55", value);
-    // const value_promise = value;
   });
   // var data = "";
   // var data = Promise.resolve(f()).then((value) => {
@@ -275,14 +270,14 @@ const TabIconBadge = ({
   //   return value;
   // });
 
-  console.log(
-    "data_value",
-    myPromise.then((value) => {
-      return value;
-      // console.log("get value._55", value);
-      // const value_promise = value;
-    })
-  );
+  // console.log(
+  //   "data_value",
+  //   myPromise.then((value) => {
+  //     return value;
+  //     // console.log("get value._55", value);
+  //     // const value_promise = value;
+  //   })
+  // );
 
   return (
     <View style={{ flexDirection: "row" }}>
@@ -345,8 +340,20 @@ class Routes extends Component {
     };
   }
 
+  // componentDidUpdate() {
+  //   console.log("update");
+  // }
+
+  componentWillMount() {
+    console.log("update");
+  }
+
   async componentDidMount() {
     try {
+      console.log("notify_length", this.props.notify_length);
+      // this.notif.getScheduledLocalNotifications((notify) =>
+      //   console.log(notify)
+      // );
       // const tes = this.props.data;
       // console.log("tes dari notif ke rout", tes);
       const isLogin = await _getData("@isLogin");
@@ -386,22 +393,6 @@ class Routes extends Component {
           let resData_map = resData[0].cnt;
           console.log("resdata_map", resData_map);
           this.setState({ cnt_badge: resData_map });
-          // resData.map((item) => {
-          //   let items = {
-          //     // ...item,
-          //     jumlahnotif: item.cnt,
-          //   };
-          //   data.push(items);
-          // });
-
-          // if (data) {
-          //   this.setState({ cntNotif: data });
-
-          //   console.log("data update", this.state.cntNotif);
-          // }
-
-          // _storeData("@CountNotif", this.state.cntNotif);
-          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
         }
       })
       .catch((error) => {
@@ -409,9 +400,9 @@ class Routes extends Component {
       });
   };
 
-  async componentWillReceiveProps(props) {
+  componentWillReceiveProps(props) {
     // const jumlahnotif = await _getData("@CountNotif");
-    console.log("halo terima", props.lempar);
+    console.log("halo terima", props.lemparDataCnt);
     // // props dari B
     // console.log("props back di routes", props.count_notif_dari_home);
     // const count_notif_dari_home = props.lemparDataCnt[0].jumlahnotif;
@@ -436,13 +427,31 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-            <Scene
-              key="tabbar"
-              initial={this.state.hasLogin}
+            {/* <Scene
+              key="footer"
+              // initial={this.state.hasLogin}
               hideNavBar
               translucent={true}
               tabs={true}
               activeTintColor="#AB9E84"
+            // type="reset"
+            /> */}
+            {/* <Scene
+              key="footer"
+              // initial={this.state.hasLogin}
+              navTransparent={true}
+              hideNavBar={true}
+              component={FooterNav}
+              // type="reset"
+            /> */}
+            {/* <Scene
+              key="tabbar"
+              gestureEnabled={false}
+              // hideNavBar
+              // translucent={true}
+              activeBackgroundColor="#ddd"
+              tabs
+              tabBarComponent={FooterNav}
             >
               <Scene
                 key="home"
@@ -461,6 +470,7 @@ class Routes extends Component {
                 icon={TabIcon}
                 // color="#ad1819"
                 // tintColor="#ad1819"
+                // type="reset"
               />
               <Scene
                 // key="SkipLoginBlank"
@@ -502,9 +512,10 @@ class Routes extends Component {
                 // get={getdata}
                 // icon={TabIcon}
                 cntNo={this.state.cnt_badge}
-                // cntNo={this.props.count_notif_dari_home}
-                // tes={this.tes}
-                // halo={this.state.halo}
+                // cntNo={this.props.lemparDataCnt}
+                // tes={this.handleClick.bind(this)}
+                // number={this.state.num}
+                // halo={this.getCountBadge.bind(this)}
               />
               <Scene
                 key="akun"
@@ -516,7 +527,83 @@ class Routes extends Component {
                 iconName="user"
                 icon={TabIcon}
               />
-            </Scene>
+            </Scene> */}
+
+            <Scene
+              key="home"
+              component={Home}
+              navTransparent={true}
+              hideNavBar={true}
+              title=""
+              tabBarLabel="Home"
+              color="#000000"
+              tabBarStyle={{ color: "#000000" }}
+              titleStyle={{ color: "#000" }}
+              // labelStyle={{color: "#ad1819"}}
+              // activeTintColor="#ad1819"
+              // inactiveTintColor="#fff"
+              iconName="home"
+              icon={TabIcon}
+              // color="#ad1819"
+              // tintColor="#ad1819"
+              // type="reset"
+            />
+            <Scene
+              // key="SkipLoginBlank"
+              // component={SkipLoginBlank}
+              key="ListingProjectPage"
+              component={Search}
+              navTransparent={true}
+              hideNavBar={true}
+              title=""
+              tabBarLabel="Progress"
+              iconName="building-o"
+              icon={TabIcon}
+            />
+            <Scene
+              // key="SkipLoginBlank"
+              // component={SkipLoginBlank}
+              key="Menu"
+              component={Menu}
+              navTransparent={true}
+              hideNavBar={true}
+              title=""
+              tabBarLabel="News"
+              iconName="newspaper-o"
+              icon={TabIcon}
+            />
+            <Scene
+              key="notif"
+              // key="IndexNotif"
+              // component={SkipLoginBlank2}
+              // key="notif"
+              component={Notif}
+              // component={ScreenNotif}
+              navTransparent={true}
+              hideNavBar={true}
+              title=""
+              tabBarLabel="Notification"
+              iconName="bell"
+              icon={TabIconBadge}
+              // get={getdata}
+              // icon={TabIcon}
+              cntNo={this.state.cnt_badge}
+              // cntNo={this.props.lemparDataCnt}
+              // tes={this.handleClick.bind(this)}
+              // number={this.state.num}
+              // halo={this.getCountBadge.bind(this)}
+            />
+            <Scene
+              key="akun"
+              component={AkunHome}
+              navTransparent={true}
+              hideNavBar={true}
+              title=""
+              tabBarLabel="Profile"
+              iconName="user"
+              icon={TabIcon}
+            />
+            {/* </Scene> */}
             <Scene
               key="propertydetail"
               component={PropertyDetail}
@@ -546,28 +633,24 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="unitgoris"
               component={Unitgoris}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="unittype"
               component={Unittype}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="unitdetail"
               component={UnitDetail}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="chousefloor"
               component={ChouseFloor}
@@ -610,70 +693,60 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="profile"
               component={Profile}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="MyReservationProjectPage"
               component={MyReservationProjectPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="MyUnitPage"
               component={MyUnitPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="MyUnitDetailPage"
               component={MyUnitDetailPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="SimulasiPage"
               component={Calcu}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="NewsPage"
               component={NewsPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="BookingPage"
               component={BookingPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="project"
               component={Project}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="TWPBillProjectPage"
               component={MyBillingPage}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="ProjectDownloadPage"
               component={DownloadPage}
@@ -699,7 +772,6 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             {/*//! Sementara diubah  */}
             <Scene
               key="ReportNew"
@@ -767,7 +839,6 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="ResetPass"
               component={Reset}
@@ -813,14 +884,12 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="FollowupProspect"
               component={FollowupProspect}
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="Detail"
               component={DetailProspect}
@@ -887,7 +956,6 @@ class Routes extends Component {
               hideNavBar={true}
               title=""
             />
-
             <Scene
               key="NupBooking"
               component={NupBooking}
@@ -904,7 +972,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="FormBooking"
               component={FormBooking}
@@ -929,7 +996,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="DetailAmenitiesDining"
               component={DetailAmenitiesDining}
@@ -938,7 +1004,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="DetailAmenitiesMall"
               component={DetailAmenitiesMall}
@@ -963,7 +1028,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="DetailAmenitiesPool"
               component={DetailAmenitiesPool}
@@ -972,7 +1036,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="DetailAmenitiesPlay"
               component={DetailAmenitiesPlay}
@@ -981,7 +1044,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="PageTerm"
               component={PageTerm}
@@ -990,7 +1052,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="ContactUs"
               component={ContactUs}
@@ -999,7 +1060,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="AboutUs"
               component={AboutUs}
@@ -1008,7 +1068,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="MyBooking"
               component={MyBooking}
@@ -1017,7 +1076,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="DetailBooking"
               component={DetailBooking}
@@ -1042,7 +1100,6 @@ class Routes extends Component {
               translucent={true}
               tabs={true}
             />
-
             <Scene
               key="MyBooking_segment"
               component={MyBooking_segment}
@@ -1102,6 +1159,14 @@ class Routes extends Component {
             <Scene
               key="EditAgent"
               component={EditAgent}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="New_NupBooking"
+              component={New_NupBooking}
               title=""
               hideNavBar
               translucent={true}

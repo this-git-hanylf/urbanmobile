@@ -63,7 +63,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Siren from "react-native-siren";
 import NotifService from "../components/NotifService";
 var PushNotification = require("react-native-push-notification");
-
+import Icon_ from "react-native-vector-icons/FontAwesome";
 //manggil notifservice yang ditaro di componen.
 
 // const versionSpecificRules = [
@@ -104,40 +104,43 @@ export default class Home extends Component {
 
       isCorLoaded: false,
       token: "",
+      pushData: [],
+      // badge_notif_db: await _getData("@CountNotif")
     };
 
-    //buat di notif
-    this.notif = new NotifService(
-      this.onRegister.bind(this),
-      this.onNotif.bind(this)
-    );
+    // buat di notif
+    // this.notif = new NotifService(
+    //   this.onRegister.bind(this),
+    //   this.onNotif.bind(this)
+    // );
   }
-  onPress = () => {
-    PushNotification.localNotification({
-      /* iOS and Android properties */
-      title: "My Notification Title", // (optional)
-      message: "My Notification Message", // (required)
-    });
-  };
-  onRegister(token) {
-    this.setState({
-      registerToken: token.token,
-      fcmRegistered: true,
-    });
-  }
+  // onPress = () => {
+  //   PushNotification.localNotification({
+  //     /* iOS and Android properties */
+  //     title: "My Notification Title", // (optional)
+  //     message: "My Notification Message", // (required)
+  //   });
+  // };
+  // onRegister(token) {
+  //   this.setState({
+  //     registerToken: token.token,
+  //     fcmRegistered: true,
+  //   });
+  // }
 
-  onNotif(notif) {
-    Alert.alert(notif.title, notif.message);
-  }
+  // onNotif(notif) {
+  //   Alert.alert(notif.title, notif.message);
+  // }
 
-  handlePerm(perms) {
-    Alert.alert("Permissions", JSON.stringify(perms));
-  }
-  componentWillMount() {
+  // handlePerm(perms) {
+  //   Alert.alert("Permissions", JSON.stringify(perms));
+  // }
+  async componentWillMount() {
     this.startHeaderHeight = 80;
     if (Platform.OS == "android") {
       this.startHeaderHeight = 100 + StatusBar.currentHeight;
     }
+
     // this.props.onBack();
   }
   componentWillReceiveProps(props) {
@@ -157,17 +160,19 @@ export default class Home extends Component {
   async componentDidMount() {
     console.log("Data Project", await _getData("@UserProject"));
     console.log("Data Notif", await _getData("@CountNotif"));
+
     const data = {
       email: await _getData("@User"),
       name: await _getData("@Name"),
       dataTower: await _getData("@UserProject"),
       isCorLoaded: true,
+      // badge_notif_db: await _getData("@CountNotif"),
     };
     // const CountnotifdiHome = await _getData("@CountNotif");
     // console.log("count notif di home", CountnotifdiHome);
-    Actions.refresh("tabbar", {
-      // klik: _storeData("@CountNotif", CountnotifdiHome),
-    });
+    // Actions.refresh("tabbar", {
+    //   // klik: _storeData("@CountNotif", CountnotifdiHome),
+    // });
     // _storeData("@CountNotif", CountnotifdiHome);
     // _storeData("@CountNotif", CountnotifdiHome);
 
@@ -177,6 +182,51 @@ export default class Home extends Component {
       // this.checkPermission();
       // this.createNotificationListeners();
     });
+
+    //notif dari firebase terbaru
+    let self = this;
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+      },
+
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function (notification) {
+        console.log("NOTIFICATION:", notification);
+
+        // process the notification here
+
+        // required on iOS only
+        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+
+        // process the notification
+        self._addDataToList(notification);
+        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
+        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+      // Android only
+      senderID: "945884059945",
+      // iOS only
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+  }
+
+  //untuk ngambil data length notif dari firebase
+  _addDataToList(data) {
+    let array = this.state.pushData;
+    array.push(data);
+    _storeData("@ArrayPushDataLengthFirebase", array);
+    this.setState({
+      pushData: array,
+    });
+    console.log("adddatatolist", this.state.pushData);
   }
 
   // async checkPermission() {
@@ -395,13 +445,6 @@ export default class Home extends Component {
             >
               Hello {this.state.name}
             </Text>
-            <Button
-              onPress={this.notif.scheduleNotif("my_sound.mp3", {
-                fullName: this.state.fullname,
-              })}
-            >
-              <Text>tes</Text>
-            </Button>
           </ImageBackground>
 
           <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -559,6 +602,9 @@ export default class Home extends Component {
 
   render() {
     const example1 = this.mainExample(1, "");
+    // console.log("badge dari db", this.state.badge_notif_db[0].jumlahnotif);
+
+    console.log("badge dari db1", this.state.badge_notif_db);
     // const example2 = this.momentumExample(2, 'Momentum | Left-aligned | Active animation');
     // const example3 = this.layoutExample(3, '"Stack of cards" layout | Loop', 'stack');
     // const example4 = this.layoutExample(4, '"Tinder-like" layout | Loop', 'tinder');
@@ -649,31 +695,87 @@ export default class Home extends Component {
             </ScrollView>
           </ScrollView>
         </View>
+
+        {/* footer navigasi */}
+        <Footer>
+          <FooterTab style={{ backgroundColor: "white" }}>
+            <Button vertical>
+              <Icon_
+                name="home"
+                color="#AB9E84"
+                style={{ color: "#AB9E84", fontSize: 24 }}
+              />
+              <Text style={{ color: "#AB9E84", textTransform: "capitalize" }}>
+                Home
+              </Text>
+            </Button>
+            <Button vertical onPress={() => Actions.Menu()}>
+              <Icon_
+                name="newspaper-o"
+                style={{ color: "#b7b7b7", fontSize: 24 }}
+              />
+              <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                News
+              </Text>
+            </Button>
+            {this.state.pushData != 0 ? (
+              <Button
+                badge
+                vertical
+                onPress={() =>
+                  Actions.notif({ pass_pushData: this.state.pushData })
+                }
+              >
+                <Badge style={{ top: 8 }}>
+                  <Text>{this.state.pushData.length}</Text>
+                </Badge>
+
+                <Icon_ name="bell" style={{ color: "#b7b7b7", fontSize: 24 }} />
+                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                  Notification
+                </Text>
+              </Button>
+            ) : (
+              <Button badge vertical onPress={() => Actions.notif()}>
+                <Icon_ name="bell" style={{ color: "#b7b7b7", fontSize: 24 }} />
+                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                  Notification
+                </Text>
+              </Button>
+            )}
+            <Button vertical onPress={() => Actions.akun()}>
+              <Icon_ name="user" style={{ color: "#b7b7b7", fontSize: 24 }} />
+              <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                Profile
+              </Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </ImageBackground>
     );
   }
 }
 
-const RemotePushController = () => {
-  useEffect(() => {
-    PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log("TOKEN:", token);
-      },
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log("REMOTE NOTIFICATION ==>", notification);
-        // process the notification here
-      },
-      // Android only: GCM or FCM Sender ID
-      senderID: "945884059945",
-      popInitialNotification: true,
-      requestPermissions: true,
-    });
-  }, []);
-  return null;
-};
+// const RemotePushController = () => {
+//   useEffect(() => {
+//     PushNotification.configure({
+//       // (optional) Called when Token is generated (iOS and Android)
+//       onRegister: function (token) {
+//         console.log("TOKEN:", token);
+//       },
+//       // (required) Called when a remote or local notification is opened or received
+//       onNotification: function (notification) {
+//         console.log("REMOTE NOTIFICATION ==>", notification);
+//         // process the notification here
+//       },
+//       // Android only: GCM or FCM Sender ID
+//       senderID: "945884059945",
+//       popInitialNotification: true,
+//       requestPermissions: true,
+//     });
+//   }, []);
+//   return null;
+// };
 
 const messaging = firebase.messaging();
 
@@ -712,54 +814,54 @@ firebase.notifications().onNotification((notification) => {
   });
 });
 
-PushNotification.configure({
-  // (optional) Called when Token is generated (iOS and Android)
-  onRegister: function (token) {
-    console.log("TOKEN NotiveService:", token);
-  },
+// PushNotification.configure({
+//   // (optional) Called when Token is generated (iOS and Android)
+//   onRegister: function (token) {
+//     console.log("TOKEN NotiveService:", token);
+//   },
 
-  // (required) Called when a remote is received or opened, or local notification is opened
-  onNotification: function (notification) {
-    console.log("NOTIFICATION on:", notification);
+//   // (required) Called when a remote is received or opened, or local notification is opened
+//   onNotification: function (notification) {
+//     console.log("NOTIFICATION on:", notification);
 
-    console.log("number notif", notification.number);
-    Actions.reset("tabbar", { lempar_number: notification.number });
-    // process the notification
+//     console.log("number notif", notification.number);
+//     // Actions.reset("tabbar", { lempar_number: notification.number });
+//     // process the notification
 
-    // (required) Called when a remote is received or opened, or local notification is opened
-    // notification.finish(PushNotificationIOS.FetchResult.NoData);
-  },
+//     // (required) Called when a remote is received or opened, or local notification is opened
+//     // notification.finish(PushNotificationIOS.FetchResult.NoData);
+//   },
 
-  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
-  onAction: function (notification) {
-    console.log("ACTION:", notification.action);
-    console.log("NOTIFICATION action:", notification);
+//   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+//   onAction: function (notification) {
+//     console.log("ACTION:", notification.action);
+//     console.log("NOTIFICATION action:", notification);
 
-    // process the action
-  },
+//     // process the action
+//   },
 
-  // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-  onRegistrationError: function (err) {
-    console.error(err.message, err);
-  },
+//   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+//   onRegistrationError: function (err) {
+//     console.error(err.message, err);
+//   },
 
-  // IOS ONLY (optional): default: all - Permissions to register.
-  permissions: {
-    alert: true,
-    badge: true,
-    sound: true,
-  },
+//   // IOS ONLY (optional): default: all - Permissions to register.
+//   permissions: {
+//     alert: true,
+//     badge: true,
+//     sound: true,
+//   },
 
-  // Should the initial notification be popped automatically
-  // default: true
-  popInitialNotification: true,
+//   // Should the initial notification be popped automatically
+//   // default: true
+//   popInitialNotification: true,
 
-  /**
-   * (optional) default: true
-   * - Specified if permissions (ios) and token (android and ios) will requested or not,
-   * - if not, you must call PushNotificationsHandler.requestPermissions() later
-   * - if you are not using remote notification or do not have Firebase installed, use this:
-   *     requestPermissions: Platform.OS === 'ios'
-   */
-  requestPermissions: true,
-});
+//   /**
+//    * (optional) default: true
+//    * - Specified if permissions (ios) and token (android and ios) will requested or not,
+//    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+//    * - if you are not using remote notification or do not have Firebase installed, use this:
+//    *     requestPermissions: Platform.OS === 'ios'
+//    */
+//   requestPermissions: true,
+// });

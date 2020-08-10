@@ -1105,13 +1105,13 @@ class FormBooking extends React.Component {
                                     <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                 </View> */}
               <Input
-                placeholder="Address"
+                placeholder="Address (max 60)"
                 autoCapitalize="words"
                 placeholderTextColor={"#c2c2c2"}
                 value={this.state.cor}
                 onChangeText={(val) => this.setState({ cor: val })}
                 style={Styles.positionTextInput}
-                ref="email"
+                ref="cor"
                 maxLength={60}
               />
               {this.state.errorcor ? (

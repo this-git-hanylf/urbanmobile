@@ -158,6 +158,7 @@ export default class extends React.Component {
     this._renderItemTower = this._renderItemTower.bind(this);
     this._renderItemUnit = this._renderItemUnit.bind(this);
     this.nupBooking = this.nupBooking.bind(this);
+    this.newnupBooking = this.newnupBooking.bind(this);
     // this.alertNUP = this.alertNUP.bind(this); //add this line
     // this.selectAmen = this.selectAmen.bind(this); //add this line
     // this.renderItemNews = this.renderItemNews.bind(this);
@@ -744,6 +745,20 @@ export default class extends React.Component {
     // }
   };
 
+  newnupBooking = () => {
+    // alert('tes')
+    const data = this.props.items;
+    console.log("lempar data", data);
+
+    if (data) {
+      Actions.New_NupBooking({ items: data });
+      // alert('ada data');
+      // console.log('da')
+    }
+    // else{
+    //   alert('gada');
+    // }
+  };
   alertNUP() {
     const pesan2 = "Please contact your agent for booking";
     this.alertFillBlank2(true, pesan2);
@@ -1160,6 +1175,24 @@ export default class extends React.Component {
                               Booking Priority Pass
                             </Text>
                           </Button>
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.alertNUP()}
+                            // onPress={() => this.nupBooking()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              New Booking
+                            </Text>
+                          </Button>
                         </View>
                       ) : (
                         <View style={{ paddingTop: "130%" }}>
@@ -1178,6 +1211,23 @@ export default class extends React.Component {
                               }}
                             >
                               Booking Priority Pass
+                            </Text>
+                          </Button>
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.newnupBooking()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              New Booking
                             </Text>
                           </Button>
                         </View>

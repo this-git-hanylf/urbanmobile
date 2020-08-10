@@ -99,7 +99,9 @@ export default class NotifService {
   }
 
   cancelNotif() {
-    PushNotification.cancelLocalNotifications({ id: "" + this.lastId });
+    PushNotification.cancelLocalNotifications({
+      id: "" + this.lastId,
+    });
   }
 
   cancelAll() {
@@ -112,5 +114,9 @@ export default class NotifService {
 
   getScheduledLocalNotifications(callback) {
     PushNotification.getScheduledLocalNotifications(callback);
+  }
+
+  getApplicationIconBadgeNumber() {
+    PushNotification.getApplicationIconBadgeNumber(0);
   }
 }

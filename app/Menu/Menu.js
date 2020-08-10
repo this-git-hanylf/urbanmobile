@@ -12,7 +12,7 @@ import {
   ScrollView,
   Platform,
   SafeAreaView,
-  FlatList
+  FlatList,
 } from "react-native";
 import {
   Container,
@@ -32,7 +32,7 @@ import {
   Footer,
   View,
   FooterTab,
-  Badge
+  Badge,
 } from "native-base";
 
 import NavigationService from "../Service/Navigation";
@@ -43,6 +43,7 @@ import Styles2 from "./Style2";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import { Actions } from "react-native-router-flux";
 import { urlApi } from "@Config/services";
+import Icon_ from "react-native-vector-icons/FontAwesome";
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
@@ -59,7 +60,7 @@ export default class Menu extends React.Component {
       dashmenu: [],
       fotoProfil: "http://35.198.219.220:2121/alfaAPI/images/profil/avatar.png",
       isLogin: false,
-      isLoaded: false
+      isLoaded: false,
     };
   }
 
@@ -73,7 +74,7 @@ export default class Menu extends React.Component {
       dashmenu: (await _getData("@DashMenu"))
         ? await _getData("@DashMenu")
         : [],
-      isLogin: await _getData("@isLogin")
+      isLogin: await _getData("@isLogin"),
     };
 
     console.log("datra", data);
@@ -90,7 +91,7 @@ export default class Menu extends React.Component {
 
   receiveProps = async () => {
     const data = {
-      name: await _getData("@Name")
+      name: await _getData("@Name"),
     };
 
     if (await _getData("@ProfileUpdate")) {
@@ -112,12 +113,12 @@ export default class Menu extends React.Component {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Token: this.state.token
-        }
+          Token: this.state.token,
+        },
       }
     )
-      .then(response => response.json())
-      .then(res => {
+      .then((response) => response.json())
+      .then((res) => {
         const resData = res.Data[0];
 
         // ? Agar Gambar Tidak ter cache
@@ -125,12 +126,12 @@ export default class Menu extends React.Component {
         this.setState({ fotoProfil: url });
         console.log("res Profil", this.state);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  goToFeed = val => {
+  goToFeed = (val) => {
     if (val.isProject == 1) {
       Actions.project({ goTo: val.URL_angular });
     } else {
@@ -348,19 +349,88 @@ export default class Menu extends React.Component {
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                alignContent: "center"
+                alignContent: "center",
               }}
             >
               <Text
                 style={{
                   color: Colors.white,
                   fontFamily: Fonts.type.proximaNovaBoldWeb,
-                  fontSize: 20
+                  fontSize: 20,
                 }}
               >
                 Coming Soon
               </Text>
             </View>
+
+            {/* footer navigasi */}
+            <Footer>
+              <FooterTab style={{ backgroundColor: "white" }}>
+                <Button vertical onPress={() => Actions.home()}>
+                  <Icon_
+                    name="home"
+                    color="#b7b7b7"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                  >
+                    Home
+                  </Text>
+                </Button>
+                <Button vertical>
+                  <Icon_
+                    name="newspaper-o"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                  >
+                    News
+                  </Text>
+                </Button>
+                {this.state.badge_notif_db > 0 ? (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Badge style={{ top: 8 }}>
+                      <Text>{this.state.badge_notif_db[0].jumlahnotif}</Text>
+                    </Badge>
+
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )}
+                <Button vertical onPress={() => Actions.akun()}>
+                  <Icon_
+                    name="user"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                  >
+                    Profile
+                  </Text>
+                </Button>
+              </FooterTab>
+            </Footer>
             {/* </ScrollView> */}
           </ImageBackground>
         </Container>
@@ -376,7 +446,7 @@ export default class Menu extends React.Component {
               position: "absolute",
               bottom: 100,
               alignSelf: "center",
-              flexDirection: "row"
+              flexDirection: "row",
             }}
           >
             <Button style={Styles.btnSmall} onPress={() => this.signin()}>
@@ -388,7 +458,7 @@ export default class Menu extends React.Component {
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
                   letterSpacing: 1,
-                  textTransform: "capitalize"
+                  textTransform: "capitalize",
                 }}
               >
                 Sign In
@@ -403,7 +473,7 @@ export default class Menu extends React.Component {
                   textAlign: "center",
                   fontFamily: Fonts.type.proximaNovaReg,
                   letterSpacing: 1,
-                  textTransform: "capitalize"
+                  textTransform: "capitalize",
                 }}
               >
                 Sign Up
@@ -422,10 +492,10 @@ const LoginStyle = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   btn: {
     backgroundColor: Colors.loginBlue,
-    padding: 10
-  }
+    padding: 10,
+  },
 });
