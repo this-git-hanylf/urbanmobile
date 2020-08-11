@@ -203,20 +203,29 @@ export default class Notif extends React.Component {
   // };
   //tutup dari bang good
 
-  async kurangin_length2({ id_length }) {
+  async kurangin_length({ id_length }) {
     console.log("item.id", id_length);
 
-    let array_ = this.state.pushData;
+    var array_ = this.state.pushData;
 
-    if (id_length) {
-      var kurang_array = array_.length--;
-      console.log("kurang array", kurang_array);
-      this.setState({ pushData: array_ });
-      console.log("data yg dikurangin", this.state.pushData);
+    for (var i = 0; i < array_.length; i++) {
+      // array2.push(array1[i]);
+      array_.splice(i, 1);
+      // i--; //decrement i IF we remove an item
     }
+
+    alert("have been read");
+
+    this.setState({ pushData: array_ });
+    // if (id_length) {
+    //   var kurang_array = array_.length--;
+    //   console.log("kurang array", kurang_array);
+    //   this.setState({ pushData: array_ });
+    //   console.log("data yg dikurangin", this.state.pushData);
+    // }
   }
 
-  async kurangin_length({ id_length }) {
+  async kurangin_length2({ id_length }) {
     var array1 = this.state.pushData;
     var array2 = this.state.pushData2;
 
@@ -560,32 +569,29 @@ export default class Notif extends React.Component {
               height: 400,
             }}
           >
-            {
-              this.state.pushData != 0
-                ? this.state.pushData.length != 0 && (
-                    <FlatList
-                      data={this.state.pushData}
-                      renderItem={({ item }) => this._renderItem(item)}
-                      keyExtractor={(item) => item.title}
-                      extraData={this.state}
-                    />
-                  )
-                : null
-              // this.state.pushData.length == 0 && (
-              //     <View style={{ paddingVertical: 50 }}>
-              //       <Text
-              //         style={{
-              //           fontSize: 14,
-              //           textAlign: "center",
-              //         }}
-              //       >
-              //         You don't have any push notification yet. Send some push
-              //         to show it in the list push data
-              //       </Text>
-              //     </View>
-              // )
-            }
-            {
+            {this.state.pushData != 0
+              ? this.state.pushData.length != 0 && (
+                  <FlatList
+                    data={this.state.pushData}
+                    renderItem={({ item }) => this._renderItem(item)}
+                    keyExtractor={(item) => item.title}
+                    extraData={this.state}
+                  />
+                )
+              : this.state.pushData.length == 0 && (
+                  <View style={{ paddingVertical: 50 }}>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        textAlign: "center",
+                      }}
+                    >
+                      You don't have any push notification yet. Send some push
+                      to show it in the list push data
+                    </Text>
+                  </View>
+                )}
+            {/* {
               this.state.pushData2 != 0
                 ? this.state.pushData2.length != 0 && (
                     <FlatList
@@ -609,8 +615,7 @@ export default class Notif extends React.Component {
               //       </Text>
               //     </View>
               // )
-            }
-
+            } */}
             {/* {this.state.passing_pushData_dariHome
               ? this.state.passing_pushData_dariHome.length != 0 && (
                   <FlatList
