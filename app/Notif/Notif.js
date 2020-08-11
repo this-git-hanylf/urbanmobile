@@ -13,6 +13,7 @@ import {
   Platform,
   SafeAreaView,
   FlatList,
+  Alert,
 } from "react-native";
 import {
   Container,
@@ -205,13 +206,18 @@ export default class Notif extends React.Component {
 
   async kurangin_length({ id_length }) {
     console.log("item.id", id_length);
+    // console.log("inndex", index);
 
     var array_ = this.state.pushData;
 
+    console.log("araay", array_.id);
+
     for (var i = 0; i < array_.length; i++) {
-      // array2.push(array1[i]);
-      array_.splice(i, 1);
-      // i--; //decrement i IF we remove an item
+      console.log("array i", array_[i]);
+      console.log("array id", array_[i].id);
+      if (id_length === array_[i].id) {
+        array_.splice(i, 1);
+      }
     }
 
     alert("have been read");
@@ -665,7 +671,12 @@ export default class Notif extends React.Component {
           {/* footer navigasi */}
           <Footer>
             <FooterTab style={{ backgroundColor: "white" }}>
-              <Button vertical onPress={() => Actions.home()}>
+              <Button
+                vertical
+                onPress={() =>
+                  Actions.home({ pushData: this.state.pushData.length })
+                }
+              >
                 <Icon_
                   name="home"
                   color="#b7b7b7"
