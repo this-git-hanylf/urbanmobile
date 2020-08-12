@@ -107,6 +107,7 @@ export default class Notif extends React.Component {
     this.setState(data, () => {
       this.getDataNotif();
       this.getCountNotif();
+      // this.getProject();
       // this.updateisRead();
     });
     // this.kurangin_length = this.kurangin_length.bind(this);
@@ -417,6 +418,12 @@ export default class Notif extends React.Component {
             project_no: resData.project_no,
             db_profile: resData.db_profile,
           };
+
+          // setTimeout(() => {
+          //   Actions.MyBooking({
+          //     items: item,
+          //   });
+          // }, 0);
           // Actions.MyBooking({ items: item });
         }
       })
@@ -470,7 +477,8 @@ export default class Notif extends React.Component {
         } else {
           console.log(res.Error);
           this.setState({ isLoaded: this.state.isLoaded }, () => {
-            alert(res.Pesan);
+            // alert(res.Pesan);
+            alert("you have been read");
           });
         }
 
@@ -496,7 +504,7 @@ export default class Notif extends React.Component {
         if (res.Error === false) {
           let resData = res.Data;
           let data = [];
-          // console.log("resdata", resData);
+          console.log("resdata", resData);
           resData.map((item) => {
             let items = {
               // ...item,
@@ -552,22 +560,24 @@ export default class Notif extends React.Component {
   render() {
     if (this.state.isLogin) {
       return (
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={{ backgroundColor: Colors.lighter }}
-        >
-          <Header />
-          <View
-            style={{
-              backgroundColor: "#eee",
-              color: "#000",
-              height: 100,
-              padding: 12,
-            }}
-          >
-            <Text>Push Notifications</Text>
-          </View>
-          <View
+        <Container>
+          <Content>
+            <ScrollView
+              contentInsetAdjustmentBehavior="automatic"
+              style={{ backgroundColor: Colors.lighter }}
+            >
+              <Header />
+              <View
+                style={{
+                  backgroundColor: "#eee",
+                  color: "#000",
+                  height: 100,
+                  padding: 12,
+                }}
+              >
+                <Text>Push Notifications</Text>
+              </View>
+              {/* <View
             style={{
               backgroundColor: Colors.white,
               paddingHorizontal: 20,
@@ -597,84 +607,105 @@ export default class Notif extends React.Component {
                     </Text>
                   </View>
                 )}
-            {/* {
-              this.state.pushData2 != 0
-                ? this.state.pushData2.length != 0 && (
-                    <FlatList
-                      data={this.state.pushData2}
-                      renderItem={({ item }) => this._renderItem2(item)}
-                      keyExtractor={(item) => item.title}
-                      extraData={this.state}
-                    />
-                  )
-                : null
-              // this.state.pushData2.length == 0 && (
-              //     <View style={{ paddingVertical: 50 }}>
-              //       <Text
-              //         style={{
-              //           fontSize: 14,
-              //           textAlign: "center",
-              //         }}
-              //       >
-              //         You don't have any push notification yet. Send some push
-              //         to show it in the list push data
-              //       </Text>
-              //     </View>
-              // )
-            } */}
-            {/* {this.state.passing_pushData_dariHome
-              ? this.state.passing_pushData_dariHome.length != 0 && (
-                  <FlatList
-                    data={this.state.passing_pushData_dariHome}
-                    renderItem={({ item }) => this._renderItem_dariHome(item)}
-                    keyExtractor={(item) => item.title}
-                    extraData={this.state}
-                  />
-                )
-              : this.state.passing_pushData_dariHome.length == 0 && (
-                  <View style={{ paddingVertical: 50 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        textAlign: "center",
-                      }}
-                    >
-                      You don't have any push notification yet. Send some push
-                      to show it in the list push data dari home
-                    </Text>
-                  </View>
-                )} */}
-            {/* {this.state.passing_pushData_dariHome.length != 0 && (
-              <FlatList
-                data={this.state.passing_pushData_dariHome}
-                renderItem={({ item }) => this._renderItem_dariHome(item)}
-                keyExtractor={(item) => item.title}
-                extraData={this.state}
-              />
-            )}
+          </View> */}
 
-            {this.state.passing_pushData_dariHome.length == 0 && (
-              <View style={{ paddingVertical: 50 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    textAlign: "center",
+              {/* ambiil dari database */}
+              {this.state.dataNotif.map((data, key) => (
+                // <Text>{data.Complain_no}</Text>
+
+                <List
+                  containerStyle={{
+                    borderTopWidth: 0,
+                    borderBottomWidth: 0,
                   }}
+                  key={key}
+                  style={[
+                    Styles.item,
+                    {
+                      backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+                    },
+                  ]}
                 >
-                  You don't have any push notification yet. Send some push to
-                  show it in the list push data dari home
-                </Text>
-              </View>
-            )} */}
-            {/* <LearnMoreLinks /> */}
-          </View>
-          {/* footer navigasi */}
+                  <ListItem
+                    onPress={() => {
+                      data.IsRead == 1
+                        ? this.updateisRead({ data })
+                        : alert("0");
+                      // this.updateisRead({ data });
+                      // this.setState({ isRead: 1 }, () => {
+                      //   this.props.onPress(item.NotificationID);
+                      // });
+                      // Actions.refresh({ key: Math.random() });
+
+                      // this.setState({ isRead: 0 });
+                      // this.setState({ isRead: data.IsRead });
+                      // console.log("id notif", this.state.notifID);
+                    }}
+                    style={{
+                      backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+                    }}
+                  >
+                    {/* <Image
+                        source={{ uri: item.image }}
+                        style={Styles.itemImg}
+                      /> */}
+                    <View>
+                      <View style={{ flexDirection: "row" }}>
+                        <Left>
+                          {
+                            data.NotificationCd == "PAYDUE" ? (
+                              <Text style={Styles.itemDesc}>
+                                Please complete your payment
+                              </Text>
+                            ) : null
+                            // <Text style={Styles.itemDesc}>tes</Text>
+                          }
+                        </Left>
+                        {/* <Right>
+                            <Text style={Styles.itemDate}>
+
+                              {moment(data.NotificationDate).format(
+                                "D MMMM YYYY"
+                              )}
+                            </Text>
+                          </Right> */}
+                      </View>
+                      <Text style={Styles.itemTitle}>{data.Complain_no}</Text>
+                      <Text style={Styles.itemDesc}>
+                        {data.Remarks}{" "}
+                        <Text style={Styles.itemDesc_bold}>
+                          #{data.NotificationID}
+                        </Text>
+                      </Text>
+                      <Text
+                        style={[
+                          Styles.itemDate,
+                          { color: data.IsRead == 1 ? "#999" : "#333" },
+                        ]}
+                      >
+                        {/* {data.NotificationDate} */}
+                        {moment(data.NotificationDate).format(
+                          "D MMMM YYYY HH:mm"
+                        )}
+                      </Text>
+                    </View>
+                  </ListItem>
+                </List>
+              ))}
+              {/* tutup ambil dari database */}
+            </ScrollView>
+          </Content>
+
+          {/* footer tab tambahan */}
           <Footer>
             <FooterTab style={{ backgroundColor: "white" }}>
               <Button
                 vertical
                 onPress={() =>
-                  Actions.home({ pushData: this.state.pushData.length })
+                  Actions.home({
+                    pushData: this.state.pushData.length,
+                    cntNotif: this.state.cntNotif,
+                  })
                 }
               >
                 <Icon_
@@ -695,7 +726,56 @@ export default class Notif extends React.Component {
                   News
                 </Text>
               </Button>
-              {this.state.pushData != 0 ? (
+              {this.state.cntNotif != 0 ? (
+                this.state.cntNotif[0].jumlahnotif > 0 ? (
+                  <Button badge vertical>
+                    <Badge style={{ top: 5 }}>
+                      <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
+                    </Badge>
+
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#AB9E84", fontSize: 24, bottom: 5 }}
+                    />
+                    <Text
+                      style={{
+                        color: "#AB9E84",
+                        textTransform: "capitalize",
+                        bottom: 5,
+                      }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button vertical>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#AB9E84", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )
+              ) : (
+                <Button vertical>
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              )}
+
+              {/* dibawah ini pushdata badge dari firebase */}
+              {/* {this.state.pushData != 0 ? (
                 <Button badge vertical>
                   <Badge style={{ top: 8 }}>
                     <Text>{this.state.pushData.length}</Text>
@@ -723,7 +803,7 @@ export default class Notif extends React.Component {
                     Notification
                   </Text>
                 </Button>
-              )}
+              )} */}
               <Button vertical onPress={() => Actions.akun()}>
                 <Icon_ name="user" style={{ color: "#b7b7b7", fontSize: 24 }} />
                 <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
@@ -732,7 +812,8 @@ export default class Notif extends React.Component {
               </Button>
             </FooterTab>
           </Footer>
-        </ScrollView>
+        </Container>
+
         // <Container style={Style.bgMain}>
         //   <StatusBar
         //     backgroundColor={"rgba(0, 0, 0, 0)"}
