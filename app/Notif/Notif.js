@@ -116,38 +116,38 @@ export default class Notif extends React.Component {
       this.setState({ isLoaded: true });
     }, 2000);
 
-    let self = this;
-    PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log("TOKEN:", token);
-      },
+    // let self = this;
+    // PushNotification.configure({
+    //   // (optional) Called when Token is generated (iOS and Android)
+    //   onRegister: function (token) {
+    //     console.log("TOKEN:", token);
+    //   },
 
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log("NOTIFICATION:", notification);
+    //   // (required) Called when a remote or local notification is opened or received
+    //   onNotification: function (notification) {
+    //     console.log("NOTIFICATION:", notification);
 
-        // process the notification here
+    //     // process the notification here
 
-        // required on iOS only
-        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    //     // required on iOS only
+    //     // notification.finish(PushNotificationIOS.FetchResult.NoData);
 
-        // process the notification
-        self._addDataToList(notification);
-        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-        // notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-      // Android only
-      senderID: "945884059945",
-      // iOS only
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-      popInitialNotification: true,
-      requestPermissions: true,
-    });
+    //     // process the notification
+    //     self._addDataToList(notification);
+    //     // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
+    //     // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    //   },
+    //   // Android only
+    //   senderID: "945884059945",
+    //   // iOS only
+    //   permissions: {
+    //     alert: true,
+    //     badge: true,
+    //     sound: true,
+    //   },
+    //   popInitialNotification: true,
+    //   requestPermissions: true,
+    // });
 
     let passing_pushData_dariHome = this.props.pass_pushData;
     // // console.log("passing_pushData_dariHome", passing_pushData_dariHome);
@@ -419,11 +419,11 @@ export default class Notif extends React.Component {
             db_profile: resData.db_profile,
           };
 
-          // setTimeout(() => {
-          //   Actions.MyBooking({
-          //     items: item,
-          //   });
-          // }, 0);
+          setTimeout(() => {
+            Actions.MyBooking({
+              items: item,
+            });
+          }, 0);
           // Actions.MyBooking({ items: item });
         }
       })
@@ -610,58 +610,59 @@ export default class Notif extends React.Component {
           </View> */}
 
               {/* ambiil dari database */}
-              {this.state.dataNotif.map((data, key) => (
-                // <Text>{data.Complain_no}</Text>
+              {this.state.dataNotif != null ? (
+                this.state.dataNotif.map((data, key) => (
+                  // <Text>{data.Complain_no}</Text>
 
-                <List
-                  containerStyle={{
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0,
-                  }}
-                  key={key}
-                  style={[
-                    Styles.item,
-                    {
-                      backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
-                    },
-                  ]}
-                >
-                  <ListItem
-                    onPress={() => {
-                      data.IsRead == 1
-                        ? this.updateisRead({ data })
-                        : alert("0");
-                      // this.updateisRead({ data });
-                      // this.setState({ isRead: 1 }, () => {
-                      //   this.props.onPress(item.NotificationID);
-                      // });
-                      // Actions.refresh({ key: Math.random() });
-
-                      // this.setState({ isRead: 0 });
-                      // this.setState({ isRead: data.IsRead });
-                      // console.log("id notif", this.state.notifID);
+                  <List
+                    containerStyle={{
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
                     }}
-                    style={{
-                      backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
-                    }}
+                    key={key}
+                    style={[
+                      Styles.item,
+                      {
+                        backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+                      },
+                    ]}
                   >
-                    {/* <Image
+                    <ListItem
+                      onPress={() => {
+                        data.IsRead == 1
+                          ? this.updateisRead({ data })
+                          : alert("0");
+                        // this.updateisRead({ data });
+                        // this.setState({ isRead: 1 }, () => {
+                        //   this.props.onPress(item.NotificationID);
+                        // });
+                        // Actions.refresh({ key: Math.random() });
+
+                        // this.setState({ isRead: 0 });
+                        // this.setState({ isRead: data.IsRead });
+                        // console.log("id notif", this.state.notifID);
+                      }}
+                      style={{
+                        backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+                      }}
+                    >
+                      {/* <Image
                         source={{ uri: item.image }}
                         style={Styles.itemImg}
                       /> */}
-                    <View>
-                      <View style={{ flexDirection: "row" }}>
-                        <Left>
-                          {
-                            data.NotificationCd == "PAYDUE" ? (
-                              <Text style={Styles.itemDesc}>
-                                Please complete your payment
-                              </Text>
-                            ) : null
-                            // <Text style={Styles.itemDesc}>tes</Text>
-                          }
-                        </Left>
-                        {/* <Right>
+                      <View>
+                        <View style={{ flexDirection: "row" }}>
+                          <Left>
+                            {
+                              data.NotificationCd == "PAYDUE" ? (
+                                <Text style={Styles.itemDesc}>
+                                  Please complete your payment
+                                </Text>
+                              ) : null
+                              // <Text style={Styles.itemDesc}>tes</Text>
+                            }
+                          </Left>
+                          {/* <Right>
                             <Text style={Styles.itemDate}>
 
                               {moment(data.NotificationDate).format(
@@ -669,29 +670,33 @@ export default class Notif extends React.Component {
                               )}
                             </Text>
                           </Right> */}
-                      </View>
-                      <Text style={Styles.itemTitle}>{data.Complain_no}</Text>
-                      <Text style={Styles.itemDesc}>
-                        {data.Remarks}{" "}
-                        <Text style={Styles.itemDesc_bold}>
-                          #{data.NotificationID}
+                        </View>
+                        <Text style={Styles.itemTitle}>{data.Complain_no}</Text>
+                        <Text style={Styles.itemDesc}>
+                          {data.Remarks}{" "}
+                          <Text style={Styles.itemDesc_bold}>
+                            #{data.NotificationID}
+                          </Text>
                         </Text>
-                      </Text>
-                      <Text
-                        style={[
-                          Styles.itemDate,
-                          { color: data.IsRead == 1 ? "#999" : "#333" },
-                        ]}
-                      >
-                        {/* {data.NotificationDate} */}
-                        {moment(data.NotificationDate).format(
-                          "D MMMM YYYY HH:mm"
-                        )}
-                      </Text>
-                    </View>
-                  </ListItem>
-                </List>
-              ))}
+                        <Text
+                          style={[
+                            Styles.itemDate,
+                            { color: data.IsRead == 1 ? "#999" : "#333" },
+                          ]}
+                        >
+                          {/* {data.NotificationDate} */}
+                          {moment(data.NotificationDate).format(
+                            "D MMMM YYYY HH:mm"
+                          )}
+                        </Text>
+                      </View>
+                    </ListItem>
+                  </List>
+                ))
+              ) : (
+                <Text>No notif</Text>
+              )}
+
               {/* tutup ambil dari database */}
             </ScrollView>
           </Content>

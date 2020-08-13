@@ -77,6 +77,7 @@ export default class extends React.Component {
       Alert_Visibility: false,
       pesan: "",
       files: [],
+      cntNotif: "",
     };
     // this.logout = this.logout.bind(this);
   }
@@ -100,6 +101,7 @@ export default class extends React.Component {
         this.getProfile();
         this.getDatasysspec();
         this.getFile();
+        this.getCountNotif();
       }
     });
 
@@ -263,12 +265,16 @@ export default class extends React.Component {
   };
 
   signOut = async () => {
+    // const mac = await DeviceInfo.getMACAddress().then((mac) => {
+    //   return mac;
+    // });
     const formData = {
       email: this.state.email,
-      ipAddress: await DeviceInfo.getIPAddress().then((mac) => mac),
+      ipAddress: await DeviceInfo.getMACAddress().then((mac) => mac),
       device: Platform.OS,
     };
 
+    // console.log("ipaddress", ipAddress);
     fetch(urlApi + "c_auth/Logout/" + this.state.email, {
       method: "POST",
       body: JSON.stringify(formData),
@@ -360,6 +366,45 @@ export default class extends React.Component {
   alertFillBlank(visible, pesan) {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
+
+  getCountNotif = async () => {
+    //  let result = res.Data;
+    const email = this.state.email;
+
+    // console.log("datatower", dataTower);
+    console.log("email buat count", email);
+    fetch(urlApi + "c_notification/getNotificationBadge/IFCAMOBILE/" + email, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res notif di notif", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          let data = [];
+          console.log("resdata", resData);
+          resData.map((item) => {
+            let items = {
+              // ...item,
+              jumlahnotif: item.cnt,
+            };
+            data.push(items);
+          });
+
+          if (data) {
+            this.setState({ cntNotif: data });
+
+            console.log("data update", this.state.cntNotif);
+          }
+
+          _storeData("@CountNotif", this.state.cntNotif);
+          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
     if (this.state.isLogin) {
@@ -600,7 +645,60 @@ export default class extends React.Component {
                     News
                   </Text>
                 </Button>
-                {this.state.badge_notif_db > 0 ? (
+
+                {this.state.cntNotif != 0 ? (
+                  this.state.cntNotif[0].jumlahnotif > 0 ? (
+                    <Button badge vertical onPress={() => Actions.notif()}>
+                      <Badge style={{ top: 5 }}>
+                        <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
+                      </Badge>
+
+                      <Icon_
+                        name="bell"
+                        style={{ color: "#b7b7b7", fontSize: 24, bottom: 5 }}
+                      />
+                      <Text
+                        style={{
+                          color: "#b7b7b7",
+                          textTransform: "capitalize",
+                          bottom: 5,
+                        }}
+                      >
+                        Notification
+                      </Text>
+                    </Button>
+                  ) : (
+                    <Button vertical onPress={() => Actions.notif()}>
+                      <Icon_
+                        name="bell"
+                        style={{ color: "#b7b7b7", fontSize: 24 }}
+                      />
+                      <Text
+                        style={{
+                          color: "#b7b7b7",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Notification
+                      </Text>
+                    </Button>
+                  )
+                ) : (
+                  <Button vertical onPress={() => Actions.notif()}>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )}
+
+                {/* dibawah ini adalah pushdata dari firebase */}
+                {/* {this.state.badge_notif_db > 0 ? (
                   <Button badge vertical onPress={() => Actions.notif()}>
                     <Badge style={{ top: 8 }}>
                       <Text>{this.state.badge_notif_db[0].jumlahnotif}</Text>
@@ -628,7 +726,7 @@ export default class extends React.Component {
                       Notification
                     </Text>
                   </Button>
-                )}
+                )} */}
                 <Button vertical>
                   <Icon_
                     name="user"

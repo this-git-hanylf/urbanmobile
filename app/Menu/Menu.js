@@ -61,6 +61,7 @@ export default class Menu extends React.Component {
       fotoProfil: "http://35.198.219.220:2121/alfaAPI/images/profil/avatar.png",
       isLogin: false,
       isLoaded: false,
+      cntNotif: "",
     };
   }
 
@@ -81,6 +82,7 @@ export default class Menu extends React.Component {
     this.setState(data, () => {
       if (data.isLogin) {
         this.getProfile();
+        this.getCountNotif();
       }
     });
 
@@ -138,6 +140,45 @@ export default class Menu extends React.Component {
       Actions[val.URL_angular]();
     }
     console.log("menu", val);
+  };
+
+  getCountNotif = async () => {
+    //  let result = res.Data;
+    const email = this.state.email;
+
+    // console.log("datatower", dataTower);
+    console.log("email buat count", email);
+    fetch(urlApi + "c_notification/getNotificationBadge/IFCAMOBILE/" + email, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res notif di notif", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          let data = [];
+          console.log("resdata", resData);
+          resData.map((item) => {
+            let items = {
+              // ...item,
+              jumlahnotif: item.cnt,
+            };
+            data.push(items);
+          });
+
+          if (data) {
+            this.setState({ cntNotif: data });
+
+            console.log("data update", this.state.cntNotif);
+          }
+
+          _storeData("@CountNotif", this.state.cntNotif);
+          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   signin() {
@@ -389,7 +430,60 @@ export default class Menu extends React.Component {
                     News
                   </Text>
                 </Button>
-                {this.state.badge_notif_db > 0 ? (
+
+                {this.state.cntNotif != 0 ? (
+                  this.state.cntNotif[0].jumlahnotif > 0 ? (
+                    <Button badge vertical onPress={() => Actions.notif()}>
+                      <Badge style={{ top: 5 }}>
+                        <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
+                      </Badge>
+
+                      <Icon_
+                        name="bell"
+                        style={{ color: "#b7b7b7", fontSize: 24, bottom: 5 }}
+                      />
+                      <Text
+                        style={{
+                          color: "#b7b7b7",
+                          textTransform: "capitalize",
+                          bottom: 5,
+                        }}
+                      >
+                        Notification
+                      </Text>
+                    </Button>
+                  ) : (
+                    <Button vertical onPress={() => Actions.notif()}>
+                      <Icon_
+                        name="bell"
+                        style={{ color: "#b7b7b7", fontSize: 24 }}
+                      />
+                      <Text
+                        style={{
+                          color: "#b7b7b7",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        Notification
+                      </Text>
+                    </Button>
+                  )
+                ) : (
+                  <Button vertical onPress={() => Actions.notif()}>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )}
+
+                {/* dibawah ini adalah pushdata dari firebase */}
+                {/* {this.state.badge_notif_db > 0 ? (
                   <Button badge vertical onPress={() => Actions.notif()}>
                     <Badge style={{ top: 8 }}>
                       <Text>{this.state.badge_notif_db[0].jumlahnotif}</Text>
@@ -417,7 +511,7 @@ export default class Menu extends React.Component {
                       Notification
                     </Text>
                   </Button>
-                )}
+                )} */}
                 <Button vertical onPress={() => Actions.akun()}>
                   <Icon_
                     name="user"

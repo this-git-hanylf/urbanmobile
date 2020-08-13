@@ -47,7 +47,7 @@ import firebase from "react-native-firebase";
 import AsyncStorage from "@react-native-community/async-storage";
 
 var PushNotification = require("react-native-push-notification");
-
+import NotifService from "../components/NotifService";
 import { Linking } from "react-native";
 import VersionCheck from "react-native-version-check";
 import { TouchableHighlight } from "react-native-gesture-handler";
@@ -146,14 +146,46 @@ export default class Intro extends React.Component {
       isNeeded: false,
       storeUrl: "",
     };
+
+    this.handleNotification = this.handleNotification.bind(this);
+    // buat di notif
+    // this.notif = new NotifService(
+    //   this.onRegister.bind(this),
+    //   this.onNotif.bind(this)
+    // );
   }
   async componentWillMount() {
     isMount = true;
 
     this.requestStorage();
     this.tes();
+
+    // this.checkPermission();
+    // this.createNotificationListeners();
     // this.getVersion();
   }
+
+  // onPress = () => {
+  //   PushNotification.localNotification({
+  //     /* iOS and Android properties */
+  //     title: "My Notification Title", // (optional)
+  //     message: "My Notification Message", // (required)
+  //   });
+  // };
+  // onRegister(token) {
+  //   this.setState({
+  //     registerToken: token.token,
+  //     fcmRegistered: true,
+  //   });
+  // }
+
+  // onNotif(notif) {
+  //   Alert.alert(notif.title, notif.message);
+  // }
+
+  // handlePerm(perms) {
+  //   Alert.alert("Permissions", JSON.stringify(perms));
+  // }
 
   requestStorage = async () => {
     try {
@@ -177,6 +209,9 @@ export default class Intro extends React.Component {
   async componentDidMount() {
     const isIntro = await _getData("@isIntro");
     this.setState({ showRealApp: isIntro });
+
+    // this.checkPermission();
+    // this.createNotificationListeners();
 
     //cek versi app
     VersionCheck.getLatestVersion() // Automatically choose profer provider using `Platform.select` by device platform.
@@ -319,6 +354,15 @@ export default class Intro extends React.Component {
       });
   }
 
+  handleNotification(notification) {
+    console.log("handleNotification");
+    // var notificationId = ''
+    // //your logic to get relevant information from the notification
+
+    // //here you navigate to a scene in your app based on the notification info
+    // this.navigator.push({ id: Constants.ITEM_VIEW_ID, item: item });
+  }
+
   tes() {
     const messaging = firebase.messaging();
     messaging
@@ -358,42 +402,129 @@ export default class Intro extends React.Component {
         message: body, // (required)
       });
     });
+
+    let self = this;
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
-        console.log("TOKEN:", token);
-        // this.setState({
-        //   token_fire: token,
-        // });
+        console.log("TOKEN di INTRO:", token);
+        console.log("bisa buat screen notif ga");
+        // Actions.notif();
       },
+
       // (required) Called when a remote or local notification is opened or received
       onNotification: function (notification) {
-        console.log("NOTIFICATION:", notification);
+        console.log("NOTIFICATION DI INTRO:", notification);
+        // Actions.notif();
+
+        // process the notification here
+
+        // required on iOS only
+        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+
         // process the notification
-        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-        //notification.finish(PushNotificationIOS.FetchResult.NoData);
+        // self._addDataToList(notification);
+        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
+        // notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
-      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
-      // senderID: '945884059945',
-      // popInitialNotification: true,
-      // requestPermissions: true,
-      // IOS ONLY (optional): default: all - Permissions to register.
+
+      onAction: function (notification) {
+        console.log("ACTION DI INTRO:", notification.action);
+        console.log("NOTIFICATION action DI INTRO:", notification);
+        this.handleNotification(notification);
+        // process the action
+      },
+
+      // Android only
+      senderID: "945884059945",
+      // iOS only
       permissions: {
         alert: true,
         badge: true,
         sound: true,
       },
-      // Should the initial notification be popped automatically
-      // default: true
       popInitialNotification: true,
-      /**
-       * (optional) default: true
-       * - Specified if permissions (ios) and token (android and ios) will requested or not,
-       * - if not, you must call PushNotificationsHandler.requestPermissions() later
-       */
       requestPermissions: true,
     });
   }
+
+  //untuk ngambil data length notif dari firebase
+  // _addDataToList(data) {
+  //   // let array = this.state.pushData;
+  //   // array.push(data);
+  //   // _storeData("@ArrayPushDataLengthFirebase", array);
+  //   // this.setState({
+  //   //   pushData: array,
+  //   // });
+  //   // console.log("adddatatolist", this.state.pushData);
+  //   Actions.notif();
+  // }
+
+  // //contoh dari alfa buuat bunyi tuuing firebase
+  // async checkPermission() {
+  //   const enabled = await firebase.messaging().hasPermission();
+  //   if (enabled) {
+  //     this.getToken();
+  //   } else {
+  //     this.requestPermission();
+  //   }
+  // }
+
+  // async getToken() {
+  //   let fcmToken = await AsyncStorage.getItem("fcmToken");
+  //   // console.log('fcmToken', fcmToken);
+  //   if (!fcmToken) {
+  //     fcmToken = await firebase.messaging().getToken();
+  //     if (fcmToken) {
+  //       // user has a device token
+  //       await AsyncStorage.setItem("token", fcmToken);
+  //       console.log("fcmToken", fcmToken);
+  //       this.setState({
+  //         token: fcmToken,
+  //       });
+  //     }
+  //   }
+  // }
+
+  // async requestPermission() {
+  //   try {
+  //     await firebase.messaging().requestPermission();
+  //     // User has authorised
+  //     this.getToken();
+  //   } catch (error) {
+  //     // User has rejected permissions
+  //     console.log("permission rejected");
+  //   }
+  // }
+
+  // async createNotificationListeners() {
+  //   firebase.notifications().setBadge(0);
+  //   this.notificationListener = firebase
+  //     .notifications()
+  //     .onNotification((notification) => {
+  //       const { title, body } = notification;
+  //       this.showAlert(title, body);
+  //     });
+
+  //   this.notificationOpenedListener = firebase
+  //     .notifications()
+  //     .onNotificationOpened((notificationOpen) => {
+  //       const { title, body } = notificationOpen.notification;
+  //       this.showAlert(title, body);
+  //     });
+
+  //   const notificationOpen = await firebase
+  //     .notifications()
+  //     .getInitialNotification();
+  //   if (notificationOpen) {
+  //     const { title, body } = notificationOpen.notification;
+  //     this.showAlert(title, body);
+  //   }
+
+  //   this.messageListener = firebase.messaging().onMessage((message) => {
+  //     console.log(JSON.stringify(message));
+  //   });
+  // }
 
   doLogin(value) {
     console.log("formdata ada tokennya", value);

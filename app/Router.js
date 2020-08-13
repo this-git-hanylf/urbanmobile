@@ -533,7 +533,7 @@ class Routes extends Component {
               key="home"
               component={Home}
               navTransparent={true}
-              hideNavBar={true}
+              // hideNavBar={true}
               title=""
               tabBarLabel="Home"
               color="#000000"
@@ -544,6 +544,10 @@ class Routes extends Component {
               // inactiveTintColor="#fff"
               iconName="home"
               icon={TabIcon}
+              initial={this.state.hasLogin}
+              hideNavBar
+              translucent={true}
+              tabs={true}
               // color="#ad1819"
               // tintColor="#ad1819"
               // type="reset"
