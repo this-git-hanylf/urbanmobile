@@ -192,7 +192,7 @@ export default class Home extends Component {
       onRegister: function (token) {
         console.log("TOKEN di HOME:", token);
 
-        Actions.notif();
+        // Actions.notif();
       },
 
       // (required) Called when a remote or local notification is opened or received
