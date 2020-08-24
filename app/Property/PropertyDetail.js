@@ -882,6 +882,12 @@ export default class extends React.Component {
     }
   }
 
+  bookingnow() {
+    const items = this.props.items;
+    console.log("items buat ke choose tower", items);
+    Actions.ProductProjectPage({ items: items });
+  }
+
   // openMap(cordinat) {
   //   console.log("cordinat", cordinat);
   //   console.log("open directions");
@@ -1157,7 +1163,7 @@ export default class extends React.Component {
                       <AlertCustom />
                       {this.state.group !== "AGENT" ? (
                         <View style={{ paddingTop: "130%" }}>
-                          <Button
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
                             // onPress={() => this.nupBooking()}
@@ -1174,8 +1180,8 @@ export default class extends React.Component {
                             >
                               Booking Priority Pass
                             </Text>
-                          </Button>
-                          <Button
+                          </Button> */}
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
                             // onPress={() => this.nupBooking()}
@@ -1192,11 +1198,28 @@ export default class extends React.Component {
                             >
                               New Booking
                             </Text>
+                          </Button> */}
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.alertNUP()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              Booking Now
+                            </Text>
                           </Button>
                         </View>
                       ) : (
                         <View style={{ paddingTop: "130%" }}>
-                          <Button
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.nupBooking()}
                           >
@@ -1228,6 +1251,23 @@ export default class extends React.Component {
                               }}
                             >
                               New Booking
+                            </Text>
+                          </Button> */}
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() => this.bookingnow()}
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              Booking Now
                             </Text>
                           </Button>
                         </View>

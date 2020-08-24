@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes } from "react";
 import {
   Linking,
   StatusBar,
@@ -15,6 +15,7 @@ import {
   FlatList,
   Alert,
   Modal,
+  PermissionsAndroid,
 } from "react-native";
 import {
   Container,
@@ -57,6 +58,15 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
 );
 
+import {
+  // SettingsDividerShort,
+  // SettingsDividerLong,
+  // SettingsEditText,
+  // SettingsCategoryHeader,
+  SettingsSwitch,
+  // SettingsPicker,
+} from "react-native-settings-components";
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -78,6 +88,7 @@ export default class extends React.Component {
       pesan: "",
       files: [],
       cntNotif: "",
+      allowPushNotifications: false,
     };
     // this.logout = this.logout.bind(this);
   }
@@ -406,6 +417,28 @@ export default class extends React.Component {
       });
   };
 
+  requestPermissionNotif = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.RECEIVE_WAP_PUSH,
+        {
+          title: "IFCA S + want to acces your storage",
+          message: "Please be careful with agreement permissions ",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   render() {
     if (this.state.isLogin) {
       return (
@@ -424,6 +457,29 @@ export default class extends React.Component {
               style={Style.layoutInner}
               contentContainerStyle={Style.layoutContent}
             >
+              {/* tes switch allow pushnotif  */}
+              <SettingsSwitch
+                title={"Allow Push Notifications"}
+                onValueChange={(value) => {
+                  console.log("allow push notifications:", value);
+                  this.setState({
+                    allowPushNotifications: value,
+                  });
+                }}
+                // onSaveValue={(value) => {
+                //   console.log("allow push notifications:", value);
+                //   this.setState({
+                //     allowPushNotifications: value,
+                //   });
+                // }}
+                value={this.state.allowPushNotifications}
+                thumbTintColor={
+                  this.state.allowPushNotifications
+                    ? colors.switchEnabled
+                    : colors.switchDisabled
+                }
+              />
+
               <Modal
                 visible={this.state.Alert_Visibility}
                 transparent={true}
@@ -793,3 +849,13 @@ export default class extends React.Component {
     }
   }
 }
+
+const colors = {
+  iosSettingsBackground: "rgb(235,235,241)",
+  white: "#FFFFFF",
+  monza: "#C70039",
+  switchEnabled: Platform.OS === "android" ? "#C70039" : null,
+  switchDisabled: Platform.OS === "android" ? "#efeff3" : null,
+  switchOnTintColor: Platform.OS === "android" ? "rgba(199, 0, 57, 0.6)" : null,
+  blueGem: "#27139A",
+};

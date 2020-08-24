@@ -14,7 +14,7 @@ import {
   Platform,
   SafeAreaView,
   View,
-  FlatList
+  FlatList,
 } from "react-native";
 import {
   Container,
@@ -31,7 +31,7 @@ import {
   Item,
   Footer,
   FooterTab,
-  Badge
+  Badge,
 } from "native-base";
 
 import NavigationService from "@Service/Navigation";
@@ -44,7 +44,6 @@ import { Style, Colors } from "../Themes/";
 import Styles from "./Style";
 import { _storeData, _getData, _navigate } from "@Component/StoreAsync";
 import { urlApi } from "@Config/services";
-
 //const {width, height} = Dimensions.get('window')
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   "window"
@@ -59,7 +58,7 @@ class Categoris extends React.Component {
     this.state = {
       hd: null,
 
-      tower: []
+      tower: [],
     };
     console.log("props", this.props);
   }
@@ -69,8 +68,8 @@ class Categoris extends React.Component {
 
     const data = {
       hd: new Headers({
-        Token: await _getData("@Token")
-      })
+        Token: await _getData("@Token"),
+      }),
     };
     this.setState(data, () => {
       this.getTower();
@@ -91,11 +90,11 @@ class Categoris extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ tower: resData });
@@ -106,22 +105,48 @@ class Categoris extends React.Component {
               }
               console.log("getTower", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
     }
   };
 
-  goTo(item) {
+  goTo2(item) {
     const data = this.props.items;
     data["tower"] = item.property_cd;
     data["towerDescs"] = item.descs;
-    console.log('data',data);
-    if(this.props.dyn){
-      _navigate("UnitEnquiryProjectPage", { prevItems: data }); 
+    console.log("data", data);
+    if (this.props.dyn) {
+      _navigate("UnitEnquiryProjectPage", { prevItems: data });
     } else {
       _navigate("chooseZone", { items: this.props.items });
+    }
+  }
+
+  goTo(item) {
+    console.log("item choose tower", item);
+    // alert('t')
+    // const itemyangdibawa = item;
+    // console.log('itemyangdibawa', itemyangdibawa)
+    // const datapentingtower = this.props.items;
+    // console.log('datapentingtower', datapentingtower);
+    const data = this.props.items;
+    data["tower"] = item.property_cd;
+    data["towerDescs"] = item.descs;
+    data["picture_url"] = item.picture_url;
+    data["property_cd"] = item.property_cd;
+    data["product_cd"] = item.product_cd;
+    data["hidden_picture_url"] = item.hidden_picture_url;
+    console.log("data", data);
+    if (this.props.dyn) {
+      _navigate("UnitEnquiryProjectPage", { prevItems: data });
+    } else {
+      // _navigate("chooseZone", { items: this.props.items });
+      _navigate("ChooseZoneModif", {
+        items: this.props.items,
+        prevItems: data,
+      });
     }
   }
 
@@ -169,7 +194,7 @@ class Categoris extends React.Component {
                 <FlatList
                   data={this.state.tower}
                   style={Styles.item}
-                  keyExtractor={item => item.rowID}
+                  keyExtractor={(item) => item.rowID}
                   renderItem={({ item, separators }) => (
                     <TouchableHighlight
                       underlayColor="transparent"

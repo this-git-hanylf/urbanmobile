@@ -69,6 +69,7 @@
     "react-native-render-html": "^4.1.2",
     "react-native-router-flux": "^4.0.6",
     "react-native-searchable-dropdown": "^1.1.1",
+    "react-native-settings-components": "^0.0.2",
     "react-native-siren": "^0.0.3",
     "react-native-slideshow": "^1.0.1",
     "react-native-snap-carousel": "^3.7.5",

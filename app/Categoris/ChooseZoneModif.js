@@ -16,7 +16,7 @@ import {
   View,
   FlatList,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import {
   Container,
@@ -33,7 +33,7 @@ import {
   Item,
   Footer,
   FooterTab,
-  Badge
+  Badge,
 } from "native-base";
 
 import NavigationService from "@Service/Navigation";
@@ -50,8 +50,9 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Carousel, {
   Pagination,
-  ParallaxImage
+  ParallaxImage,
 } from "react-native-snap-carousel";
+import moment from "moment";
 
 //const {width, height} = Dimensions.get('window')
 // const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
@@ -93,7 +94,9 @@ class ChooseZoneModif extends React.Component {
       property_cd: "",
       hidden_pict: "",
       Alert_Visibility: false,
-      pesan: ""
+      pesan: "",
+      periode_book: [],
+      start_date: moment(new Date()).format("DD/MM/YYYY"),
     };
     isMount = true;
     console.log("props", this.props);
@@ -114,8 +117,8 @@ class ChooseZoneModif extends React.Component {
       // towerDescs : item.towerDescs,
       // console.log('twr descs', towerDescs);
       hd: new Headers({
-        Token: await _getData("@Token")
-      })
+        Token: await _getData("@Token"),
+      }),
     };
     console.log("data", data);
 
@@ -124,6 +127,7 @@ class ChooseZoneModif extends React.Component {
       this.getDataAminities(this.props.items);
       this.getDataGallery(this.props.items);
       this.getUnit();
+      this.getPeriodeBooking();
     });
   }
 
@@ -198,11 +202,11 @@ class ChooseZoneModif extends React.Component {
               item.project_no,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ amen: resData });
@@ -214,7 +218,7 @@ class ChooseZoneModif extends React.Component {
               }
               console.log("amenitis", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -242,21 +246,21 @@ class ChooseZoneModif extends React.Component {
               project,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 console.log(resData);
                 this.setState({ gallery: resData.gallery });
-                resData.gallery.map(item => {
-                  this.setState(prevState => ({
+                resData.gallery.map((item) => {
+                  this.setState((prevState) => ({
                     imagesPreview: [
                       ...prevState.imagesPreview,
-                      { url: item.gallery_url }
-                    ]
+                      { url: item.gallery_url },
+                    ],
                   }));
                 });
               } else {
@@ -267,7 +271,7 @@ class ChooseZoneModif extends React.Component {
               }
               console.log("getData Galerry", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -339,11 +343,11 @@ class ChooseZoneModif extends React.Component {
               property_cd,
             {
               method: "GET",
-              headers: this.state.hd
+              headers: this.state.hd,
             }
           )
-            .then(response => response.json())
-            .then(res => {
+            .then((response) => response.json())
+            .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ unit: resData });
@@ -355,7 +359,7 @@ class ChooseZoneModif extends React.Component {
               }
               console.log("unit", res);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error);
             })
         : null;
@@ -429,6 +433,65 @@ class ChooseZoneModif extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
+  getPeriodeBooking() {
+    const item = this.props.items;
+    console.log("item get periode", item);
+
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_periode_book/getPeriode/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              item.property_cd +
+              // "/" +
+              // start_date,
+              "/" +
+              item.product_cd,
+            {
+              method: "GET",
+              headers: this.state.hd,
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ periode_book: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("periode_book", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  newnupBooking = () => {
+    // alert('tes')
+    const data = this.props.items;
+    console.log("lempar data", data);
+
+    if (data) {
+      Actions.New_NupBooking({ items: data });
+      // alert('ada data');
+      // console.log('da')
+    }
+    // else{
+    //   alert('gada');
+    // }
+  };
+
   render() {
     return (
       <Container style={Style.bgMain}>
@@ -494,7 +557,7 @@ class ChooseZoneModif extends React.Component {
                   // backgroundColor: "red",
                   flex: 1,
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <View
@@ -503,7 +566,7 @@ class ChooseZoneModif extends React.Component {
                     width: "70%",
                     height: "20%",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   <Text
@@ -512,7 +575,7 @@ class ChooseZoneModif extends React.Component {
                       fontSize: 17,
                       paddingBottom: 15,
                       color: Colors.black,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                   >
                     {this.state.pesan}
@@ -521,7 +584,7 @@ class ChooseZoneModif extends React.Component {
                   <View
                     style={{
                       flexDirection: "row",
-                      alignContent: "space-around"
+                      alignContent: "space-around",
                     }}
                   >
                     <TouchableOpacity
@@ -532,7 +595,7 @@ class ChooseZoneModif extends React.Component {
                         alignContent: "space-around",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
                       }}
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
@@ -548,21 +611,21 @@ class ChooseZoneModif extends React.Component {
 
             <View
               style={{
-                top: 25
+                top: 25,
                 // width: "100%"
               }}
             >
               <ImageBackground
                 // source={this.state.pict_hardcode}
                 source={{
-                  uri: this.state.hidden_pict
+                  uri: this.state.hidden_pict,
                 }}
                 // source={require("@Asset/images/project_suite_urban.png")}
                 style={{
                   flex: 1,
                   height: 700,
                   // width: "100%"
-                  resizeMode: "contain"
+                  resizeMode: "contain",
 
                   // width: 30
                 }}
@@ -588,7 +651,7 @@ class ChooseZoneModif extends React.Component {
                       fontWeight: "900",
                       color: "#FFFFFF",
                       fontSize: 14,
-                      textAlign: "center"
+                      textAlign: "center",
                     }}
                     // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                   >
@@ -612,7 +675,7 @@ class ChooseZoneModif extends React.Component {
                           alignItems: "center",
                           textAlign: "center",
                           fontFamily: Fonts.type.proximaNovaBold,
-                          letterSpacing: 1
+                          letterSpacing: 1,
                         }}
                       >
                         Booking Priority Pass
@@ -621,23 +684,55 @@ class ChooseZoneModif extends React.Component {
                   </View>
                 ) : (
                   <View style={{ paddingTop: "110%" }}>
-                    <Button
-                      style={Style.signInBtnMedium}
-                      onPress={() => this.nupBooking()}
-                    >
-                      <Text
-                        style={{
-                          width: "100%",
-                          fontSize: 16,
-                          alignItems: "center",
-                          textAlign: "center",
-                          fontFamily: Fonts.type.proximaNovaBold,
-                          letterSpacing: 1
-                        }}
-                      >
-                        Booking Priority Pass
-                      </Text>
-                    </Button>
+                    {
+                      this.state.periode_book ? (
+                        this.state.periode_book != 0 ? (
+                          <Button
+                            style={Style.signInBtnMedium}
+                            onPress={() =>
+                              this.state.periode_book[0].booking_type == "BU"
+                                ? this.newnupBooking()
+                                : this.nupBooking()
+                            }
+                          >
+                            <Text
+                              style={{
+                                width: "100%",
+                                fontSize: 16,
+                                alignItems: "center",
+                                textAlign: "center",
+                                fontFamily: Fonts.type.proximaNovaBold,
+                                letterSpacing: 1,
+                              }}
+                            >
+                              {this.state.periode_book[0].booking_descs}
+                            </Text>
+                          </Button>
+                        ) : (
+                          <ActivityIndicator />
+                        )
+                      ) : (
+                        <ActivityIndicator />
+                      )
+
+                      // <Button
+                      //   style={Style.signInBtnMedium}
+                      //   // onPress={() => this.nupBooking()}
+                      // >
+                      //   <Text
+                      //     style={{
+                      //       width: "100%",
+                      //       fontSize: 16,
+                      //       alignItems: "center",
+                      //       textAlign: "center",
+                      //       fontFamily: Fonts.type.proximaNovaBold,
+                      //       letterSpacing: 1,
+                      //     }}
+                      //   >
+                      //     Booking Now
+                      //   </Text>
+                      // </Button>
+                    }
                   </View>
                 )}
               </ImageBackground>
@@ -655,7 +750,7 @@ class ChooseZoneModif extends React.Component {
                   paddingHorizontal: 25,
                   fontFamily: Fonts.type.proximaNovaReg,
                   letterSpacing: 2,
-                  lineHeight: 25
+                  lineHeight: 25,
                 }}
               >
                 Tower 1 terdiri 18 lantai dengan luas bangunan sekitar 11.253m2.
@@ -812,7 +907,7 @@ class ChooseZoneModif extends React.Component {
                   horizontal
                   style={[Styles.slider, { paddingTop: 10 }]}
                   showsHorizontalScrollIndicator={false}
-                  keyExtractor={item => item.line_no}
+                  keyExtractor={(item) => item.line_no}
                   renderItem={({ item, index }) => (
                     <TouchableOpacity
                       underlayColor="transparent"
