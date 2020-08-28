@@ -192,7 +192,7 @@ export default class Intro extends React.Component {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
-          title: "IFCA S + want to acces your storage",
+          title: "Urban Mobile want to acces your storage",
           message: "Please be careful with agreement permissions ",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",

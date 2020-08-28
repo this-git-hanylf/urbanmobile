@@ -422,7 +422,7 @@ export default class extends React.Component {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.RECEIVE_WAP_PUSH,
         {
-          title: "IFCA S + want to acces your storage",
+          title: "Urban Mobile want to acces your storage",
           message: "Please be careful with agreement permissions ",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",

@@ -145,6 +145,7 @@ import UploadBukti from "./NupBooking/UploadBukti";
 
 //New_NupBooking
 import New_NupBooking from "./NupBooking/New_NupBooking";
+import New_NupBookingBlock from "./NupBooking/New_NupBookingBlock";
 
 //ContactUs
 import ContactUs from "./ContactUs/ContactUs";
@@ -1171,6 +1172,14 @@ class Routes extends Component {
             <Scene
               key="New_NupBooking"
               component={New_NupBooking}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="New_NupBookingBlock"
+              component={New_NupBookingBlock}
               title=""
               hideNavBar
               translucent={true}

@@ -885,7 +885,8 @@ export default class extends React.Component {
   bookingnow() {
     const items = this.props.items;
     console.log("items buat ke choose tower", items);
-    Actions.ProductProjectPage({ items: items });
+    Actions.ProductProjectPage({ items: items }); //booking now yang lama
+    // Actions.New_NupBookingBlock({ items: items }); //booking now yang baru, pilih block langsung
   }
 
   // openMap(cordinat) {
