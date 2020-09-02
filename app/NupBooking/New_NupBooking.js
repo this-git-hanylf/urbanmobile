@@ -109,11 +109,16 @@ class New_NupBooking extends React.Component {
       activePage_Lot: 0,
       block: [],
       getLot: [],
-      // getLot_room: [],
+      getLot_room: [],
       block_no: "",
       lot_type: "",
-      // klik: false,
+      klik: false,
       isLoaded: false,
+      isLoadedBlock: false,
+      isLoadedType: false,
+      // getpict: [],
+      getpict: "",
+
       // dataBlock: "",
     };
     // console.log()
@@ -165,6 +170,7 @@ class New_NupBooking extends React.Component {
       this.getDataDetails(this.props.items);
       this.getBlock();
       this.getLot();
+      // this.getDataRoom();
       // this.tes();
       // this.getRoomUnit();
       // this.getLot_room();
@@ -291,7 +297,9 @@ class New_NupBooking extends React.Component {
               "/" +
               // item.entity_cd +
               // "/" +
-              item.project_no,
+              item.project_no +
+              "/" +
+              this.state.property_cd,
             {
               method: "GET",
               headers: this.state.hd,
@@ -302,13 +310,15 @@ class New_NupBooking extends React.Component {
             .then((res) => {
               if (!res.Error) {
                 const resData = res.Data;
+                this.setState({ isLoadedBlock: true });
                 this.setState({ block: resData });
                 console.log("state block", this.state.block);
+                console.log("statte isloadedblock", this.state.isLoadedBlock);
+
                 // this.getRoomUnit(this.state.block);
                 // console.log("blockMo", resData[0].block_no);
                 // const block_no_res = resData[0].block_no;
-                // this.getRoomUnit();
-                this.tes();
+                this.getDataRoom();
 
                 // this.getLot_room_default({ block: resData });
               } else {
@@ -351,7 +361,8 @@ class New_NupBooking extends React.Component {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ getLot: resData });
-                this.tes();
+                this.setState({ isLoadedType: true });
+                this.getDataRoom();
                 // this.getRoomUnit(this.state.getLot);
                 // this.getLot_room_default({ dataLotType: resData });
               } else {
@@ -376,11 +387,8 @@ class New_NupBooking extends React.Component {
     //kirim datablock ke getRoomUnit
     this.setState({ dataBlock: dataBlock });
     this.setState({ klik: true });
+    this.getDataRoom();
     // this.setState({ klik: true });
-    this.setState({ isLoaded: !this.state.klik }, () => {
-      // alert("true");
-      this.tes();
-    });
   };
   selectComponent_Lot = (activePage_Lot, dataLotType) => () => {
     this.setState({ activePage_Lot });
@@ -392,7 +400,7 @@ class New_NupBooking extends React.Component {
     this.setState({ klik: true });
     this.setState({ isLoaded: !this.state.klik }, () => {
       // alert("true");
-      this.tes();
+      this.getDataRoom();
     });
   };
 
@@ -401,20 +409,76 @@ class New_NupBooking extends React.Component {
     if (this.state.activePage === 0)
       return (
         <Content>
-          {/* {this.state.tower ? 
-          <Text>{this.state.tower[0].</Text>  
-        } */}
-          <Text> tab 1</Text>
+          {this.state.isLoadedBlock == true ? (
+            this.state.block ? (
+              this.state.block == null ||
+              this.state.block == "" ||
+              this.state.block == 0 ? (
+                <Text>null gambar </Text>
+              ) : (
+                <View>
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: 250,
+                      // alignSelf: "center",
+                      resizeMode: "contain",
+                      // flex: 1,
+                      top: 0,
+                      marginTop: 0,
+                      marginBottom: 0,
+                      bottom: 0,
+                    }}
+                    source={{ uri: this.state.block[0].picture_url }}
+                  ></Image>
+
+                  {/* <Text>{this.state.block[0].picture_url}</Text> */}
+                </View>
+              )
+            ) : (
+              <Text>gak ada block</Text>
+            )
+          ) : (
+            <Text>No Image</Text>
+          )}
         </Content>
       );
     //... Your Component 1 to display
     if (this.state.activePage === 1)
       return (
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
-          <Text> tab 2</Text>
+        <Content>
+          {this.state.isLoadedBlock == true ? (
+            this.state.block ? (
+              this.state.block == null ||
+              this.state.block == "" ||
+              this.state.block == 0 ? (
+                <Text>null gambar </Text>
+              ) : (
+                <View>
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: 250,
+                      // alignSelf: "center",
+                      resizeMode: "contain",
+                      // flex: 1,
+                      top: 0,
+                      marginTop: 0,
+                      marginBottom: 0,
+                      bottom: 0,
+                    }}
+                    source={{ uri: this.state.block[1].picture_url }}
+                  ></Image>
+
+                  <Text>{this.state.block[1].picture_url}</Text>
+                </View>
+              )
+            ) : (
+              <Text>gak ada block</Text>
+            )
+          ) : (
+            <Text>No Image</Text>
+          )}
         </Content>
       );
     // else
@@ -429,237 +493,341 @@ class New_NupBooking extends React.Component {
   };
 
   _renderComponent_Lot = () => {
-    // console.log("this tower", this.state.tower);
-    // {
-    //   this.state.tower.map((data, key) =>
-    //     this.state.activePage === 0 ? (
-    //       <Content key={key}>
-    //         <Text>{data.label}</Text>
-    //       </Content>
-    //     ) : (
-    //       <Text>nnull</Text>
-    //     )
-    //   );
-    // }
     if (this.state.activePage_Lot === 0)
       return (
-        <Content>
-          {/* {this.state.tower ? 
-          <Text>{this.state.tower[0].</Text>  
-        } */}
-          <Text> tab lot type 1</Text>
-        </Content>
+        // <Content>
+        //   {/* {this.state.tower ?
+        //   <Text>{this.state.tower[0].</Text>
+        // } */}
+        //   <Text> tab lot type 1</Text>
+        // </Content>
+        null
       );
     //... Your Component 1 to display
     if (this.state.activePage_Lot === 1)
       return (
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
-          <Text> tab lot type 2</Text>
-        </Content>
+        // <Content
+        //   style={Style.layoutInner}
+        //   contentContainerStyle={Style.layoutContent}
+        // >
+        //   <Text>
+        //     {" "}
+        //     tab lot type 2 {console.log("getlotroom", this.state.getLot_room)}
+        //   </Text>
+        // </Content>
+
+        null
       );
     else
       return (
-        <Content
-          style={Style.layoutInner}
-          contentContainerStyle={Style.layoutContent}
-        >
-          <Text> tab 3</Text>
-        </Content>
+        // <Content
+        //   style={Style.layoutInner}
+        //   contentContainerStyle={Style.layoutContent}
+        // >
+        //   <Text> tab 3</Text>
+        // </Content>
+        null
       );
   };
 
-  tes() {
-    console.log("cek datablock", this.state.dataBlock);
-    console.log("cek datalottype", this.state.dataLotType);
-    // console.log("klik", this.state.klik);
-    // this.getBlock();
-    // this.getLot();
+  getDataRoom() {
     if (
       this.state.dataBlock == undefined &&
       this.state.dataLotType == undefined
     ) {
-      console.log("state block dari state", this.state.block[0].block_no);
-      console.log("state type dari state", this.state.getLot[0].lot_type);
+      if (this.state.isLoadedBlock == true) {
+        console.log("datablock dari block[0]", this.state.block[0].block_no);
+      }
+      if (this.state.isLoadedType == true) {
+        console.log("datablock dari getlot[0]", this.state.getLot[0].lot_type);
+      }
+      console.log("datablock getdataroom room null");
       const item = this.props.items;
       console.log("item tower", item);
-      fetch(
-        urlApi +
-          "c_product_info/getLot_room/" +
-          item.db_profile +
-          "/" +
-          item.entity_cd +
-          "/" +
-          item.project_no +
-          "/" +
-          item.property_cd +
-          "/" +
-          this.state.block[0].block_no +
-          "/" +
-          this.state.getLot[0].lot_type,
-
-        {
-          method: "GET",
-          headers: this.state.hd,
-          //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          if (!res.Error) {
-            const resData = res.Data;
-            this.setState({ getLot_room: resData });
-          } else {
-            this.setState({ isLoaded: !this.state.isLoaded }, () => {
-              // alert(res.Pesan);
-              console.log("Error di tes if 1: ", res.Pesan);
-            });
-          }
-          console.log(
-            "getLot_room where block no and lot type array 0 (default)",
-            res
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      {
+        isMount
+          ? fetch(
+              urlApi +
+                "c_product_info/getLot_room/" +
+                item.db_profile +
+                "/" +
+                item.entity_cd +
+                "/" +
+                item.project_no +
+                "/" +
+                item.property_cd +
+                "/" +
+                this.state.block[0].block_no +
+                "/" +
+                this.state.getLot[0].lot_type,
+              {
+                method: "GET",
+                headers: this.state.hd,
+                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+              }
+            )
+              .then((response) => response.json())
+              .then((res) => {
+                if (!res.Error) {
+                  const resData = res.Data;
+                  this.setState({ getLot_room: resData });
+                  this.setState({ isLoadedRoom: true });
+                  this.selectRoomUnit();
+                  // this.getRoomUnit(this.state.getLot);
+                  // this.getLot_room_default({ dataLotType: resData });
+                } else {
+                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                    alert(res.Pesan);
+                  });
+                }
+                console.log("getLot_room", res);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+          : null;
+      }
     } else if (
-      this.state.dataBlock != undefined &&
-      this.state.dataLotType == undefined
+      this.state.dataBlock != undefined ||
+      this.state.dataLotType != undefined
     ) {
-      console.log("state block klik", this.state.dataBlock);
-      console.log("state type", this.state.getLot[0].lot_type);
+      console.log("datablock getdataroom room not null");
+      if (this.state.dataBlock == undefined) {
+        console.log("datablock dari block[0]", this.state.block[0].block_no);
+        var block_no = this.state.block[0].block_no;
+      } else {
+        console.log("state datablock klik", this.state.dataBlock.dataBlock);
+        var block_no = this.state.dataBlock.dataBlock;
+      }
+      if (this.state.dataLotType == undefined) {
+        console.log("datablock dari getlot[0]", this.state.getLot[0].lot_type);
+        var lot_type = this.state.getLot[0].lot_type;
+      } else {
+        console.log("state datatype", this.state.dataLotType.dataLotType);
+        var lot_type = this.state.dataLotType.dataLotType;
+      }
+      console.log("block klik", block_no);
+      console.log("lot_type klik", lot_type);
       const item = this.props.items;
       console.log("item tower", item);
-      fetch(
-        urlApi +
-          "c_product_info/getLot_room/" +
-          item.db_profile +
-          "/" +
-          item.entity_cd +
-          "/" +
-          item.project_no +
-          "/" +
-          item.property_cd +
-          "/" +
-          this.state.dataBlock.dataBlock +
-          "/" +
-          this.state.getLot[0].lot_type,
+      {
+        isMount
+          ? fetch(
+              urlApi +
+                "c_product_info/getLot_room/" +
+                item.db_profile +
+                "/" +
+                item.entity_cd +
+                "/" +
+                item.project_no +
+                "/" +
+                item.property_cd +
+                "/" +
+                block_no +
+                "/" +
+                lot_type,
+              {
+                method: "GET",
+                headers: this.state.hd,
+                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+              }
+            )
+              .then((response) => response.json())
+              .then((res) => {
+                if (!res.Error) {
+                  const resData = res.Data;
+                  this.setState({ getLot_room: resData });
+                  this.setState({ isLoadedRoom: true });
+                  this.selectRoomUnit();
+                  // this.getRoomUnit(this.state.getLot);
+                  // this.getLot_room_default({ dataLotType: resData });
+                } else {
+                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                    alert(res.Pesan);
+                  });
+                }
+                console.log("getLot_room", res);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+          : null;
+      }
+    }
+  }
 
-        {
-          method: "GET",
-          headers: this.state.hd,
-          //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          if (!res.Error) {
-            const resData = res.Data;
-            this.setState({ getLot_room: resData });
-          } else {
-            this.setState({ isLoaded: !this.state.isLoaded }, () => {
-              // alert(res.Pesan);
-              console.log("Error di tes if 2: ", res.Pesan);
-            });
-          }
-          console.log("getLot_room without lot type", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if (
+  selectRoomUnit(data) {
+    if (
       this.state.dataBlock == undefined &&
-      this.state.dataLotType != undefined
+      this.state.dataLotType == undefined &&
+      data == undefined
     ) {
-      console.log("state block", this.state.block[0].block_no);
-      console.log("state type klik", this.state.dataLotType);
+      if (this.state.isLoadedBlock == true) {
+        console.log("datablock dari block[0]", this.state.block[0].block_no);
+      }
+      if (this.state.isLoadedType == true) {
+        console.log("datablock dari getlot[0]", this.state.getLot[0].lot_type);
+      }
+      if (this.state.isLoadedRoom == true) {
+        console.log("data room unit", this.state.getLot_room[0].room_unit);
+      }
+      console.log("datablock getdataroom room null");
       const item = this.props.items;
       console.log("item tower", item);
-      fetch(
-        urlApi +
-          "c_product_info/getLot_room/" +
-          item.db_profile +
-          "/" +
-          item.entity_cd +
-          "/" +
-          item.project_no +
-          "/" +
-          item.property_cd +
-          "/" +
-          this.state.block[0].block_no +
-          "/" +
-          this.state.dataLotType.dataLotType,
 
-        {
-          method: "GET",
-          headers: this.state.hd,
-          //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          if (!res.Error) {
-            const resData = res.Data;
-            this.setState({ getLot_room: resData });
-          } else {
-            this.setState({ isLoaded: !this.state.isLoaded }, () => {
-              // alert(res.Pesan);
-              console.log("Error di tes if 3: ", res.Pesan);
-            });
-          }
-          console.log("getLot_room without block no", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      {
+        isMount
+          ? fetch(
+              urlApi +
+                "c_product_info/getLotRoom_pict/" +
+                item.db_profile +
+                "/" +
+                item.entity_cd +
+                "/" +
+                item.project_no +
+                "/" +
+                item.property_cd +
+                "/" +
+                this.state.block[0].block_no +
+                "/" +
+                this.state.getLot[0].lot_type +
+                "/" +
+                this.state.getLot_room[0].room_unit,
+              {
+                method: "GET",
+                headers: this.state.hd,
+                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+              }
+            )
+              .then((response) => response.json())
+              .then((res) => {
+                if (!res.Error) {
+                  const resData = res.Data;
+                  this.setState({ getpict: resData });
+                  // this.setState({ isLoadedType: true });
+                } else {
+                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                    alert(res.Pesan);
+                  });
+                }
+                console.log("getpict", res);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+          : null;
+      }
+
+      // for (let x = 0; x < this.state.getLot_room.length; x++) {
+      //   if (
+      //     this.state.getLot_room[x].room_unit ==
+      //     this.state.getLot_room[0].room_unit
+      //   ) {
+      //     console.log("room unit sama");
+      //     console.log(
+      //       "this.state.getLot_room[x].room_unit",
+      //       this.state.getLot_room[x].room_unit
+      //     );
+      //     console.log(
+      //       "this.state.getLot_room[0].room_unit",
+      //       this.state.getLot_room[0].room_unit
+      //     );
+      //     this.setState({ backgroundColor: "blue" });
+      //     console.log("backgtound", this.state.backgroundColor);
+      //   } else {
+      //     console.log("room unit beda");
+      //     this.setState({ backgroundColor: "red" });
+      //   }
+      // }
     } else if (
-      this.state.dataBlock != undefined &&
-      this.state.dataLotType != undefined
+      this.state.dataBlock != undefined ||
+      this.state.dataLotType != undefined ||
+      data != undefined
     ) {
-      console.log("dataBlock dari klik", this.state.dataBlock);
-      console.log("dataLotType dari klik", this.state.dataLotType);
+      console.log("datablock getdataroom room not null");
+      if (this.state.dataBlock == undefined) {
+        console.log("datablock dari block[0]", this.state.block[0].block_no);
+        var block_no = this.state.block[0].block_no;
+      } else {
+        console.log("state datablock klik", this.state.dataBlock.dataBlock);
+        var block_no = this.state.dataBlock.dataBlock;
+      }
+      if (this.state.dataLotType == undefined) {
+        console.log("datablock dari getlot[0]", this.state.getLot[0].lot_type);
+        var lot_type = this.state.getLot[0].lot_type;
+      } else {
+        console.log("state datatype", this.state.dataLotType.dataLotType);
+        var lot_type = this.state.dataLotType.dataLotType;
+      }
+      if (data == undefined) {
+        console.log("data room unit", this.state.getLot_room[0].room_unit);
+        var room_unit = this.state.getLot_room[0].room_unit;
+      } else {
+        console.log("data room klik nih", data.room_unit);
+        var room_unit = data.room_unit;
+      }
+      console.log("block klik", block_no);
+      console.log("lot_type klik", lot_type);
       const item = this.props.items;
       console.log("item tower", item);
-      fetch(
-        urlApi +
-          "c_product_info/getLot_room/" +
-          item.db_profile +
-          "/" +
-          item.entity_cd +
-          "/" +
-          item.project_no +
-          "/" +
-          item.property_cd +
-          "/" +
-          this.state.dataBlock.dataBlock +
-          "/" +
-          this.state.dataLotType.dataLotType,
+      {
+        isMount
+          ? fetch(
+              urlApi +
+                "c_product_info/getLotRoom_pict/" +
+                item.db_profile +
+                "/" +
+                item.entity_cd +
+                "/" +
+                item.project_no +
+                "/" +
+                item.property_cd +
+                "/" +
+                block_no +
+                "/" +
+                lot_type +
+                "/" +
+                room_unit,
+              {
+                method: "GET",
+                headers: this.state.hd,
+                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+              }
+            )
+              .then((response) => response.json())
+              .then((res) => {
+                if (!res.Error) {
+                  const resData = res.Data;
+                  this.setState({ getpict: resData });
+                  // this.setState({ isLoadedType: true });
+                } else {
+                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                    alert(res.Pesan);
+                  });
+                }
+                console.log("getpict", res);
+              })
+              .catch((error) => {
+                console.log(error);
+              })
+          : null;
+      }
 
-        {
-          method: "GET",
-          headers: this.state.hd,
-          //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          if (!res.Error) {
-            const resData = res.Data;
-            this.setState({ getLot_room: resData });
-          } else {
-            this.setState({ isLoaded: !this.state.isLoaded }, () => {
-              // alert(res.Pesan);
-              console.log("Error di tes if 4: ", res.Pesan);
-            });
-          }
-          console.log("getLot_room with block no and lot type", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // for (let x = 0; x < this.state.getLot_room.length; x++) {
+      //   if (this.state.getLot_room[x].room_unit == data.room_unit) {
+      //     console.log("room unit sama");
+      //     console.log(
+      //       "this.state.getLot_room[x].room_unit",
+      //       this.state.getLot_room[x].room_unit
+      //     );
+      //     console.log("this.state.getLot_room[0].room_unit", data.room_unit);
+      //     this.setState({ backgroundColor: "blue" });
+      //     console.log("backgtound", this.state.backgroundColor);
+      //   } else {
+      //     console.log("room unit beda");
+      //     this.setState({ backgroundColor: "red" });
+      //   }
+      // }
     }
   }
 
@@ -800,7 +968,7 @@ class New_NupBooking extends React.Component {
               >
                 <Button
                   style={[Style.signInBtnMedium, { top: "105%" }]}
-                  onPress={() => this.alertNUP()}
+                  // onPress={() => this.alertNUP()}
                 >
                   <Text
                     style={{
@@ -1029,48 +1197,81 @@ class New_NupBooking extends React.Component {
 
           <Content padder>{this._renderComponent_Lot()}</Content>
 
-          <View
-            style={{
-              // backgroundColor: "yellow",
-              flexDirection: "row",
-              // width: "80%",
-            }}
-          >
+          <View>
+            {/* <Image> */}
+            {this.state.getpict ? (
+              this.state.getpict == null ||
+              this.state.getpict == "" ||
+              this.state.getpict == 0 ? (
+                <Text>null gambar </Text>
+              ) : (
+                <View>
+                  <Image
+                    style={{
+                      width: "100%",
+                      height: 250,
+                      // alignSelf: "center",
+                      resizeMode: "contain",
+                      // flex: 1,
+                      top: 0,
+                      marginTop: 0,
+                      marginBottom: 0,
+                      bottom: 0,
+                    }}
+                    source={{ uri: this.state.getpict[0].picture_url }}
+                  ></Image>
+
+                  {/* <Text>{console.log(this.state.getpict[0].picture_url)}</Text> */}
+                </View>
+              )
+            ) : (
+              <Text>gak ada block</Text>
+            )}
+
+            {/* </Image> */}
+          </View>
+          <View style={{ alignItems: "center" }}>
             <ScrollView horizontal>
-              <View>
-                {this.state.getLot_room ? (
-                  this.state.getLot_room.length == 0 ||
-                  this.state.getLot_room.length == "" ||
-                  this.state.getLot_room.length == null ? (
-                    <Text> No data</Text>
-                  ) : (
-                    <Text>ada data</Text>
-                    // this.state.getLot_room.map((data, key) => (
-                    //   <TouchableOpacity
-                    //     key={key}
-                    //     style={{
-                    //       width: 45,
-                    //       height: 45,
-                    //       backgroundColor: "blue",
-                    //       justifyContent: "center",
-                    //       margin: 5,
-                    //     }}
-                    //   >
-                    //     <Text
-                    //       style={{
-                    //         alignSelf: "center",
-                    //         justifyContent: "center",
-                    //       }}
-                    //     >
-                    //       {data.room_unit}
-                    //     </Text>
-                    //   </TouchableOpacity>
-                    // ))
-                  )
+              {this.state.getLot_room ? (
+                this.state.getLot_room == 0 ||
+                this.state.getLot_room == "" ||
+                this.state.getLot_room == null ? (
+                  <Text>
+                    {" "}
+                    No data{" "}
+                    {/* {console.log("datta getlot", this.state.errorgetLot_room)} */}
+                  </Text>
                 ) : (
-                  <ActivityIndicator />
-                )}
-              </View>
+                  // <Text>ada data</Text>
+                  this.state.getLot_room.map((data, key) => (
+                    <TouchableOpacity
+                      key={key}
+                      style={{
+                        width: 45,
+                        height: 45,
+                        backgroundColor: data.room_unit ? "blue" : "red",
+                        justifyContent: "center",
+                        margin: 5,
+                      }}
+                      onPress={() => this.selectRoomUnit(data)}
+                    >
+                      <Text
+                        style={{
+                          alignSelf: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data.room_unit}
+                      </Text>
+                    </TouchableOpacity>
+                  ))
+                )
+              ) : (
+                <ActivityIndicator />
+              )}
+              {/* <View>
+                
+              </View> */}
 
               {/* {this.state.getLot_room.length == 0 ? (
                 <Text>tidak ada data</Text>
@@ -1100,9 +1301,6 @@ class New_NupBooking extends React.Component {
             </ScrollView>
           </View>
         </ScrollView>
-        {/* <ScrollView style={{height: '100%'}}>
-                    
-                </ScrollView> */}
       </Container>
     );
   }
