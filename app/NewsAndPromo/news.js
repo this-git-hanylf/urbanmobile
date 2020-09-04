@@ -44,6 +44,7 @@ import Styles from "./Style";
 import { _storeData, _getData } from "@Component/StoreAsync";
 import { urlApi } from "@Config/services";
 import moment from "moment";
+import Icon_ from "react-native-vector-icons/FontAwesome";
 
 let isMount = false;
 // create a component
@@ -58,6 +59,7 @@ class NewsPage extends Component {
       user: "",
       name: "",
       project: [],
+      cntNotif: "",
     };
 
     console.log("props cf", props);
@@ -76,6 +78,7 @@ class NewsPage extends Component {
 
     this.setState(data, () => {
       this.getNews();
+      this.getCountNotif();
     });
   }
 
@@ -122,6 +125,45 @@ class NewsPage extends Component {
     Actions.unitenquiry();
     this.setState({ click: true });
   }
+
+  getCountNotif = async () => {
+    //  let result = res.Data;
+    const email = this.state.email;
+
+    // console.log("datatower", dataTower);
+    console.log("email buat count", email);
+    fetch(urlApi + "c_notification/getNotificationBadge/IFCAMOBILE/" + email, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res notif di notif", res);
+        if (res.Error === false) {
+          let resData = res.Data;
+          let data = [];
+          console.log("resdata", resData);
+          resData.map((item) => {
+            let items = {
+              // ...item,
+              jumlahnotif: item.cnt,
+            };
+            data.push(items);
+          });
+
+          if (data) {
+            this.setState({ cntNotif: data });
+
+            console.log("data update", this.state.cntNotif);
+          }
+
+          _storeData("@CountNotif", this.state.cntNotif);
+          // Actions.push("notif", _storeData("@CountNotif", this.state.cntNotif));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   render() {
     return (
       <Container style={Style.bgMain}>
@@ -237,6 +279,145 @@ class NewsPage extends Component {
             </ScrollView>
           </View>
         </Content>
+        {/* footer navigasi */}
+        <Footer>
+          <FooterTab style={{ backgroundColor: "white" }}>
+            <Button vertical onPress={() => Actions.home()}>
+              <Icon_
+                name="home"
+                color="#b7b7b7"
+                style={{ color: "#b7b7b7", fontSize: 24 }}
+              />
+              <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                Home
+              </Text>
+            </Button>
+            <Button vertical onPress={() => Actions.Menu()}>
+              <Icon_
+                name="building"
+                color="#b7b7b7"
+                style={{ color: "#b7b7b7", fontSize: 24 }}
+              />
+              <Text
+                style={{
+                  color: "#b7b7b7",
+                  textTransform: "capitalize",
+                  width: 110,
+
+                  textAlign: "center",
+                }}
+              >
+                Progress
+              </Text>
+            </Button>
+            <Button vertical>
+              <Icon_
+                name="newspaper-o"
+                style={{ color: "#AB9E84", fontSize: 24 }}
+              />
+              <Text style={{ color: "#AB9E84", textTransform: "capitalize" }}>
+                News
+              </Text>
+            </Button>
+
+            {this.state.cntNotif != 0 ? (
+              this.state.cntNotif[0].jumlahnotif > 0 ? (
+                <Button badge vertical onPress={() => Actions.notif()}>
+                  <Badge style={{ top: 5 }}>
+                    <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
+                  </Badge>
+
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#b7b7b7", fontSize: 24, bottom: 5 }}
+                  />
+                  <Text
+                    style={{
+                      color: "#b7b7b7",
+                      textTransform: "capitalize",
+                      bottom: 5,
+                      width: 110,
+
+                      textAlign: "center",
+                    }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              ) : (
+                <Button vertical onPress={() => Actions.notif()}>
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{
+                      color: "#b7b7b7",
+                      textTransform: "capitalize",
+                      width: 110,
+
+                      textAlign: "center",
+                    }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              )
+            ) : (
+              <Button vertical onPress={() => Actions.notif()}>
+                <Icon_ name="bell" style={{ color: "#b7b7b7", fontSize: 24 }} />
+                <Text
+                  style={{
+                    color: "#b7b7b7",
+                    textTransform: "capitalize",
+                    width: 110,
+
+                    textAlign: "center",
+                  }}
+                >
+                  Notification
+                </Text>
+              </Button>
+            )}
+
+            {/* dibawah ini adalah pushdata dari firebase */}
+            {/* {this.state.badge_notif_db > 0 ? (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Badge style={{ top: 8 }}>
+                      <Text>{this.state.badge_notif_db[0].jumlahnotif}</Text>
+                    </Badge>
+
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button badge vertical onPress={() => Actions.notif()}>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#b7b7b7", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )} */}
+            <Button vertical onPress={() => Actions.akun()}>
+              <Icon_ name="user" style={{ color: "#b7b7b7", fontSize: 24 }} />
+              <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                Profile
+              </Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }

@@ -690,6 +690,24 @@ export default class extends React.Component {
                     Home
                   </Text>
                 </Button>
+                <Button vertical onPress={() => Actions.Menu()}>
+                  <Icon_
+                    name="building"
+                    color="#b7b7b7"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{
+                      color: "#b7b7b7",
+                      textTransform: "capitalize",
+                      width: 110,
+
+                      textAlign: "center",
+                    }}
+                  >
+                    Progress
+                  </Text>
+                </Button>
                 {/* <Button vertical onPress={() => Actions.Menu()}> */}
                 <Button vertical onPress={() => Actions.NewsPage()}>
                   <Icon_
@@ -719,6 +737,9 @@ export default class extends React.Component {
                           color: "#b7b7b7",
                           textTransform: "capitalize",
                           bottom: 5,
+                          width: 110,
+
+                          textAlign: "center",
                         }}
                       >
                         Notification
@@ -734,6 +755,9 @@ export default class extends React.Component {
                         style={{
                           color: "#b7b7b7",
                           textTransform: "capitalize",
+                          width: 110,
+
+                          textAlign: "center",
                         }}
                       >
                         Notification
@@ -747,7 +771,13 @@ export default class extends React.Component {
                       style={{ color: "#b7b7b7", fontSize: 24 }}
                     />
                     <Text
-                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                      style={{
+                        color: "#b7b7b7",
+                        textTransform: "capitalize",
+                        width: 110,
+
+                        textAlign: "center",
+                      }}
                     >
                       Notification
                     </Text>

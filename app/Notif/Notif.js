@@ -560,264 +560,150 @@ export default class Notif extends React.Component {
   render() {
     if (this.state.isLogin) {
       return (
-        <Container>
-          <Content>
-            <ScrollView
-              contentInsetAdjustmentBehavior="automatic"
-              style={{ backgroundColor: Colors.lighter }}
-            >
-              <Header />
-              <View
-                style={{
-                  backgroundColor: "#eee",
-                  color: "#000",
-                  height: 100,
-                  padding: 12,
-                }}
-              >
-                <Text>Push Notifications</Text>
-              </View>
-              {/* <View
-            style={{
-              backgroundColor: Colors.white,
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-              height: 400,
-            }}
-          >
-            {this.state.pushData != 0
-              ? this.state.pushData.length != 0 && (
-                  <FlatList
-                    data={this.state.pushData}
-                    renderItem={({ item }) => this._renderItem(item)}
-                    keyExtractor={(item) => item.title}
-                    extraData={this.state}
-                  />
-                )
-              : this.state.pushData.length == 0 && (
-                  <View style={{ paddingVertical: 50 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        textAlign: "center",
-                      }}
-                    >
-                      You don't have any push notification yet. Send some push
-                      to show it in the list push data
-                    </Text>
-                  </View>
-                )}
-          </View> */}
+        // <Container>
+        //   <Content>
+        //     <ScrollView
+        //       contentInsetAdjustmentBehavior="automatic"
+        //       style={{ backgroundColor: Colors.lighter }}
+        //     >
+        //       <Header />
+        //       <View
+        //         style={{
+        //           backgroundColor: "#eee",
+        //           color: "#000",
+        //           height: 100,
+        //           padding: 12,
+        //         }}
+        //       >
+        //         <Text>Push Notifications</Text>
+        //       </View>
+        //       {/* <View
+        //     style={{
+        //       backgroundColor: Colors.white,
+        //       paddingHorizontal: 20,
+        //       paddingVertical: 10,
+        //       height: 400,
+        //     }}
+        //   >
+        //     {this.state.pushData != 0
+        //       ? this.state.pushData.length != 0 && (
+        //           <FlatList
+        //             data={this.state.pushData}
+        //             renderItem={({ item }) => this._renderItem(item)}
+        //             keyExtractor={(item) => item.title}
+        //             extraData={this.state}
+        //           />
+        //         )
+        //       : this.state.pushData.length == 0 && (
+        //           <View style={{ paddingVertical: 50 }}>
+        //             <Text
+        //               style={{
+        //                 fontSize: 14,
+        //                 textAlign: "center",
+        //               }}
+        //             >
+        //               You don't have any push notification yet. Send some push
+        //               to show it in the list push data
+        //             </Text>
+        //           </View>
+        //         )}
+        //   </View> */}
 
-              {/* ambiil dari database */}
-              {this.state.dataNotif != null ? (
-                this.state.dataNotif.map((data, key) => (
-                  // <Text>{data.Complain_no}</Text>
+        //       {/* ambiil dari database */}
+        //       {this.state.dataNotif != null ? (
+        //         this.state.dataNotif.map((data, key) => (
+        //           // <Text>{data.Complain_no}</Text>
 
-                  <List
-                    containerStyle={{
-                      borderTopWidth: 0,
-                      borderBottomWidth: 0,
-                    }}
-                    key={key}
-                    style={[
-                      Styles.item,
-                      {
-                        backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
-                      },
-                    ]}
-                  >
-                    <ListItem
-                      onPress={() => {
-                        data.IsRead == 1
-                          ? this.updateisRead({ data })
-                          : alert("0");
-                        // this.updateisRead({ data });
-                        // this.setState({ isRead: 1 }, () => {
-                        //   this.props.onPress(item.NotificationID);
-                        // });
-                        // Actions.refresh({ key: Math.random() });
+        //           <List
+        //             containerStyle={{
+        //               borderTopWidth: 0,
+        //               borderBottomWidth: 0,
+        //             }}
+        //             key={key}
+        //             style={[
+        //               Styles.item,
+        //               {
+        //                 backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+        //               },
+        //             ]}
+        //           >
+        //             <ListItem
+        //               onPress={() => {
+        //                 data.IsRead == 1
+        //                   ? this.updateisRead({ data })
+        //                   : alert("0");
+        //                 // this.updateisRead({ data });
+        //                 // this.setState({ isRead: 1 }, () => {
+        //                 //   this.props.onPress(item.NotificationID);
+        //                 // });
+        //                 // Actions.refresh({ key: Math.random() });
 
-                        // this.setState({ isRead: 0 });
-                        // this.setState({ isRead: data.IsRead });
-                        // console.log("id notif", this.state.notifID);
-                      }}
-                      style={{
-                        backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
-                      }}
-                    >
-                      {/* <Image
-                        source={{ uri: item.image }}
-                        style={Styles.itemImg}
-                      /> */}
-                      <View>
-                        <View style={{ flexDirection: "row" }}>
-                          <Left>
-                            {
-                              data.NotificationCd == "PAYDUE" ? (
-                                <Text style={Styles.itemDesc}>
-                                  Please complete your payment
-                                </Text>
-                              ) : null
-                              // <Text style={Styles.itemDesc}>tes</Text>
-                            }
-                          </Left>
-                          {/* <Right>
-                            <Text style={Styles.itemDate}>
+        //                 // this.setState({ isRead: 0 });
+        //                 // this.setState({ isRead: data.IsRead });
+        //                 // console.log("id notif", this.state.notifID);
+        //               }}
+        //               style={{
+        //                 backgroundColor: data.IsRead == 1 ? "#fff" : "#97aecf",
+        //               }}
+        //             >
+        //               {/* <Image
+        //                 source={{ uri: item.image }}
+        //                 style={Styles.itemImg}
+        //               /> */}
+        //               <View>
+        //                 <View style={{ flexDirection: "row" }}>
+        //                   <Left>
+        //                     {
+        //                       data.NotificationCd == "PAYDUE" ? (
+        //                         <Text style={Styles.itemDesc}>
+        //                           Please complete your payment
+        //                         </Text>
+        //                       ) : null
+        //                       // <Text style={Styles.itemDesc}>tes</Text>
+        //                     }
+        //                   </Left>
+        //                   {/* <Right>
+        //                     <Text style={Styles.itemDate}>
 
-                              {moment(data.NotificationDate).format(
-                                "D MMMM YYYY"
-                              )}
-                            </Text>
-                          </Right> */}
-                        </View>
-                        <Text style={Styles.itemTitle}>{data.Complain_no}</Text>
-                        <Text style={Styles.itemDesc}>
-                          {data.Remarks}{" "}
-                          <Text style={Styles.itemDesc_bold}>
-                            #{data.NotificationID}
-                          </Text>
-                        </Text>
-                        <Text
-                          style={[
-                            Styles.itemDate,
-                            { color: data.IsRead == 1 ? "#999" : "#333" },
-                          ]}
-                        >
-                          {/* {data.NotificationDate} */}
-                          {moment(data.NotificationDate).format(
-                            "D MMMM YYYY HH:mm"
-                          )}
-                        </Text>
-                      </View>
-                    </ListItem>
-                  </List>
-                ))
-              ) : (
-                <Text>No notif</Text>
-              )}
+        //                       {moment(data.NotificationDate).format(
+        //                         "D MMMM YYYY"
+        //                       )}
+        //                     </Text>
+        //                   </Right> */}
+        //                 </View>
+        //                 <Text style={Styles.itemTitle}>{data.Complain_no}</Text>
+        //                 <Text style={Styles.itemDesc}>
+        //                   {data.Remarks}{" "}
+        //                   <Text style={Styles.itemDesc_bold}>
+        //                     #{data.NotificationID}
+        //                   </Text>
+        //                 </Text>
+        //                 <Text
+        //                   style={[
+        //                     Styles.itemDate,
+        //                     { color: data.IsRead == 1 ? "#999" : "#333" },
+        //                   ]}
+        //                 >
+        //                   {/* {data.NotificationDate} */}
+        //                   {moment(data.NotificationDate).format(
+        //                     "D MMMM YYYY HH:mm"
+        //                   )}
+        //                 </Text>
+        //               </View>
+        //             </ListItem>
+        //           </List>
+        //         ))
+        //       ) : (
+        //         <Text>No notif</Text>
+        //       )}
 
-              {/* tutup ambil dari database */}
-            </ScrollView>
-          </Content>
+        //       {/* tutup ambil dari database */}
+        //     </ScrollView>
+        //   </Content>
 
-          {/* footer tab tambahan */}
-          <Footer>
-            <FooterTab style={{ backgroundColor: "white" }}>
-              <Button
-                vertical
-                onPress={() =>
-                  Actions.home({
-                    pushData: this.state.pushData.length,
-                    cntNotif: this.state.cntNotif,
-                  })
-                }
-              >
-                <Icon_
-                  name="home"
-                  color="#b7b7b7"
-                  style={{ color: "#b7b7b7", fontSize: 24 }}
-                />
-                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
-                  Home
-                </Text>
-              </Button>
-              <Button vertical onPress={() => Actions.Menu()}>
-                <Icon_
-                  name="newspaper-o"
-                  style={{ color: "#b7b7b7", fontSize: 24 }}
-                />
-                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
-                  News
-                </Text>
-              </Button>
-              {this.state.cntNotif != 0 ? (
-                this.state.cntNotif[0].jumlahnotif > 0 ? (
-                  <Button badge vertical>
-                    <Badge style={{ top: 5 }}>
-                      <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
-                    </Badge>
+        // </Container>
 
-                    <Icon_
-                      name="bell"
-                      style={{ color: "#AB9E84", fontSize: 24, bottom: 5 }}
-                    />
-                    <Text
-                      style={{
-                        color: "#AB9E84",
-                        textTransform: "capitalize",
-                        bottom: 5,
-                      }}
-                    >
-                      Notification
-                    </Text>
-                  </Button>
-                ) : (
-                  <Button vertical>
-                    <Icon_
-                      name="bell"
-                      style={{ color: "#AB9E84", fontSize: 24 }}
-                    />
-                    <Text
-                      style={{ color: "#AB9E84", textTransform: "capitalize" }}
-                    >
-                      Notification
-                    </Text>
-                  </Button>
-                )
-              ) : (
-                <Button vertical>
-                  <Icon_
-                    name="bell"
-                    style={{ color: "#AB9E84", fontSize: 24 }}
-                  />
-                  <Text
-                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
-                  >
-                    Notification
-                  </Text>
-                </Button>
-              )}
-
-              {/* dibawah ini pushdata badge dari firebase */}
-              {/* {this.state.pushData != 0 ? (
-                <Button badge vertical>
-                  <Badge style={{ top: 8 }}>
-                    <Text>{this.state.pushData.length}</Text>
-                  </Badge>
-
-                  <Icon_
-                    name="bell"
-                    style={{ color: "#AB9E84", fontSize: 24 }}
-                  />
-                  <Text
-                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
-                  >
-                    Notification
-                  </Text>
-                </Button>
-              ) : (
-                <Button badge vertical>
-                  <Icon_
-                    name="bell"
-                    style={{ color: "#AB9E84", fontSize: 24 }}
-                  />
-                  <Text
-                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
-                  >
-                    Notification
-                  </Text>
-                </Button>
-              )} */}
-              <Button vertical onPress={() => Actions.akun()}>
-                <Icon_ name="user" style={{ color: "#b7b7b7", fontSize: 24 }} />
-                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
-                  Profile
-                </Text>
-              </Button>
-            </FooterTab>
-          </Footer>
-        </Container>
+        //diatas ini notif yg bisa ---------//
 
         // <Container style={Style.bgMain}>
         //   <StatusBar
@@ -1005,63 +891,212 @@ export default class Notif extends React.Component {
         //   </Footer>
         // </Container>
 
-        // <Container>
-        //   <ImageBackground
-        //     style={Styles.backgroundImage_2}
-        //     source={require("../Images/background-blue.png")}
-        //   >
-        //     <Header style={Styles.header}>
-        //       <StatusBar
-        //         backgroundColor={"rgba(0, 0, 0, 0)"}
-        //         animated
-        //         barStyle="dark-content"
-        //       />
-        //       <Left style={Styles.left}>
-        //         <Button
-        //           transparent
-        //           style={Style.actionBarBtn}
-        //           onPress={Actions.pop}
-        //         >
-        //           <Icon
-        //             active
-        //             name="arrow-left"
-        //             style={Style.textWhite}
-        //             type="MaterialCommunityIcons"
-        //           />
-        //         </Button>
-        //       </Left>
-        //       <Body style={Styles.body}>
-        //         <Text
-        //           style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
-        //         >
-        //           {/* {"Registration"} */}
-        //           {/* {this.Capitalize("Registration")} */}
-        //         </Text>
-        //       </Body>
-        //       <Right style={Styles.right}></Right>
-        //     </Header>
-        //     {/* <ScrollView> */}
-        //     <View
-        //       style={{
-        //         flex: 1,
-        //         justifyContent: "center",
-        //         alignItems: "center",
-        //         alignContent: "center",
-        //       }}
-        //     >
-        //       <Text
-        //         style={{
-        //           color: Colors.white,
-        //           fontFamily: Fonts.type.proximaNovaBoldWeb,
-        //           fontSize: 20,
-        //         }}
-        //       >
-        //         Coming Soon
-        //       </Text>
-        //     </View>
-        //     {/* </ScrollView> */}
-        //   </ImageBackground>
-        // </Container>
+        <Container>
+          <ImageBackground
+            style={Styles.backgroundImage_2}
+            source={require("../Images/background-blue.png")}
+          >
+            <Header style={Styles.header}>
+              <StatusBar
+                backgroundColor={"rgba(0, 0, 0, 0)"}
+                animated
+                barStyle="dark-content"
+              />
+              <Left style={Styles.left}>
+                <Button
+                  transparent
+                  style={Style.actionBarBtn}
+                  onPress={Actions.pop}
+                >
+                  <Icon
+                    active
+                    name="arrow-left"
+                    style={Style.textWhite}
+                    type="MaterialCommunityIcons"
+                  />
+                </Button>
+              </Left>
+              <Body style={Styles.body}>
+                <Text
+                  style={[Style.textWhite, Style.textMedium, Style.fontProxima]}
+                >
+                  {/* {"Registration"} */}
+                  {/* {this.Capitalize("Registration")} */}
+                </Text>
+              </Body>
+              <Right style={Styles.right}></Right>
+            </Header>
+            {/* <ScrollView> */}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                alignContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: Fonts.type.proximaNovaBoldWeb,
+                  fontSize: 20,
+                }}
+              >
+                Coming Soon
+              </Text>
+            </View>
+            {/* </ScrollView> */}
+          </ImageBackground>
+          {/* footer tab tambahan */}
+          <Footer>
+            <FooterTab style={{ backgroundColor: "white" }}>
+              <Button
+                vertical
+                onPress={() =>
+                  Actions.home({
+                    pushData: this.state.pushData.length,
+                    cntNotif: this.state.cntNotif,
+                  })
+                }
+              >
+                <Icon_
+                  name="home"
+                  color="#b7b7b7"
+                  style={{ color: "#b7b7b7", fontSize: 24 }}
+                />
+                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                  Home
+                </Text>
+              </Button>
+              <Button vertical onPress={() => Actions.Menu()}>
+                <Icon_
+                  name="building"
+                  color="#b7b7b7"
+                  style={{ color: "#b7b7b7", fontSize: 24 }}
+                />
+                <Text
+                  style={{
+                    color: "#b7b7b7",
+                    textTransform: "capitalize",
+                    width: 110,
+
+                    textAlign: "center",
+                  }}
+                >
+                  Progress
+                </Text>
+              </Button>
+              <Button vertical onPress={() => Actions.NewsPage()}>
+                <Icon_
+                  name="newspaper-o"
+                  style={{ color: "#b7b7b7", fontSize: 24 }}
+                />
+                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                  News
+                </Text>
+              </Button>
+              {this.state.cntNotif != 0 ? (
+                this.state.cntNotif[0].jumlahnotif > 0 ? (
+                  <Button badge vertical>
+                    <Badge style={{ top: 5 }}>
+                      <Text>{this.state.cntNotif[0].jumlahnotif}</Text>
+                    </Badge>
+
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#AB9E84", fontSize: 24, bottom: 5 }}
+                    />
+                    <Text
+                      style={{
+                        color: "#AB9E84",
+                        textTransform: "capitalize",
+                        bottom: 5,
+                        width: 110,
+
+                        textAlign: "center",
+                      }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button vertical>
+                    <Icon_
+                      name="bell"
+                      style={{ color: "#AB9E84", fontSize: 24 }}
+                    />
+                    <Text
+                      style={{
+                        color: "#AB9E84",
+                        textTransform: "capitalize",
+                        width: 110,
+
+                        textAlign: "center",
+                      }}
+                    >
+                      Notification
+                    </Text>
+                  </Button>
+                )
+              ) : (
+                <Button vertical>
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{
+                      color: "#AB9E84",
+                      textTransform: "capitalize",
+                      width: 110,
+
+                      textAlign: "center",
+                    }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              )}
+
+              {/* dibawah ini pushdata badge dari firebase */}
+              {/* {this.state.pushData != 0 ? (
+                <Button badge vertical>
+                  <Badge style={{ top: 8 }}>
+                    <Text>{this.state.pushData.length}</Text>
+                  </Badge>
+
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              ) : (
+                <Button badge vertical>
+                  <Icon_
+                    name="bell"
+                    style={{ color: "#AB9E84", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                  >
+                    Notification
+                  </Text>
+                </Button>
+              )} */}
+              <Button vertical onPress={() => Actions.akun()}>
+                <Icon_ name="user" style={{ color: "#b7b7b7", fontSize: 24 }} />
+                <Text style={{ color: "#b7b7b7", textTransform: "capitalize" }}>
+                  Profile
+                </Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        </Container>
       );
     } else {
       return (

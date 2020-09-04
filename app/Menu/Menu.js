@@ -419,13 +419,31 @@ export default class Menu extends React.Component {
                     Home
                   </Text>
                 </Button>
-                <Button vertical>
+                <Button vertical onPress={() => Actions.Menu()}>
                   <Icon_
-                    name="newspaper-o"
+                    name="building"
+                    color="#AB9E84"
                     style={{ color: "#AB9E84", fontSize: 24 }}
                   />
                   <Text
-                    style={{ color: "#AB9E84", textTransform: "capitalize" }}
+                    style={{
+                      color: "#AB9E84",
+                      textTransform: "capitalize",
+                      width: 110,
+
+                      textAlign: "center",
+                    }}
+                  >
+                    Progress
+                  </Text>
+                </Button>
+                <Button vertical onPress={() => Actions.NewsPage()}>
+                  <Icon_
+                    name="newspaper-o"
+                    style={{ color: "#b7b7b7", fontSize: 24 }}
+                  />
+                  <Text
+                    style={{ color: "#b7b7b7", textTransform: "capitalize" }}
                   >
                     News
                   </Text>
@@ -447,6 +465,9 @@ export default class Menu extends React.Component {
                           color: "#b7b7b7",
                           textTransform: "capitalize",
                           bottom: 5,
+                          width: 110,
+
+                          textAlign: "center",
                         }}
                       >
                         Notification
@@ -462,6 +483,9 @@ export default class Menu extends React.Component {
                         style={{
                           color: "#b7b7b7",
                           textTransform: "capitalize",
+                          width: 110,
+
+                          textAlign: "center",
                         }}
                       >
                         Notification
@@ -475,7 +499,13 @@ export default class Menu extends React.Component {
                       style={{ color: "#b7b7b7", fontSize: 24 }}
                     />
                     <Text
-                      style={{ color: "#b7b7b7", textTransform: "capitalize" }}
+                      style={{
+                        color: "#b7b7b7",
+                        textTransform: "capitalize",
+                        width: 110,
+
+                        textAlign: "center",
+                      }}
                     >
                       Notification
                     </Text>
