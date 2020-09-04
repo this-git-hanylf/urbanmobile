@@ -1164,7 +1164,7 @@ export default class extends React.Component {
                       <AlertCustom />
                       {this.state.group !== "AGENT" ? (
                         <View style={{ paddingTop: "130%" }}>
-                          {/* <Button
+                          <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
                             // onPress={() => this.nupBooking()}
@@ -1181,7 +1181,7 @@ export default class extends React.Component {
                             >
                               Booking Priority Pass
                             </Text>
-                          </Button> */}
+                          </Button>
                           {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
@@ -1200,7 +1200,7 @@ export default class extends React.Component {
                               New Booking
                             </Text>
                           </Button> */}
-                          <Button
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
                           >
@@ -1216,11 +1216,11 @@ export default class extends React.Component {
                             >
                               Booking Now
                             </Text>
-                          </Button>
+                          </Button> */}
                         </View>
                       ) : (
                         <View style={{ paddingTop: "130%" }}>
-                          {/* <Button
+                          <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.nupBooking()}
                           >
@@ -1237,7 +1237,7 @@ export default class extends React.Component {
                               Booking Priority Pass
                             </Text>
                           </Button>
-                          <Button
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.newnupBooking()}
                           >
@@ -1254,7 +1254,7 @@ export default class extends React.Component {
                               New Booking
                             </Text>
                           </Button> */}
-                          <Button
+                          {/* <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.bookingnow()}
                           >
@@ -1270,7 +1270,7 @@ export default class extends React.Component {
                             >
                               Booking Now
                             </Text>
-                          </Button>
+                          </Button> */}
                         </View>
                       )}
                     </ImageBackground>
