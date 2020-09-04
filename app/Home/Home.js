@@ -759,7 +759,8 @@ export default class Home extends Component {
                 Home
               </Text>
             </Button>
-            <Button vertical onPress={() => Actions.Menu()}>
+            {/* <Button vertical onPress={() => Actions.Menu()}> */}
+            <Button vertical onPress={() => Actions.NewsPage()}>
               <Icon_
                 name="newspaper-o"
                 style={{ color: "#b7b7b7", fontSize: 24 }}

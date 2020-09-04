@@ -662,6 +662,7 @@ class New_NupBooking extends React.Component {
       this.state.dataLotType == undefined &&
       data == undefined
     ) {
+      console.log("if blue");
       if (this.state.isLoadedBlock == true) {
         console.log("datablock dari block[0]", this.state.block[0].block_no);
       }
@@ -704,6 +705,7 @@ class New_NupBooking extends React.Component {
                 if (!res.Error) {
                   const resData = res.Data;
                   this.setState({ getpict: resData });
+                  this.change(data);
                   // this.setState({ isLoadedType: true });
                 } else {
                   this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -744,6 +746,7 @@ class New_NupBooking extends React.Component {
       this.state.dataLotType != undefined ||
       data != undefined
     ) {
+      // this.setState({ backgroundColor: "red" });
       console.log("datablock getdataroom room not null");
       if (this.state.dataBlock == undefined) {
         console.log("datablock dari block[0]", this.state.block[0].block_no);
@@ -799,6 +802,7 @@ class New_NupBooking extends React.Component {
                 if (!res.Error) {
                   const resData = res.Data;
                   this.setState({ getpict: resData });
+                  this.change(data);
                   // this.setState({ isLoadedType: true });
                 } else {
                   this.setState({ isLoaded: !this.state.isLoaded }, () => {
@@ -812,22 +816,25 @@ class New_NupBooking extends React.Component {
               })
           : null;
       }
+    }
+  }
 
-      // for (let x = 0; x < this.state.getLot_room.length; x++) {
-      //   if (this.state.getLot_room[x].room_unit == data.room_unit) {
-      //     console.log("room unit sama");
-      //     console.log(
-      //       "this.state.getLot_room[x].room_unit",
-      //       this.state.getLot_room[x].room_unit
-      //     );
-      //     console.log("this.state.getLot_room[0].room_unit", data.room_unit);
-      //     this.setState({ backgroundColor: "blue" });
-      //     console.log("backgtound", this.state.backgroundColor);
-      //   } else {
-      //     console.log("room unit beda");
-      //     this.setState({ backgroundColor: "red" });
-      //   }
-      // }
+  change(data) {
+    for (let x = 0; x < this.state.getLot_room.length; x++) {
+      if (this.state.getLot_room[x].room_unit === data.room_unit) {
+        console.log("room unit sama");
+        console.log(
+          "this.state.getLot_room[x].room_unit",
+          this.state.getLot_room[x].room_unit
+        );
+
+        console.log("this.state.getLot_room[0].room_unit", data.room_unit);
+        this.setState({ change_color: "red" });
+        console.log("backgtound", this.state.change_color);
+      } else {
+        console.log("room unit beda");
+        this.setState({ change_color: false });
+      }
     }
   }
 
@@ -1249,7 +1256,7 @@ class New_NupBooking extends React.Component {
                       style={{
                         width: 45,
                         height: 45,
-                        backgroundColor: data.room_unit ? "blue" : "red",
+                        backgroundColor: "blue",
                         justifyContent: "center",
                         margin: 5,
                       }}

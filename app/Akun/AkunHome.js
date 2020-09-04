@@ -458,7 +458,7 @@ export default class extends React.Component {
               contentContainerStyle={Style.layoutContent}
             >
               {/* tes switch allow pushnotif  */}
-              <SettingsSwitch
+              {/* <SettingsSwitch
                 title={"Allow Push Notifications"}
                 onValueChange={(value) => {
                   console.log("allow push notifications:", value);
@@ -478,7 +478,7 @@ export default class extends React.Component {
                     ? colors.switchEnabled
                     : colors.switchDisabled
                 }
-              />
+              /> */}
 
               <Modal
                 visible={this.state.Alert_Visibility}
@@ -690,7 +690,8 @@ export default class extends React.Component {
                     Home
                   </Text>
                 </Button>
-                <Button vertical onPress={() => Actions.Menu()}>
+                {/* <Button vertical onPress={() => Actions.Menu()}> */}
+                <Button vertical onPress={() => Actions.NewsPage()}>
                   <Icon_
                     name="newspaper-o"
                     style={{ color: "#b7b7b7", fontSize: 24 }}
