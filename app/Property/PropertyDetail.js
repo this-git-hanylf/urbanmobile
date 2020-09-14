@@ -1316,36 +1316,98 @@ export default class extends React.Component {
                   ) : (
                     <ActivityIndicator />
                   )}
-
-                  {/* {this.state.overview ? 
-                
-                // tagsStyles: { i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } }
-                // <Text style={{color: Colors.white}}>
-                  // <HTML html={'' this.state.overview[0].overview_info} imagesMaxWidth={Dimensions.get('window').width}  />
-                  <HTML html={`<span style="textAlign: 'center', fontStyle: 'italic', color: 'white' ">` + this.state.overview[0].overview_info + `</span>`} imagesMaxWidth={Dimensions.get('window').width}  />
-              // <WebView
-              //   scalesPageToFit={false}
-              //   bounces={false}
-              //   javaScriptEnabled
-              //   style={{ height: 240, width: null, marginHorizontal: 20}}
-              //   source={{
-              //     html: `
-              //           <!DOCTYPE html>
-              //           <html>
-              //             <head></head>
-              //             <body>
-              //               <div style="color: 'red'; ">'${this.state.overview[0].overview_info}'</div>
-              //               <div>tes</div>
-              //             </body>
-              //           </html>
-              //     `,
-              //   }}
-              //   automaticallyAdjustContentInsets={false}
-              
-              // />
-                // </Text>
-                 :<ActivityIndicator /> } */}
                 </View>
+
+                <Grid style={{ alignItems: "center", marginTop: 20 }}>
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() =>
+                        Linking.openURL(
+                          "tel:" + this.state.project[0].office_no
+                        )
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="phone"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Call
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].direction_map)
+                      }
+                    >
+                      <Icon
+                        reverse
+                        name="map-marker"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Direction
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() => this.sendEmail()}
+                    >
+                      <Icon
+                        raised
+                        name="envelope"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Email
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
 
                 <View style={{ paddingBottom: 20 }}>
                   <View style={{ paddingVertical: 10 }}>
@@ -1682,14 +1744,6 @@ export default class extends React.Component {
                   </View>
 
                   {this.state.project ? (
-                    //  <HTML html={`<iframe name="gMap" src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.980392567379!2d98.67400131448191!3d3.591970997386129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131c5bb04a5b5:0xc9bead74e038893e!2sThe+Reiz+Condo+Medan!5e0!3m2!1sen!2sid!4v1534232821301&key=${API_KEY}'></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-
-                    //  <HTML html={`<iframe src='${this.state.project[0].coordinat_project}' width="300" height="300" frameborder="0" style="border:0;"></iframe>`} imagesMaxWidth={Dimensions.get('window').width} />
-                    //  <HTML html={this.state.project[0].coordinat_project} />
-                    // <HTML html={`<iframe src="https://goo.gl/maps/idUCFGKtvhrhYGhd6" height="500px" ></iframe>`}></HTML>
-                    // <HTML html={`<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8&q=Space+Needle,Seattle+WA"></iframe>`}></HTML>
-                    // <HTML html = {`<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=17&center=3.1164,101.5950&key=AIzaSyBY0EdmxQjo65OoFYIlQZ8jQ1FS8VOTFC8"></iframe>`}></HTML>
-                    // <HTML html = {`<iframe\s*src="https:\/\/www\.google\.com\/maps\/embed\?[^"]+"*\s*[^>]+>*<\/iframe>`}></HTML>
                     <View style={{ marginTop: 10 }}>
                       <WebView
                         scalesPageToFit={false}
@@ -1713,7 +1767,7 @@ export default class extends React.Component {
                         }}
                         automaticallyAdjustContentInsets={false}
                       />
-                      <Button
+                      {/* <Button
                         style={{
                           backgroundColor: Colors.goldUrban,
 
@@ -1769,7 +1823,7 @@ export default class extends React.Component {
                             />
                           </View>
                         </TouchableOpacity>
-                      </Button>
+                      </Button> */}
                     </View>
                   ) : (
                     <ActivityIndicator />
@@ -1782,6 +1836,7 @@ export default class extends React.Component {
                         style={{
                           color: "white",
                           fontSize: 14,
+                          textAlign: "center",
                           fontFamily: Fonts.type.proximaNovaReg,
                         }}
                       >
@@ -1791,6 +1846,7 @@ export default class extends React.Component {
                         style={{
                           color: "white",
                           fontSize: 14,
+                          textAlign: "center",
                           fontFamily: Fonts.type.proximaNovaReg,
                         }}
                       >
@@ -1800,6 +1856,7 @@ export default class extends React.Component {
                         style={{
                           color: "white",
                           fontSize: 14,
+                          textAlign: "center",
                           fontFamily: Fonts.type.proximaNovaReg,
                         }}
                       >
@@ -1810,9 +1867,101 @@ export default class extends React.Component {
                     <ActivityIndicator />
                   )}
                 </View>
+
+                <Grid style={{ alignItems: "center", marginTop: 20 }}>
+                  <Row>
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() =>
+                        Linking.openURL(
+                          "tel:" + this.state.project[0].office_no
+                        )
+                      }
+                    >
+                      <Icon
+                        raised
+                        name="phone"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Call
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() =>
+                        Linking.openURL(this.state.project[0].direction_map)
+                      }
+                    >
+                      <Icon
+                        reverse
+                        name="map-marker"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Direction
+                      </Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: 90,
+                        width: 110,
+                        textAlign: "center",
+                        alignItems: "center",
+                      }}
+                      onPress={() => this.sendEmail()}
+                    >
+                      <Icon
+                        raised
+                        name="envelope"
+                        type="FontAwesome"
+                        style={{ color: "#fff" }}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          color: Colors.white,
+                          fontSize: 14,
+                          paddingTop: 5,
+                        }}
+                      >
+                        Email
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+
                 <View style={{ paddingBottom: 20, paddingTop: 20 }}>
                   <Button
-                    style={Style.signInBtnMedium}
+                    style={[Style.signInBtnMedium, { borderRadius: 0 }]}
                     onPress={() => this.downloadBrosur()}
                     // onPress={() =>
                     //   Actions.ProjectDownloadPage({ items: this.props.items })
@@ -1828,7 +1977,7 @@ export default class extends React.Component {
                         letterSpacing: 1,
                       }}
                     >
-                      Download File/Brochure
+                      Download
                     </Text>
                   </Button>
                 </View>
@@ -1883,8 +2032,8 @@ export default class extends React.Component {
                         >
                           <Icon
                             reverse
-                            name="ios-globe"
-                            type="Ionicons"
+                            name="desktop"
+                            type="FontAwesome"
                             style={{ color: "#fff" }}
                           />
                           <Text

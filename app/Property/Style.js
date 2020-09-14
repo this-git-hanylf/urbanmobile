@@ -518,8 +518,8 @@ export default {
   },
   itemBoxAmen_not_gold: {
     // resizeMode: 'cover',
-    width: 145,
-    height: 145,
+    width: 190,
+    height: 180,
     marginBottom: 20,
     marginLeft: 10,
     marginRight: 10,
@@ -551,7 +551,7 @@ export default {
   itemAmen_not_gold: {
     marginBottom: 10,
     width: "100%",
-    height: 150,
+    height: 180,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },

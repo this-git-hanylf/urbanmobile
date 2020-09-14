@@ -509,14 +509,14 @@ export default class Home extends Component {
                 value={this.state.tes}
                 style={{
                   fontFamily: this.state.tes
-                    ? Fonts.type.proximaNovaThin
-                    : Fonts.type.proximaNovaThin,
+                    ? Fonts.type.proximaNovaBold
+                    : Fonts.type.proximaNovaBold,
                   fontWeight: this.state.tes ? "100" : "400",
                   marginLeft: 20,
-                  fontSize: 16,
+                  fontSize: 17,
                 }}
               ></Input>
-              <Icon
+              {/* <Icon
                 style={{
                   color: colors.greyUrban,
                   bottom: 4,
@@ -525,7 +525,7 @@ export default class Home extends Component {
                   fontSize: 26,
                 }}
                 name="search"
-              />
+              /> */}
             </Item>
           </View>
         </View>
@@ -533,9 +533,9 @@ export default class Home extends Component {
         <View style={{ paddingVertical: 30 }}>
           <Text
             style={{
-              color: colors.gold,
-              fontFamily: Fonts.type.proximaNovaBoldWeb,
-              letterSpacing: 1.5,
+              color: "#fff",
+              fontFamily: Fonts.type.proximaNovaBold,
+              letterSpacing: 2,
               alignItems: "center",
               textAlign: "center",
               paddingTop: 10,
