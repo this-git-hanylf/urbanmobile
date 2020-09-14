@@ -104,7 +104,21 @@ export default {
     paddingLeft: 15,
     paddingRight: 15,
   },
-
+  signInBtn: {
+    backgroundColor: Colors.navyUrban,
+    // height: Metrics.HEIGHT * 0.10,
+    height: 40,
+    // width: 300,
+    // paddingLeft: 20,
+    // paddingRight: 20,
+    // width: '100%',
+    alignSelf: "center",
+    // elevation: 3,
+    // shadowColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    // borderRadius: 5,
+  },
   signInBtnMedium: {
     backgroundColor: Colors.goldUrban,
     // height: Metrics.HEIGHT * 0.10,

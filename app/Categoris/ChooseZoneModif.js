@@ -127,7 +127,7 @@ class ChooseZoneModif extends React.Component {
       this.getDataAminities(this.props.items);
       this.getDataGallery(this.props.items);
       this.getUnit();
-      // this.getPeriodeBooking();
+      this.getPeriodeBooking();
     });
   }
 
@@ -433,64 +433,64 @@ class ChooseZoneModif extends React.Component {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
   }
 
-  // getPeriodeBooking() {
-  //   const item = this.props.items;
-  //   console.log("item get periode", item);
+  getPeriodeBooking() {
+    const item = this.props.items;
+    console.log("item get periode", item);
 
-  //   {
-  //     isMount
-  //       ? fetch(
-  //           urlApi +
-  //             "c_periode_book/getPeriode/" +
-  //             item.db_profile +
-  //             "/" +
-  //             item.entity_cd +
-  //             "/" +
-  //             item.project_no +
-  //             "/" +
-  //             item.property_cd +
-  //             // "/" +
-  //             // start_date,
-  //             "/" +
-  //             item.product_cd,
-  //           {
-  //             method: "GET",
-  //             headers: this.state.hd,
-  //           }
-  //         )
-  //           .then((response) => response.json())
-  //           .then((res) => {
-  //             if (!res.Error) {
-  //               const resData = res.Data;
-  //               this.setState({ periode_book: resData });
-  //             } else {
-  //               this.setState({ isLoaded: !this.state.isLoaded }, () => {
-  //                 alert(res.Pesan);
-  //               });
-  //             }
-  //             console.log("periode_book", res);
-  //           })
-  //           .catch((error) => {
-  //             console.log(error);
-  //           })
-  //       : null;
-  //   }
-  // }
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_periode_book/getPeriode/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              item.property_cd +
+              // "/" +
+              // start_date,
+              "/" +
+              item.product_cd,
+            {
+              method: "GET",
+              headers: this.state.hd,
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ periode_book: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("periode_book", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
 
-  // newnupBooking = () => {
-  //   // alert('tes')
-  //   const data = this.props.items;
-  //   console.log("lempar data", data);
+  newnupBooking = () => {
+    // alert('tes')
+    const data = this.props.items;
+    console.log("lempar data", data);
 
-  //   if (data) {
-  //     Actions.New_NupBooking({ items: data });
-  //     // alert('ada data');
-  //     // console.log('da')
-  //   }
-  //   // else{
-  //   //   alert('gada');
-  //   // }
-  // };
+    if (data) {
+      Actions.New_NupBooking({ items: data });
+      // alert('ada data');
+      // console.log('da')
+    }
+    // else{
+    //   alert('gada');
+    // }
+  };
 
   render() {
     return (
@@ -684,7 +684,7 @@ class ChooseZoneModif extends React.Component {
                   </View>
                 ) : (
                   <View style={{ paddingTop: "110%" }}>
-                    <Button
+                    {/* <Button
                       style={Style.signInBtnMedium}
                       // onPress={() => this.alertNUP()}
                       onPress={() => this.nupBooking()}
@@ -701,8 +701,8 @@ class ChooseZoneModif extends React.Component {
                       >
                         Booking Priority Pass
                       </Text>
-                    </Button>
-                    {/* {
+                    </Button> */}
+                    {
                       this.state.periode_book ? (
                         this.state.periode_book != 0 ? (
                           <Button
@@ -727,7 +727,26 @@ class ChooseZoneModif extends React.Component {
                             </Text>
                           </Button>
                         ) : (
-                          <ActivityIndicator />
+                          <View style={{ paddingTop: "110%" }}>
+                            <Button
+                              style={Style.signInBtnMedium}
+                              onPress={() => this.alertNUP()}
+                              // onPress={() => this.nupBooking()}
+                            >
+                              <Text
+                                style={{
+                                  width: "100%",
+                                  fontSize: 16,
+                                  alignItems: "center",
+                                  textAlign: "center",
+                                  fontFamily: Fonts.type.proximaNovaBold,
+                                  letterSpacing: 1,
+                                }}
+                              >
+                                Booking Priority Pass
+                              </Text>
+                            </Button>
+                          </View>
                         )
                       ) : (
                         <ActivityIndicator />
@@ -750,7 +769,7 @@ class ChooseZoneModif extends React.Component {
                       //     Booking Now
                       //   </Text>
                       // </Button>
-                    } */}
+                    }
                   </View>
                 )}
               </ImageBackground>

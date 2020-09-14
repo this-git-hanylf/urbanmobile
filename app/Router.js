@@ -175,6 +175,9 @@ import EditAgent from "./EditAgent/index";
 
 // import ComingSoon from "./"
 
+//select unit
+import SelectUnit from "./SelectUnit/SelectUnit";
+
 //footer
 import FooterNav from "./components/FooterNav";
 
@@ -1180,6 +1183,14 @@ class Routes extends Component {
             <Scene
               key="New_NupBookingBlock"
               component={New_NupBookingBlock}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="SelectUnit"
+              component={SelectUnit}
               title=""
               hideNavBar
               translucent={true}

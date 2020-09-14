@@ -153,9 +153,11 @@ class Categoris extends React.Component {
   render() {
     return (
       <Container style={Style.bgMain}>
-        <Header style={Style.navigation}>
+        <Header
+          style={[Style.navigation, { backgroundColor: Colors.navyUrban }]}
+        >
           <StatusBar
-            backgroundColor={Colors.statusBarOrange}
+            backgroundColor={Colors.statusBarNavy}
             animated
             barStyle="light-content"
           />
