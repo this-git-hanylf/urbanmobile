@@ -112,6 +112,8 @@ class ChooseZoneModif extends React.Component {
       picture_url: this.props.prevItems.picture_url,
       property_cd: this.props.prevItems.property_cd,
       hidden_pict: this.props.prevItems.hidden_picture_url,
+      picture_booking_url: this.props.prevItems.picture_booking_url,
+      picture_booking_descs_url: this.props.prevItems.picture_booking_descs_url,
       group: await _getData("@Group"),
 
       // towerDescs : item.towerDescs,
@@ -120,7 +122,7 @@ class ChooseZoneModif extends React.Component {
         Token: await _getData("@Token"),
       }),
     };
-    console.log("data", data);
+    console.log("data ChooseZoneModif", data);
 
     this.setState(data, () => {
       // this.getTower();
@@ -480,10 +482,11 @@ class ChooseZoneModif extends React.Component {
   newnupBooking = () => {
     // alert('tes')
     const data = this.props.items;
+    const prev = this.props.prevItems;
     console.log("lempar data", data);
 
     if (data) {
-      Actions.New_NupBooking({ items: data });
+      Actions.New_NupBooking({ items: data, prevItems: prev });
       // alert('ada data');
       // console.log('da')
     }

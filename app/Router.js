@@ -178,6 +178,9 @@ import EditAgent from "./EditAgent/index";
 //select unit
 import SelectUnit from "./SelectUnit/SelectUnit";
 
+//form booking di booking unit
+import FormNewBooking from "./NupBooking/FormNewBooking";
+
 //footer
 import FooterNav from "./components/FooterNav";
 
@@ -1191,6 +1194,14 @@ class Routes extends Component {
             <Scene
               key="SelectUnit"
               component={SelectUnit}
+              title=""
+              hideNavBar
+              translucent={true}
+              tabs={true}
+            />
+            <Scene
+              key="FormNewBooking"
+              component={FormNewBooking}
               title=""
               hideNavBar
               translucent={true}

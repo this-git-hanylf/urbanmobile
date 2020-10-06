@@ -73,15 +73,21 @@ class SelectUnit extends React.Component {
       pesan_remove: "",
 
       getLevel: [],
+      activePage: 0,
+      getLotNo: [],
+      getPaymentCode: [],
+      activePage: 0,
+      getPaymentDetail: [],
+      getKeterangan: [],
+      getTrxAmt_Freq: [],
+      klik: false,
 
       // dataBlock: "",
     };
     // console.log()
     isMount = true;
     console.log("props", this.props);
-
-    // this.addItem = this.addItem.bind(this);
-    // this._handleDeleteButtonPress = this._handleDeleteButtonPress.bind(this);
+    this.selectComponent = this.selectComponent.bind(this);
   }
 
   async componentDidMount() {
@@ -153,7 +159,12 @@ class SelectUnit extends React.Component {
               if (!res.Error) {
                 const resData = res.Data;
                 this.setState({ getLevel: resData });
-
+                console.log(
+                  "this.state active page di getlevel",
+                  this.state.activePage
+                );
+                this.getLotNo();
+                this.getKeterangan();
                 // this.getRoomUnit(this.state.getLot);
                 // this.getLot_room_default({ dataLotType: resData });
               } else {
@@ -167,6 +178,457 @@ class SelectUnit extends React.Component {
               console.log(error);
             })
         : null;
+    }
+  }
+
+  getLotNo(level_no) {
+    console.log("level no di getlotno", level_no);
+    if (level_no == null || level_no == undefined) {
+      console.log("level no default", this.state.getLevel[0].level_no);
+      var level_no = this.state.getLevel[0].level_no;
+    } else {
+      console.log("level no di klik", level_no);
+      var level_no = level_no;
+    }
+    const item = this.props.items;
+    console.log("item get level no", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getLotNo/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              item.property_cd +
+              "/" +
+              item.block_no +
+              "/" +
+              item.lot_type +
+              "/" +
+              item.room_unit +
+              "/" +
+              level_no,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                const dataLotNo = res.Data;
+                this.setState({ getLotNo: resData });
+                this.getPaymentCode(dataLotNo);
+
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getLotNo", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  getPaymentCode(dataLotNo) {
+    console.log("dataLotNo", dataLotNo);
+
+    const item = this.props.items;
+    console.log("item get payment cd", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getPaymentCode/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              dataLotNo[0].lot_no,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+
+                this.setState({ getPaymentCode: resData });
+                this.getPaymentDetail_Amt();
+                this.getTrxAmt_Freq();
+                this.getShortDescs();
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getPaymentCode", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  getKeterangan(level_no) {
+    console.log("level no di getketerangan", level_no);
+    if (level_no == null || level_no == undefined) {
+      console.log(
+        "level no default get keterangan",
+        this.state.getLevel[0].level_no
+      );
+      var level_no = this.state.getLevel[0].level_no;
+    } else {
+      console.log("level no di klik get keterangan", level_no);
+      var level_no = level_no;
+    }
+
+    const item = this.props.items;
+    console.log("item get keterangan", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getKeteranganLevel_No/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              item.property_cd +
+              "/" +
+              item.block_no +
+              "/" +
+              item.lot_type +
+              "/" +
+              item.room_unit +
+              "/" +
+              level_no,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+
+                this.setState({ getKeterangan: resData });
+
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getKeterangan", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  selectComponent = (activePage, data) => () => {
+    console.log("data", data);
+    console.log("data payment_cd", data.data.payment_cd);
+    console.log("data short descs", data.data.short_descs);
+    console.log("activepage", activePage);
+
+    this.setState({ activePage });
+    var short_descs = data.data.short_descs;
+    this.setState({ short_descs: data.data.short_descs });
+    this.setState({ payment_cd: data.data.payment_cd });
+    const item = this.props.items;
+    const getLotNo = this.state.getLotNo;
+
+    const params = {
+      entity_cd: item.entity_cd,
+      db_profile: item.db_profile,
+      project_no: item.project_no,
+      lot_no: getLotNo[0].lot_no,
+      payment_cd: data.data.payment_cd,
+    };
+    console.log("params select", params);
+
+    this.setState({ klik: true });
+    this.setState({ isLoaded: !this.state.klik }, () => {
+      // alert("true");
+      this.getPaymentDetail_Amt(params);
+      this.getTrxAmt_Freq(params);
+      this.getShortDescs(short_descs);
+    });
+  };
+
+  getShortDescs(short_descs) {
+    if (short_descs == undefined) {
+      var get_short_descs = this.state.getPaymentCode[0].short_descs;
+    } else {
+      var get_short_descs = short_descs;
+    }
+    this.setState({ short_descs: get_short_descs });
+  }
+
+  getPaymentDetail_Amt(params) {
+    if (params == null || params == undefined) {
+      const items = this.props.items;
+      console.log("params default", items);
+      var entity = items.entity_cd;
+      var project_no = items.project_no;
+      var db_profile = items.db_profile;
+      if (this.state.getLotNo) {
+        var lot_no = this.state.getLotNo[0].lot_no;
+      }
+      if (this.state.getPaymentCode) {
+        var payment_cd = this.state.getPaymentCode[0].payment_cd;
+      }
+
+      const params2 = {
+        entity: entity,
+        project_no: project_no,
+        db_profile: db_profile,
+        lot_no: lot_no,
+        payment_cd: payment_cd,
+      };
+      console.log("params 2 if", params2);
+    } else {
+      var entity = params.entity_cd;
+      var project_no = params.project_no;
+      var db_profile = params.db_profile;
+      var lot_no = params.lot_no;
+      var payment_cd = params.payment_cd;
+
+      const params2 = {
+        entity: entity,
+        project_no: project_no,
+        db_profile: db_profile,
+        lot_no: lot_no,
+        payment_cd: payment_cd,
+      };
+      console.log("params 2 else", params2);
+    }
+
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getPaymentCodeDetail/" +
+              db_profile +
+              "/" +
+              entity +
+              "/" +
+              project_no +
+              "/" +
+              lot_no +
+              "/" +
+              payment_cd,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+
+                this.setState({ getPaymentDetail: resData });
+
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  alert(res.Pesan);
+                });
+              }
+              console.log("getPaymentDetail", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  getTrxAmt_Freq(params) {
+    if (params == null || params == undefined) {
+      const items = this.props.items;
+      console.log("params default", items);
+      var entity = items.entity_cd;
+      var project_no = items.project_no;
+      var db_profile = items.db_profile;
+      if (this.state.getLotNo) {
+        var lot_no = this.state.getLotNo[0].lot_no;
+      }
+      if (this.state.getPaymentCode) {
+        var payment_cd = this.state.getPaymentCode[0].payment_cd;
+      }
+
+      const params2 = {
+        entity: entity,
+        project_no: project_no,
+        db_profile: db_profile,
+        lot_no: lot_no,
+        payment_cd: payment_cd,
+      };
+      console.log("params 2 if", params2);
+    } else {
+      var entity = params.entity_cd;
+      var project_no = params.project_no;
+      var db_profile = params.db_profile;
+      var lot_no = params.lot_no;
+      var payment_cd = params.payment_cd;
+
+      const params2 = {
+        entity: entity,
+        project_no: project_no,
+        db_profile: db_profile,
+        lot_no: lot_no,
+        payment_cd: payment_cd,
+      };
+      console.log("params 2 else", params2);
+    }
+
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_product_info/getTrxAmt_Freq/" +
+              db_profile +
+              "/" +
+              entity +
+              "/" +
+              project_no +
+              "/" +
+              lot_no +
+              "/" +
+              payment_cd,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+
+                this.setState({ getTrxAmt_Freq: resData });
+
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  console.log("ERROR NO DATA getTrxAmt_Freq", res.Pesan);
+                });
+              }
+              console.log("getTrxAmt_Freq", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  _renderComponent = () => {
+    if (this.state.activePage === 0)
+      return (
+        // <Content>
+        //   {/* {this.state.tower ?
+        //   <Text>{this.state.tower[0].</Text>
+        // } */}
+        //   <Text> tab lot type 1</Text>
+        // </Content>
+        null
+      );
+    //... Your Component 1 to display
+    if (this.state.activePage === 1)
+      return (
+        // <Content
+        //   style={Style.layoutInner}
+        //   contentContainerStyle={Style.layoutContent}
+        // >
+        //   <Text>
+        //     {" "}
+        //     tab lot type 2 {console.log("getlotroom", this.state.getLot_room)}
+        //   </Text>
+        // </Content>
+
+        null
+      );
+    else
+      return (
+        // <Content
+        //   style={Style.layoutInner}
+        //   contentContainerStyle={Style.layoutContent}
+        // >
+        //   <Text> tab 3</Text>
+        // </Content>
+        null
+      );
+  };
+
+  clickProject(activePage, item) {
+    console.log("key", activePage);
+    console.log("item level", item.level_no);
+    this.setState({ level_no: item.level_no });
+    const level_no = item.level_no;
+    if (item.level_no) {
+      this.getLotNo(level_no);
+      this.getKeterangan(level_no);
+    }
+    this.setState({ activePage });
+    console.log("this.state active page di clikc project", activePage);
+  }
+
+  selectUnit() {
+    if (this.state.level_no == null || this.state.level_no == undefined) {
+      alert("level no harus dipilih");
+    } else {
+      const items = {
+        entity_cd: this.state.entity,
+        project_no: this.state.project_no,
+        property_cd: this.state.property_cd,
+        db_profile: this.state.db_profile,
+        projectdesc: this.state.projectdesc,
+        room_unit: this.state.room_unit,
+        towerDescs: this.state.towerDescs,
+        title: this.state.title,
+        block_no: this.state.block_no,
+        lot_type: this.state.lot_type,
+        level_no: this.state.level_no,
+        // getpict_roomtype: this.state.getpict_roomtype[0].room_type_url,
+      };
+      console.log("items kirim ke select unit", items);
+      Actions.FormNewBooking({ items: items });
     }
   }
 
@@ -281,80 +743,6 @@ class SelectUnit extends React.Component {
           </View>
         </ImageBackground>
 
-        {/* <ScrollView>
-          <View style={{ marginHorizontal: 30, marginTop: 15 }}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-              Today's Deals
-            </Text>
-            <Text style={{ fontSize: 13, textAlign: "left" }}>
-              This is what you miss already. Don't miss another
-            </Text>
-            <Text style={{ fontSize: 13, textAlign: "left" }}>
-              opportunity by not having this One and Only Urban Suites
-            </Text>
-          </View> */}
-        {/* <View
-            style={{
-              flex: 1,
-              paddingLeft: 0,
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            {this.state.getLevel ? (
-              this.state.getLevel.map((data, key) => (
-                <View
-                  style={{
-                    marginHorizontal: 5,
-                    flexDirection: "column",
-                    width: "100%",
-                    //   flex: 1,
-                  }}
-                >
-                  <TouchableOpacity key={key}>
-                    <View
-                      style={{
-                        backgroundColor: Colors.goldUrban,
-                        borderRadius: 3,
-                        width: "50%",
-                        // width: Metrics.WIDTH / 2,
-                        flexDirection: "row",
-                        marginVertical: 8,
-                        marginLeft: 0,
-                        paddingVertical: 15,
-                        paddingHorizontal: 15,
-                        justifyContent: "center",
-                        // flex: 1,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: "500",
-                        }}
-                      >
-                        {data.level_no}
-                      </Text>
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          color: Colors.white,
-                          fontSize: 13,
-                        }}
-                      >
-                        {data.land_net_price}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              ))
-            ) : (
-              <Text>gada isinya</Text>
-            )}
-          </View> */}
-        {/* </ScrollView> */}
         <Content style={Style.layoutContent}>
           <ScrollView scrollEventThrottle={200} directionalLockEnabled={true}>
             <View style={{ marginHorizontal: 30, marginTop: 15 }}>
@@ -384,7 +772,7 @@ class SelectUnit extends React.Component {
                   }}
                 >
                   {this.state.getLevel.map((item, key) => (
-                    <TouchableOpacity
+                    <Button
                       key={key}
                       style={{
                         width: "48%",
@@ -392,7 +780,8 @@ class SelectUnit extends React.Component {
                         marginBottom: 10,
                         // borderRadius: 3,
                       }}
-                      onPress={() => this.clickProject(item)}
+                      active={this.state.activePage === key}
+                      onPress={() => this.clickProject(key, item)}
                     >
                       <View
                         style={{
@@ -403,7 +792,12 @@ class SelectUnit extends React.Component {
                           height: 50,
                           justifyContent: "center",
                           alignItems: "center",
-                          backgroundColor: Colors.goldUrban,
+                          // backgroundColor: Colors.goldUrban,
+
+                          backgroundColor:
+                            this.state.activePage === key
+                              ? "#8c7f5f"
+                              : Colors.goldUrban,
                         }}
                       >
                         <Text
@@ -427,7 +821,7 @@ class SelectUnit extends React.Component {
                           Rp. {numFormat(parseInt(item.land_net_price))}
                         </Text>
                       </View>
-                    </TouchableOpacity>
+                    </Button>
                   ))}
                 </View>
               )}
@@ -452,6 +846,150 @@ class SelectUnit extends React.Component {
               </Text>
             </View>
 
+            <View style={{ alignItems: "center" }}>
+              <ScrollView horizontal>
+                <Segment
+                  style={{
+                    backgroundColor: Colors.white,
+                    alignItems: "center",
+                  }}
+                >
+                  {this.state.getPaymentCode.map((data, key) => (
+                    <Button
+                      first
+                      key={key}
+                      active={this.state.activePage === key}
+                      onPress={this.selectComponent(key, {
+                        data,
+                      })}
+                      style={
+                        this.state.activePage === key
+                          ? {
+                              backgroundColor: "#fff",
+                              borderBottomWidth: 5,
+                              borderBottomColor: "#226f9e", //biru baru urban
+                              width: "auto",
+                            }
+                          : {
+                              backgroundColor: "#fff",
+                              width: "auto",
+                              borderBottomWidth: 1,
+                              borderBottomColor: "#565c5c", //abu-abu baru urban
+                            }
+                      }
+                    >
+                      <Text
+                        style={
+                          this.state.activePage === key
+                            ? {
+                                color: "#226f9e",
+                                textAlign: "center",
+                              }
+                            : {
+                                color: "#565c5c",
+                                textAlign: "center",
+                              }
+                        }
+                      >
+                        {data.short_descs}
+                      </Text>
+                    </Button>
+                  ))}
+                </Segment>
+              </ScrollView>
+            </View>
+
+            <View style={{ marginBottom: 15 }}>
+              {this.state.getKeterangan ? (
+                this.state.getKeterangan.map((data, key) => (
+                  <View key={key}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        paddingLeft: 50,
+                        paddingTop: 5,
+                        width: "50%",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 24,
+                          fontFamily: Fonts.type.proximaNovaReg,
+                          marginRight: 5,
+                        }}
+                      >
+                        {data.descs_block_no}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 40,
+                          fontFamily: Fonts.type.proximaNovaCondBold,
+                        }}
+                      >
+                        {data.room_unit}
+                      </Text>
+                    </View>
+
+                    {this.state.getTrxAmt_Freq.length != 0 ? (
+                      <Text
+                        style={{
+                          textAlign: "right",
+                          right: 50,
+                          bottom: 30,
+                        }}
+                      >
+                        {this.state.short_descs}:{" "}
+                        {numFormat(this.state.getTrxAmt_Freq[0].trx_amount)}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "right",
+                          right: 50,
+                          bottom: 30,
+                        }}
+                      >
+                        12x : null
+                      </Text>
+                    )}
+
+                    <View
+                      style={{
+                        paddingLeft: 50,
+                      }}
+                    >
+                      <Text style={{ fontSize: 14 }}>
+                        Tipe{"    "}: {data.descs_lot_type}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        paddingLeft: 50,
+                      }}
+                    >
+                      <Text style={{ fontSize: 14 }}>
+                        SGA{"    "}: {data.land_area} m2
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        paddingLeft: 50,
+                      }}
+                    >
+                      <Text style={{ fontSize: 14 }}>
+                        View{"   "}: {data.land_area} m2
+                      </Text>
+                    </View>
+                  </View>
+                ))
+              ) : (
+                <View>
+                  <Text>No Data Available </Text>
+                </View>
+              )}
+            </View>
+
             <View>
               <Image
                 style={{
@@ -469,6 +1007,177 @@ class SelectUnit extends React.Component {
                   uri: this.state.getpict_roomtype,
                 }}
               ></Image>
+            </View>
+
+            <View
+              style={{
+                textAlign: "center",
+                marginTop: 20,
+              }}
+            >
+              <Grid>
+                <Row style={{}}>
+                  <Col
+                  // style={{
+                  //   alignItems: "center",
+                  // }}
+                  >
+                    <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                      Payment Plan
+                    </Text>
+                  </Col>
+                  <Col style={{ width: 30 }}></Col>
+                  <Col>
+                    <Text style={{ textAlign: "center", marginRight: 40 }}>
+                      Cicilan
+                    </Text>
+                  </Col>
+                </Row>
+                <View
+                  style={{
+                    borderBottomWidth: 1,
+                    marginLeft: 20,
+                    marginRight: 20,
+                  }}
+                ></View>
+              </Grid>
+              {this.state.getPaymentDetail ? (
+                this.state.getPaymentDetail.map((data, key) => (
+                  <View key={key}>
+                    <Grid>
+                      <Row>
+                        <Col style={{ width: 200 }}>
+                          {/* <Text>{key + 1}</Text> */}
+
+                          {data.freq == 1 && data.trx_mode_type == "I" ? (
+                            <Text
+                              style={{
+                                textAlign: "left",
+                                marginLeft: 40,
+                              }}
+                            >
+                              Last {data.descs}
+                            </Text>
+                          ) : data.trx_mode_type == "B" ? (
+                            <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                              {data.descs}
+                            </Text>
+                          ) : (
+                            <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                              {data.descs} {data.freq}x
+                            </Text>
+                          )}
+                        </Col>
+                        <Col style={{ width: 40 }}>
+                          {data.freq == 1 && data.trx_mode_type == "I" ? (
+                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                          ) : data.trx_mode_type == "B" ? (
+                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                          ) : (
+                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                          )}
+                        </Col>
+                        <Col>
+                          <Text
+                            style={{
+                              textAlign: "right",
+                              marginRight: 40,
+                            }}
+                          >
+                            {" "}
+                            {numFormat(data.trx_amt)}
+                          </Text>
+                          {/* <View
+                            style={{ flexDirection: "row", textAlign: "right" }}
+                          >
+                           
+                          </View> */}
+                        </Col>
+                      </Row>
+                    </Grid>
+                  </View>
+                ))
+              ) : (
+                <Text>null</Text>
+              )}
+            </View>
+
+            <View style={{ marginTop: 20 }}>
+              <Text style={{ paddingLeft: 40, fontSize: 12 }}>
+                Keterangan :
+              </Text>
+              <View
+                style={{
+                  paddingLeft: 20,
+                  // width: "100%",
+                }}
+              >
+                <Text style={{ fontSize: 9, textAlign: "justify" }}>
+                  -{"       "} Booking Fee Rp. 15,000,000
+                </Text>
+              </View>
+              <View
+                style={{
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  width: "100%",
+                }}
+              >
+                <Text
+                  style={{ fontSize: 9, textAlign: "justify", width: "100%" }}
+                >
+                  - {"      "} Angsuran 1 paling lambat 7 hari dari tanggal
+                  Booking Fee
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  paddingLeft: 20,
+
+                  paddingRight: 20,
+                }}
+              >
+                <Text
+                  style={{ fontSize: 9, textAlign: "justify", width: "100%" }}
+                >
+                  - {"       "}Harga jual belum termasuk Biaya Pemecahan
+                  Sertifikat, Akte Jual Beli, Biaya Balik
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 9,
+                    textAlign: "justify",
+                    paddingLeft: 10,
+                  }}
+                >
+                  {"     "}Nama, BPHTB, atau Pajak Susulan dari Pemerintah
+                </Text>
+                {/* <Text
+                  style={{
+                    fontSize: 9,
+                    textAlign: "justify",
+                    paddingLeft: 10,
+                  }}
+                >
+                  {"     "}Pemerintah
+                </Text> */}
+              </View>
+
+              <View
+                style={{
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                }}
+              >
+                <Text style={{ fontSize: 9, textAlign: "justify" }}>
+                  - {"       "}Harga sewaktu - waktu dapat berubah tanpa
+                  pemberitahuan terlebih dahulu
+                </Text>
+                {/* <Text style={{ fontSize: 9, textAlign: "justify" }}>
+                  {"        "}terlebih dahulu
+                </Text> */}
+              </View>
             </View>
 
             <View style={{ alignItems: "center" }}>
@@ -522,6 +1231,33 @@ class SelectUnit extends React.Component {
                   ))} */}
                 </Segment>
               </ScrollView>
+            </View>
+
+            <View
+              style={{
+                width: Metrics.WIDTH,
+                paddingBottom: 25,
+                paddingTop: 10,
+              }}
+            >
+              <Button
+                style={[Style.signInBtn]}
+                onPress={() => this.selectUnit()}
+              >
+                <Text
+                  style={{
+                    width: "100%",
+                    fontSize: 16,
+                    alignItems: "center",
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    letterSpacing: 1,
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Select Unit
+                </Text>
+              </Button>
             </View>
           </ScrollView>
         </Content>

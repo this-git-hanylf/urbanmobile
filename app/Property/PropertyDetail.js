@@ -2111,6 +2111,34 @@ export default class extends React.Component {
                             alignItems: "center",
                           }}
                           onPress={() =>
+                            Linking.openURL(this.state.project[0].youtube_url)
+                          }
+                        >
+                          <Icon
+                            raised
+                            name="youtube"
+                            type="FontAwesome"
+                            style={{ color: "#fff" }}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: Fonts.type.proximaNovaReg,
+                              color: Colors.white,
+                              fontSize: 14,
+                              paddingTop: 5,
+                            }}
+                          >
+                            Youtube
+                          </Text>
+                        </Col>
+
+                        <Col
+                          style={{
+                            height: 90,
+                            textAlign: "center",
+                            alignItems: "center",
+                          }}
+                          onPress={() =>
                             Linking.openURL(this.state.project[0].instagram_url)
                           }
                         >
@@ -2130,34 +2158,6 @@ export default class extends React.Component {
                             }}
                           >
                             Instagram
-                          </Text>
-                        </Col>
-
-                        <Col
-                          style={{
-                            height: 90,
-                            textAlign: "center",
-                            alignItems: "center",
-                          }}
-                          onPress={() =>
-                            Linking.openURL(this.state.project[0].youtube_url)
-                          }
-                        >
-                          <Icon
-                            raised
-                            name="youtube"
-                            type="FontAwesome"
-                            style={{ color: "#fff" }}
-                          />
-                          <Text
-                            style={{
-                              fontFamily: Fonts.type.proximaNovaReg,
-                              color: Colors.white,
-                              fontSize: 14,
-                              paddingTop: 5,
-                            }}
-                          >
-                            Youtube
                           </Text>
                         </Col>
                       </Row>

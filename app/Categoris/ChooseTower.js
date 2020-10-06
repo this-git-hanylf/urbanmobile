@@ -138,6 +138,8 @@ class Categoris extends React.Component {
     data["property_cd"] = item.property_cd;
     data["product_cd"] = item.product_cd;
     data["hidden_picture_url"] = item.hidden_picture_url;
+    data["picture_booking_url"] = item.picture_booking_url;
+    data["picture_booking_descs_url"] = item.picture_booking_descs_url;
     console.log("data", data);
     if (this.props.dyn) {
       _navigate("UnitEnquiryProjectPage", { prevItems: data });
