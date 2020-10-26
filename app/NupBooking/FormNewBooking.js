@@ -75,16 +75,30 @@ class FormNewBooking extends React.Component {
       fullname: "",
       mobilephone: "",
       email: "",
+      npwp: "",
+      pictUrlKtp: "",
+      pictUrlNPWP: "",
+      darinik: false,
+      dataFromNik: [],
     };
     // console.log()
     isMount = true;
+    this.showAlert = this.showAlert.bind(this);
   }
 
   async componentDidMount() {
     isMount = true;
 
+    console.log("items", this.props.items);
     const data = {
       projectdesc: this.props.items.projectdesc,
+      project_no: this.props.items.project_no,
+      entity: this.props.items.entity_cd,
+      trx_amt: this.props.items.trx_amt,
+      descs_amt: this.props.items.descs,
+      //   audit_user: await _getData("@UserId"),
+      audit_user: await _getData("@AgentCd"),
+      // projectdesc: this.props.items.project_descs,
     };
     console.log("data", data);
 
@@ -100,6 +114,165 @@ class FormNewBooking extends React.Component {
 
   alertFillBlank(visible, pesan) {
     this.setState({ Alert_Visibility: visible, pesan: pesan });
+  }
+
+  showAlert = (key) => {
+    Alert.alert(
+      "Select a Photo",
+      "Choose the place where you want to get a photo",
+      [
+        { text: "Gallery", onPress: () => this.fromGallery(key) },
+        { text: "Camera", onPress: () => this.fromCamera(key) },
+        {
+          text: "Cancel",
+          onPress: () => console.log("User Cancel"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  fromCamera(key) {
+    ImagePicker.openCamera({
+      cropping: true,
+      width: 600,
+      height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
+    })
+      .then((image) => {
+        console.log("received image", image);
+
+        this.setState({ [key]: { uri: image.path } });
+      })
+      .catch((e) => console.log("tag", e));
+  }
+
+  fromGallery(key) {
+    ImagePicker.openPicker({
+      multiple: false,
+      width: 600,
+      height: 500,
+      compressImageQuality: 0.7,
+      compressImageMaxWidth: 600,
+      compressImageMaxHeight: 500,
+    })
+      .then((image) => {
+        console.log("received image", image);
+
+        this.setState({ [key]: { uri: image.path } });
+      })
+      .catch((e) => console.log("tag", e));
+  }
+
+  cariNIK(carinik) {
+    this.setState({ loadingnik: true });
+    console.log("carinik", carinik);
+    if (carinik) {
+      let nik_no = carinik.carinik;
+      console.log("nikno", nik_no);
+      this.getDataFromNik(nik_no);
+    }
+    //   if (this.state.dataFromNik == 0) {
+
+    //   }
+  }
+
+  getDataFromNik(nik_no) {
+    const item = this.props.items;
+    console.log("item tower", item);
+    {
+      isMount
+        ? fetch(
+            urlApi +
+              "c_nup/getDataFromNik/" +
+              item.db_profile +
+              "/" +
+              item.entity_cd +
+              "/" +
+              item.project_no +
+              "/" +
+              nik_no,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                // this.setState({ dataFromNik: resData });
+                this.cekNIK({ dataFromNik: resData });
+                this.setState({ loadingnik: false });
+                this.setState({ darinik: true });
+              } else {
+                this.setState(
+                  {
+                    isLoaded: this.state.isLoaded,
+                    loadingnik: false,
+                    darinik: true,
+                  },
+                  () => {
+                    const pesan = res.Pesan;
+                    this.alertFillBlank(true, pesan);
+                    // alert(res.Pesan);
+                    console.log(res.Pesan);
+                    // this.setState({ loadingnik: false });
+                  }
+                );
+              }
+              this.setState({ loadingnik: false });
+              console.log("dataFromNik", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        : null;
+    }
+  }
+
+  cekNIK(dataFromNik) {
+    console.log("cekNIK", dataFromNik);
+    let url_ktp =
+      dataFromNik.dataFromNik[0].ktp_attachment +
+      "?random_number=" +
+      new Date().getTime();
+    let url_npwp =
+      dataFromNik.dataFromNik[0].npwp_attachment +
+      "?random_number=" +
+      new Date().getTime();
+    if (dataFromNik) {
+      this.setState({
+        fullname: dataFromNik.dataFromNik[0].full_name,
+
+        mobilephone: dataFromNik.dataFromNik[0].mobile_phone,
+        email: dataFromNik.dataFromNik[0].email,
+        // nik: dataFromNik.dataFromNik[0].nik,
+        npwp: dataFromNik.dataFromNik[0].npwp_no,
+        //---------foto attachment
+        // pictUrlKtp: dataFromNik.dataFromNik[0].ktp_attachment, //ktp
+        // pictUrlNPWP: dataFromNik.dataFromNik[0].npwp_attachment,
+        //---------end foto attachment
+
+        // bank_name: dataFromNik.dataFromNik[0].bank_name,
+        // account_name: dataFromNik.dataFromNik[0].account_name,
+        // account_no: dataFromNik.dataFromNik[0].account_no,
+        // cor: dataFromNik.dataFromNik[0].address1,
+        // pictUrlKtp: { uri: url_ktp },
+        // pictUrlNPWP: { uri: url_npwp },
+      });
+      // fullname = dataFromNik.dataFromNik[0].full_name;
+      // console.log("fullname", fullname);
+      //   console.log("fullname", this.state.fullname);
+    } else {
+      const pesan = "Nik not found, please try again";
+      this.alertFillBlank(true, pesan);
+      // alert("Nik not found");
+    }
   }
 
   validating = (validationData) => {
@@ -126,6 +299,184 @@ class FormNewBooking extends React.Component {
     }
 
     return isValid;
+  };
+
+  submit = () => {
+    this.setState({ isLoaded: !this.state.isLoaded });
+
+    let filektp = "";
+    let filenpwp = "";
+
+    console.log("dari nik", this.state.darinik);
+
+    if (this.state.pictUrlKtp == 0) {
+      console.log("replace", this.state.replaceFoto);
+      // filektp = "@Asset/images/icon/dropdown.png";
+      filektp = "./img/noimage.png";
+
+      console.log("pic nul", this.state.pictUrlKtp);
+      // this.state.replaceFoto.uri.replace("file://", "")
+    } else {
+      filektp = RNFetchBlob.wrap(
+        this.state.pictUrlKtp.uri.replace("file://", "")
+      );
+
+      console.log("pic not nul", this.state.pictUrlKtp);
+    }
+
+    if (this.state.pictUrlNPWP == 0) {
+      console.log("replace", this.state.replaceFoto);
+      filenpwp = "./img/noimage.png";
+      console.log("pic nul", this.state.pictUrlNPWP);
+    } else {
+      filenpwp = RNFetchBlob.wrap(
+        this.state.pictUrlNPWP.uri.replace("file://", "")
+      );
+
+      console.log("pic not nul", this.state.pictUrlNPWP);
+    }
+
+    const dataPrev = this.props.prevItems;
+
+    console.log("dataprev", dataPrev);
+
+    const {
+      fullname,
+      mobilephone,
+      email,
+      nik,
+      npwp,
+      projectdesc,
+      project_no,
+      entity,
+      audit_user,
+      // subtot,
+      // totalqty,
+    } = this.state;
+
+    const frmData = {
+      fullname: fullname,
+      mobilephone: mobilephone,
+      email: email,
+      nik: nik,
+      npwp: npwp,
+      //---------foto attachment
+      pictUrlKtp: filektp, //ktp
+      pictUrlNPWP: filenpwp,
+      //---------end foto attachment
+
+      project_descs: projectdesc,
+      // arrayData: dataPrev,
+
+      project_no: project_no,
+      entity: entity,
+      audit_user: audit_user,
+
+      agent_cd: audit_user,
+    };
+
+    const isValid = this.validating({
+      email: { require: true },
+      nik: { require: true },
+      fullname: { require: true },
+
+      mobilephone: { require: true },
+      npwp: { require: true },
+    });
+
+    let fileNameKtp = "";
+    if (this.state.pictUrlKtp.length == 0) {
+      console.log(this.state.pictUrlKtp.length);
+      fileNameKtp = "./img/noimage.png";
+    } else {
+      fileNameKtp = "KTP_BookingPriorty_" + nik + ".png";
+    }
+
+    let fileNameNpwp = "";
+    if (this.state.pictUrlNPWP.length == 0) {
+      console.log(this.state.pictUrlNPWP.length);
+      fileNameNpwp = "./img/noimage.png";
+    } else {
+      fileNameNpwp = "npwp_BookingPriorty_" + nik + ".png";
+    }
+
+    console.log("saveFormNUP", frmData);
+    // console.log('leng nik',this.state.nik.length);
+    console.log("leng foto ktp", this.state.pictUrlKtp.length);
+
+    //
+    if (isValid) {
+      RNFetchBlob.fetch(
+        "POST",
+        // urlApi + "c_auth/SignUpAgent",
+        urlApi + "c_nup/saveBookingUnit/IFCAPB/",
+        {
+          "Content-Type": "multipart/form-data",
+        },
+        [
+          // { name: "photo", filename: fileName, data: fileImg },
+          { name: "photoktp", filename: fileNameKtp, data: filektp },
+          { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+          // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+          // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+          { name: "data", data: JSON.stringify(frmData) },
+        ]
+      ).then((resp) => {
+        console.log("res_if", resp);
+        const res = JSON.parse(resp.data);
+        console.log("res", res);
+        // const res = JSON.stringify(resp.data);
+
+        if (!res.Error) {
+          // Actions.pop()
+          this.setState({ isLogin: true }, () => {
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
+            // Actions.pop()
+            // Actions.Login()
+            const prevItems = {
+              fullname: frmData.fullname,
+              total: this.state.trx_amt,
+              descs_amt: this.state.descs_amt,
+            };
+            _navigate("FormPayment", { prevItems: prevItems });
+          });
+        } else {
+          // const pesan = res.Pesan;
+          // this.alertFillBlank(true, pesan);
+          this.setState({ isLoaded: true }, () => {
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
+            console.log("error 3mb");
+            // console.log('url',this.state.pickUrlKtp.uri)
+          });
+        }
+
+        // this.setState({ isLoaded: true });
+        this.setState({ isLoaded: true }, () => {
+          // alert(res.Pesan);
+          const pesan = res.Pesan;
+          this.alertFillBlank(true, pesan);
+          // console.log('url',this.state.pickUrlKtp.uri)
+        });
+        // alert(res.Pesan);
+      });
+    } else {
+      // alert("Please input field");
+      // const pesan = "Please input field";
+      // this.alertFillBlank(true, pesan);
+      this.setState({ isLoaded: true }, () => {
+        const pesan = "Please input field";
+        this.alertFillBlank(true, pesan);
+        // alert("Please input field");
+        // alert(res.Pesan);
+        // console.log('url',this.state.pickUrlKtp.uri)
+      });
+      // alert("Please");
+      // console.log('url else',this.state.pickUrlKtp.uri)
+    }
   };
 
   render() {
@@ -312,8 +663,8 @@ class FormNewBooking extends React.Component {
                 keyboardType="numeric"
                 placeholderTextColor={"#c2c2c2"}
                 // placeholderFontSize={10}
-                // value={this.state.nik}
-                // onChangeText={(val) => this.setState({ nik: val })}
+                value={this.state.nik}
+                onChangeText={(val) => this.setState({ nik: val })}
                 // onChangeText={val => this.getNik({ val })}
                 style={Styles.positionTextInput}
                 ref="nik"
@@ -343,7 +694,7 @@ class FormNewBooking extends React.Component {
                   right: 20,
                 }}
                 name="search"
-                // onPress={() => this.cariNIK({ carinik: this.state.nik })}
+                onPress={() => this.cariNIK({ carinik: this.state.nik })}
               />
             )}
 
@@ -547,6 +898,169 @@ class FormNewBooking extends React.Component {
             {this.state.erroremail ? (
               <Text style={Styles.text_error}>Email Required</Text>
             ) : null}
+          </View>
+
+          <View style={{ paddingBottom: 10, marginTop: 4 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-start",
+                paddingBottom: 0,
+                left: 10,
+                height: 10,
+              }}
+            >
+              <Text
+                style={{
+                  color: this.state.bank_name ? "#c2c2c2" : Colors.greyUrban,
+                  fontSize: 13,
+                }}
+              >
+                NPWP
+              </Text>
+            </View>
+            <Item style={Styles.marginround}>
+              {/* <Label style={{ color: Colors.greyUrban, fontSize: 14 }}>
+                Email
+              </Label> */}
+              {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                                    <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
+                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                </View> */}
+              <Input
+                placeholder="NPWP"
+                autoCapitalize="words"
+                placeholderTextColor={"#c2c2c2"}
+                value={this.state.npwp}
+                onChangeText={(val) => this.setState({ npwp: val })}
+                style={Styles.positionTextInput}
+                ref="NPWP"
+              />
+              {this.state.errornpwp ? (
+                <Icon style={Styles.icon_error} name="close-circle" />
+              ) : null}
+              {/* <Icon name='close-circle' /> */}
+            </Item>
+            {this.state.npwp ? null : (
+              <Text
+                style={{
+                  color: Colors.greyUrban,
+                  bottom: 25,
+                  position: "absolute",
+                  right: 10,
+                  fontSize: 12,
+                }}
+              >
+                (customer)
+              </Text>
+            )}
+            {this.state.errornpwp ? (
+              <Text style={Styles.text_error}>NPWP Required</Text>
+            ) : null}
+          </View>
+
+          {/* KTP */}
+          <View style={{ paddingTop: 10 }}>
+            {this.state.pictUrlKtp == null || this.state.pictUrlKtp == "" ? (
+              <Item
+                regular
+                style={[{ borderRadius: 5 }, Styles.inputAttach]}
+                onPress={() => this.showAlert("pictUrlKtp")}
+                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <Text style={Styles.textAttach}>Attach KTP</Text>
+                <Image
+                  style={{
+                    width: 25,
+                    height: 25,
+                    position: "absolute",
+                    right: 10,
+                  }}
+                  source={require("@Asset/images/icon/image_blue.png")}
+                ></Image>
+              </Item>
+            ) : (
+              <Item
+                regular
+                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
+                onPress={() => this.showAlert("pictUrlKtp")}
+                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <View style={[Styles.containImageTop_no]}>
+                  <Image
+                    // resizeMode="cover"
+                    style={{
+                      width: 200,
+                      height: 130,
+                      alignContent: "center",
+                    }}
+                    source={this.state.pictUrlKtp}
+                  />
+                </View>
+
+                <Image
+                  style={{
+                    width: 25,
+                    height: 25,
+                    position: "absolute",
+                    right: 10,
+                  }}
+                  source={require("@Asset/images/icon/image.png")}
+                ></Image>
+              </Item>
+            )}
+          </View>
+
+          {/* NPWP */}
+          <View style={{ paddingTop: 10 }}>
+            {this.state.pictUrlNPWP == null || this.state.pictUrlNPWP == "" ? (
+              <Item
+                regular
+                style={[{ borderRadius: 5 }, Styles.inputAttach]}
+                onPress={() => this.showAlert("pictUrlNPWP")}
+                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <Text style={Styles.textAttach}>Attach NPWP</Text>
+                <Image
+                  style={{
+                    width: 25,
+                    height: 25,
+                    position: "absolute",
+                    right: 10,
+                  }}
+                  source={require("@Asset/images/icon/image_blue.png")}
+                ></Image>
+              </Item>
+            ) : (
+              <Item
+                regular
+                style={[{ borderRadius: 5 }, Styles.inputAttachLarge]}
+                onPress={() => this.showAlert("pictUrlNPWP")}
+                pointerEvents={this.state.isLoaded ? "auto" : "none"}
+              >
+                <View style={[Styles.containImageTop_no]}>
+                  <Image
+                    // resizeMode="cover"
+                    style={{
+                      width: 200,
+                      height: 130,
+                      alignContent: "center",
+                    }}
+                    source={this.state.pictUrlNPWP}
+                  />
+                </View>
+
+                <Image
+                  style={{
+                    width: 25,
+                    height: 25,
+                    position: "absolute",
+                    right: 10,
+                  }}
+                  source={require("@Asset/images/icon/image.png")}
+                ></Image>
+              </Item>
+            )}
           </View>
 
           <View>

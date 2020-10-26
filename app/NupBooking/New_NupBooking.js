@@ -431,7 +431,7 @@ class New_NupBooking extends React.Component {
                 <Text>null gambar </Text>
               ) : (
                 <View>
-                  <Text>gambarr blok</Text>
+                  {/* <Text>gambarr blok</Text> */}
                   <Image
                     style={{
                       width: "100%",
@@ -1443,7 +1443,7 @@ class New_NupBooking extends React.Component {
             {/* </Image> */}
           </View>
           <View style={{ alignItems: "center" }}>
-            <Text>get lot room</Text>
+            {/* <Text>get lot room</Text> */}
             <ScrollView horizontal>
               {this.state.getLot_room ? (
                 this.state.getLot_room.length == 0 ||

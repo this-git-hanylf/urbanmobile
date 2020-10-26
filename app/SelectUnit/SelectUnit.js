@@ -243,7 +243,7 @@ class SelectUnit extends React.Component {
   }
 
   getPaymentCode(dataLotNo) {
-    console.log("dataLotNo", dataLotNo);
+    console.log("dataLotNo di getpaymentcode", dataLotNo);
 
     const item = this.props.items;
     console.log("item get payment cd", item);
@@ -613,6 +613,22 @@ class SelectUnit extends React.Component {
     if (this.state.level_no == null || this.state.level_no == undefined) {
       alert("level no harus dipilih");
     } else {
+      var get_payment_detail = this.state.getPaymentDetail;
+      // if (get_payment_detail.trx_mode_type)
+      console.log("get_payment_detail", get_payment_detail);
+      // console.log(
+      //   "get_payment_detail.trx_mode_type",
+      //   get_payment_detail.trx_mode_type
+      // );
+      get_payment_detail.forEach((data) => {
+        console.log("data foreach", data.trx_mode_type);
+        var trx_mode_type = data.trx_mode_type;
+        if (trx_mode_type == "B") {
+          trx_amt = data.trx_amt;
+          descs = data.descs;
+        }
+      });
+
       const items = {
         entity_cd: this.state.entity,
         project_no: this.state.project_no,
@@ -625,6 +641,10 @@ class SelectUnit extends React.Component {
         block_no: this.state.block_no,
         lot_type: this.state.lot_type,
         level_no: this.state.level_no,
+        trx_amt: this.state.trx_amt,
+        descs: this.state.descs,
+        trx_amt: trx_amt,
+        descs: descs,
         // getpict_roomtype: this.state.getpict_roomtype[0].room_type_url,
       };
       console.log("items kirim ke select unit", items);
