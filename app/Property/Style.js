@@ -518,16 +518,18 @@ export default {
   },
   itemBoxAmen_not_gold: {
     // resizeMode: 'cover',
-    width: 190,
-    height: 180,
+    alignContent: 'center',
+    
+    width: 180,
+    height: 170,
     marginBottom: 20,
-    marginLeft: 10,
+    marginLeft: '15%',
     marginRight: 10,
     // backgroundColor: Colors.goldUrban,
     borderRadius: 5,
     // elevation: 10,
     shadowOffset: {
-      width: 15,
+      width: 25,
       height: 15,
     },
     // shadowColor: "grey",
@@ -550,8 +552,8 @@ export default {
   },
   itemAmen_not_gold: {
     marginBottom: 10,
-    width: "100%",
-    height: 180,
+    width: "90%",
+    height: 160,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },

@@ -96,6 +96,14 @@ class FormNewBooking extends React.Component {
       entity: this.props.items.entity_cd,
       trx_amt: this.props.items.trx_amt,
       descs_amt: this.props.items.descs,
+
+      //yang dikirim buat update status pm_lot
+      property_cd: this.props.items.property_cd,
+      block_no: this.props.items.block_no,
+      lot_type: this.props.items.lot_type,
+      room_unit: this.props.items.room_unit,
+      level_no: this.props.items.level_no,
+
       //   audit_user: await _getData("@UserId"),
       audit_user: await _getData("@AgentCd"),
       // projectdesc: this.props.items.project_descs,
@@ -350,6 +358,13 @@ class FormNewBooking extends React.Component {
       project_no,
       entity,
       audit_user,
+
+      //update status di pm_lot
+      property_cd,
+      block_no,
+      lot_type,
+      room_unit,
+      level_no,
       // subtot,
       // totalqty,
     } = this.state;
@@ -373,6 +388,13 @@ class FormNewBooking extends React.Component {
       audit_user: audit_user,
 
       agent_cd: audit_user,
+
+      //update status di pm_lot
+      property_cd:property_cd,
+      block_no: block_no,
+      lot_type: lot_type,
+      room_unit: room_unit,
+      level_no: level_no,
     };
 
     const isValid = this.validating({

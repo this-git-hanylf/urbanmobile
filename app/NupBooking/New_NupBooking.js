@@ -61,6 +61,9 @@ import { act } from "react-test-renderer";
 // );
 const { height, width } = Dimensions.get("window");
 let isMount = false;
+var screenWidth = Dimensions.get('window').width;
+var screenHeight = Dimensions.get('window').height;
+
 
 class New_NupBooking extends React.Component {
   constructor(props) {
@@ -131,17 +134,20 @@ class New_NupBooking extends React.Component {
     this.selectComponent = this.selectComponent.bind(this);
     this.selectComponent_Lot = this.selectComponent_Lot.bind(this);
 
-    // this.addItem = this.addItem.bind(this);
+    // this.scrollView = this.scrollView.bind(this);
     // this._handleDeleteButtonPress = this._handleDeleteButtonPress.bind(this);
   }
 
   async componentDidMount() {
+
     isMount = true;
     isLoaded = true;
     const items = this.props.items;
     console.log("items", items);
     const prev = this.props.prevItems;
     console.log("prev", prev);
+
+
 
     const data = {
       hd: new Headers({
@@ -1047,11 +1053,11 @@ class New_NupBooking extends React.Component {
     // console.log("this.state.image.back", this.state.block);
     return (
       <Container style={Style.bgMain}>
-        {/* <StatusBar
-          backgroundColor={Colors.statusBarNavy}
+        <StatusBar
+          backgroundColor={Colors.blueUrban}
           animated
           barStyle="light-content"
-        /> */}
+        />
 
         {/* <Header
           style={[
@@ -1089,13 +1095,14 @@ class New_NupBooking extends React.Component {
       
         </Header> */}
         <ImageBackground
-          source={this.state.imageback}
+          // source={this.state.imageback}
           style={{
             // flex: 1,
-            marginBottom: 30,
-            top: 25,
+            marginBottom: 20,
+            top: 20,
             width: Metrics.WIDTH,
             height: 80,
+            backgroundColor: "#003457"
           }}
         >
           <View
@@ -1108,19 +1115,20 @@ class New_NupBooking extends React.Component {
               width: "100%",
               height: "10%",
               flexDirection: "row",
+             
             }}
           >
-            <View style={{ paddingLeft: 20 }}>
+            <View style={{ paddingLeft: 10,paddingRight: 0 }}>
               <Button
                 transparent
-                style={[Style.actionBarBtn]}
+                style={{ alignSelf: "flex-start",marginLeft: -10,}}
                 onPress={Actions.pop}
               >
                 <Icon
                   active
                   name="arrow-left"
                   // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#000" }}
+                  style={{ color: "#fff" }}
                   type="MaterialCommunityIcons"
                 />
               </Button>
@@ -1129,31 +1137,51 @@ class New_NupBooking extends React.Component {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
+                alignContent:'center',
                 flex: 2,
-                top: 15,
+                top: 17,
               }}
             >
-              <Text style={{ color: "#000" }}>{this.state.title}</Text>
-              <Text style={{ color: "#000" }}>tes</Text>
+              <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold' }}>{this.state.title}</Text>
+              <Text style={{ color: "#fff", fontSize: 10, }}>LRT CIKUNIR, JATIBENING</Text>
+              <Text style={{ color: Colors.goldUrban, fontSize: 12, fontWeight: 'bold' }}>{this.state.towerDescs}</Text>
             </View>
-            <View style={{ paddingRight: 10 }}>
-              <Button
-                transparent
-                style={[Style.actionBarBtn]}
-                onPress={Actions.pop}
+
+            <View style={{ paddingLeft: 0, paddingRight: 10 }}>
+              <View style={{ flexDirection: 'row',  }}>
+                <View
+                // transparent
+                style={{paddingRight: 5, }}
+                // onPress={Actions.pop}
+              >
+                <Icon
+                  active
+                  name="share-variant"
+                  // style={[Style.textWhite,{fontSize: 28}]}
+                  style={{ color: "#fff", fontSize: 20,  top: 10}}
+                  type="MaterialCommunityIcons"
+                />
+              </View>
+              <View
+                // transparent
+                style={{ paddingLeft: 5}}
+                // onPress={Actions.pop}
               >
                 <Icon
                   active
                   name="menu"
-                  style={{ color: "#000" }}
+                  // style={[Style.textWhite,{fontSize: 28}]}
+                  style={{ color: "#fff", fontSize: 21,  top: 10}}
                   type="MaterialCommunityIcons"
                 />
-              </Button>
+              </View>
+               </View>
+              
             </View>
           </View>
         </ImageBackground>
 
-        <ScrollView>
+        <ScrollView   ref={(node)=> this.scroll = node} style={{heigh: screenHeight,}}>
           <ImageBackground
             style={
               {
@@ -1174,13 +1202,14 @@ class New_NupBooking extends React.Component {
                   alignSelf: "center",
                   resizeMode: "contain",
                   flex: 1,
+                  backgroundColor:"#003457" //biru background urban
                 }}
                 // source={require("@Asset/images/deskripsi/3-1.jpg")}
                 source={{ uri: this.state.picture_booking_url }}
               >
                 <Button
                   style={[Style.signInBtnMedium, { top: "105%" }]}
-                  // onPress={() => this.alertNUP()}
+                  onPress={()=>{this.scroll.scrollTo({y:screenHeight*1.5})}}
                 >
                   <Text
                     style={{
@@ -1198,6 +1227,7 @@ class New_NupBooking extends React.Component {
               </ImageBackground>
             </View>
 
+            
             <Image
               style={{
                 width: 370,
@@ -1299,6 +1329,7 @@ class New_NupBooking extends React.Component {
             </Grid>
           </ImageBackground>
 
+          
           <View style={{ alignItems: "center" }}>
             <ScrollView horizontal>
               <Segment
@@ -1409,7 +1440,7 @@ class New_NupBooking extends React.Component {
 
           <Content padder>{this._renderComponent_Lot()}</Content>
 
-          <View>
+          <View  >
             {/* <Image> */}
             {this.state.getpict ? (
               this.state.getpict == null ||
@@ -1460,7 +1491,7 @@ class New_NupBooking extends React.Component {
                     <Button
                       key={key}
                       style={{
-                        width: 45,
+                        width: 55,
                         height: 45,
                         backgroundColor:
                           this.state.activePage_LotRoom === key
@@ -1479,6 +1510,7 @@ class New_NupBooking extends React.Component {
                         style={{
                           alignSelf: "center",
                           justifyContent: "center",
+                          fontSize: 12
                         }}
                       >
                         {data.room_unit}
@@ -1569,7 +1601,11 @@ class New_NupBooking extends React.Component {
               </Text>
             </Button>
           </View>
+   
         </ScrollView>
+           
+       
+       
       </Container>
     );
   }

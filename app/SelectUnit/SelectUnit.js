@@ -225,7 +225,7 @@ class SelectUnit extends React.Component {
                 const dataLotNo = res.Data;
                 this.setState({ getLotNo: resData });
                 this.getPaymentCode(dataLotNo);
-
+                console.log("buat ke getpaymentcode", dataLotNo);
                 // this.getRoomUnit(this.state.getLot);
                 // this.getLot_room_default({ dataLotType: resData });
               } else {
@@ -355,7 +355,8 @@ class SelectUnit extends React.Component {
   }
 
   selectComponent = (activePage, data) => () => {
-    console.log("data", data);
+    
+    console.log("data selectComponent", data);
     console.log("data payment_cd", data.data.payment_cd);
     console.log("data short descs", data.data.short_descs);
     console.log("activepage", activePage);
@@ -386,10 +387,13 @@ class SelectUnit extends React.Component {
   };
 
   getShortDescs(short_descs) {
+    console.log("short desc", short_descs)
     if (short_descs == undefined) {
       var get_short_descs = this.state.getPaymentCode[0].short_descs;
+      console.log("get_short_descs if",get_short_descs)
     } else {
       var get_short_descs = short_descs;
+      console.log("get_short_descs else", get_short_descs)
     }
     this.setState({ short_descs: get_short_descs });
   }
@@ -597,13 +601,19 @@ class SelectUnit extends React.Component {
   };
 
   clickProject(activePage, item) {
+    
     console.log("key", activePage);
     console.log("item level", item.level_no);
     this.setState({ level_no: item.level_no });
     const level_no = item.level_no;
+    const dataLotNo = this.state.getLotNo;
+    console.log("datalotno di clickproject", dataLotNo)
+    // alert(level_no);
     if (item.level_no) {
       this.getLotNo(level_no);
       this.getKeterangan(level_no);
+      this.getShortDescs();
+      this.getPaymentCode(dataLotNo);
     }
     this.setState({ activePage });
     console.log("this.state active page di clikc project", activePage);
@@ -657,11 +667,11 @@ class SelectUnit extends React.Component {
     // console.log("this.state.image.back", this.state.block);
     return (
       <Container>
-        {/* <StatusBar
-          backgroundColor={Colors.statusBarNavy}
+       <StatusBar
+          backgroundColor={Colors.blueUrban}
           animated
           barStyle="light-content"
-        /> */}
+        />
 
         {/* <Header
           style={[
@@ -698,14 +708,15 @@ class SelectUnit extends React.Component {
           <View style={Style.actionBarRight} />
       
         </Header> */}
-        <ImageBackground
-          source={this.state.imageback}
+       <ImageBackground
+          // source={this.state.imageback}
           style={{
             // flex: 1,
-            marginBottom: 30,
-            top: 25,
+            marginBottom: 20,
+            top: 20,
             width: Metrics.WIDTH,
             height: 80,
+            backgroundColor: "#003457"
           }}
         >
           <View
@@ -718,19 +729,20 @@ class SelectUnit extends React.Component {
               width: "100%",
               height: "10%",
               flexDirection: "row",
+             
             }}
           >
-            <View style={{ paddingLeft: 20 }}>
+            <View style={{ paddingLeft: 10,paddingRight: 0 }}>
               <Button
                 transparent
-                style={[Style.actionBarBtn]}
+                style={{ alignSelf: "flex-start",marginLeft: -10,}}
                 onPress={Actions.pop}
               >
                 <Icon
                   active
                   name="arrow-left"
                   // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#000" }}
+                  style={{ color: "#fff" }}
                   type="MaterialCommunityIcons"
                 />
               </Button>
@@ -739,26 +751,46 @@ class SelectUnit extends React.Component {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
+                alignContent:'center',
                 flex: 2,
-                top: 15,
+                top: 17,
               }}
             >
-              <Text style={{ color: "#000" }}>{this.state.title}</Text>
-              <Text style={{ color: "#000" }}>tes</Text>
+              <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold' }}>{this.state.title}</Text>
+              <Text style={{ color: "#fff", fontSize: 10, }}>LRT CIKUNIR, JATIBENING</Text>
+              <Text style={{ color: Colors.goldUrban, fontSize: 12, fontWeight: 'bold' }}>{this.state.towerDescs}</Text>
             </View>
-            <View style={{ paddingRight: 10 }}>
-              <Button
-                transparent
-                style={[Style.actionBarBtn]}
-                onPress={Actions.pop}
+
+            <View style={{ paddingLeft: 0, paddingRight: 10 }}>
+              <View style={{ flexDirection: 'row',  }}>
+                <View
+                // transparent
+                style={{paddingRight: 5, }}
+                // onPress={Actions.pop}
+              >
+                <Icon
+                  active
+                  name="share-variant"
+                  // style={[Style.textWhite,{fontSize: 28}]}
+                  style={{ color: "#fff", fontSize: 20,  top: 10}}
+                  type="MaterialCommunityIcons"
+                />
+              </View>
+              <View
+                // transparent
+                style={{ paddingLeft: 5}}
+                // onPress={Actions.pop}
               >
                 <Icon
                   active
                   name="menu"
-                  style={{ color: "#000" }}
+                  // style={[Style.textWhite,{fontSize: 28}]}
+                  style={{ color: "#fff", fontSize: 21,  top: 10}}
                   type="MaterialCommunityIcons"
                 />
-              </Button>
+              </View>
+               </View>
+              
             </View>
           </View>
         </ImageBackground>
@@ -927,7 +959,7 @@ class SelectUnit extends React.Component {
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        paddingLeft: 50,
+                        paddingLeft: 35,
                         paddingTop: 5,
                         width: "50%",
                       }}
@@ -955,7 +987,7 @@ class SelectUnit extends React.Component {
                       <Text
                         style={{
                           textAlign: "right",
-                          right: 50,
+                          right: 35,
                           bottom: 30,
                         }}
                       >
@@ -1042,13 +1074,13 @@ class SelectUnit extends React.Component {
                   //   alignItems: "center",
                   // }}
                   >
-                    <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                    <Text style={{ textAlign: "left", marginLeft: 30 }}>
                       Payment Plan
                     </Text>
                   </Col>
                   <Col style={{ width: 30 }}></Col>
                   <Col>
-                    <Text style={{ textAlign: "center", marginRight: 40 }}>
+                    <Text style={{ textAlign: "center", marginRight: 30 }}>
                       Cicilan
                     </Text>
                   </Col>
@@ -1066,29 +1098,29 @@ class SelectUnit extends React.Component {
                   <View key={key}>
                     <Grid>
                       <Row>
-                        <Col style={{ width: 200 }}>
+                        <Col style={{ width: 195 }}>
                           {/* <Text>{key + 1}</Text> */}
 
                           {data.freq == 1 && data.trx_mode_type == "I" ? (
                             <Text
                               style={{
                                 textAlign: "left",
-                                marginLeft: 40,
+                                marginLeft: 30,
                               }}
                             >
                               Last {data.descs}
                             </Text>
                           ) : data.trx_mode_type == "B" ? (
-                            <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                            <Text style={{ textAlign: "left", marginLeft: 30 }}>
                               {data.descs}
                             </Text>
                           ) : (
-                            <Text style={{ textAlign: "left", marginLeft: 40 }}>
+                            <Text style={{ textAlign: "left", marginLeft: 30 }}>
                               {data.descs} {data.freq}x
                             </Text>
                           )}
                         </Col>
-                        <Col style={{ width: 40 }}>
+                        <Col style={{ width: 30 }}>
                           {data.freq == 1 && data.trx_mode_type == "I" ? (
                             <Text style={{ textAlign: "right" }}>Rp.</Text>
                           ) : data.trx_mode_type == "B" ? (
@@ -1101,7 +1133,7 @@ class SelectUnit extends React.Component {
                           <Text
                             style={{
                               textAlign: "right",
-                              marginRight: 40,
+                              marginRight: 20,
                             }}
                           >
                             {" "}
@@ -1123,22 +1155,22 @@ class SelectUnit extends React.Component {
             </View>
 
             <View style={{ marginTop: 20 }}>
-              <Text style={{ paddingLeft: 40, fontSize: 12 }}>
+              <Text style={{ paddingLeft: 30, fontSize: 12 }}>
                 Keterangan :
               </Text>
               <View
                 style={{
-                  paddingLeft: 20,
-                  // width: "100%",
+                  paddingLeft: 30,
+                  width: "100%",
                 }}
               >
                 <Text style={{ fontSize: 9, textAlign: "justify" }}>
-                  -{"       "} Booking Fee Rp. 15,000,000
+                  - Booking Fee Rp. 15,000,000
                 </Text>
               </View>
               <View
                 style={{
-                  paddingLeft: 20,
+                  paddingLeft: 30,
                   paddingRight: 20,
                   width: "100%",
                 }}
@@ -1146,14 +1178,14 @@ class SelectUnit extends React.Component {
                 <Text
                   style={{ fontSize: 9, textAlign: "justify", width: "100%" }}
                 >
-                  - {"      "} Angsuran 1 paling lambat 7 hari dari tanggal
+                  - Angsuran 1 paling lambat 7 hari dari tanggal
                   Booking Fee
                 </Text>
               </View>
 
               <View
                 style={{
-                  paddingLeft: 20,
+                  paddingLeft: 30,
 
                   paddingRight: 20,
                 }}
@@ -1161,17 +1193,18 @@ class SelectUnit extends React.Component {
                 <Text
                   style={{ fontSize: 9, textAlign: "justify", width: "100%" }}
                 >
-                  - {"       "}Harga jual belum termasuk Biaya Pemecahan
-                  Sertifikat, Akte Jual Beli, Biaya Balik
+                  - Harga jual belum termasuk Biaya Pemecahan
+                  Sertifikat, Akte Jual Beli, Biaya Balik 
+                  {/* Nama, BPHTB, atau Pajak Susulan dari Pemerintah */}
                 </Text>
                 <Text
                   style={{
                     fontSize: 9,
                     textAlign: "justify",
-                    paddingLeft: 10,
+                    paddingLeft: 5,
                   }}
                 >
-                  {"     "}Nama, BPHTB, atau Pajak Susulan dari Pemerintah
+                  Nama, BPHTB, atau Pajak Susulan dari Pemerintah
                 </Text>
                 {/* <Text
                   style={{
@@ -1186,12 +1219,12 @@ class SelectUnit extends React.Component {
 
               <View
                 style={{
-                  paddingLeft: 20,
+                  paddingLeft: 30,
                   paddingRight: 20,
                 }}
               >
                 <Text style={{ fontSize: 9, textAlign: "justify" }}>
-                  - {"       "}Harga sewaktu - waktu dapat berubah tanpa
+                  - Harga sewaktu - waktu dapat berubah tanpa
                   pemberitahuan terlebih dahulu
                 </Text>
                 {/* <Text style={{ fontSize: 9, textAlign: "justify" }}>
