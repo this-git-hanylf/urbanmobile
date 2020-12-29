@@ -20,6 +20,7 @@ import {
   Alert,
   Clipboard,
   // Picker
+  BackHandler
 } from "react-native";
 import {
   Container,
@@ -70,6 +71,7 @@ class FormPayment extends React.Component {
     super(props);
     this.state = {
       time: {},
+      formPayment: true,
       seconds: 86400,
       currentDate: new Date(),
       markedDate: moment(new Date()).format("YYYY-MM-DD"),
@@ -85,6 +87,8 @@ class FormPayment extends React.Component {
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
     this.confirm = this.confirm.bind(this);
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     // this.state = {
 
@@ -135,7 +139,32 @@ class FormPayment extends React.Component {
   componentWillUnmount() {
     // this.setState({isMount:false})
     isMount = false;
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+  
+  handleBackButtonClick() {
+    console.log("formpayment", this.state.formPayment);
+    if (this.state.formPayment) {
+      // this.setState({
+      //   isSearchBarActive: false,
+      // });
+      // this.props.navigation.goBack(null);
+
+      Actions.home();
+      return true;
+    }
+    else {
+      return false;
+    }
+    // return false;
+    // this.props.navigation.goBack(null);
+    // Actions.home();
+    // return true;
+}
 
   showAlert = (title, message) => {
     Alert.alert(
@@ -255,7 +284,7 @@ class FormPayment extends React.Component {
                 </Header> */}
         <View style={{ top: 25, paddingBottom: 35 }}>
           <View style={{ paddingLeft: 15, paddingTop: 15 }}>
-            <Button
+            {/* <Button
               transparent
               style={Style.actionBarBtn}
               onPress={Actions.pop}
@@ -267,7 +296,7 @@ class FormPayment extends React.Component {
                 style={{ color: "#000" }}
                 type="MaterialCommunityIcons"
               />
-            </Button>
+            </Button> */}
           </View>
         </View>
 
@@ -545,7 +574,8 @@ class FormPayment extends React.Component {
               <Button
                 style={Styles.btnMedium}
                 onPress={() => {
-                  this.confirm();
+                  // this.confirm();
+                  this.handleBackButtonClick();
                   // this.notif.scheduleNotif("my_sound.mp3", {
                   //   fullName: this.state.fullname,
                   // });
