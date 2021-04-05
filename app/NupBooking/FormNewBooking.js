@@ -194,51 +194,51 @@ class FormNewBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_nup/getDataFromNik/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              nik_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-            }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                // this.setState({ dataFromNik: resData });
-                this.cekNIK({ dataFromNik: resData });
-                this.setState({ loadingnik: false });
-                this.setState({ darinik: true });
-              } else {
-                this.setState(
-                  {
-                    isLoaded: this.state.isLoaded,
-                    loadingnik: false,
-                    darinik: true,
-                  },
-                  () => {
-                    const pesan = res.Pesan;
-                    this.alertFillBlank(true, pesan);
-                    // alert(res.Pesan);
-                    console.log(res.Pesan);
-                    // this.setState({ loadingnik: false });
-                  }
-                );
-              }
+          urlApi +
+          "c_nup/getDataFromNik/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          nik_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              // this.setState({ dataFromNik: resData });
+              this.cekNIK({ dataFromNik: resData });
               this.setState({ loadingnik: false });
-              console.log("dataFromNik", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+              this.setState({ darinik: true });
+            } else {
+              this.setState(
+                {
+                  isLoaded: this.state.isLoaded,
+                  loadingnik: false,
+                  darinik: true,
+                },
+                () => {
+                  const pesan = res.Pesan;
+                  this.alertFillBlank(true, pesan);
+                  // alert(res.Pesan);
+                  console.log(res.Pesan);
+                  // this.setState({ loadingnik: false });
+                }
+              );
+            }
+            this.setState({ loadingnik: false });
+            console.log("dataFromNik", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -390,7 +390,7 @@ class FormNewBooking extends React.Component {
       agent_cd: audit_user,
 
       //update status di pm_lot
-      property_cd:property_cd,
+      property_cd: property_cd,
       block_no: block_no,
       lot_type: lot_type,
       room_unit: room_unit,
@@ -427,78 +427,78 @@ class FormNewBooking extends React.Component {
     console.log("leng foto ktp", this.state.pictUrlKtp.length);
 
     //
-    if (isValid) {
-      RNFetchBlob.fetch(
-        "POST",
-        // urlApi + "c_auth/SignUpAgent",
-        urlApi + "c_nup/saveBookingUnit/IFCAPB/",
-        {
-          "Content-Type": "multipart/form-data",
-        },
-        [
-          // { name: "photo", filename: fileName, data: fileImg },
-          { name: "photoktp", filename: fileNameKtp, data: filektp },
-          { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-          // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
-          // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-          { name: "data", data: JSON.stringify(frmData) },
-        ]
-      ).then((resp) => {
-        console.log("res_if", resp);
-        const res = JSON.parse(resp.data);
-        console.log("res", res);
-        // const res = JSON.stringify(resp.data);
+    // if (isValid) {
+    //   RNFetchBlob.fetch(
+    //     "POST",
+    //     // urlApi + "c_auth/SignUpAgent",
+    //     urlApi + "c_nup/saveBookingUnit/IFCAPB/",
+    //     {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //     [
+    //       // { name: "photo", filename: fileName, data: fileImg },
+    //       { name: "photoktp", filename: fileNameKtp, data: filektp },
+    //       { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+    //       // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+    //       // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+    //       { name: "data", data: JSON.stringify(frmData) },
+    //     ]
+    //   ).then((resp) => {
+    //     console.log("res_if", resp);
+    //     const res = JSON.parse(resp.data);
+    //     console.log("res", res);
+    //     // const res = JSON.stringify(resp.data);
 
-        if (!res.Error) {
-          // Actions.pop()
-          this.setState({ isLogin: true }, () => {
-            // alert(res.Pesan);
-            const pesan = res.Pesan;
-            this.alertFillBlank(true, pesan);
-            // Actions.pop()
-            // Actions.Login()
-            const prevItems = {
-              fullname: frmData.fullname,
-              total: this.state.trx_amt,
-              descs_amt: this.state.descs_amt,
-            };
-            _navigate("FormPayment", { prevItems: prevItems });
-          });
-        } else {
-          // const pesan = res.Pesan;
-          // this.alertFillBlank(true, pesan);
-          this.setState({ isLoaded: true }, () => {
-            // alert(res.Pesan);
-            const pesan = res.Pesan;
-            this.alertFillBlank(true, pesan);
-            console.log("error 3mb");
-            // console.log('url',this.state.pickUrlKtp.uri)
-          });
-        }
+    //     if (!res.Error) {
+    //       // Actions.pop()
+    //       this.setState({ isLogin: true }, () => {
+    //         // alert(res.Pesan);
+    //         const pesan = res.Pesan;
+    //         this.alertFillBlank(true, pesan);
+    //         // Actions.pop()
+    //         // Actions.Login()
+    //         const prevItems = {
+    //           fullname: frmData.fullname,
+    //           total: this.state.trx_amt,
+    //           descs_amt: this.state.descs_amt,
+    //         };
+    //         _navigate("FormPayment", { prevItems: prevItems });
+    //       });
+    //     } else {
+    //       // const pesan = res.Pesan;
+    //       // this.alertFillBlank(true, pesan);
+    //       this.setState({ isLoaded: true }, () => {
+    //         // alert(res.Pesan);
+    //         const pesan = res.Pesan;
+    //         this.alertFillBlank(true, pesan);
+    //         console.log("error 3mb");
+    //         // console.log('url',this.state.pickUrlKtp.uri)
+    //       });
+    //     }
 
-        // this.setState({ isLoaded: true });
-        this.setState({ isLoaded: true }, () => {
-          // alert(res.Pesan);
-          const pesan = res.Pesan;
-          this.alertFillBlank(true, pesan);
-          // console.log('url',this.state.pickUrlKtp.uri)
-        });
-        // alert(res.Pesan);
-      });
-    } else {
-      // alert("Please input field");
-      // const pesan = "Please input field";
-      // this.alertFillBlank(true, pesan);
-      this.setState({ isLoaded: true }, () => {
-        const pesan = "Please input field";
-        this.alertFillBlank(true, pesan);
-        // alert("Please input field");
-        // alert(res.Pesan);
-        // console.log('url',this.state.pickUrlKtp.uri)
-      });
-      // alert("Please");
-      // console.log('url else',this.state.pickUrlKtp.uri)
-    }
+    //     // this.setState({ isLoaded: true });
+    //     this.setState({ isLoaded: true }, () => {
+    //       // alert(res.Pesan);
+    //       const pesan = res.Pesan;
+    //       this.alertFillBlank(true, pesan);
+    //       // console.log('url',this.state.pickUrlKtp.uri)
+    //     });
+    //     // alert(res.Pesan);
+    //   });
+    // } else {
+    //   // alert("Please input field");
+    //   // const pesan = "Please input field";
+    //   // this.alertFillBlank(true, pesan);
+    //   this.setState({ isLoaded: true }, () => {
+    //     const pesan = "Please input field";
+    //     this.alertFillBlank(true, pesan);
+    //     // alert("Please input field");
+    //     // alert(res.Pesan);
+    //     // console.log('url',this.state.pickUrlKtp.uri)
+    //   });
+    //   // alert("Please");
+    //   // console.log('url else',this.state.pickUrlKtp.uri)
+    // }
   };
 
   render() {
@@ -573,7 +573,7 @@ class FormNewBooking extends React.Component {
                 fontFamily: Fonts.type.proximaNovaBold,
                 letterSpacing: 1,
               }}
-              // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+            // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
             >
               FORM BOOKING UNIT
             </Text>
@@ -599,7 +599,7 @@ class FormNewBooking extends React.Component {
             onRequestClose={() => {
               this.alertFillBlank(!this.state.Alert_Visibility, pesan);
             }}
-            // activeOpacity={1}
+          // activeOpacity={1}
           >
             <View
               style={{
@@ -643,7 +643,7 @@ class FormNewBooking extends React.Component {
                       this.setState({ isLoaded: this.state.isLoaded });
                       console.log("isloading ok", this.state.isLoaded);
                     }}
-                    // activeOpacity={0.7}
+                  // activeOpacity={0.7}
                   >
                     <Text style={{ color: Colors.white }}>OK</Text>
                   </TouchableOpacity>
@@ -774,7 +774,7 @@ class FormNewBooking extends React.Component {
                 onChangeText={(val) => this.setState({ fullname: val })}
                 style={Styles.positionTextInput}
                 ref="fullname"
-                // textAlign={"right"}
+              // textAlign={"right"}
               />
 
               {this.state.errorfullname ? (
@@ -947,11 +947,12 @@ class FormNewBooking extends React.Component {
               </Label> */}
               {/* <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                                     <Icon solid name='star' style={styles.iconSub} type="FontAwesome5" />
-                                    <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
+                                 fnext   <Icon name='id-card-alt' type="FontAwesome5" style={styles.iconColor} />
                                 </View> */}
               <Input
                 placeholder="NPWP"
-                autoCapitalize="words"
+                // autoCapitalize="words"
+                keyboardType="numeric"
                 placeholderTextColor={"#c2c2c2"}
                 value={this.state.npwp}
                 onChangeText={(val) => this.setState({ npwp: val })}
@@ -1093,7 +1094,7 @@ class FormNewBooking extends React.Component {
               <Button
                 style={Styles.btnMedium}
                 onPress={() => this.submit()}
-                // disabled={!this.state.capt}
+              // disabled={!this.state.capt}
               >
                 {/* {!this.state.isLoaded ? (
                   <ActivityIndicator color="#fff" />

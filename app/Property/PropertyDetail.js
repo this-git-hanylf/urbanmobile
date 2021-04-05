@@ -233,41 +233,41 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getDataDetails/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_reservation/getDataDetails/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              const data = {
+                amenities: resData.amenities,
+                feature: resData.feature,
+                overview: resData.overview,
+                project: resData.project,
+              };
+              console.log("data", data);
+              this.setState(data);
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                const data = {
-                  amenities: resData.amenities,
-                  feature: resData.feature,
-                  overview: resData.overview,
-                  project: resData.project,
-                };
-                console.log("data", data);
-                this.setState(data);
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("getDAtaDetails", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getDAtaDetails", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -276,43 +276,43 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getGallery/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_reservation/getGallery/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              console.log(resData);
+              const resData = res.Data;
+              this.setState({ gallery: resData.gallery });
+              resData.gallery.map((item) => {
+                this.setState((prevState) => ({
+                  imagesPreview: [
+                    ...prevState.imagesPreview,
+                    { url: item.gallery_url },
+                  ],
+                }));
+              });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                console.log(resData);
-                const resData = res.Data;
-                this.setState({ gallery: resData.gallery });
-                resData.gallery.map((item) => {
-                  this.setState((prevState) => ({
-                    imagesPreview: [
-                      ...prevState.imagesPreview,
-                      { url: item.gallery_url },
-                    ],
-                  }));
-                });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("getData Galerry", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getData Galerry", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -321,43 +321,43 @@ export default class extends React.Component {
     {
       isMount
         ? // fetch(urlApi+'c_reservation/getGallery/'+item.entity_cd+'/'+item.project_no,{
-          fetch(
-            urlApi +
-              "c_reservation/getGallery/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+        fetch(
+          urlApi +
+          "c_reservation/getGallery/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              console.log(resData);
+              const resData = res.Data;
+              this.setState({ plans: resData.plans });
+              resData.plans.map((item) => {
+                this.setState((prevState) => ({
+                  unitPlanPreview: [
+                    ...prevState.unitPlanPreview,
+                    { url: item.plan_url },
+                  ],
+                }));
+              });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                console.log(resData);
-                const resData = res.Data;
-                this.setState({ plans: resData.plans });
-                resData.plans.map((item) => {
-                  this.setState((prevState) => ({
-                    unitPlanPreview: [
-                      ...prevState.unitPlanPreview,
-                      { url: item.plan_url },
-                    ],
-                  }));
-                });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("getData Plans", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getData Plans", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -435,7 +435,7 @@ export default class extends React.Component {
   //   alert('t')
   // };
   goTo(item) {
-    console.log("item", item);
+    console.log("item property detail", item);
     // alert('t')
     // const itemyangdibawa = item;
     // console.log('itemyangdibawa', itemyangdibawa)
@@ -447,6 +447,7 @@ export default class extends React.Component {
     data["picture_url"] = item.picture_url;
     data["property_cd"] = item.property_cd;
     data["hidden_picture_url"] = item.hidden_picture_url;
+    data["product_cd"] = item.product_cd;
     console.log("data", data);
     if (this.props.dyn) {
       _navigate("UnitEnquiryProjectPage", { prevItems: data });
@@ -470,9 +471,9 @@ export default class extends React.Component {
         // onPress={() => this.goTo()}
         // onPress={()=>this.goTo()}
         onPress={() => this.goTo(item)}
-        // onPress={this.goTo()}
-        // onPress={() => this.goTo()}
-        // onPress={()=>Actions.ProductProjectPage({items : item})}
+      // onPress={this.goTo()}
+      // onPress={() => this.goTo()}
+      // onPress={()=>Actions.ProductProjectPage({items : item})}
       >
         <ParallaxImage
           // onPress={()=>this.goTo(item)}
@@ -519,34 +520,34 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getTower/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_product_info/getTower/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ tower: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ tower: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("getTower", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getTower", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -557,34 +558,34 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getDataDetailsAmenities/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_reservation/getDataDetailsAmenities/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ amen: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ amen: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("amenitis", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("amenitis", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -595,34 +596,34 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getUnitProp/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_product_info/getUnitProp/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ unit: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ unit: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("unit", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("unit", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -673,36 +674,36 @@ export default class extends React.Component {
     {
       isMount
         ? fetch(
-            // urlApi + "c_location/getLocationAll/ifca3/",
-            urlApi +
-              "c_location/getLocationAll/IFCAMOBILE/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          // urlApi + "c_location/getLocationAll/ifca3/",
+          urlApi +
+          "c_location/getLocationAll/IFCAMOBILE/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data[0];
+              this.setState({ location: resData });
+              this.setState({ project_status: resData.project_status });
+              console.log("projec status", resData.project_status);
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("eror location", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data[0];
-                this.setState({ location: resData });
-                this.setState({ project_status: resData.project_status });
-                console.log("projec status", resData.project_status);
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("eror location", res.Pesan);
-                });
-              }
-              // this.setState({ arrayholder: res.Data });
-              console.log("getLocation", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            // this.setState({ arrayholder: res.Data });
+            console.log("getLocation", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -971,7 +972,7 @@ export default class extends React.Component {
                   onRequestClose={() => {
                     this.alertFillBlank(!this.state.Alert_Visibility, pesan);
                   }}
-                  // activeOpacity={1}
+                // activeOpacity={1}
                 >
                   <View
                     style={{
@@ -1021,7 +1022,7 @@ export default class extends React.Component {
                           onPress={() => {
                             this.alertFillBlank(!this.state.Alert_Visibility);
                           }}
-                          // activeOpacity={0.7}
+                        // activeOpacity={0.7}
                         >
                           <Text style={{ color: Colors.white }}>No</Text>
                         </TouchableOpacity>
@@ -1040,7 +1041,7 @@ export default class extends React.Component {
                             this.alertFillBlank(!this.state.Alert_Visibility);
                             Actions.Login();
                           }}
-                          // activeOpacity={0.7}
+                        // activeOpacity={0.7}
                         >
                           <Text style={{ color: Colors.white }}>Yes</Text>
                         </TouchableOpacity>
@@ -1056,7 +1057,7 @@ export default class extends React.Component {
                   onRequestClose={() => {
                     this.alertFillBlank2(!this.state.Alert_Visibility2, pesan2);
                   }}
-                  // activeOpacity={1}
+                // activeOpacity={1}
                 >
                   <View
                     style={{
@@ -1106,7 +1107,7 @@ export default class extends React.Component {
                           onPress={() => {
                             this.alertFillBlank2(!this.state.Alert_Visibility2);
                           }}
-                          // activeOpacity={0.7}
+                        // activeOpacity={0.7}
                         >
                           <Text style={{ color: Colors.white }}>OK</Text>
                         </TouchableOpacity>
@@ -1151,7 +1152,7 @@ export default class extends React.Component {
                             textAlign: "center",
                             fontFamily: Fonts.type.sfuiDisplayBold,
                           }}
-                          // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                        // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                         >
                           {this.state.title.toUpperCase()}
                         </Text>
@@ -1167,7 +1168,7 @@ export default class extends React.Component {
                           <Button
                             style={Style.signInBtnMedium}
                             onPress={() => this.alertNUP()}
-                            // onPress={() => this.nupBooking()}
+                          // onPress={() => this.nupBooking()}
                           >
                             <Text
                               style={{
@@ -1430,8 +1431,8 @@ export default class extends React.Component {
                     hasParallaxImages={true}
                     containerCustomStyle={styles.slider}
 
-                    // contentContainerCustomStyle={styles.sliderContentContainer}
-                    // resizeMode={ImageResizeMode.contain}
+                  // contentContainerCustomStyle={styles.sliderContentContainer}
+                  // resizeMode={ImageResizeMode.contain}
                   />
 
                   {/* </View> */}
@@ -1479,7 +1480,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1500,7 +1501,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1524,7 +1525,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1545,7 +1546,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1569,7 +1570,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1590,7 +1591,7 @@ export default class extends React.Component {
                         <View
                           style={Styles.itemBoxAmen_not_gold}
                           underlayColor="transparent"
-                          // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                         >
                           <View>
                             <View>
@@ -1642,8 +1643,8 @@ export default class extends React.Component {
                     renderItem={this._renderItemUnit}
                     hasParallaxImages={true}
                     containerCustomStyle={styles.slider}
-                    // contentContainerCustomStyle={styles.sliderContentContainer}
-                    // resizeMode={ImageResizeMode.contain}
+                  // contentContainerCustomStyle={styles.sliderContentContainer}
+                  // resizeMode={ImageResizeMode.contain}
                   />
 
                   {/* </View> */}
@@ -1726,7 +1727,7 @@ export default class extends React.Component {
                       }
                       index={this.state.index}
                       imageUrls={this.state.imagesPreview}
-                      // style={{ width: 200 }}
+                    // style={{ width: 200 }}
                     />
                   ) : null}
                 </Modal>
@@ -1963,9 +1964,9 @@ export default class extends React.Component {
                   <Button
                     style={[Style.signInBtnMedium, { borderRadius: 0 }]}
                     onPress={() => this.downloadBrosur()}
-                    // onPress={() =>
-                    //   Actions.ProjectDownloadPage({ items: this.props.items })
-                    // }
+                  // onPress={() =>
+                  //   Actions.ProjectDownloadPage({ items: this.props.items })
+                  // }
                   >
                     <Text
                       style={{

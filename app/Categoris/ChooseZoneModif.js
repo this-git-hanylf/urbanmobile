@@ -195,34 +195,34 @@ class ChooseZoneModif extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getDataDetailsAmenities/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-            }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ amen: resData });
-              } else {
-                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                //   alert(res.Pesan);
-                // });
-                console.log("amenitis", res);
-              }
+          urlApi +
+          "c_reservation/getDataDetailsAmenities/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ amen: resData });
+            } else {
+              // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+              //   alert(res.Pesan);
+              // });
               console.log("amenitis", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            }
+            console.log("amenitis", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -239,43 +239,43 @@ class ChooseZoneModif extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getGallery/" +
-              db_profile +
-              "/" +
-              entity +
-              "/" +
-              project,
-            {
-              method: "GET",
-              headers: this.state.hd,
-            }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                console.log(resData);
-                this.setState({ gallery: resData.gallery });
-                resData.gallery.map((item) => {
-                  this.setState((prevState) => ({
-                    imagesPreview: [
-                      ...prevState.imagesPreview,
-                      { url: item.gallery_url },
-                    ],
-                  }));
-                });
-              } else {
-                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                //   alert(res.Pesan);
-                // });
-                console.log("getData Galerry", res);
-              }
+          urlApi +
+          "c_reservation/getGallery/" +
+          db_profile +
+          "/" +
+          entity +
+          "/" +
+          project,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              console.log(resData);
+              this.setState({ gallery: resData.gallery });
+              resData.gallery.map((item) => {
+                this.setState((prevState) => ({
+                  imagesPreview: [
+                    ...prevState.imagesPreview,
+                    { url: item.gallery_url },
+                  ],
+                }));
+              });
+            } else {
+              // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+              //   alert(res.Pesan);
+              // });
               console.log("getData Galerry", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            }
+            console.log("getData Galerry", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -308,7 +308,7 @@ class ChooseZoneModif extends React.Component {
       <View
         style={Style.itemBoxAmen_not_gold}
         underlayColor="transparent"
-        // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
       >
         <View>
           <View>
@@ -334,36 +334,36 @@ class ChooseZoneModif extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getUnitPropTower/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              property_cd,
-            {
-              method: "GET",
-              headers: this.state.hd,
-            }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ unit: resData });
-              } else {
-                console.log("unit", res);
-                // this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                //   alert(res.Pesan);
-                // });
-              }
+          urlApi +
+          "c_product_info/getUnitPropTower/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          property_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ unit: resData });
+            } else {
               console.log("unit", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+              // this.setState({ isLoaded: !this.state.isLoaded }, () => {
+              //   alert(res.Pesan);
+              // });
+            }
+            console.log("unit", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -437,44 +437,46 @@ class ChooseZoneModif extends React.Component {
 
   getPeriodeBooking() {
     const item = this.props.items;
+    const prevItems = this.props.prevItems;
+    console.log('previtems periode', prevItems);
     console.log("item get periode", item);
 
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_periode_book/getPeriode/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd +
-              // "/" +
-              // start_date,
-              "/" +
-              item.product_cd,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_periode_book/getPeriode/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd +
+          // "/" +
+          // start_date,
+          "/" +
+          item.product_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ periode_book: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ periode_book: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("periode_book", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("periode_book", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -553,7 +555,7 @@ class ChooseZoneModif extends React.Component {
               onRequestClose={() => {
                 this.alertFillBlank(!this.state.Alert_Visibility, pesan);
               }}
-              // activeOpacity={1}
+            // activeOpacity={1}
             >
               <View
                 style={{
@@ -603,7 +605,7 @@ class ChooseZoneModif extends React.Component {
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
                       }}
-                      // activeOpacity={0.7}
+                    // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>OK</Text>
                     </TouchableOpacity>
@@ -656,7 +658,7 @@ class ChooseZoneModif extends React.Component {
                       fontSize: 14,
                       textAlign: "center",
                     }}
-                    // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+                  // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
                   >
                     {this.state.title}
                   </Text>
@@ -669,7 +671,7 @@ class ChooseZoneModif extends React.Component {
                     <Button
                       style={Style.signInBtnMedium}
                       onPress={() => this.alertNUP()}
-                      // onPress={() => this.nupBooking()}
+                    // onPress={() => this.nupBooking()}
                     >
                       <Text
                         style={{
@@ -734,7 +736,7 @@ class ChooseZoneModif extends React.Component {
                             <Button
                               style={Style.signInBtnMedium}
                               onPress={() => this.alertNUP()}
-                              // onPress={() => this.nupBooking()}
+                            // onPress={() => this.nupBooking()}
                             >
                               <Text
                                 style={{
@@ -814,7 +816,7 @@ class ChooseZoneModif extends React.Component {
                     <View
                       style={Styles.itemBoxAmen_not_gold}
                       underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                     >
                       <View>
                         <View>
@@ -835,7 +837,7 @@ class ChooseZoneModif extends React.Component {
                     <View
                       style={Styles.itemBoxAmen_not_gold}
                       underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                     >
                       <View>
                         <View>
@@ -859,7 +861,7 @@ class ChooseZoneModif extends React.Component {
                     <View
                       style={Styles.itemBoxAmen_not_gold}
                       underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                     >
                       <View>
                         <View>
@@ -880,7 +882,7 @@ class ChooseZoneModif extends React.Component {
                     <View
                       style={Styles.itemBoxAmen_not_gold}
                       underlayColor="transparent"
-                      // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
+                    // onPress={()=>Actions.NewsAndPromoDetail({items : item})}
                     >
                       <View>
                         <View>
@@ -924,8 +926,8 @@ class ChooseZoneModif extends React.Component {
                 renderItem={this._renderItemUnit}
                 hasParallaxImages={true}
                 containerCustomStyle={Styles.slider_unit}
-                // contentContainerCustomStyle={styles.sliderContentContainer}
-                // resizeMode={ImageResizeMode.contain}
+              // contentContainerCustomStyle={styles.sliderContentContainer}
+              // resizeMode={ImageResizeMode.contain}
               />
 
               {/* </View> */}

@@ -197,35 +197,35 @@ class New_NupBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getTowerMap/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getTowerMap/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ tower: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("ERROR DI GET TOWER", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ tower: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("ERROR DI GET TOWER", res.Pesan);
-                });
-              }
-              console.log("getTower", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getTower", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -250,41 +250,41 @@ class New_NupBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getDataDetails/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_reservation/getDataDetails/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              const data = {
+                amenities: resData.amenities,
+                feature: resData.feature,
+                overview: resData.overview,
+                project: resData.project,
+              };
+              console.log("data", data);
+              this.setState(data);
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("error", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                const data = {
-                  amenities: resData.amenities,
-                  feature: resData.feature,
-                  overview: resData.overview,
-                  project: resData.project,
-                };
-                console.log("data", data);
-                this.setState(data);
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("error", res.Pesan);
-                });
-              }
-              console.log("getDAtaDetails", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getDAtaDetails", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -295,47 +295,47 @@ class New_NupBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getBlock_new/" +
-              item.db_profile +
-              "/" +
-              // item.entity_cd +
-              // "/" +
-              item.project_no +
-              "/" +
-              this.state.property_cd,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getBlock_new/" +
+          item.db_profile +
+          "/" +
+          // item.entity_cd +
+          // "/" +
+          item.project_no +
+          "/" +
+          this.state.property_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ isLoadedBlock: true });
+              this.setState({ block: resData });
+              console.log("state block", this.state.block);
+              console.log("statte isloadedblock", this.state.isLoadedBlock);
+
+              // this.getRoomUnit(this.state.block);
+              // console.log("blockMo", resData[0].block_no);
+              // const block_no_res = resData[0].block_no;
+              this.getDataRoom();
+
+              // this.getLot_room_default({ block: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("ERROR DI GET BLOCK", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ isLoadedBlock: true });
-                this.setState({ block: resData });
-                console.log("state block", this.state.block);
-                console.log("statte isloadedblock", this.state.isLoadedBlock);
-
-                // this.getRoomUnit(this.state.block);
-                // console.log("blockMo", resData[0].block_no);
-                // const block_no_res = resData[0].block_no;
-                this.getDataRoom();
-
-                // this.getLot_room_default({ block: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("ERROR DI GET BLOCK", res.Pesan);
-                });
-              }
-              console.log("block", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("block", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -346,41 +346,41 @@ class New_NupBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getLot_new/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getLot_new/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ getLot: resData });
+              this.setState({ isLoadedType: true });
+              this.getDataRoom();
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("ERROR DI GET LOT", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ getLot: resData });
-                this.setState({ isLoadedType: true });
-                this.getDataRoom();
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("ERROR DI GET LOT", res.Pesan);
-                });
-              }
-              console.log("getLot", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getLot", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -432,8 +432,8 @@ class New_NupBooking extends React.Component {
           {this.state.isLoadedBlock == true ? (
             this.state.block ? (
               this.state.block == null ||
-              this.state.block == "" ||
-              this.state.block == 0 ? (
+                this.state.block == "" ||
+                this.state.block == 0 ? (
                 <Text>null gambar </Text>
               ) : (
                 <View>
@@ -471,8 +471,8 @@ class New_NupBooking extends React.Component {
           {this.state.isLoadedBlock == true ? (
             this.state.block ? (
               this.state.block == null ||
-              this.state.block == "" ||
-              this.state.block == 0 ? (
+                this.state.block == "" ||
+                this.state.block == 0 ? (
                 <Text>null gambar </Text>
               ) : (
                 <View>
@@ -607,46 +607,46 @@ class New_NupBooking extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getLot_room/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd +
-              "/" +
-              block_no +
-              "/" +
-              lot_type,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getLot_room/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd +
+          "/" +
+          block_no +
+          "/" +
+          lot_type,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ getLot_room: resData });
+              this.setState({ isLoadedRoom: true });
+              this.selectRoomUnit();
+              this.getPictRoomUnit();
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                // alert(res.Pesan);
+                console.log("ERROR DI GET DATA ROOM", res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ getLot_room: resData });
-                this.setState({ isLoadedRoom: true });
-                this.selectRoomUnit();
-                this.getPictRoomUnit();
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  // alert(res.Pesan);
-                  console.log("ERROR DI GET DATA ROOM", res.Pesan);
-                });
-              }
-              console.log("getLot_room else", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getLot_room else", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -677,83 +677,53 @@ class New_NupBooking extends React.Component {
       console.log("datablock getdataroom room null");
       const item = this.props.items;
       console.log("item tower", item);
-      // const params_items = {
-      //   db_profile: item.db_profile,
-      //   entity_cd: item.entity_cd,
-      //   project_no: item.project_no,
-      //   property_cd: item.property_cd,
-      //   block_no: this.state.block[0].block_no,
-      //   lot_type: this.state.getLot[0].lot_type,
-      //   room_unit: this.state.getLot_room[0].room_unit,
-      // };
-      // console.log("params_items", params_items);
+
       {
         isMount
           ? fetch(
-              urlApi +
-                "c_product_info/getLotRoom_pict/" +
-                item.db_profile +
-                "/" +
-                item.entity_cd +
-                "/" +
-                item.project_no +
-                "/" +
-                item.property_cd +
-                "/" +
-                this.state.block[0].block_no +
-                "/" +
-                this.state.getLot[0].lot_type +
-                "/" +
-                this.state.getLot_room[0].room_unit,
-              {
-                method: "GET",
-                headers: this.state.hd,
-                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            urlApi +
+            "c_product_info/getLotRoom_pict/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no +
+            "/" +
+            item.property_cd +
+            "/" +
+            this.state.block[0].block_no +
+            "/" +
+            this.state.getLot[0].lot_type +
+            "/" +
+            this.state.getLot_room[0].room_unit,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ getpict: resData });
+                this.change(data);
+                // this.getPictRoomUnit({ data: params_items });
+                // this.setState({ isLoadedType: true });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  // alert(res.Pesan);
+                  console.log("ERROR DI IF SELECT ROOM UNIT", res.Pesan);
+                });
               }
-            )
-              .then((response) => response.json())
-              .then((res) => {
-                if (!res.Error) {
-                  const resData = res.Data;
-                  this.setState({ getpict: resData });
-                  this.change(data);
-                  // this.getPictRoomUnit({ data: params_items });
-                  // this.setState({ isLoadedType: true });
-                } else {
-                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                    // alert(res.Pesan);
-                    console.log("ERROR DI IF SELECT ROOM UNIT", res.Pesan);
-                  });
-                }
-                console.log("getpict", res);
-              })
-              .catch((error) => {
-                console.log(error);
-              })
+              console.log("getpict", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
           : null;
       }
 
-      // for (let x = 0; x < this.state.getLot_room.length; x++) {
-      //   if (
-      //     this.state.getLot_room[x].room_unit ==
-      //     this.state.getLot_room[0].room_unit
-      //   ) {
-      //     console.log("room unit sama");
-      //     console.log(
-      //       "this.state.getLot_room[x].room_unit",
-      //       this.state.getLot_room[x].room_unit
-      //     );
-      //     console.log(
-      //       "this.state.getLot_room[0].room_unit",
-      //       this.state.getLot_room[0].room_unit
-      //     );
-      //     this.setState({ backgroundColor: "blue" });
-      //     console.log("backgtound", this.state.backgroundColor);
-      //   } else {
-      //     console.log("room unit beda");
-      //     this.setState({ backgroundColor: "red" });
-      //   }
-      // }
     } else if (
       this.state.dataBlock != undefined ||
       this.state.dataLotType != undefined ||
@@ -791,45 +761,45 @@ class New_NupBooking extends React.Component {
       {
         isMount
           ? fetch(
-              urlApi +
-                "c_product_info/getLotRoom_pict/" +
-                item.db_profile +
-                "/" +
-                item.entity_cd +
-                "/" +
-                item.project_no +
-                "/" +
-                item.property_cd +
-                "/" +
-                block_no +
-                "/" +
-                lot_type +
-                "/" +
-                room_unit,
-              {
-                method: "GET",
-                headers: this.state.hd,
-                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            urlApi +
+            "c_product_info/getLotRoom_pict/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no +
+            "/" +
+            item.property_cd +
+            "/" +
+            block_no +
+            "/" +
+            lot_type +
+            "/" +
+            room_unit,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ getpict: resData });
+                this.change(data);
+                // this.setState({ isLoadedType: true });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  // alert(res.Pesan);
+                  console.log("ERROR DI ELSE SELECT ROOM UNIT", res.Pesan);
+                });
               }
-            )
-              .then((response) => response.json())
-              .then((res) => {
-                if (!res.Error) {
-                  const resData = res.Data;
-                  this.setState({ getpict: resData });
-                  this.change(data);
-                  // this.setState({ isLoadedType: true });
-                } else {
-                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                    // alert(res.Pesan);
-                    console.log("ERROR DI ELSE SELECT ROOM UNIT", res.Pesan);
-                  });
-                }
-                console.log("getpict", res);
-              })
-              .catch((error) => {
-                console.log(error);
-              })
+              console.log("getpict", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
           : null;
       }
     }
@@ -858,43 +828,43 @@ class New_NupBooking extends React.Component {
       {
         isMount
           ? fetch(
-              urlApi +
-                "c_product_info/getLotRoomType_pict/" +
-                item.db_profile +
-                "/" +
-                item.entity_cd +
-                "/" +
-                item.project_no +
-                "/" +
-                item.property_cd +
-                "/" +
-                this.state.block[0].block_no +
-                "/" +
-                this.state.getLot_room[0].room_unit,
-              {
-                method: "GET",
-                headers: this.state.hd,
-                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            urlApi +
+            "c_product_info/getLotRoomType_pict/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no +
+            "/" +
+            item.property_cd +
+            "/" +
+            this.state.block[0].block_no +
+            "/" +
+            this.state.getLot_room[0].room_unit,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ getpict_roomtype: resData });
+                // this.change(data);
+                // this.setState({ isLoadedType: true });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  // alert(res.Pesan);
+                  console.log("ERROR DI IF GET PICT ROOM UNIT", res.Pesan);
+                });
               }
-            )
-              .then((response) => response.json())
-              .then((res) => {
-                if (!res.Error) {
-                  const resData = res.Data;
-                  this.setState({ getpict_roomtype: resData });
-                  // this.change(data);
-                  // this.setState({ isLoadedType: true });
-                } else {
-                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                    // alert(res.Pesan);
-                    console.log("ERROR DI IF GET PICT ROOM UNIT", res.Pesan);
-                  });
-                }
-                console.log("getpict", res);
-              })
-              .catch((error) => {
-                console.log(error);
-              })
+              console.log("getpict", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
           : null;
       }
     } else if (
@@ -932,43 +902,43 @@ class New_NupBooking extends React.Component {
       {
         isMount
           ? fetch(
-              urlApi +
-                "c_product_info/getLotRoomType_pict/" +
-                item.db_profile +
-                "/" +
-                item.entity_cd +
-                "/" +
-                item.project_no +
-                "/" +
-                item.property_cd +
-                "/" +
-                block_no +
-                "/" +
-                room_unit,
-              {
-                method: "GET",
-                headers: this.state.hd,
-                //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            urlApi +
+            "c_product_info/getLotRoomType_pict/" +
+            item.db_profile +
+            "/" +
+            item.entity_cd +
+            "/" +
+            item.project_no +
+            "/" +
+            item.property_cd +
+            "/" +
+            block_no +
+            "/" +
+            room_unit,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+                this.setState({ getpict_roomtype: resData });
+                // this.change(data);
+                // this.setState({ isLoadedType: true });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  // alert(res.Pesan);
+                  console.log("ERROR DI ELSE GET PICT ROOM UNIT", res.Pesan);
+                });
               }
-            )
-              .then((response) => response.json())
-              .then((res) => {
-                if (!res.Error) {
-                  const resData = res.Data;
-                  this.setState({ getpict_roomtype: resData });
-                  // this.change(data);
-                  // this.setState({ isLoadedType: true });
-                } else {
-                  this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                    // alert(res.Pesan);
-                    console.log("ERROR DI ELSE GET PICT ROOM UNIT", res.Pesan);
-                  });
-                }
-                console.log("getpict", res);
-              })
-              .catch((error) => {
-                console.log(error);
-              })
+              console.log("getpict", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
           : null;
       }
     }
@@ -1115,13 +1085,13 @@ class New_NupBooking extends React.Component {
               width: "100%",
               height: "10%",
               flexDirection: "row",
-             
+
             }}
           >
-            <View style={{ paddingLeft: 10,paddingRight: 0 }}>
+            <View style={{ paddingLeft: 10, paddingRight: 0 }}>
               <Button
                 transparent
-                style={{ alignSelf: "flex-start",marginLeft: -10,}}
+                style={{ alignSelf: "flex-start", marginLeft: -10, }}
                 onPress={Actions.pop}
               >
                 <Icon
@@ -1137,7 +1107,7 @@ class New_NupBooking extends React.Component {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                alignContent:'center',
+                alignContent: 'center',
                 flex: 2,
                 top: 17,
               }}
@@ -1148,40 +1118,40 @@ class New_NupBooking extends React.Component {
             </View>
 
             <View style={{ paddingLeft: 0, paddingRight: 10 }}>
-              <View style={{ flexDirection: 'row',  }}>
+              <View style={{ flexDirection: 'row', }}>
                 <View
-                // transparent
-                style={{paddingRight: 5, }}
+                  // transparent
+                  style={{ paddingRight: 5, }}
                 // onPress={Actions.pop}
-              >
-                <Icon
-                  active
-                  name="share-variant"
-                  // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#fff", fontSize: 20,  top: 10}}
-                  type="MaterialCommunityIcons"
-                />
-              </View>
-              <View
-                // transparent
-                style={{ paddingLeft: 5}}
+                >
+                  <Icon
+                    active
+                    name="share-variant"
+                    // style={[Style.textWhite,{fontSize: 28}]}
+                    style={{ color: "#fff", fontSize: 20, top: 10 }}
+                    type="MaterialCommunityIcons"
+                  />
+                </View>
+                <View
+                  // transparent
+                  style={{ paddingLeft: 5 }}
                 // onPress={Actions.pop}
-              >
-                <Icon
-                  active
-                  name="menu"
-                  // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#fff", fontSize: 21,  top: 10}}
-                  type="MaterialCommunityIcons"
-                />
+                >
+                  <Icon
+                    active
+                    name="menu"
+                    // style={[Style.textWhite,{fontSize: 28}]}
+                    style={{ color: "#fff", fontSize: 21, top: 10 }}
+                    type="MaterialCommunityIcons"
+                  />
+                </View>
               </View>
-               </View>
-              
+
             </View>
           </View>
         </ImageBackground>
 
-        <ScrollView   ref={(node)=> this.scroll = node} style={{heigh: screenHeight,}}>
+        <ScrollView ref={(node) => this.scroll = node} style={{ heigh: screenHeight, }}>
           <ImageBackground
             style={
               {
@@ -1202,14 +1172,14 @@ class New_NupBooking extends React.Component {
                   alignSelf: "center",
                   resizeMode: "contain",
                   flex: 1,
-                  backgroundColor:"#003457" //biru background urban
+                  backgroundColor: "#003457" //biru background urban
                 }}
                 // source={require("@Asset/images/deskripsi/3-1.jpg")}
                 source={{ uri: this.state.picture_booking_url }}
               >
                 <Button
                   style={[Style.signInBtnMedium, { top: "105%" }]}
-                  onPress={()=>{this.scroll.scrollTo({y:screenHeight*1.5})}}
+                  onPress={() => { this.scroll.scrollTo({ y: screenHeight * 1.5 }) }}
                 >
                   <Text
                     style={{
@@ -1227,7 +1197,7 @@ class New_NupBooking extends React.Component {
               </ImageBackground>
             </View>
 
-            
+
             <Image
               style={{
                 width: 370,
@@ -1329,7 +1299,7 @@ class New_NupBooking extends React.Component {
             </Grid>
           </ImageBackground>
 
-          
+
           <View style={{ alignItems: "center" }}>
             <ScrollView horizontal>
               <Segment
@@ -1349,30 +1319,30 @@ class New_NupBooking extends React.Component {
                     style={
                       this.state.activePage === key
                         ? {
-                            backgroundColor: "#fff",
-                            borderBottomWidth: 5,
-                            borderBottomColor: "#226f9e", //biru baru urban
-                            width: "auto",
-                          }
+                          backgroundColor: "#fff",
+                          borderBottomWidth: 5,
+                          borderBottomColor: "#226f9e", //biru baru urban
+                          width: "auto",
+                        }
                         : {
-                            backgroundColor: "#fff",
-                            width: "auto",
-                            borderBottomWidth: 1,
-                            borderBottomColor: "#565c5c", //abu-abu baru urban
-                          }
+                          backgroundColor: "#fff",
+                          width: "auto",
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#565c5c", //abu-abu baru urban
+                        }
                     }
                   >
                     <Text
                       style={
                         this.state.activePage === key
                           ? {
-                              color: "#226f9e",
-                              textAlign: "center",
-                            }
+                            color: "#226f9e",
+                            textAlign: "center",
+                          }
                           : {
-                              color: "#565c5c",
-                              textAlign: "center",
-                            }
+                            color: "#565c5c",
+                            textAlign: "center",
+                          }
                       }
                     >
                       {data.descs}
@@ -1404,30 +1374,30 @@ class New_NupBooking extends React.Component {
                     style={
                       this.state.activePage_Lot === key
                         ? {
-                            backgroundColor: "#fff",
-                            borderBottomWidth: 5,
-                            borderBottomColor: "#226f9e", //biru baru urban
-                            width: "auto",
-                          }
+                          backgroundColor: "#fff",
+                          borderBottomWidth: 5,
+                          borderBottomColor: "#226f9e", //biru baru urban
+                          width: "auto",
+                        }
                         : {
-                            backgroundColor: "#fff",
-                            width: "auto",
-                            borderBottomWidth: 1,
-                            borderBottomColor: "#565c5c", //abu-abu baru urban
-                          }
+                          backgroundColor: "#fff",
+                          width: "auto",
+                          borderBottomWidth: 1,
+                          borderBottomColor: "#565c5c", //abu-abu baru urban
+                        }
                     }
                   >
                     <Text
                       style={
                         this.state.activePage_Lot === key
                           ? {
-                              color: "#226f9e",
-                              textAlign: "center",
-                            }
+                            color: "#226f9e",
+                            textAlign: "center",
+                          }
                           : {
-                              color: "#565c5c",
-                              textAlign: "center",
-                            }
+                            color: "#565c5c",
+                            textAlign: "center",
+                          }
                       }
                     >
                       {data.descs}
@@ -1444,8 +1414,8 @@ class New_NupBooking extends React.Component {
             {/* <Image> */}
             {this.state.getpict ? (
               this.state.getpict == null ||
-              this.state.getpict == "" ||
-              this.state.getpict == 0 ? (
+                this.state.getpict == "" ||
+                this.state.getpict == 0 ? (
                 <Text>null gambar </Text>
               ) : (
                 <View>
@@ -1478,8 +1448,8 @@ class New_NupBooking extends React.Component {
             <ScrollView horizontal>
               {this.state.getLot_room ? (
                 this.state.getLot_room.length == 0 ||
-                this.state.getLot_room.length == "" ||
-                this.state.getLot_room.length == null ? (
+                  this.state.getLot_room.length == "" ||
+                  this.state.getLot_room.length == null ? (
                   <Text>
                     {" "}
                     No data{" "}
@@ -1552,8 +1522,8 @@ class New_NupBooking extends React.Component {
           <View>
             {this.state.getpict_roomtype ? (
               this.state.getpict_roomtype == null ||
-              this.state.getpict_roomtype == "" ||
-              this.state.getpict_roomtype == 0 ? (
+                this.state.getpict_roomtype == "" ||
+                this.state.getpict_roomtype == 0 ? (
                 <Text>null gambar </Text>
               ) : (
                 <View>
@@ -1601,11 +1571,11 @@ class New_NupBooking extends React.Component {
               </Text>
             </Button>
           </View>
-   
+
         </ScrollView>
-           
-       
-       
+
+
+
       </Container>
     );
   }

@@ -76,7 +76,7 @@ class SelectUnit extends React.Component {
       activePage: 0,
       getLotNo: [],
       getPaymentCode: [],
-      activePage: 0,
+      activePagePaymentCode: 0,
       getPaymentDetail: [],
       getKeterangan: [],
       getTrxAmt_Freq: [],
@@ -133,50 +133,50 @@ class SelectUnit extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getLevelNo/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd +
-              "/" +
-              item.block_no +
-              "/" +
-              item.lot_type +
-              "/" +
-              item.room_unit,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getLevelNo/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd +
+          "/" +
+          item.block_no +
+          "/" +
+          item.room_unit +
+          "/" +
+          item.lot_type,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ getLevel: resData });
+              console.log(
+                "this.state active page di getlevel",
+                this.state.activePage
+              );
+              this.getLotNo();
+              this.getKeterangan();
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ getLevel: resData });
-                console.log(
-                  "this.state active page di getlevel",
-                  this.state.activePage
-                );
-                this.getLotNo();
-                this.getKeterangan();
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getLevel", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getLevel", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -195,49 +195,49 @@ class SelectUnit extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getLotNo/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd +
-              "/" +
-              item.block_no +
-              "/" +
-              item.lot_type +
-              "/" +
-              item.room_unit +
-              "/" +
-              level_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getLotNo/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd +
+          "/" +
+          item.block_no +
+          "/" +
+          item.lot_type +
+          "/" +
+          item.room_unit +
+          "/" +
+          level_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              const dataLotNo = res.Data;
+              this.setState({ getLotNo: resData });
+              this.getPaymentCode(dataLotNo);
+              console.log("buat ke getpaymentcode", dataLotNo);
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                const dataLotNo = res.Data;
-                this.setState({ getLotNo: resData });
-                this.getPaymentCode(dataLotNo);
-                console.log("buat ke getpaymentcode", dataLotNo);
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getLotNo", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getLotNo", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -250,42 +250,45 @@ class SelectUnit extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getPaymentCode/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              dataLotNo[0].lot_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
-            }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
+          urlApi +
+          "c_product_info/getPaymentCode/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          dataLotNo[0].lot_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
 
-                this.setState({ getPaymentCode: resData });
-                this.getPaymentDetail_Amt();
-                this.getTrxAmt_Freq();
-                this.getShortDescs();
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getPaymentCode", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+              this.setState({ getPaymentCode: resData });
+              // const params = res.Data
+
+              this.getPaymentDetail_Amt(); //untuk manggil data default
+              this.getTrxAmt_Freq(); //untuk manggil data default
+              this.getShortDescs();
+
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("getPaymentCode", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
@@ -305,63 +308,63 @@ class SelectUnit extends React.Component {
 
     const item = this.props.items;
     console.log("item get keterangan", item);
+
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getKeteranganLevel_No/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              item.property_cd +
-              "/" +
-              item.block_no +
-              "/" +
-              item.lot_type +
-              "/" +
-              item.room_unit +
-              "/" +
-              level_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getKeteranganLevel_No/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          item.property_cd +
+          "/" +
+          item.block_no +
+          "/" +
+          item.lot_type +
+          "/" +
+          item.room_unit +
+          "/" + level_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+
+              this.setState({ getKeterangan: resData });
+
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-
-                this.setState({ getKeterangan: resData });
-
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getKeterangan", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getKeterangan", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
 
-  selectComponent = (activePage, data) => () => {
-    
+  selectComponent = (activePagePaymentCode, data) => () => {
+
     console.log("data selectComponent", data);
     console.log("data payment_cd", data.data.payment_cd);
     console.log("data short descs", data.data.short_descs);
-    console.log("activepage", activePage);
+    console.log("activePagePaymentCode", activePagePaymentCode);
 
-    this.setState({ activePage });
+    this.setState({ activePagePaymentCode });
     var short_descs = data.data.short_descs;
     this.setState({ short_descs: data.data.short_descs });
     this.setState({ payment_cd: data.data.payment_cd });
@@ -375,9 +378,11 @@ class SelectUnit extends React.Component {
       lot_no: getLotNo[0].lot_no,
       payment_cd: data.data.payment_cd,
     };
-    console.log("params select", params);
+    // this.setState({ payment_cd_untuk_getKeterangan: data.data.payment_cd });
+    // console.log("params select", params);
 
     this.setState({ klik: true });
+    console.log('klik');
     this.setState({ isLoaded: !this.state.klik }, () => {
       // alert("true");
       this.getPaymentDetail_Amt(params);
@@ -390,7 +395,7 @@ class SelectUnit extends React.Component {
     console.log("short desc", short_descs)
     if (short_descs == undefined) {
       var get_short_descs = this.state.getPaymentCode[0].short_descs;
-      console.log("get_short_descs if",get_short_descs)
+      console.log("get_short_descs if", get_short_descs)
     } else {
       var get_short_descs = short_descs;
       console.log("get_short_descs else", get_short_descs)
@@ -399,89 +404,85 @@ class SelectUnit extends React.Component {
   }
 
   getPaymentDetail_Amt(params) {
-    if (params == null || params == undefined) {
+    console.log('params payment detail amt', params);
+    if (params != undefined) {
+
+      var entity = params.entity_cd;
+      var project_no = params.project_no;
+      var db_profile = params.db_profile;
+      var lot_no = params.lot_no;
+      var payment_cd = params.payment_cd;
+    } else {
       const items = this.props.items;
       console.log("params default", items);
       var entity = items.entity_cd;
       var project_no = items.project_no;
       var db_profile = items.db_profile;
       if (this.state.getLotNo) {
+        console.log('params payment detail default lotno', this.state.getLotNo[0].lot_no);
         var lot_no = this.state.getLotNo[0].lot_no;
       }
       if (this.state.getPaymentCode) {
+        console.log('params payment detail default paymendcode', this.state.getPaymentCode[0].payment_cd);
         var payment_cd = this.state.getPaymentCode[0].payment_cd;
       }
-
-      const params2 = {
-        entity: entity,
-        project_no: project_no,
-        db_profile: db_profile,
-        lot_no: lot_no,
-        payment_cd: payment_cd,
-      };
-      console.log("params 2 if", params2);
-    } else {
-      var entity = params.entity_cd;
-      var project_no = params.project_no;
-      var db_profile = params.db_profile;
-      var lot_no = params.lot_no;
-      var payment_cd = params.payment_cd;
-
-      const params2 = {
-        entity: entity,
-        project_no: project_no,
-        db_profile: db_profile,
-        lot_no: lot_no,
-        payment_cd: payment_cd,
-      };
-      console.log("params 2 else", params2);
     }
+
+    const params_ = {
+      entity: entity,
+      project_no: project_no,
+      db_profile: db_profile,
+      lot_no: lot_no,
+      payment_cd: payment_cd,
+    };
+    console.log("params", params_);
 
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getPaymentCodeDetail/" +
-              db_profile +
-              "/" +
-              entity +
-              "/" +
-              project_no +
-              "/" +
-              lot_no +
-              "/" +
-              payment_cd,
-            {
-              method: "GET",
-              headers: this.state.hd,
-              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          urlApi +
+          "c_product_info/getPaymentCodeDetail/" +
+          db_profile +
+          "/" +
+          entity +
+          "/" +
+          project_no +
+          "/" +
+          lot_no +
+          "/" +
+          payment_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+            //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+
+              this.setState({ getPaymentDetail: resData });
+
+              // this.getRoomUnit(this.state.getLot);
+              // this.getLot_room_default({ dataLotType: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-
-                this.setState({ getPaymentDetail: resData });
-
-                // this.getRoomUnit(this.state.getLot);
-                // this.getLot_room_default({ dataLotType: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getPaymentDetail", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getPaymentDetail", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   }
 
   getTrxAmt_Freq(params) {
-    if (params == null || params == undefined) {
+    if (params == undefined) {
+
       const items = this.props.items;
       console.log("params default", items);
       var entity = items.entity_cd;
@@ -502,37 +503,20 @@ class SelectUnit extends React.Component {
         payment_cd: payment_cd,
       };
       console.log("params 2 if", params2);
-    } else {
-      var entity = params.entity_cd;
-      var project_no = params.project_no;
-      var db_profile = params.db_profile;
-      var lot_no = params.lot_no;
-      var payment_cd = params.payment_cd;
-
-      const params2 = {
-        entity: entity,
-        project_no: project_no,
-        db_profile: db_profile,
-        lot_no: lot_no,
-        payment_cd: payment_cd,
-      };
-      console.log("params 2 else", params2);
-    }
-
-    {
-      isMount
-        ? fetch(
+      {
+        isMount
+          ? fetch(
             urlApi +
-              "c_product_info/getTrxAmt_Freq/" +
-              db_profile +
-              "/" +
-              entity +
-              "/" +
-              project_no +
-              "/" +
-              lot_no +
-              "/" +
-              payment_cd,
+            "c_product_info/getTrxAmt_Freq/" +
+            db_profile +
+            "/" +
+            entity +
+            "/" +
+            project_no +
+            "/" +
+            lot_no +
+            "/" +
+            payment_cd,
             {
               method: "GET",
               headers: this.state.hd,
@@ -550,58 +534,247 @@ class SelectUnit extends React.Component {
                 // this.getLot_room_default({ dataLotType: resData });
               } else {
                 this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  console.log("ERROR NO DATA getTrxAmt_Freq", res.Pesan);
+                  console.log("ERROR NO DATA getTrxAmt_Freq else", res.Pesan);
                 });
               }
-              console.log("getTrxAmt_Freq", res);
+              console.log("getTrxAmt_Freq else", res);
             })
             .catch((error) => {
               console.log(error);
             })
-        : null;
+          : null;
+      }
+
+    } else {
+
+      var params_entity = params.entity_cd;
+      var params_project_no = params.project_no;
+      var params_db_profile = params.db_profile;
+      var params_lot_no = params.lot_no;
+      var params_payment_cd = params.payment_cd;
+
+      const params2 = {
+        params_entity: params_entity,
+        params_project_no: params_project_no,
+        params_db_profile: params_db_profile,
+        params_lot_no: params_lot_no,
+        params_payment_cd: params_payment_cd,
+      };
+      console.log("params 2 else", params2);
+      {
+        isMount
+          ? fetch(
+            urlApi +
+            "c_product_info/getTrxAmt_Freq/" +
+            params_db_profile +
+            "/" +
+            params_entity +
+            "/" +
+            params_project_no +
+            "/" +
+            params_lot_no +
+            "/" +
+            params_payment_cd,
+            {
+              method: "GET",
+              headers: this.state.hd,
+              //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+            }
+          )
+            .then((response) => response.json())
+            .then((res) => {
+              if (!res.Error) {
+                const resData = res.Data;
+
+                this.setState({ getTrxAmt_Freq: resData });
+
+                // this.getRoomUnit(this.state.getLot);
+                // this.getLot_room_default({ dataLotType: resData });
+              } else {
+                this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                  console.log("ERROR NO DATA getTrxAmt_Freq if", res.Pesan);
+                });
+              }
+              console.log("getTrxAmt_Freq if", res);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+          : null;
+      }
+
+
     }
+
+
   }
 
-  _renderComponent = () => {
-    if (this.state.activePage === 0)
-      return (
-        // <Content>
-        //   {/* {this.state.tower ?
-        //   <Text>{this.state.tower[0].</Text>
-        // } */}
-        //   <Text> tab lot type 1</Text>
-        // </Content>
-        null
-      );
-    //... Your Component 1 to display
-    if (this.state.activePage === 1)
-      return (
-        // <Content
-        //   style={Style.layoutInner}
-        //   contentContainerStyle={Style.layoutContent}
-        // >
-        //   <Text>
-        //     {" "}
-        //     tab lot type 2 {console.log("getlotroom", this.state.getLot_room)}
-        //   </Text>
-        // </Content>
+  // getPaymentDetail_Amt_backup(params) {
+  //   if (params == null || params == undefined) {
+  //     const items = this.props.items;
+  //     console.log("params default", items);
+  //     var entity = items.entity_cd;
+  //     var project_no = items.project_no;
+  //     var db_profile = items.db_profile;
+  //     if (this.state.getLotNo) {
+  //       console.log('params payment detail default lotno', this.state.getLotNo[0].lot_no);
+  //       var lot_no = this.state.getLotNo[0].lot_no;
+  //     }
+  //     if (this.state.getPaymentCode) {
+  //       console.log('params payment detail default paymendcode', this.state.getPaymentCode[0].payment_cd);
+  //       var payment_cd = this.state.getPaymentCode[0].payment_cd;
+  //     }
 
-        null
-      );
-    else
-      return (
-        // <Content
-        //   style={Style.layoutInner}
-        //   contentContainerStyle={Style.layoutContent}
-        // >
-        //   <Text> tab 3</Text>
-        // </Content>
-        null
-      );
+  //     const params2 = {
+  //       entity: entity,
+  //       project_no: project_no,
+  //       db_profile: db_profile,
+  //       lot_no: lot_no,
+  //       payment_cd: payment_cd,
+  //     };
+  //     console.log("params 2 if", params2);
+  //     {
+  //       isMount
+  //         ? fetch(
+  //           urlApi +
+  //           "c_product_info/getPaymentCodeDetail/" +
+  //           db_profile +
+  //           "/" +
+  //           entity +
+  //           "/" +
+  //           project_no +
+  //           "/" +
+  //           lot_no +
+  //           "/" +
+  //           payment_cd,
+  //           {
+  //             method: "GET",
+  //             headers: this.state.hd,
+  //             //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+  //           }
+  //         )
+  //           .then((response) => response.json())
+  //           .then((res) => {
+  //             if (!res.Error) {
+  //               const resData = res.Data;
+
+  //               this.setState({ getPaymentDetail: resData });
+
+  //               // this.getRoomUnit(this.state.getLot);
+  //               // this.getLot_room_default({ dataLotType: resData });
+  //             } else {
+  //               this.setState({ isLoaded: !this.state.isLoaded }, () => {
+  //                 alert(res.Pesan);
+  //               });
+  //             }
+  //             console.log("getPaymentDetail", res);
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  //           })
+  //         : null;
+  //     }
+  //   } else {
+  //     var entity = params.entity_cd;
+  //     var project_no = params.project_no;
+  //     var db_profile = params.db_profile;
+  //     var lot_no = params.lot_no;
+  //     var payment_cd = params.payment_cd;
+
+  //     const params2 = {
+  //       entity: entity,
+  //       project_no: project_no,
+  //       db_profile: db_profile,
+  //       lot_no: lot_no,
+  //       payment_cd: payment_cd,
+  //     };
+  //     console.log("params 2 else", params2);
+  //     {
+  //       isMount
+  //         ? fetch(
+  //           urlApi +
+  //           "c_product_info/getPaymentCodeDetail/" +
+  //           db_profile +
+  //           "/" +
+  //           entity +
+  //           "/" +
+  //           project_no +
+  //           "/" +
+  //           lot_no +
+  //           "/" +
+  //           payment_cd,
+  //           {
+  //             method: "GET",
+  //             headers: this.state.hd,
+  //             //   body: JSON.stringify({entity_cd: item.entity_cd, proj})
+  //           }
+  //         )
+  //           .then((response) => response.json())
+  //           .then((res) => {
+  //             if (!res.Error) {
+  //               const resData = res.Data;
+
+  //               this.setState({ getPaymentDetail: resData });
+
+  //               // this.getRoomUnit(this.state.getLot);
+  //               // this.getLot_room_default({ dataLotType: resData });
+  //             } else {
+  //               this.setState({ isLoaded: !this.state.isLoaded }, () => {
+  //                 alert(res.Pesan);
+  //               });
+  //             }
+  //             console.log("getPaymentDetail", res);
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  //           })
+  //         : null;
+  //     }
+  //   }
+
+
+  // }
+
+  _renderComponent = () => {
+    // if (this.state.activePage === 0)
+    //   return (
+    //     // <Content>
+    //     //   {/* {this.state.tower ?
+    //     //   <Text>{this.state.tower[0].</Text>
+    //     // } */}
+    //     //   <Text> tab lot type 1</Text>
+    //     // </Content>
+    //     null
+    //   );
+    // //... Your Component 1 to display
+    // if (this.state.activePage === 1)
+    //   return (
+    //     // <Content
+    //     //   style={Style.layoutInner}
+    //     //   contentContainerStyle={Style.layoutContent}
+    //     // >
+    //     //   <Text>
+    //     //     {" "}
+    //     //     tab lot type 2 {console.log("getlotroom", this.state.getLot_room)}
+    //     //   </Text>
+    //     // </Content>
+
+    //     null
+    //   );
+    // else
+    //   return (
+    //     // <Content
+    //     //   style={Style.layoutInner}
+    //     //   contentContainerStyle={Style.layoutContent}
+    //     // >
+    //     //   <Text> tab 3</Text>
+    //     // </Content>
+    //     null
+    //   );
   };
 
   clickProject(activePage, item) {
-    
+
     console.log("key", activePage);
     console.log("item level", item.level_no);
     this.setState({ level_no: item.level_no });
@@ -616,6 +789,8 @@ class SelectUnit extends React.Component {
       this.getPaymentCode(dataLotNo);
     }
     this.setState({ activePage });
+    this.setState({ activePagePaymentCode: 0 }); //buat ngerefresh segment biar balik ke array 0 atau button first. semoga sih ga ngaruh ke data, cuma ke tampilan aja
+    // this.state.activePagePaymentCode
     console.log("this.state active page di clikc project", activePage);
   }
 
@@ -667,7 +842,7 @@ class SelectUnit extends React.Component {
     // console.log("this.state.image.back", this.state.block);
     return (
       <Container>
-       <StatusBar
+        <StatusBar
           backgroundColor={Colors.blueUrban}
           animated
           barStyle="light-content"
@@ -708,7 +883,7 @@ class SelectUnit extends React.Component {
           <View style={Style.actionBarRight} />
       
         </Header> */}
-       <ImageBackground
+        <ImageBackground
           // source={this.state.imageback}
           style={{
             // flex: 1,
@@ -729,13 +904,13 @@ class SelectUnit extends React.Component {
               width: "100%",
               height: "10%",
               flexDirection: "row",
-             
+
             }}
           >
-            <View style={{ paddingLeft: 10,paddingRight: 0 }}>
+            <View style={{ paddingLeft: 10, paddingRight: 0 }}>
               <Button
                 transparent
-                style={{ alignSelf: "flex-start",marginLeft: -10,}}
+                style={{ alignSelf: "flex-start", marginLeft: -10, }}
                 onPress={Actions.pop}
               >
                 <Icon
@@ -751,7 +926,7 @@ class SelectUnit extends React.Component {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                alignContent:'center',
+                alignContent: 'center',
                 flex: 2,
                 top: 17,
               }}
@@ -762,35 +937,35 @@ class SelectUnit extends React.Component {
             </View>
 
             <View style={{ paddingLeft: 0, paddingRight: 10 }}>
-              <View style={{ flexDirection: 'row',  }}>
+              <View style={{ flexDirection: 'row', }}>
                 <View
-                // transparent
-                style={{paddingRight: 5, }}
+                  // transparent
+                  style={{ paddingRight: 5, }}
                 // onPress={Actions.pop}
-              >
-                <Icon
-                  active
-                  name="share-variant"
-                  // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#fff", fontSize: 20,  top: 10}}
-                  type="MaterialCommunityIcons"
-                />
-              </View>
-              <View
-                // transparent
-                style={{ paddingLeft: 5}}
+                >
+                  <Icon
+                    active
+                    name="share-variant"
+                    // style={[Style.textWhite,{fontSize: 28}]}
+                    style={{ color: "#fff", fontSize: 20, top: 10 }}
+                    type="MaterialCommunityIcons"
+                  />
+                </View>
+                <View
+                  // transparent
+                  style={{ paddingLeft: 5 }}
                 // onPress={Actions.pop}
-              >
-                <Icon
-                  active
-                  name="menu"
-                  // style={[Style.textWhite,{fontSize: 28}]}
-                  style={{ color: "#fff", fontSize: 21,  top: 10}}
-                  type="MaterialCommunityIcons"
-                />
+                >
+                  <Icon
+                    active
+                    name="menu"
+                    // style={[Style.textWhite,{fontSize: 28}]}
+                    style={{ color: "#fff", fontSize: 21, top: 10 }}
+                    type="MaterialCommunityIcons"
+                  />
+                </View>
               </View>
-               </View>
-              
+
             </View>
           </View>
         </ImageBackground>
@@ -866,7 +1041,7 @@ class SelectUnit extends React.Component {
                           style={{
                             color: "#fff",
                             fontFamily: Fonts.type.proximaNovaReg,
-                            fontSize: 16,
+                            fontSize: 12,
                             textAlign: "center",
                           }}
                         >
@@ -910,37 +1085,37 @@ class SelectUnit extends React.Component {
                     <Button
                       first
                       key={key}
-                      active={this.state.activePage === key}
+                      active={this.state.activePagePaymentCode === key}
                       onPress={this.selectComponent(key, {
                         data,
                       })}
                       style={
-                        this.state.activePage === key
+                        this.state.activePagePaymentCode === key
                           ? {
-                              backgroundColor: "#fff",
-                              borderBottomWidth: 5,
-                              borderBottomColor: "#226f9e", //biru baru urban
-                              width: "auto",
-                            }
+                            backgroundColor: "#fff",
+                            borderBottomWidth: 5,
+                            borderBottomColor: "#226f9e", //biru baru urban
+                            width: "auto",
+                          }
                           : {
-                              backgroundColor: "#fff",
-                              width: "auto",
-                              borderBottomWidth: 1,
-                              borderBottomColor: "#565c5c", //abu-abu baru urban
-                            }
+                            backgroundColor: "#fff",
+                            width: "auto",
+                            borderBottomWidth: 1,
+                            borderBottomColor: "#565c5c", //abu-abu baru urban
+                          }
                       }
                     >
                       <Text
                         style={
-                          this.state.activePage === key
+                          this.state.activePagePaymentCode === key
                             ? {
-                                color: "#226f9e",
-                                textAlign: "center",
-                              }
+                              color: "#226f9e",
+                              textAlign: "center",
+                            }
                             : {
-                                color: "#565c5c",
-                                textAlign: "center",
-                              }
+                              color: "#565c5c",
+                              textAlign: "center",
+                            }
                         }
                       >
                         {data.short_descs}
@@ -966,12 +1141,14 @@ class SelectUnit extends React.Component {
                     >
                       <Text
                         style={{
-                          fontSize: 24,
+                          fontSize: 20,
                           fontFamily: Fonts.type.proximaNovaReg,
                           marginRight: 5,
+                          width: '60%'
                         }}
                       >
-                        {data.descs_block_no}
+                        {/* {data.descs_block_no} */}
+                        {this.state.towerDescs}
                       </Text>
                       <Text
                         style={{
@@ -992,7 +1169,8 @@ class SelectUnit extends React.Component {
                         }}
                       >
                         {this.state.short_descs}:{" "}
-                        {numFormat(this.state.getTrxAmt_Freq[0].trx_amount)}
+                        {/* {numFormat(this.state.getTrxAmt_Freq[0].trx_amount)} */}
+                        {numFormat(this.state.getTrxAmt_Freq[0].trx_amt)}
                       </Text>
                     ) : (
                       <Text
@@ -1012,7 +1190,8 @@ class SelectUnit extends React.Component {
                       }}
                     >
                       <Text style={{ fontSize: 14 }}>
-                        Tipe{"    "}: {data.descs_lot_type}
+                        {/* Tipe{"    "}: {data.descs_lot_type} */}
+                        Tipe{"    "}: {data.desctype}
                       </Text>
                     </View>
                     <View
@@ -1030,7 +1209,7 @@ class SelectUnit extends React.Component {
                       }}
                     >
                       <Text style={{ fontSize: 14 }}>
-                        View{"   "}: {data.land_area} m2
+                        View{"   "}: {data.desczone}
                       </Text>
                     </View>
                   </View>
@@ -1106,27 +1285,28 @@ class SelectUnit extends React.Component {
                               style={{
                                 textAlign: "left",
                                 marginLeft: 30,
+                                fontSize: 14
                               }}
                             >
                               Last {data.descs}
                             </Text>
                           ) : data.trx_mode_type == "B" ? (
-                            <Text style={{ textAlign: "left", marginLeft: 30 }}>
+                            <Text style={{ textAlign: "left", marginLeft: 30, fontSize: 14 }}>
                               {data.descs}
                             </Text>
                           ) : (
-                            <Text style={{ textAlign: "left", marginLeft: 30 }}>
+                            <Text style={{ textAlign: "left", marginLeft: 30, fontSize: 14 }}>
                               {data.descs} {data.freq}x
                             </Text>
                           )}
                         </Col>
                         <Col style={{ width: 30 }}>
                           {data.freq == 1 && data.trx_mode_type == "I" ? (
-                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                            <Text style={{ textAlign: "right", fontSize: 14 }}>Rp.</Text>
                           ) : data.trx_mode_type == "B" ? (
-                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                            <Text style={{ textAlign: "right", fontSize: 14 }}>Rp.</Text>
                           ) : (
-                            <Text style={{ textAlign: "right" }}>Rp.</Text>
+                            <Text style={{ textAlign: "right", fontSize: 14 }}>Rp.</Text>
                           )}
                         </Col>
                         <Col>
@@ -1134,6 +1314,7 @@ class SelectUnit extends React.Component {
                             style={{
                               textAlign: "right",
                               marginRight: 20,
+                              fontSize: 14
                             }}
                           >
                             {" "}
@@ -1155,22 +1336,38 @@ class SelectUnit extends React.Component {
             </View>
 
             <View style={{ marginTop: 20 }}>
-              <Text style={{ paddingLeft: 30, fontSize: 12 }}>
+              <Text style={{ paddingLeft: 20, fontSize: 12 }}>
                 Keterangan :
               </Text>
-              <View
+              {/* <View
                 style={{
-                  paddingLeft: 30,
+                  paddingLeft: 20,
                   width: "100%",
                 }}
               >
                 <Text style={{ fontSize: 9, textAlign: "justify" }}>
                   - Booking Fee Rp. 15,000,000
                 </Text>
-              </View>
+              </View> */}
               <View
                 style={{
-                  paddingLeft: 30,
+                  paddingLeft: 20,
+
+                  paddingRight: 20,
+                  flexDirection: 'row'
+                }}
+              >
+                <Text style={{ fontSize: 9, }}>
+                  - {" "}
+                </Text>
+                <Text style={{ fontSize: 9, textAlign: "justify", width: "100%", flexWrap: 'wrap' }}>
+                  Booking Fee Rp. 15,000,000
+                  </Text>
+
+              </View>
+              {/* <View
+                style={{
+                  paddingLeft: 20,
                   paddingRight: 20,
                   width: "100%",
                 }}
@@ -1181,23 +1378,40 @@ class SelectUnit extends React.Component {
                   - Angsuran 1 paling lambat 7 hari dari tanggal
                   Booking Fee
                 </Text>
+              </View> */}
+              <View
+                style={{
+                  paddingLeft: 20,
+
+                  paddingRight: 20,
+                  flexDirection: 'row'
+                }}
+              >
+                <Text style={{ fontSize: 9, }}>
+                  - {" "}
+                </Text>
+                <Text style={{ fontSize: 9, textAlign: "justify", width: "100%", flexWrap: 'wrap' }}>
+                  Angsuran 1 paling lambat 7 hari dari tanggal Booking Fee
+                  </Text>
+
               </View>
 
               <View
                 style={{
-                  paddingLeft: 30,
+                  paddingLeft: 20,
 
                   paddingRight: 20,
+                  flexDirection: 'row'
                 }}
               >
-                <Text
-                  style={{ fontSize: 9, textAlign: "justify", width: "100%" }}
-                >
-                  - Harga jual belum termasuk Biaya Pemecahan
-                  Sertifikat, Akte Jual Beli, Biaya Balik 
-                  {/* Nama, BPHTB, atau Pajak Susulan dari Pemerintah */}
+                <Text style={{ fontSize: 9, }}>
+                  - {" "}
                 </Text>
-                <Text
+                <Text style={{ fontSize: 9, textAlign: "justify", width: "95%", flexWrap: 'wrap' }}>
+                  Harga jual belum termasuk Biaya Pemecahan
+                  Sertifikat, Akte Jual Beli, Biaya Balik Nama, BPHTB, atau Pajak Susulan dari Pemerintah
+                  </Text>
+                {/* <Text
                   style={{
                     fontSize: 9,
                     textAlign: "justify",
@@ -1205,7 +1419,7 @@ class SelectUnit extends React.Component {
                   }}
                 >
                   Nama, BPHTB, atau Pajak Susulan dari Pemerintah
-                </Text>
+                </Text> */}
                 {/* <Text
                   style={{
                     fontSize: 9,
@@ -1217,7 +1431,7 @@ class SelectUnit extends React.Component {
                 </Text> */}
               </View>
 
-              <View
+              {/* <View
                 style={{
                   paddingLeft: 30,
                   paddingRight: 20,
@@ -1227,8 +1441,39 @@ class SelectUnit extends React.Component {
                   - Harga sewaktu - waktu dapat berubah tanpa
                   pemberitahuan terlebih dahulu
                 </Text>
-                {/* <Text style={{ fontSize: 9, textAlign: "justify" }}>
-                  {"        "}terlebih dahulu
+               
+              </View> */}
+              <View
+                style={{
+                  paddingLeft: 20,
+
+                  paddingRight: 20,
+                  flexDirection: 'row'
+                }}
+              >
+                <Text style={{ fontSize: 9, }}>
+                  - {" "}
+                </Text>
+                <Text style={{ fontSize: 9, textAlign: "justify", width: "100%", flexWrap: 'wrap' }}>
+                  Harga sewaktu - waktu dapat berubah tanpa pemberitahuan terlebih dahulu
+                  </Text>
+                {/* <Text
+                  style={{
+                    fontSize: 9,
+                    textAlign: "justify",
+                    paddingLeft: 5,
+                  }}
+                >
+                  Nama, BPHTB, atau Pajak Susulan dari Pemerintah
+                </Text> */}
+                {/* <Text
+                  style={{
+                    fontSize: 9,
+                    textAlign: "justify",
+                    paddingLeft: 10,
+                  }}
+                >
+                  {"     "}Pemerintah
                 </Text> */}
               </View>
             </View>

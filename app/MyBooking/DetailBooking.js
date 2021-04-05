@@ -95,6 +95,7 @@ class DetailBooking extends Component {
       qty_total: "",
       total_amt: "",
       status: "",
+      status_gambar: false
       // current_date: new Date(),
       // uri: "",
     };
@@ -267,7 +268,8 @@ class DetailBooking extends Component {
       .then((image) => {
         console.log("received image", image);
 
-        this.setState({ [key]: { uri: image.path }, status: true });
+        this.setState({ [key]: { uri: image.path }, status: true ,status_gambar : true});
+        // this.setState({ status_gambar : true });
       })
       .catch((e) => console.log("tag", e));
   }
@@ -284,8 +286,9 @@ class DetailBooking extends Component {
       .then((image) => {
         console.log("received image", image);
 
-        this.setState({ [key]: { uri: image.path }, status: true });
+        this.setState({ [key]: { uri: image.path }, status: true, status_gambar : true });
         console.log("status di gallert", this.state.status);
+        // this.setState({ status_gambar : true });
       })
       .catch((e) => console.log("tag", e));
   }
@@ -402,9 +405,9 @@ class DetailBooking extends Component {
     // if (frmData) {
     //   this.setState({ isLoaded: this.state.isLoaded });
     // }
-    if (isValid) {
+    if (isValid && this.state.status_gambar == true) {
       console.log("tes is valid");
-      // this.setState({ isLoaded: this.state.isLoaded });
+      this.setState({ isLoaded: this.state.isLoaded });
       RNFetchBlob.fetch(
         "POST",
         // urlApi + "c_auth/SignUpAgent",
