@@ -146,6 +146,7 @@ export default class extends React.Component {
       unit: [],
       tes: "",
       stat: "",
+      periode_book: [],
       stylehtml:
         "color: Colors.white, textAlign:'center', fontSize: 18, paddingVertical: 10, paddingHorizontal: 30, fontFamily: Fonts.type.proximaNovaReg,letterSpacing: 2,lineHeight: 25",
       pict_hardcode: require("@Asset/images/project_suite_urban.png"),
@@ -200,6 +201,7 @@ export default class extends React.Component {
       this.getDataAminities(this.props.items);
       this.getUnit();
       this.getLocation();
+      this.getPeriodeBooking();
       // this.goTo()
     });
     this.setState({ statusdataaktif: this.props.status_aktif });
@@ -883,11 +885,59 @@ export default class extends React.Component {
     }
   }
 
-  bookingnow() {
+  bookingnow() { // ngarah ke screen pilih tower
     const items = this.props.items;
     console.log("items buat ke choose tower", items);
     Actions.ProductProjectPage({ items: items }); //booking now yang lama
     // Actions.New_NupBookingBlock({ items: items }); //booking now yang baru, pilih block langsung
+  }
+
+  getPeriodeBooking() {
+    const item = this.props.items;
+    // const prevItems = this.props.prevItems;
+    // console.log('previtems periode', prevItems);
+    console.log("item get periode", item);
+
+    {
+      isMount
+        ? fetch(
+          urlApi +
+          "c_periode_book/getPeriode_propertydetail/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          // +
+          // "/" +
+          // item.property_cd,
+          // +
+          // "/" +
+          // start_date,
+          // "/" +
+          // item.product_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ periode_book: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("periode_book", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+        : null;
+    }
   }
 
   // openMap(cordinat) {
@@ -1183,96 +1233,85 @@ export default class extends React.Component {
                               Booking Priority Pass
                             </Text>
                           </Button>
-                          {/* <Button
-                            style={Style.signInBtnMedium}
-                            onPress={() => this.alertNUP()}
-                            // onPress={() => this.nupBooking()}
-                          >
-                            <Text
-                              style={{
-                                width: "100%",
-                                fontSize: 16,
-                                alignItems: "center",
-                                textAlign: "center",
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                letterSpacing: 1,
-                              }}
-                            >
-                              Booking Now
-                            </Text>
-                          </Button> */}
-                          {/* <Button
-                            style={Style.signInBtnMedium}
-                            onPress={() => this.alertNUP()}
-                          >
-                            <Text
-                              style={{
-                                width: "100%",
-                                fontSize: 16,
-                                alignItems: "center",
-                                textAlign: "center",
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                letterSpacing: 1,
-                              }}
-                            >
-                              Booking Now
-                            </Text>
-                          </Button> */}
+
                         </View>
                       ) : (
                         <View style={{ paddingTop: "130%" }}>
-                          <Button
-                            style={Style.signInBtnMedium}
-                            onPress={() => this.nupBooking()}
-                          >
-                            <Text
-                              style={{
-                                width: "100%",
-                                fontSize: 16,
-                                alignItems: "center",
-                                textAlign: "center",
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                letterSpacing: 1,
-                              }}
-                            >
-                              Booking Priority Pass
-                            </Text>
-                          </Button>
-                          {/* <Button
-                            style={Style.signInBtnMedium}
-                            onPress={() => this.newnupBooking()}
-                          >
-                            <Text
-                              style={{
-                                width: "100%",
-                                fontSize: 16,
-                                alignItems: "center",
-                                textAlign: "center",
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                letterSpacing: 1,
-                              }}
-                            >
-                              New Booking
-                            </Text>
-                          </Button> */}
-                          {/* <Button
-                            style={Style.signInBtnMedium}
-                            onPress={() => this.bookingnow()}
-                          >
-                            <Text
-                              style={{
-                                width: "100%",
-                                fontSize: 16,
-                                alignItems: "center",
-                                textAlign: "center",
-                                fontFamily: Fonts.type.proximaNovaBold,
-                                letterSpacing: 1,
-                              }}
-                            >
-                              Booking Now
-                            </Text>
-                          </Button> */}
+                          {
+                            this.state.periode_book ? (
+                              this.state.periode_book != 0 ? (
+                                <Button
+                                  style={Style.signInBtnMedium}
+                                  onPress={() =>
+                                    this.state.periode_book[0].booking_type == "BU"
+                                      ? this.bookingnow()
+                                      : this.nupBooking()
+                                  }
+                                >
+                                  <Text
+                                    style={{
+                                      width: "100%",
+                                      fontSize: 16,
+                                      alignItems: "center",
+                                      textAlign: "center",
+                                      fontFamily: Fonts.type.proximaNovaBold,
+                                      letterSpacing: 1,
+                                    }}
+                                  >
+                                    {this.state.periode_book[0].booking_descs}
+                                  </Text>
+                                </Button>
+                              ) : (
+                                <View style={{ paddingTop: "110%" }}>
+                                  <Button
+                                    style={Style.signInBtnMedium}
+                                    onPress={() => this.alertNUP()}
+                                  // onPress={() => this.nupBooking()}
+                                  >
+                                    <Text
+                                      style={{
+                                        width: "100%",
+                                        fontSize: 16,
+                                        alignItems: "center",
+                                        textAlign: "center",
+                                        fontFamily: Fonts.type.proximaNovaBold,
+                                        letterSpacing: 1,
+                                      }}
+                                    >
+                                      Booking Priority Pass
+                              </Text>
+                                  </Button>
+                                </View>
+                              )
+                            ) : (
+                              <ActivityIndicator />
+                            )
+                          }
                         </View>
+
+
+                        // ini priority pass yang lama. yang biasa
+                        // <View style={{ paddingTop: "130%" }}>
+                        //   <Button
+                        //     style={Style.signInBtnMedium}
+                        //     // onPress={() => this.nupBooking()}
+                        //     onPress={() => this.bookingnow()}
+                        //   >
+                        //     <Text
+                        //       style={{
+                        //         width: "100%",
+                        //         fontSize: 16,
+                        //         alignItems: "center",
+                        //         textAlign: "center",
+                        //         fontFamily: Fonts.type.proximaNovaBold,
+                        //         letterSpacing: 1,
+                        //       }}
+                        //     >
+                        //       Booking Priority Pass
+                        //     </Text>
+                        //   </Button>
+
+                        // </View>
                       )}
                     </ImageBackground>
                   ) : null}

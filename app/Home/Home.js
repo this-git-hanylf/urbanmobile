@@ -167,6 +167,7 @@ export default class Home extends Component {
       name: await _getData("@Name"),
       dataTower: await _getData("@UserProject"),
       isCorLoaded: true,
+      debtor_acct: await _getData("@Debtor"),
       // badge_notif_db: await _getData("@CountNotif"),
     };
     // const CountnotifdiHome = await _getData("@CountNotif");
@@ -176,7 +177,7 @@ export default class Home extends Component {
     // });
     // _storeData("@CountNotif", CountnotifdiHome);
     // _storeData("@CountNotif", CountnotifdiHome);
-
+    console.log('data di home', data);
     this.setState(data, () => {
       this.getPromo();
       this.getNews();

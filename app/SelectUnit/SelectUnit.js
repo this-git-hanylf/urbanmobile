@@ -490,6 +490,7 @@ class SelectUnit extends React.Component {
       var db_profile = items.db_profile;
       if (this.state.getLotNo) {
         var lot_no = this.state.getLotNo[0].lot_no;
+        this.setState({ lot_no: lot_no });
       }
       if (this.state.getPaymentCode) {
         var payment_cd = this.state.getPaymentCode[0].payment_cd;
@@ -561,6 +562,7 @@ class SelectUnit extends React.Component {
         params_payment_cd: params_payment_cd,
       };
       console.log("params 2 else", params2);
+      this.setState({ lot_no: params_lot_no });
       {
         isMount
           ? fetch(
@@ -830,6 +832,7 @@ class SelectUnit extends React.Component {
         descs: this.state.descs,
         trx_amt: trx_amt,
         descs: descs,
+        lot_no: this.state.lot_no,
         // getpict_roomtype: this.state.getpict_roomtype[0].room_type_url,
       };
       console.log("items kirim ke select unit", items);
@@ -1141,18 +1144,18 @@ class SelectUnit extends React.Component {
                     >
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 18,
                           fontFamily: Fonts.type.proximaNovaReg,
                           marginRight: 5,
-                          width: '60%'
+                          width: '55%'
                         }}
                       >
                         {/* {data.descs_block_no} */}
-                        {this.state.towerDescs}
+                        {this.state.towerDescs.replace(" ", "\n").trim()}
                       </Text>
                       <Text
                         style={{
-                          fontSize: 40,
+                          fontSize: 32,
                           fontFamily: Fonts.type.proximaNovaCondBold,
                         }}
                       >
@@ -1166,6 +1169,7 @@ class SelectUnit extends React.Component {
                           textAlign: "right",
                           right: 35,
                           bottom: 30,
+                          fontSize: 14
                         }}
                       >
                         {this.state.short_descs}:{" "}
@@ -1178,6 +1182,7 @@ class SelectUnit extends React.Component {
                           textAlign: "right",
                           right: 50,
                           bottom: 30,
+                          fontSize: 14
                         }}
                       >
                         12x : null

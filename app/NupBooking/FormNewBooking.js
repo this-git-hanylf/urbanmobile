@@ -103,6 +103,8 @@ class FormNewBooking extends React.Component {
       lot_type: this.props.items.lot_type,
       room_unit: this.props.items.room_unit,
       level_no: this.props.items.level_no,
+      lot_no: this.props.items.lot_no,
+      debtor_acct: await _getData("@Debtor"),
 
       //   audit_user: await _getData("@UserId"),
       audit_user: await _getData("@AgentCd"),
@@ -142,6 +144,7 @@ class FormNewBooking extends React.Component {
   };
 
   fromCamera(key) {
+
     ImagePicker.openCamera({
       cropping: true,
       width: 600,
@@ -154,11 +157,13 @@ class FormNewBooking extends React.Component {
         console.log("received image", image);
 
         this.setState({ [key]: { uri: image.path } });
+
       })
       .catch((e) => console.log("tag", e));
   }
 
   fromGallery(key) {
+
     ImagePicker.openPicker({
       multiple: false,
       width: 600,
@@ -314,6 +319,12 @@ class FormNewBooking extends React.Component {
 
     let filektp = "";
     let filenpwp = "";
+    let document_no_ktp = 0;
+    let document_no_npwp = 0;
+    let count_document_ktp = 0;
+    let count_document_npwp = 0;
+    let count_document = 0;
+
 
     console.log("dari nik", this.state.darinik);
 
@@ -321,13 +332,16 @@ class FormNewBooking extends React.Component {
       console.log("replace", this.state.replaceFoto);
       // filektp = "@Asset/images/icon/dropdown.png";
       filektp = "./img/noimage.png";
-
+      document_no_ktp = 1;
+      count_document_ktp = 1;
       console.log("pic nul", this.state.pictUrlKtp);
       // this.state.replaceFoto.uri.replace("file://", "")
     } else {
       filektp = RNFetchBlob.wrap(
         this.state.pictUrlKtp.uri.replace("file://", "")
       );
+      document_no_ktp = 1;
+      count_document_ktp = 1;
 
       console.log("pic not nul", this.state.pictUrlKtp);
     }
@@ -335,13 +349,36 @@ class FormNewBooking extends React.Component {
     if (this.state.pictUrlNPWP == 0) {
       console.log("replace", this.state.replaceFoto);
       filenpwp = "./img/noimage.png";
+      document_no_npwp = 2;
+      count_document_npwp = 1;
       console.log("pic nul", this.state.pictUrlNPWP);
     } else {
       filenpwp = RNFetchBlob.wrap(
         this.state.pictUrlNPWP.uri.replace("file://", "")
       );
+      document_no_npwp = 2;
+      count_document_npwp = 1;
 
       console.log("pic not nul", this.state.pictUrlNPWP);
+    }
+
+    const doc = [
+      {
+        filektp
+      },
+      {
+        filenpwp
+      }
+    ];
+
+    console.log('doc arr', doc);
+
+
+    if (count_document_ktp && count_document_npwp != 0) {
+      console.log('count ktp', count_document_ktp);
+      console.log('count npwp', count_document_npwp);
+      console.log('count ktp dan npwp', count_document_ktp + count_document_npwp);
+      count_document = count_document_ktp + count_document_npwp;
     }
 
     const dataPrev = this.props.prevItems;
@@ -365,6 +402,8 @@ class FormNewBooking extends React.Component {
       lot_type,
       room_unit,
       level_no,
+      lot_no,
+      debtor_acct,
       // subtot,
       // totalqty,
     } = this.state;
@@ -395,6 +434,13 @@ class FormNewBooking extends React.Component {
       lot_type: lot_type,
       room_unit: room_unit,
       level_no: level_no,
+      lot_no: lot_no,
+      debtor_acct: debtor_acct,
+      document_no_ktp: document_no_ktp,
+      document_no_npwp: document_no_npwp,
+      count_document: count_document,
+      // doc: [{pictUrlKtp}, {pictUrlNPWP}]z
+      doc: doc,
     };
 
     const isValid = this.validating({
@@ -426,79 +472,79 @@ class FormNewBooking extends React.Component {
     // console.log('leng nik',this.state.nik.length);
     console.log("leng foto ktp", this.state.pictUrlKtp.length);
 
-    //
-    // if (isValid) {
-    //   RNFetchBlob.fetch(
-    //     "POST",
-    //     // urlApi + "c_auth/SignUpAgent",
-    //     urlApi + "c_nup/saveBookingUnit/IFCAPB/",
-    //     {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //     [
-    //       // { name: "photo", filename: fileName, data: fileImg },
-    //       { name: "photoktp", filename: fileNameKtp, data: filektp },
-    //       { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
-    //       // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
-    //       // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
-    //       { name: "data", data: JSON.stringify(frmData) },
-    //     ]
-    //   ).then((resp) => {
-    //     console.log("res_if", resp);
-    //     const res = JSON.parse(resp.data);
-    //     console.log("res", res);
-    //     // const res = JSON.stringify(resp.data);
 
-    //     if (!res.Error) {
-    //       // Actions.pop()
-    //       this.setState({ isLogin: true }, () => {
-    //         // alert(res.Pesan);
-    //         const pesan = res.Pesan;
-    //         this.alertFillBlank(true, pesan);
-    //         // Actions.pop()
-    //         // Actions.Login()
-    //         const prevItems = {
-    //           fullname: frmData.fullname,
-    //           total: this.state.trx_amt,
-    //           descs_amt: this.state.descs_amt,
-    //         };
-    //         _navigate("FormPayment", { prevItems: prevItems });
-    //       });
-    //     } else {
-    //       // const pesan = res.Pesan;
-    //       // this.alertFillBlank(true, pesan);
-    //       this.setState({ isLoaded: true }, () => {
-    //         // alert(res.Pesan);
-    //         const pesan = res.Pesan;
-    //         this.alertFillBlank(true, pesan);
-    //         console.log("error 3mb");
-    //         // console.log('url',this.state.pickUrlKtp.uri)
-    //       });
-    //     }
+    if (isValid) {
+      RNFetchBlob.fetch(
+        "POST",
+        // urlApi + "c_auth/SignUpAgent",
+        urlApi + "c_nup/saveBookingUnit/IFCAPB/",
+        {
+          "Content-Type": "multipart/form-data",
+        },
+        [
+          // { name: "photo", filename: fileName, data: fileImg },
+          { name: "photoktp", filename: fileNameKtp, data: filektp },
+          { name: "photonpwp", filename: fileNameNpwp, data: filenpwp },
+          // { name: "photobukutabungan", filename: fileNameBukuTabungan, data: filebukutabungan },
+          // { name: "photosuratanggota", filename: fileNameSuratAnggota, data: filesuratanggota},
+          { name: "data", data: JSON.stringify(frmData) },
+        ]
+      ).then((resp) => {
+        console.log("res_if", resp);
+        const res = JSON.parse(resp.data);
+        console.log("res", res);
+        // const res = JSON.stringify(resp.data);
 
-    //     // this.setState({ isLoaded: true });
-    //     this.setState({ isLoaded: true }, () => {
-    //       // alert(res.Pesan);
-    //       const pesan = res.Pesan;
-    //       this.alertFillBlank(true, pesan);
-    //       // console.log('url',this.state.pickUrlKtp.uri)
-    //     });
-    //     // alert(res.Pesan);
-    //   });
-    // } else {
-    //   // alert("Please input field");
-    //   // const pesan = "Please input field";
-    //   // this.alertFillBlank(true, pesan);
-    //   this.setState({ isLoaded: true }, () => {
-    //     const pesan = "Please input field";
-    //     this.alertFillBlank(true, pesan);
-    //     // alert("Please input field");
-    //     // alert(res.Pesan);
-    //     // console.log('url',this.state.pickUrlKtp.uri)
-    //   });
-    //   // alert("Please");
-    //   // console.log('url else',this.state.pickUrlKtp.uri)
-    // }
+        if (!res.Error) {
+          // Actions.pop()
+          this.setState({ isLogin: true }, () => {
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
+            // Actions.pop()
+            // Actions.Login()
+            const prevItems = {
+              fullname: frmData.fullname,
+              total: this.state.trx_amt,
+              descs_amt: this.state.descs_amt,
+            };
+            _navigate("FormPayment", { prevItems: prevItems });
+          });
+        } else {
+          // const pesan = res.Pesan;
+          // this.alertFillBlank(true, pesan);
+          this.setState({ isLoaded: true }, () => {
+            // alert(res.Pesan);
+            const pesan = res.Pesan;
+            this.alertFillBlank(true, pesan);
+            console.log("error 3mb");
+            // console.log('url',this.state.pickUrlKtp.uri)
+          });
+        }
+
+        // this.setState({ isLoaded: true });
+        this.setState({ isLoaded: true }, () => {
+          // alert(res.Pesan);
+          const pesan = res.Pesan;
+          this.alertFillBlank(true, pesan);
+          // console.log('url',this.state.pickUrlKtp.uri)
+        });
+        // alert(res.Pesan);
+      });
+    } else {
+      // alert("Please input field");
+      // const pesan = "Please input field";
+      // this.alertFillBlank(true, pesan);
+      this.setState({ isLoaded: true }, () => {
+        const pesan = "Please input field";
+        this.alertFillBlank(true, pesan);
+        // alert("Please input field");
+        // alert(res.Pesan);
+        // console.log('url',this.state.pickUrlKtp.uri)
+      });
+      // alert("Please");
+      // console.log('url else',this.state.pickUrlKtp.uri)
+    }
   };
 
   render() {
@@ -1096,7 +1142,7 @@ class FormNewBooking extends React.Component {
                 onPress={() => this.submit()}
               // disabled={!this.state.capt}
               >
-                {/* {!this.state.isLoaded ? (
+                {!this.state.isLoaded ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
                   <Text
@@ -1111,8 +1157,8 @@ class FormNewBooking extends React.Component {
                   >
                     Next
                   </Text>
-                )} */}
-                <Text
+                )}
+                {/* <Text
                   style={{
                     width: "100%",
                     fontSize: 14,
@@ -1123,7 +1169,7 @@ class FormNewBooking extends React.Component {
                   }}
                 >
                   Next
-                </Text>
+                </Text> */}
               </Button>
             </View>
           </View>

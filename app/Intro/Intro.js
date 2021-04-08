@@ -814,7 +814,7 @@ export default class Intro extends React.Component {
               onRequestClose={() => {
                 this.alertFillBlank(!this.state.Alert_Visibility, pesan);
               }}
-              // activeOpacity={1}
+            // activeOpacity={1}
             >
               <View
                 style={{
@@ -856,7 +856,7 @@ export default class Intro extends React.Component {
                       onPress={() => {
                         this.alertFillBlank(!this.state.Alert_Visibility);
                       }}
-                      // activeOpacity={0.7}
+                    // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>OK</Text>
                     </TouchableOpacity>
@@ -876,7 +876,7 @@ export default class Intro extends React.Component {
                   pesan_ver
                 );
               }}
-              // activeOpacity={1}
+            // activeOpacity={1}
             >
               <View
                 style={{
@@ -938,7 +938,7 @@ export default class Intro extends React.Component {
                       onPress={() => {
                         Linking.openURL(this.state.storeUrl);
                       }}
-                      // activeOpacity={0.7}
+                    // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>Update</Text>
                     </TouchableOpacity>
@@ -956,7 +956,7 @@ export default class Intro extends React.Component {
                         // Actions.Login();
                         this.alertCheckVersion(!this.state.Alert_CheckVersion);
                       }}
-                      // activeOpacity={0.7}
+                    // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>Later</Text>
                     </TouchableOpacity>
@@ -976,7 +976,7 @@ export default class Intro extends React.Component {
                   pesan_OSver
                 );
               }}
-              // activeOpacity={1}
+            // activeOpacity={1}
             >
               <View
                 style={{
@@ -1058,7 +1058,7 @@ export default class Intro extends React.Component {
                           !this.state.Alert_CheckOSVersion
                         );
                       }}
-                      // activeOpacity={0.7}
+                    // activeOpacity={0.7}
                     >
                       <Text style={{ color: Colors.white }}>Ok</Text>
                     </TouchableOpacity>
@@ -1142,7 +1142,7 @@ export default class Intro extends React.Component {
                   paddingBottom: 15,
                 }}
 
-                // onPress={() => Actions.forgotPass()}
+              // onPress={() => Actions.forgotPass()}
               >
                 <TouchableOpacity
                   style={{
@@ -1227,11 +1227,11 @@ export default class Intro extends React.Component {
           onDone={this._onDone}
           renderDoneButton={this._renderDoneButton}
           renderNextButton={this._renderNextButton}
-          // renderSkipButton={this._renderSkipButton}
-          // showSkipButton={true}
-          // showNextButton={false}
-          // showNextButton={false}
-          // onSkip={this._onSkip}
+        // renderSkipButton={this._renderSkipButton}
+        // showSkipButton={true}
+        // showNextButton={false}
+        // showNextButton={false}
+        // onSkip={this._onSkip}
         />
       );
     }
