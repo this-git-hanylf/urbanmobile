@@ -81,33 +81,33 @@ class Categoris extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_product_info/getTower/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_product_info/getTower/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ tower: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                this.setState({ tower: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("getTower", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("getTower", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -215,9 +215,10 @@ class Categoris extends React.Component {
                         <View style={Styles.trash}>
                           <Button
                             transparent
-                            onPress={() => {
-                              NavigationService.navigate("MemberFavorites");
-                            }}
+                            // onPress={() => {
+                            //   NavigationService.navigate("MemberFavorites");
+                            // }}
+                            onPress={() => this.goTo(item)}
                           >
                             <Icon
                               name="arrow-right"

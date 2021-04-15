@@ -117,6 +117,7 @@ class FormPayment extends React.Component {
       total: this.props.prevItems.total,
       // rekening: "2740001414", //maybank
       rekening: "0064981818",
+      rekening_maybank: "2740001414"
     };
     console.log("data", data);
 
@@ -145,7 +146,7 @@ class FormPayment extends React.Component {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
-  
+
   handleBackButtonClick() {
     console.log("formpayment", this.state.formPayment);
     if (this.state.formPayment) {
@@ -164,7 +165,7 @@ class FormPayment extends React.Component {
     // this.props.navigation.goBack(null);
     // Actions.home();
     // return true;
-}
+  }
 
   showAlert = (title, message) => {
     Alert.alert(
@@ -222,6 +223,10 @@ class FormPayment extends React.Component {
 
   set_Text_Into_Clipboard = async () => {
     await Clipboard.setString(this.state.rekening);
+  };
+
+  set_Text_Into_Clipboard_maybank = async () => {
+    await Clipboard.setString(this.state.rekening_maybank);
   };
 
   confirm = () => {
@@ -312,7 +317,7 @@ class FormPayment extends React.Component {
                   fontFamily: Fonts.type.proximaNovaBold,
                   letterSpacing: 1,
                 }}
-                // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
+              // style={[Style.actionBarText,{fontWeight: 'bold', fontFamily:Fonts.type.proximaNovaBold}]}
               >
                 BANK TRANSFER
                 {/* {this.state.projectdesc} */}
@@ -457,7 +462,8 @@ class FormPayment extends React.Component {
               </View>
             </View>
           </View>
-          <View
+
+          {/* <View
             style={{
               paddingVertical: 10,
               paddingTop: 60,
@@ -468,6 +474,8 @@ class FormPayment extends React.Component {
               style={{ alignSelf: "center" }}
             />
           </View>
+
+
           <View
             style={{
               alignSelf: "center",
@@ -509,6 +517,124 @@ class FormPayment extends React.Component {
                 Copy
               </Text>
             </TouchableOpacity>
+          </View> */}
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+            <View>
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingTop: 66,
+                }}
+              >
+                <Image
+                  source={require("@Asset/images/icon/Maybank.png")}
+                  style={{ alignSelf: "center" }}
+                />
+              </View>
+              <View
+                style={{
+                  alignSelf: "center",
+                  flexDirection: "column",
+                  paddingVertical: 10,
+
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    fontSize: 15,
+
+                  }}
+                >
+                  MAYBANK ACCOUNT
+              </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    fontSize: 15,
+
+                  }}
+                >
+                  {this.state.rekening_maybank}
+                </Text>
+                <TouchableOpacity onPress={this.set_Text_Into_Clipboard_maybank}>
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 14,
+                      color: Colors.twitter,
+                      borderBottomColor: Colors.twitter,
+                      borderBottomWidth: 1,
+                      width: 45,
+                    }}
+                  >
+                    Copy
+              </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View>
+              <View
+                style={{
+                  paddingVertical: 10,
+                  paddingTop: 60,
+                }}
+              >
+                <Image
+                  source={require("@Asset/images/icon/bca-min.png")}
+                  style={{ alignSelf: "center" }}
+                />
+              </View>
+              <View
+                style={{
+                  alignSelf: "center",
+                  flexDirection: "column",
+                  paddingVertical: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaBold,
+                    fontSize: 15,
+
+                  }}
+                >
+                  BCA ACCOUNT
+              </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: Fonts.type.proximaNovaReg,
+                    fontSize: 15,
+
+                  }}
+                >
+                  {this.state.rekening}
+                </Text>
+                <TouchableOpacity onPress={this.set_Text_Into_Clipboard}>
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                      textAlign: "center",
+                      fontFamily: Fonts.type.proximaNovaReg,
+                      fontSize: 14,
+                      color: Colors.twitter,
+                      borderBottomColor: Colors.twitter,
+                      borderBottomWidth: 1,
+                      width: 45,
+                    }}
+                  >
+                    Copy
+              </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
 
           <View

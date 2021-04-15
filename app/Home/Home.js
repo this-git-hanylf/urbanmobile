@@ -64,6 +64,7 @@ import Siren from "react-native-siren";
 import NotifService from "../components/NotifService";
 var PushNotification = require("react-native-push-notification");
 import Icon_ from "react-native-vector-icons/FontAwesome";
+import numFormat from "@Component/numFormat";
 //manggil notifservice yang ditaro di componen.
 
 // const versionSpecificRules = [
@@ -491,6 +492,7 @@ export default class Home extends Component {
             </Text>
           </ImageBackground>
 
+
           {/* <Button
             onPress={this.notif.scheduleNotif("my_sound.mp3", {
               fullName: this.state.fullname,
@@ -687,63 +689,12 @@ export default class Home extends Component {
               scrollEventThrottle={16}
               source={require("../Images/background-blue.png")}
             >
-              <View style={{ flex: 1 }}>
-                {/* <View style={Styles.sectionTransparent}>
-                  <View style={Styles.headerBg}>
-                    <Text style={Styles.sTitleWhite}>
-                      {"Promo".toUpperCase()}
-                    </Text>
-                    <Right>
-                      <Button
-                        small
-                        rounded
-                        style={Styles.sBtn}
-                        onPress={()=>Actions.Feed()}
-                        >
-                        <Text style={Styles.sLink}>See All</Text>
-                      </Button>
-                    </Right>
-                  </View>
-                  <Carousel
-                    autoplay={true}
-                    autoplayDelay={1000}
-                    autoplayInterval={3000}
-                    sliderWidth={width}
-                    sliderHeight={width}
-                    itemWidth={width - 60}
-                    data={this.state.dataPromo}
-                    renderItem={this._renderItemPromo}
-                    hasParallaxImages={true}
-                    // resizeMode={ImageResizeMode.contain}
-                  />
-                
-                </View> */}
 
-                {/* <View style={Styles.sectionTransparent}>
-                  <View style={Styles.headerBg}>
-                    <Text style={Styles.sTitleWhite}>
-                      {"News".toUpperCase()}
-                    </Text>
-                    <Right>
-                      <Button
-                        small
-                        rounded
-                        style={Styles.sBtn}
-                        onPress={()=>Actions.Feed()}>
-                        <Text style={Styles.sLink}>See All</Text>
-                      </Button>
-                    </Right>
-                  </View>
-                  <FlatList
-                    data={this.state.dataNews}
-                    contentContainerStyle={Styles.flatList}
-                    keyExtractor={item => item.id.toString()}
-                    numColumns={2}
-                    renderItem={({ item }) => this.renderItemNews(item)}
-                  />
-                </View> */}
-              </View>
+
+
             </ScrollView>
+
+
           </ScrollView>
         </View>
 

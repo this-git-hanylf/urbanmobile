@@ -81,6 +81,7 @@ class SelectUnit extends React.Component {
       getKeterangan: [],
       getTrxAmt_Freq: [],
       klik: false,
+      payment_cd: ""
 
       // dataBlock: "",
     };
@@ -378,7 +379,7 @@ class SelectUnit extends React.Component {
       lot_no: getLotNo[0].lot_no,
       payment_cd: data.data.payment_cd,
     };
-    // this.setState({ payment_cd_untuk_getKeterangan: data.data.payment_cd });
+    this.setState({ payment_cd: data.data.payment_cd });
     // console.log("params select", params);
 
     this.setState({ klik: true });
@@ -436,6 +437,8 @@ class SelectUnit extends React.Component {
       payment_cd: payment_cd,
     };
     console.log("params", params_);
+
+    this.setState({ payment_cd: payment_cd });
 
     {
       isMount
@@ -833,6 +836,7 @@ class SelectUnit extends React.Component {
         trx_amt: trx_amt,
         descs: descs,
         lot_no: this.state.lot_no,
+        payment_cd: this.state.payment_cd
         // getpict_roomtype: this.state.getpict_roomtype[0].room_type_url,
       };
       console.log("items kirim ke select unit", items);

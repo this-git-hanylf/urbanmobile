@@ -428,7 +428,7 @@ class New_NupBooking extends React.Component {
     // this.setState({ klik: true });
     if (this.state.activePage === 0)
       return (
-        <Content>
+        <Content >
           {this.state.isLoadedBlock == true ? (
             this.state.block ? (
               this.state.block == null ||
@@ -436,12 +436,12 @@ class New_NupBooking extends React.Component {
                 this.state.block == 0 ? (
                 <Text>null gambar </Text>
               ) : (
-                <View>
+                <View >
                   {/* <Text>gambarr blok</Text> */}
                   <Image
                     style={{
                       width: "100%",
-                      height: 250,
+                      height: 300,
                       // alignSelf: "center",
                       resizeMode: "contain",
                       // flex: 1,
@@ -449,15 +449,16 @@ class New_NupBooking extends React.Component {
                       marginTop: 0,
                       marginBottom: 0,
                       bottom: 0,
+                      padding: 0, margin: 0
                     }}
                     source={{ uri: this.state.block[0].picture_url }}
                   ></Image>
 
-                  {/* <Text>{this.state.block[0].picture_url}</Text> */}
+                  {/* <Text>atas</Text> */}
                 </View>
               )
             ) : (
-              <Text>gak ada block</Text>
+              <Text>No block</Text>
             )
           ) : (
             <Text>No Image</Text>
@@ -467,7 +468,7 @@ class New_NupBooking extends React.Component {
     //... Your Component 1 to display
     if (this.state.activePage === 1)
       return (
-        <Content>
+        <Content style={{ margin: 0 }}>
           {this.state.isLoadedBlock == true ? (
             this.state.block ? (
               this.state.block == null ||
@@ -479,38 +480,31 @@ class New_NupBooking extends React.Component {
                   <Image
                     style={{
                       width: "100%",
-                      height: 250,
+                      height: 300,
                       // alignSelf: "center",
                       resizeMode: "contain",
                       // flex: 1,
                       top: 0,
                       marginTop: 0,
                       marginBottom: 0,
-                      bottom: 0,
+                      bottom: 0, padding: 0, margin: 0
                     }}
                     source={{ uri: this.state.block[1].picture_url }}
                   ></Image>
+                  {/* <Text> bawah</Text> */}
 
                   {/* <Text>{this.state.block[1].picture_url}</Text> */}
                 </View>
               )
             ) : (
-              <Text>gak ada block</Text>
+              <Text>No block</Text>
             )
           ) : (
             <Text>No Image</Text>
           )}
         </Content>
       );
-    // else
-    //   return (
-    //     <Content
-    //       style={Style.layoutInner}
-    //       contentContainerStyle={Style.layoutContent}
-    //     >
-    //       <Text> tab 3</Text>
-    //     </Content>
-    //   );
+
   };
 
   _renderComponent_Lot = () => {
@@ -1353,7 +1347,7 @@ class New_NupBooking extends React.Component {
             </ScrollView>
           </View>
 
-          <Content padder>{this._renderComponent()}</Content>
+          <Content padder style={{ margin: -10 }}>{this._renderComponent()}</Content>
 
           <View style={{ alignItems: "center" }}>
             <ScrollView horizontal>
@@ -1422,7 +1416,7 @@ class New_NupBooking extends React.Component {
                   <Image
                     style={{
                       width: "100%",
-                      height: 250,
+                      height: 300,
                       // alignSelf: "center",
                       resizeMode: "contain",
                       // flex: 1,
@@ -1430,9 +1424,14 @@ class New_NupBooking extends React.Component {
                       marginTop: 0,
                       marginBottom: 0,
                       bottom: 0,
+                      padding: 10,
+                      // margin: 10,
                     }}
                     source={{ uri: this.state.getpict[0].picture_url }}
-                  ></Image>
+                  >
+
+                  </Image>
+
 
                   {/* <Text>{console.log(this.state.getpict[0].picture_url)}</Text> */}
                 </View>
@@ -1519,6 +1518,8 @@ class New_NupBooking extends React.Component {
               )} */}
             </ScrollView>
           </View>
+
+          {/* GAMBAR DESKRIPSI YANG  PALING  BAWAH */}
           <View>
             {this.state.getpict_roomtype ? (
               this.state.getpict_roomtype == null ||
@@ -1531,6 +1532,7 @@ class New_NupBooking extends React.Component {
                     style={{
                       width: Metrics.WIDTH,
                       height: Metrics.HEIGHT / 1.6,
+                      // height: 250,
                       // alignSelf: "center",
                       resizeMode: "contain",
                       // flex: 1,

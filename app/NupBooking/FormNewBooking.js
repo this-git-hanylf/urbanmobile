@@ -104,10 +104,12 @@ class FormNewBooking extends React.Component {
       room_unit: this.props.items.room_unit,
       level_no: this.props.items.level_no,
       lot_no: this.props.items.lot_no,
+      payment_cd: this.props.items.payment_cd,
       debtor_acct: await _getData("@Debtor"),
 
       //   audit_user: await _getData("@UserId"),
       audit_user: await _getData("@AgentCd"),
+      group_cd: await _getData("Gr")
       // projectdesc: this.props.items.project_descs,
     };
     console.log("data", data);
@@ -404,6 +406,8 @@ class FormNewBooking extends React.Component {
       level_no,
       lot_no,
       debtor_acct,
+      payment_cd,
+      trx_amt,
       // subtot,
       // totalqty,
     } = this.state;
@@ -441,6 +445,8 @@ class FormNewBooking extends React.Component {
       count_document: count_document,
       // doc: [{pictUrlKtp}, {pictUrlNPWP}]z
       doc: doc,
+      payment_cd: payment_cd,
+      total: trx_amt
     };
 
     const isValid = this.validating({
