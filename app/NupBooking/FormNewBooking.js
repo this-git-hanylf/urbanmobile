@@ -463,7 +463,7 @@ class FormNewBooking extends React.Component {
       console.log(this.state.pictUrlKtp.length);
       fileNameKtp = "./img/noimage.png";
     } else {
-      fileNameKtp = "KTP_BookingPriorty_" + nik + ".png";
+      fileNameKtp = "KTP_BookingPriorty_" + nik + ".jpeg";
     }
 
     let fileNameNpwp = "";
@@ -471,7 +471,7 @@ class FormNewBooking extends React.Component {
       console.log(this.state.pictUrlNPWP.length);
       fileNameNpwp = "./img/noimage.png";
     } else {
-      fileNameNpwp = "npwp_BookingPriorty_" + nik + ".png";
+      fileNameNpwp = "npwp_BookingPriorty_" + nik + ".jpeg";
     }
 
     console.log("saveFormNUP", frmData);
