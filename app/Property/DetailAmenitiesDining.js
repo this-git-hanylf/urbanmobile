@@ -272,6 +272,13 @@ class DetailAmenitiesDining extends React.Component {
     }
   }
 
+  bookingnow() { // ngarah ke screen pilih tower
+    const items = this.props.items;
+    console.log("items buat ke choose tower", items);
+    Actions.ProductProjectPage({ items: items }); //booking now yang lama
+    // Actions.New_NupBookingBlock({ items: items }); //booking now yang baru, pilih block langsung
+  }
+
   render() {
     // let feature = ''
     // if(this.state.feature){
@@ -444,25 +451,7 @@ class DetailAmenitiesDining extends React.Component {
                         )
                       }
                     </View>
-                    // <View style={{ paddingTop: "130%" }}>
-                    //   <Button
-                    //     style={Style.signInBtnMedium}
-                    //     onPress={() => this.nupBooking()}
-                    //   >
-                    //     <Text
-                    //       style={{
-                    //         width: "100%",
-                    //         fontSize: 16,
-                    //         alignItems: "center",
-                    //         textAlign: "center",
-                    //         fontFamily: Fonts.type.proximaNovaBold,
-                    //         letterSpacing: 1,
-                    //       }}
-                    //     >
-                    //       Booking Priority Pass
-                    //     </Text>
-                    //   </Button>
-                    // </View>
+
                   )}
                 </ImageBackground>
               </View>

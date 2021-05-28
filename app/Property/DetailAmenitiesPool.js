@@ -109,6 +109,7 @@ class DetailAmenitiesPool extends React.Component {
       stat: "P",
       gallery_1: require("@Asset/images/amenitis/pool/gallery1.png"),
       gallery_2: require("@Asset/images/amenitis/pool/gallery2.jpg"),
+      periode_book: [],
       // require("@Asset/images/project_suite_urban.jpg")
     };
 
@@ -134,7 +135,7 @@ class DetailAmenitiesPool extends React.Component {
 
     this.setState(data, () => {
       this.getDataAminities();
-
+      this.getPeriodeBooking();
       // this.goTo()
     });
   }
@@ -152,36 +153,36 @@ class DetailAmenitiesPool extends React.Component {
     {
       isMount
         ? fetch(
-            urlApi +
-              "c_reservation/getDataDetailsAmenitiesPool/" +
-              item.db_profile +
-              "/" +
-              item.entity_cd +
-              "/" +
-              item.project_no +
-              "/" +
-              stat,
-            {
-              method: "GET",
-              headers: this.state.hd,
+          urlApi +
+          "c_reservation/getDataDetailsAmenitiesPool/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no +
+          "/" +
+          stat,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              console.log(resData);
+              this.setState({ amen: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
             }
-          )
-            .then((response) => response.json())
-            .then((res) => {
-              if (!res.Error) {
-                const resData = res.Data;
-                console.log(resData);
-                this.setState({ amen: resData });
-              } else {
-                this.setState({ isLoaded: !this.state.isLoaded }, () => {
-                  alert(res.Pesan);
-                });
-              }
-              console.log("amenitis", res);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+            console.log("amenitis", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
         : null;
     }
   };
@@ -221,6 +222,61 @@ class DetailAmenitiesPool extends React.Component {
       { cancelable: false }
     );
   };
+
+  getPeriodeBooking() {
+    const item = this.props.items;
+    // const prevItems = this.props.prevItems;
+    // console.log('previtems periode', prevItems);
+    console.log("item get periode", item);
+
+    {
+      isMount
+        ? fetch(
+          urlApi +
+          "c_periode_book/getPeriode_propertydetail/" +
+          item.db_profile +
+          "/" +
+          item.entity_cd +
+          "/" +
+          item.project_no,
+          // +
+          // "/" +
+          // item.property_cd,
+          // +
+          // "/" +
+          // start_date,
+          // "/" +
+          // item.product_cd,
+          {
+            method: "GET",
+            headers: this.state.hd,
+          }
+        )
+          .then((response) => response.json())
+          .then((res) => {
+            if (!res.Error) {
+              const resData = res.Data;
+              this.setState({ periode_book: resData });
+            } else {
+              this.setState({ isLoaded: !this.state.isLoaded }, () => {
+                alert(res.Pesan);
+              });
+            }
+            console.log("periode_book", res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+        : null;
+    }
+  }
+
+  bookingnow() { // ngarah ke screen pilih tower
+    const items = this.props.items;
+    console.log("items buat ke choose tower", items);
+    Actions.ProductProjectPage({ items: items }); //booking now yang lama
+    // Actions.New_NupBookingBlock({ items: items }); //booking now yang baru, pilih block langsung
+  }
 
   render() {
     // let feature = ''
@@ -325,7 +381,7 @@ class DetailAmenitiesPool extends React.Component {
                       <Button
                         style={Style.signInBtnMedium}
                         onPress={() => this.alertNUP()}
-                        // onPress={() => this.nupBooking()}
+                      // onPress={() => this.nupBooking()}
                       >
                         <Text
                           style={{
@@ -343,23 +399,56 @@ class DetailAmenitiesPool extends React.Component {
                     </View>
                   ) : (
                     <View style={{ paddingTop: "130%" }}>
-                      <Button
-                        style={Style.signInBtnMedium}
-                        onPress={() => this.nupBooking()}
-                      >
-                        <Text
-                          style={{
-                            width: "100%",
-                            fontSize: 16,
-                            alignItems: "center",
-                            textAlign: "center",
-                            fontFamily: Fonts.type.proximaNovaBold,
-                            letterSpacing: 1,
-                          }}
-                        >
-                          Booking Priority Pass
-                        </Text>
-                      </Button>
+                      {
+                        this.state.periode_book ? (
+                          this.state.periode_book != 0 ? (
+                            <Button
+                              style={Style.signInBtnMedium}
+                              onPress={() =>
+                                this.state.periode_book[0].booking_type == "BU"
+                                  ? this.bookingnow()
+                                  : this.nupBooking()
+                              }
+                            >
+                              <Text
+                                style={{
+                                  width: "100%",
+                                  fontSize: 16,
+                                  alignItems: "center",
+                                  textAlign: "center",
+                                  fontFamily: Fonts.type.proximaNovaBold,
+                                  letterSpacing: 1,
+                                }}
+                              >
+                                {this.state.periode_book[0].booking_descs}
+                              </Text>
+                            </Button>
+                          ) : (
+                            <View style={{ paddingTop: "110%" }}>
+                              <Button
+                                style={Style.signInBtnMedium}
+                                onPress={() => this.alertNUP()}
+                              // onPress={() => this.nupBooking()}
+                              >
+                                <Text
+                                  style={{
+                                    width: "100%",
+                                    fontSize: 16,
+                                    alignItems: "center",
+                                    textAlign: "center",
+                                    fontFamily: Fonts.type.proximaNovaBold,
+                                    letterSpacing: 1,
+                                  }}
+                                >
+                                  Booking Priority Pass
+                              </Text>
+                              </Button>
+                            </View>
+                          )
+                        ) : (
+                          <ActivityIndicator />
+                        )
+                      }
                     </View>
                   )}
                 </ImageBackground>
